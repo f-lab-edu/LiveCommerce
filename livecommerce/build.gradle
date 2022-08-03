@@ -1,0 +1,42 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.2'
+	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+	id 'java'
+	id 'checkstyle'
+}
+
+group = 'com.flab'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+
+checkstyle {
+	configFile = file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+	configProperties = ["suppressionFile": "${project.rootDir}/config/checkstyle/checkstyle/checkstyle-suppressions.xml"]
+	ignoreFailures = false //경고가 있는 경우 빌드를 계속할 수 있는지 여부
+	toolVersion = "8.39"
+	maxErrors = 0
+	maxWarnings = 0
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
