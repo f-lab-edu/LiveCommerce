@@ -5,8 +5,8 @@ import com.flab.livecommerce.domain.User;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.springframework.stereotype.Repository;
+
 
 @Repository
 public class InMemoryUserRepository {
