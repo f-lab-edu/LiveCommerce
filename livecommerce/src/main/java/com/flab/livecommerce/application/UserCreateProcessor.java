@@ -14,9 +14,9 @@ public class UserCreateProcessor {
 
     public void execute(UserCreateRequest userCreateRequest) {
         User user = new User(
-                userCreateRequest.getEmail(),
-                userCreateRequest.getPassword(),
-                userCreateRequest.getNickname()
+            userCreateRequest.getEmail(),
+            userCreateRequest.getPassword(),
+            userCreateRequest.getNickname()
         );
         userRepository.save(user);
     }
