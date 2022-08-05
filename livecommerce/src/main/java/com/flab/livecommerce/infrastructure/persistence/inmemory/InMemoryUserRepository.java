@@ -2,8 +2,10 @@ package com.flab.livecommerce.infrastructure.persistence.inmemory;
 
 
 import com.flab.livecommerce.domain.User;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
