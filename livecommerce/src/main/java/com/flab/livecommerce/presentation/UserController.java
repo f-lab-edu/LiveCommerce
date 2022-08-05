@@ -1,16 +1,23 @@
 package com.flab.livecommerce.presentation;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.flab.livecommerce.application.facade.UserManager;
+import com.flab.livecommerce.presentation.request.UserCreateRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/user")
 @RestController
 public class UserController {
+    private final UserManager userManager;
+
+    public UserController(UserManager userManager) {
+        this.userManager = userManager;
+    }
 
     @PostMapping
-    public String signUp() {
-
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public String signUp(@RequestBody UserCreateRequest userCreateRequest) {
+        userManager.createUser(userCreateRequest);
         return "create";
     }
 }
