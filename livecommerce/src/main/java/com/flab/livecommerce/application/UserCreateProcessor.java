@@ -1,7 +1,7 @@
 package com.flab.livecommerce.application;
 
-import com.flab.livecommerce.domain.User;
-import com.flab.livecommerce.domain.UserRepository;
+import com.flab.livecommerce.domain.user.User;
+import com.flab.livecommerce.domain.user.UserRepository;
 import com.flab.livecommerce.presentation.request.UserCreateRequest;
 
 public class UserCreateProcessor {
@@ -18,6 +18,13 @@ public class UserCreateProcessor {
             userCreateRequest.getPassword(),
             userCreateRequest.getNickname()
         );
+
+        User findUser = userRepository.findByEmail(user.getEmail());
+        //중복 회원 검사
+        if (null != findUser) {
+            throw new RuntimeException();
+        }
+
         userRepository.save(user);
     }
 }
