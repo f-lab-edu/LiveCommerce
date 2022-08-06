@@ -1,4 +1,4 @@
-package com.flab.livecommerce.domain;
+package com.flab.livecommerce.domain.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

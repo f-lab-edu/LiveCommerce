@@ -1,7 +1,7 @@
 package com.flab.livecommerce.infrastructure;
 
-import com.flab.livecommerce.domain.User;
-import com.flab.livecommerce.domain.UserRepository;
+import com.flab.livecommerce.domain.user.User;
+import com.flab.livecommerce.domain.user.UserRepository;
 import com.flab.livecommerce.infrastructure.persistence.inmemory.InMemoryUserRepository;
 import org.springframework.stereotype.Repository;
 
