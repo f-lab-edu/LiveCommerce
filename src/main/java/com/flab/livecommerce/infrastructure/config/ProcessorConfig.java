@@ -10,22 +10,22 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ProcessorConfig {
 
-	@Bean
-	public UserCreateProcessor userCreateProcessor(
-		UserRepository userRepository
-	) {
-		return new UserCreateProcessor(userRepository);
-	}
+    @Bean
+    public UserCreateProcessor userCreateProcessor(
+            UserRepository userRepository
+    ) {
+        return new UserCreateProcessor(userRepository);
+    }
 
-	@Bean
-	public UserLoginProcessor userLoginProcessor(
-		UserRepository userRepository
-	) {
-		return new UserLoginProcessor(userRepository);
-	}
+    @Bean
+    public UserLoginProcessor userLoginProcessor(
+            UserRepository userRepository
+    ) {
+        return new UserLoginProcessor(userRepository);
+    }
 
-	@Bean
-	public TokenAuthorization TokenAuthorization() {
-		return new TokenAuthorization();
-	}
+    @Bean
+    public TokenAuthorization tokenAuthorization() {
+        return new TokenAuthorization();
+    }
 }

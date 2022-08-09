@@ -42,9 +42,9 @@ public class TokenAuthorization {
         }
 
         return Arrays.stream(request.getCookies())
-            .filter(cookie -> cookie.getName().equals(tokenCookieName))
-            .findAny()
-            .orElse(null);
+                .filter(cookie -> cookie.getName().equals(tokenCookieName))
+                .findAny()
+                .orElse(null);
     }
 
 }
