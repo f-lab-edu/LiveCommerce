@@ -1,7 +1,7 @@
 package com.flab.livecommerce.application;
 
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import com.flab.livecommerce.domain.user.User;
@@ -21,19 +21,19 @@ class UserTest {
     PasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Test
-    void 회원가입테스트() {
-        String Id = "sadasd@naver.com";
+    void createUserTest() {
+        String id = "sadasd@naver.com";
         String password = "test1234";
         String nickname = "asd";
 
         User user = new User(
-            Id,
+            id,
             encoder.encode(password),
             nickname
         );
 
         userRepository.save(user);
-        User findUser = userRepository.findByEmail(Id);
+        User findUser = userRepository.findByEmail(id);
 
         assertThat(findUser).isNotNull();
         assertThat(encoder.matches("test1234", findUser.getPassword())).isTrue();
@@ -41,15 +41,15 @@ class UserTest {
     }
 
     @Test
-    void UserCreateProcessorTest() {
+    void userCreateProcessorTest() {
         UserCreateProcessor processor = new UserCreateProcessor(userRepository, encoder);
         //given
-        String Id = "sadasd@naver.com";
+        String id = "sadasd@naver.com";
         String password = "test1234";
         String nickname = "asd";
 
         UserCreateRequest user = new UserCreateRequest(
-            Id,
+            id,
             encoder.encode(password),
             nickname
         );
@@ -61,15 +61,15 @@ class UserTest {
     }
 
     @Test
-    void UserLoginProcessor() {
+    void userLoginProcessor() {
         //given
         UserLoginProcessor processor = new UserLoginProcessor(userRepository, encoder);
-        String Id = "sadasd@naver.com";
+        String id = "sadasd@naver.com";
         String password = "test1234";
         String nickname = "asd";
 
         User user = new User(
-            Id,
+            id,
             encoder.encode(password),
             nickname
         );
@@ -86,7 +86,7 @@ class UserTest {
     }
 
     @Test
-    void BCryptPasswordTest() {
+    void bcryptPasswordTest() {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         String result = encoder.encode("Test1234");
 
