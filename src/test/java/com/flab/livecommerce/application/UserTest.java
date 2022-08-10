@@ -4,12 +4,12 @@ package com.flab.livecommerce.application;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import com.flab.livecommerce.application.command.user.CreateCommand;
+import com.flab.livecommerce.application.command.user.LoginCommand;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.UserRepository;
 import com.flab.livecommerce.infrastructure.UserRepositoryAdapter;
 import com.flab.livecommerce.infrastructure.persistence.inmemory.InMemoryUserRepository;
-import com.flab.livecommerce.presentation.request.UserCreateRequest;
-import com.flab.livecommerce.presentation.request.UserLoginRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,16 +48,21 @@ class UserTest {
         String password = "test1234";
         String nickname = "asd";
 
-        UserCreateRequest user = new UserCreateRequest(
+        CreateCommand command = new CreateCommand(
             id,
             encoder.encode(password),
             nickname
         );
 
-        processor.execute(user);
-        assertThatThrownBy(() -> processor.execute(user))
+
+        processor.execute(command);
+        assertThatThrownBy(() -> processor.execute(command))
             .isInstanceOf(IllegalStateException.class);
 
+        User saveUser = userRepository.save(command.toUser());
+        User findUser = userRepository.findByEmail(command.toUser().getEmail());
+
+        assertThat(saveUser).isEqualTo(findUser);
     }
 
     @Test
@@ -76,12 +81,12 @@ class UserTest {
         userRepository.save(user);
 
         //when
-        UserLoginRequest loginRequest = new UserLoginRequest("sadasd@naver.com", "test1234");
-        User loginUser = processor.execute(loginRequest);
+        LoginCommand command = new LoginCommand("sadasd@naver.com", "test1234");
+        User loginUser = processor.execute(command);
 
         //then
-        assertThat(loginUser.getEmail()).isEqualTo(loginRequest.getEmail());
-        assertThat(encoder.matches(loginRequest.getPassword(), loginUser.getPassword())).isTrue();
+        assertThat(loginUser.getEmail()).isEqualTo(command.getEmail());
+        assertThat(encoder.matches(command.getPassword(), loginUser.getPassword())).isTrue();
         assertThat(loginUser.getNickname()).isEqualTo(user.getNickname());
     }
 
