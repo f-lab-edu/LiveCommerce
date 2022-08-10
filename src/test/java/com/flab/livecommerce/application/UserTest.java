@@ -8,7 +8,9 @@ import com.flab.livecommerce.application.command.user.CreateCommand;
 import com.flab.livecommerce.application.command.user.LoginCommand;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.UserRepository;
+import com.flab.livecommerce.domain.user.encryption.PasswordEncryption;
 import com.flab.livecommerce.infrastructure.UserRepositoryAdapter;
+import com.flab.livecommerce.infrastructure.encryption.BCryptPasswordEncryption;
 import com.flab.livecommerce.infrastructure.persistence.inmemory.InMemoryUserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,7 +20,7 @@ class UserTest {
 
 
     UserRepository userRepository = new UserRepositoryAdapter(new InMemoryUserRepository());
-    PasswordEncoder encoder = new BCryptPasswordEncoder();
+    PasswordEncryption encoder = new BCryptPasswordEncryption(new BCryptPasswordEncoder());
 
     @Test
     void createUserTest() {
@@ -28,7 +30,7 @@ class UserTest {
 
         User user = new User(
             id,
-            encoder.encode(password),
+            encoder.encrypt(password),
             nickname
         );
 
@@ -36,8 +38,8 @@ class UserTest {
         User findUser = userRepository.findByEmail(id);
 
         assertThat(findUser).isNotNull();
-        assertThat(encoder.matches("test1234", findUser.getPassword())).isTrue();
-        assertThat(encoder.matches("test4321", findUser.getPassword())).isFalse();
+        assertThat(encoder.match("test1234", findUser.getPassword())).isTrue();
+        assertThat(encoder.match("test4321", findUser.getPassword())).isFalse();
     }
 
     @Test
@@ -50,7 +52,7 @@ class UserTest {
 
         CreateCommand command = new CreateCommand(
             id,
-            encoder.encode(password),
+            encoder.encrypt(password),
             nickname
         );
 
@@ -75,7 +77,7 @@ class UserTest {
 
         User user = new User(
             id,
-            encoder.encode(password),
+            encoder.encrypt(password),
             nickname
         );
         userRepository.save(user);
@@ -86,7 +88,7 @@ class UserTest {
 
         //then
         assertThat(loginUser.getEmail()).isEqualTo(command.getEmail());
-        assertThat(encoder.matches(command.getPassword(), loginUser.getPassword())).isTrue();
+        assertThat(encoder.match(command.getPassword(), loginUser.getPassword())).isTrue();
         assertThat(loginUser.getNickname()).isEqualTo(user.getNickname());
     }
 

@@ -1,16 +1,12 @@
 package com.flab.livecommerce.presentation;
 
-import com.flab.livecommerce.application.command.user.LoginCommand;
 import com.flab.livecommerce.application.facade.UserManager;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.infrastructure.TokenAuthorization;
 import com.flab.livecommerce.presentation.request.UserCreateRequest;
 import com.flab.livecommerce.presentation.request.UserLoginRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,10 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(
-        @RequestBody @Valid UserLoginRequest request,
-        HttpServletResponse response
-    ) {
+    public String login(@RequestBody @Valid UserLoginRequest request) {
         User loginUser = userManager.login(request.toCommand());
         return "ok";
     }

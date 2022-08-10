@@ -3,17 +3,18 @@ package com.flab.livecommerce.application;
 import com.flab.livecommerce.application.command.user.CreateCommand;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.flab.livecommerce.domain.user.encryption.PasswordEncryption;
 
 public class UserCreateProcessor {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder encoder;
+    private final PasswordEncryption passwordEncryption;
 
-    public UserCreateProcessor(UserRepository userRepository, PasswordEncoder encoder) {
+    public UserCreateProcessor(UserRepository userRepository, PasswordEncryption passwordEncryption) {
         this.userRepository = userRepository;
-        this.encoder = encoder;
+        this.passwordEncryption = passwordEncryption;
     }
+
 
     public void execute(CreateCommand command) {
 
@@ -22,6 +23,7 @@ public class UserCreateProcessor {
         if (null != findUser) {
             throw new IllegalStateException();
         }
+
 
         userRepository.save(command.toUser());
     }
