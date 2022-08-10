@@ -5,6 +5,7 @@ import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.infrastructure.TokenAuthorization;
 import com.flab.livecommerce.presentation.request.UserCreateRequest;
 import com.flab.livecommerce.presentation.request.UserLoginRequest;
+import com.flab.livecommerce.presentation.response.ApiResponse;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,16 +27,17 @@ public class UserController {
     }
 
     @PostMapping
-    public String signUp(@RequestBody @Valid UserCreateRequest request) {
+    public ApiResponse signUp(@RequestBody @Valid UserCreateRequest request) {
+
         userManager.createUser(request.toCommand());
 
-        return "ok";
+        return ApiResponse.success(null);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody @Valid UserLoginRequest request) {
+    public ApiResponse login(@RequestBody @Valid UserLoginRequest request) {
         User loginUser = userManager.login(request.toCommand());
-        return "ok";
+        return ApiResponse.success(null);
     }
 
 }
