@@ -1,8 +1,8 @@
 package com.flab.livecommerce.application;
 
+import com.flab.livecommerce.application.command.user.CreateCommand;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.UserRepository;
-import com.flab.livecommerce.presentation.request.UserCreateRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UserCreateProcessor {
@@ -15,19 +15,14 @@ public class UserCreateProcessor {
         this.encoder = encoder;
     }
 
-    public void execute(UserCreateRequest userCreateRequest) {
-        User user = new User(
-            userCreateRequest.getEmail(),
-            encoder.encode(userCreateRequest.getPassword()),
-            userCreateRequest.getNickname()
-        );
+    public void execute(CreateCommand command) {
 
-        User findUser = userRepository.findByEmail(user.getEmail());
+        User findUser = userRepository.findByEmail(command.getEmail());
         //중복 회원 검사
         if (null != findUser) {
             throw new IllegalStateException();
         }
 
-        userRepository.save(user);
+        userRepository.save(command.toUser());
     }
 }

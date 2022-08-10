@@ -1,5 +1,6 @@
 package com.flab.livecommerce.presentation.request;
 
+import com.flab.livecommerce.application.command.user.CreateCommand;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -24,4 +25,8 @@ public class UserCreateRequest {
 
     @NotBlank(message = "아이디는 필수 입력사항입니다.")
     private String nickname;
+
+    public CreateCommand toCommand() {
+        return new CreateCommand(email, password, nickname);
+    }
 }

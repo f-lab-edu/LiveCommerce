@@ -1,5 +1,6 @@
 package com.flab.livecommerce.presentation;
 
+import com.flab.livecommerce.application.command.user.LoginCommand;
 import com.flab.livecommerce.application.facade.UserManager;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.infrastructure.TokenAuthorization;
@@ -29,21 +30,19 @@ public class UserController {
     }
 
     @PostMapping
-    public String signUp(@RequestBody @Valid UserCreateRequest userCreateRequest) {
-        userManager.createUser(userCreateRequest);
+    public String signUp(@RequestBody @Valid UserCreateRequest request) {
+        userManager.createUser(request.toCommand());
 
         return "ok";
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(
-        @RequestBody @Valid UserLoginRequest userLoginRequest,
+    public String login(
+        @RequestBody @Valid UserLoginRequest request,
         HttpServletResponse response
     ) {
-        User loginUser = userManager.login(userLoginRequest);
-        tokenAuthorization.createToken(userLoginRequest, response);
-
-        return new ResponseEntity<>(loginUser, HttpStatus.OK);
+        User loginUser = userManager.login(request.toCommand());
+        return "ok";
     }
 
 }

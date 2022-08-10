@@ -1,5 +1,6 @@
 package com.flab.livecommerce.presentation.request;
 
+import com.flab.livecommerce.application.command.user.LoginCommand;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -22,4 +23,7 @@ public class UserLoginRequest {
     @Pattern(regexp = "^[0-9a-z].{6,10}$", message = "영문 소문자, 숫자 6~10자 이내로 입력하세요.”")
     private String password;
 
+    public LoginCommand toCommand() {
+        return new LoginCommand(email, password);
+    }
 }
