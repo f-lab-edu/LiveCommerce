@@ -10,20 +10,19 @@ public class UserLoginProcessor {
     private final UserRepository userRepository;
     private final PasswordEncryption passwordEncryption;
 
-    public UserLoginProcessor(UserRepository userRepository, PasswordEncryption passwordEncryption) {
+    public UserLoginProcessor(UserRepository userRepository,
+            PasswordEncryption passwordEncryption) {
         this.userRepository = userRepository;
         this.passwordEncryption = passwordEncryption;
     }
 
 
-    public User execute(LoginCommand command) {
+    public void execute(LoginCommand command) {
         User user = userRepository.findByEmail(command.getEmail());
 
         if (idPasswordCheck(command, user)) {
             throw new IllegalStateException();
         }
-
-        return user;
     }
 
     private boolean idPasswordCheck(LoginCommand command, User user) {

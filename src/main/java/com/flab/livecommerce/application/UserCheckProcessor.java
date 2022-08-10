@@ -13,10 +13,6 @@ public class UserCheckProcessor {
 
     public boolean checkEmail(String email) {
         User findUser = userRepository.findByEmail(email);
-        if (null != findUser) {
-            throw new IllegalStateException();
-        }
-
-        return true;
+        return null == findUser;
     }
 }

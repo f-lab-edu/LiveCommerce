@@ -2,7 +2,6 @@ package com.flab.livecommerce.presentation;
 
 import com.flab.livecommerce.application.facade.UserManager;
 import com.flab.livecommerce.domain.user.User;
-import com.flab.livecommerce.infrastructure.TokenAuthorization;
 import com.flab.livecommerce.presentation.request.UserCreateRequest;
 import com.flab.livecommerce.presentation.request.UserLoginRequest;
 import com.flab.livecommerce.presentation.response.ApiResponse;
@@ -33,15 +32,13 @@ public class UserController {
 
     @PostMapping
     public ApiResponse<Object> signUp(@RequestBody @Valid UserCreateRequest request) {
-
         userManager.createUser(request.toCommand());
-
         return ApiResponse.success(null);
     }
 
     @PostMapping("/login")
     public ApiResponse<Object> login(@RequestBody @Valid UserLoginRequest request) {
-        User loginUser = userManager.login(request.toCommand());
+        userManager.login(request.toCommand());
         return ApiResponse.success(null);
     }
 
