@@ -1,29 +1,23 @@
 package com.flab.livecommerce.infrastructure.config;
 
+import com.flab.livecommerce.application.UserCheckProcessor;
 import com.flab.livecommerce.application.UserCreateProcessor;
 import com.flab.livecommerce.application.UserLoginProcessor;
 import com.flab.livecommerce.domain.user.UserRepository;
 import com.flab.livecommerce.infrastructure.TokenAuthorization;
-import com.flab.livecommerce.infrastructure.encryption.BCryptPasswordEncryption;
+import com.flab.livecommerce.infrastructure.encryption.SecurityPasswordEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ProcessorConfig {
-
-    @Bean
-    private static PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
 
     @Bean
     public UserCreateProcessor userCreateProcessor(
             UserRepository userRepository
     ) {
-        return new UserCreateProcessor(userRepository, new BCryptPasswordEncryption(new BCryptPasswordEncoder()) {
+        return new UserCreateProcessor(userRepository, new SecurityPasswordEncoder() {
         });
     }
 
@@ -31,7 +25,14 @@ public class ProcessorConfig {
     public UserLoginProcessor userLoginProcessor(
             UserRepository userRepository
     ) {
-        return new UserLoginProcessor(userRepository, new BCryptPasswordEncryption(new BCryptPasswordEncoder()));
+        return new UserLoginProcessor(userRepository, new SecurityPasswordEncoder());
+    }
+
+    @Bean
+    public UserCheckProcessor userCheckProcessor(
+            UserRepository userRepository
+    ) {
+        return new UserCheckProcessor(userRepository);
     }
 
     @Bean

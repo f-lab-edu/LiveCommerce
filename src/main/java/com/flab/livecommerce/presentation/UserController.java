@@ -8,6 +8,7 @@ import com.flab.livecommerce.presentation.request.UserLoginRequest;
 import com.flab.livecommerce.presentation.response.ApiResponse;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,15 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserManager userManager;
-    private final TokenAuthorization tokenAuthorization;
 
-    public UserController(UserManager userManager, TokenAuthorization authorization) {
+    public UserController(UserManager userManager) {
         this.userManager = userManager;
-        this.tokenAuthorization = authorization;
+    }
+
+    @PostMapping("/email/{email}/exists")
+    public ApiResponse<Boolean> checkEmail(@PathVariable String email) {
+        boolean checkEmail = userManager.checkEmailDuplicated(email);
+        return ApiResponse.success(checkEmail);
     }
 
     @PostMapping
-    public ApiResponse signUp(@RequestBody @Valid UserCreateRequest request) {
+    public ApiResponse<Object> signUp(@RequestBody @Valid UserCreateRequest request) {
 
         userManager.createUser(request.toCommand());
 
@@ -35,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ApiResponse login(@RequestBody @Valid UserLoginRequest request) {
+    public ApiResponse<Object> login(@RequestBody @Valid UserLoginRequest request) {
         User loginUser = userManager.login(request.toCommand());
         return ApiResponse.success(null);
     }
