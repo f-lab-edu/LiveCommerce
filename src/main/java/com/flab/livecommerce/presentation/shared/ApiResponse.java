@@ -1,4 +1,4 @@
-package com.flab.livecommerce.presentation.response;
+package com.flab.livecommerce.presentation.shared;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,15 +11,15 @@ public class ApiResponse<T> {
     private T data;
     private Error error;
 
-    public static <T> ApiResponse<T> success(T data) {
+    public static <T> ApiResponse success(T data) {
         return new ApiResponse<>(true, data, null);
     }
 
-    public static <T> ApiResponse<T> fail(Error error) {
+    public static ApiResponse fail(Error error) {
         return new ApiResponse<>(false, null, error);
     }
 
-    public static <T> ApiResponse<T> fail(String code, String type, String message) {
+    public static ApiResponse fail(String code, String type, String message) {
         return new ApiResponse<>(false, null, new Error(code, type, message));
     }
 
@@ -27,8 +27,11 @@ public class ApiResponse<T> {
     @Getter
     static class Error {
 
+        //http 상태코드
         private String code;
+        //에러 타입
         private String type;
+        //에러 메시지
         private String message;
     }
 }
