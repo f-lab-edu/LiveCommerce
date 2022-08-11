@@ -2,9 +2,9 @@ package com.flab.livecommerce.application.facade;
 
 import com.flab.livecommerce.application.UserCheckProcessor;
 import com.flab.livecommerce.application.UserCreateProcessor;
+import com.flab.livecommerce.application.UserCreateProcessor.UserCreateCommand;
 import com.flab.livecommerce.application.UserLoginProcessor;
-import com.flab.livecommerce.application.command.user.CreateCommand;
-import com.flab.livecommerce.application.command.user.LoginCommand;
+import com.flab.livecommerce.application.UserLoginProcessor.LoginCommand;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,7 +25,7 @@ public class UserManager {
     }
 
 
-    public void createUser(CreateCommand command) {
+    public void createUser(UserCreateCommand command) {
         userCreateProcessor.execute(command);
     }
 

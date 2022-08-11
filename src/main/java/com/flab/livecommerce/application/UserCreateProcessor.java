@@ -1,24 +1,32 @@
 package com.flab.livecommerce.application;
 
-import com.flab.livecommerce.application.command.user.CreateCommand;
-import com.flab.livecommerce.domain.user.Encryption;
+import com.flab.livecommerce.domain.user.PasswordEncryptor;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.UserRepository;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 public class UserCreateProcessor {
 
     private final UserRepository userRepository;
-    private final Encryption passwordEncryption;
+    private final PasswordEncryptor passwordEncryption;
 
     public UserCreateProcessor(
         UserRepository userRepository,
-        Encryption passwordEncryption
+        PasswordEncryptor passwordEncryption
     ) {
         this.userRepository = userRepository;
         this.passwordEncryption = passwordEncryption;
     }
 
-    public void execute(CreateCommand command) {
+    public void execute(UserCreateCommand command) {
+
+        User findUser = userRepository.findByEmail(command.getEmail());
+
+        if (null != findUser) {
+            throw new IllegalStateException();
+        }
+
         userRepository.save(
             new User(
                 command.getEmail(),
@@ -26,5 +34,14 @@ public class UserCreateProcessor {
                 command.getNickname()
             )
         );
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class UserCreateCommand {
+
+        private String email;
+        private String password;
+        private String nickname;
     }
 }
