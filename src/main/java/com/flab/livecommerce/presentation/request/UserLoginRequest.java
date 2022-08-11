@@ -1,6 +1,6 @@
 package com.flab.livecommerce.presentation.request;
 
-import com.flab.livecommerce.application.command.user.LoginCommand;
+import com.flab.livecommerce.application.UserLoginProcessor.LoginCommand;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -26,4 +26,5 @@ public class UserLoginRequest {
     public LoginCommand toCommand() {
         return new LoginCommand(email, password);
     }
+
 }
