@@ -12,7 +12,4 @@ public class CreateCommand {
     private String password;
     private String nickname;
 
-    public User toUser() {
-        return new User(email, password, nickname);
-    }
 }

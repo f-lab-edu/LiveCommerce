@@ -1,6 +1,5 @@
 package com.flab.livecommerce.application;
 
-import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.UserRepository;
 
 public class UserCheckProcessor {
@@ -11,8 +10,9 @@ public class UserCheckProcessor {
         this.userRepository = userRepository;
     }
 
-    public boolean checkEmail(String email) {
-        User findUser = userRepository.findByEmail(email);
-        return null == findUser;
+    public void execute(String email) {
+        if (null == userRepository.findByEmail(email)) {
+            throw new IllegalStateException();
+        }
     }
 }

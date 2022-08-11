@@ -1,12 +1,12 @@
 package com.flab.livecommerce.presentation;
 
 import com.flab.livecommerce.application.facade.UserManager;
-import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.presentation.request.UserCreateRequest;
 import com.flab.livecommerce.presentation.request.UserLoginRequest;
-import com.flab.livecommerce.presentation.response.ApiResponse;
+import com.flab.livecommerce.presentation.shared.ApiResponse;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,22 +24,21 @@ public class UserController {
         this.userManager = userManager;
     }
 
-    @PostMapping("/email/{email}/exists")
-    public ApiResponse<Boolean> checkEmail(@PathVariable String email) {
-        boolean checkEmail = userManager.checkEmailDuplicated(email);
-        return ApiResponse.success(checkEmail);
+    @GetMapping("/email/{email}/exists")
+    public ApiResponse checkEmail(@PathVariable String email) {
+        userManager.checkEmailDuplicated(email);
+        return ApiResponse.success(null);
     }
 
     @PostMapping
-    public ApiResponse<Object> signUp(@RequestBody @Valid UserCreateRequest request) {
+    public ApiResponse signUp(@RequestBody @Valid UserCreateRequest request) {
         userManager.createUser(request.toCommand());
         return ApiResponse.success(null);
     }
 
     @PostMapping("/login")
-    public ApiResponse<Object> login(@RequestBody @Valid UserLoginRequest request) {
+    public ApiResponse login(@RequestBody @Valid UserLoginRequest request) {
         userManager.login(request.toCommand());
         return ApiResponse.success(null);
     }
-
 }

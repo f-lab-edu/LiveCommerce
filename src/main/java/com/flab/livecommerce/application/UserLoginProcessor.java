@@ -1,21 +1,20 @@
 package com.flab.livecommerce.application;
 
 import com.flab.livecommerce.application.command.user.LoginCommand;
+import com.flab.livecommerce.domain.user.Encryption;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.UserRepository;
-import com.flab.livecommerce.domain.user.encryption.PasswordEncryption;
+
 
 public class UserLoginProcessor {
 
     private final UserRepository userRepository;
-    private final PasswordEncryption passwordEncryption;
+    private final Encryption passwordEncryption;
 
-    public UserLoginProcessor(UserRepository userRepository,
-            PasswordEncryption passwordEncryption) {
+    public UserLoginProcessor(UserRepository userRepository, Encryption passwordEncryption) {
         this.userRepository = userRepository;
         this.passwordEncryption = passwordEncryption;
     }
-
 
     public void execute(LoginCommand command) {
         User user = userRepository.findByEmail(command.getEmail());
