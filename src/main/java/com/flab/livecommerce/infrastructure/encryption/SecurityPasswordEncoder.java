@@ -1,21 +1,23 @@
 package com.flab.livecommerce.infrastructure.encryption;
 
-import com.flab.livecommerce.domain.user.encryption.PasswordEncryption;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.flab.livecommerce.domain.user.Encryption;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class SecurityPasswordEncoder implements PasswordEncryption {
+public class SecurityPasswordEncoder implements Encryption {
 
-    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder encoder;
 
+    public SecurityPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.encoder = passwordEncoder;
+    }
 
     @Override
     public String encrypt(String password) {
-        return passwordEncoder.encode(password);
+        return encoder.encode(password);
     }
 
     @Override
     public boolean match(String rawPassword, String encryptedPassword) {
-        return passwordEncoder.matches(rawPassword, encryptedPassword);
+        return encoder.matches(rawPassword, encryptedPassword);
     }
 }
