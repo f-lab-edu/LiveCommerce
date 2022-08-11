@@ -1,12 +1,10 @@
 package com.flab.livecommerce.application;
 
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import com.flab.livecommerce.application.command.user.CreateCommand;
-import com.flab.livecommerce.application.command.user.LoginCommand;
-import com.flab.livecommerce.domain.user.Encryption;
+import com.flab.livecommerce.application.UserCreateProcessor.UserCreateCommand;
+import com.flab.livecommerce.application.UserLoginProcessor.LoginCommand;
+import com.flab.livecommerce.domain.user.PasswordEncryptor;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.UserRepository;
 import com.flab.livecommerce.infrastructure.UserRepositoryAdapter;
@@ -20,7 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 class UserTest {
 
     UserRepository userRepository;
-    Encryption encoder;
+    PasswordEncryptor encoder;
     User user;
 
     @BeforeEach
@@ -38,7 +36,7 @@ class UserTest {
     void userCreateProcessorTest() {
         UserCreateProcessor processor = new UserCreateProcessor(userRepository, encoder);
 
-        CreateCommand command = new CreateCommand(
+        UserCreateCommand command = new UserCreateCommand(
             user.getEmail(),
             user.getPassword(),
             user.getNickname()
@@ -106,4 +104,5 @@ class UserTest {
         assertThat(encoder.matches("Test1234", result)).isTrue();
         assertThat(encoder.matches("Test1237", result)).isFalse();
     }
+
 }
