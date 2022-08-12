@@ -40,6 +40,7 @@ public class ProcessorConfig {
         return new UserCheckProcessor(userRepository);
     }
 
+    @Bean
     private static PasswordEncoder algorithm() {
         return new BCryptPasswordEncoder();
     }
