@@ -21,9 +21,9 @@ public class UserCreateProcessor {
 
     public void execute(UserCreateCommand command) {
 
-        User findUser = userRepository.findByEmail(command.getEmail());
+        User existUser = userRepository.findByEmail(command.getEmail());
 
-        if (null != findUser) {
+        if (null != existUser) {
             throw new IllegalStateException();
         }
 
