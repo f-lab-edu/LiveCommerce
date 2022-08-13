@@ -11,7 +11,7 @@ public class UserCheckProcessor {
     }
 
     public void execute(String email) {
-        if (null == userRepository.findByEmail(email)) {
+        if (null != userRepository.findByEmail(email)) {
             throw new IllegalStateException();
         }
     }
