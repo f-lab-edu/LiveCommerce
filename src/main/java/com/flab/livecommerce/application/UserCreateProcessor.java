@@ -12,8 +12,8 @@ public class UserCreateProcessor {
     private final PasswordEncryptor passwordEncryption;
 
     public UserCreateProcessor(
-        UserRepository userRepository,
-        PasswordEncryptor passwordEncryption
+            UserRepository userRepository,
+            PasswordEncryptor passwordEncryption
     ) {
         this.userRepository = userRepository;
         this.passwordEncryption = passwordEncryption;
