@@ -1,6 +1,5 @@
 package com.flab.livecommerce.infrastructure.config;
 
-import com.flab.livecommerce.application.UserCheckProcessor;
 import com.flab.livecommerce.application.UserCreateProcessor;
 import com.flab.livecommerce.application.UserLoginProcessor;
 import com.flab.livecommerce.domain.user.UserRepository;
@@ -14,12 +13,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class ProcessorConfig {
 
     @Bean
+    private static PasswordEncoder algorithm() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     public UserCreateProcessor userCreateProcessor(
             UserRepository userRepository
     ) {
         return new UserCreateProcessor(
-            userRepository,
-            new SecurityPasswordEncoder(algorithm())
+                userRepository,
+                new SecurityPasswordEncoder(algorithm())
         );
     }
 
@@ -28,20 +32,8 @@ public class ProcessorConfig {
             UserRepository userRepository
     ) {
         return new UserLoginProcessor(
-            userRepository,
-            new SecurityPasswordEncoder(algorithm())
+                userRepository,
+                new SecurityPasswordEncoder(algorithm())
         );
-    }
-
-    @Bean
-    public UserCheckProcessor userCheckProcessor(
-            UserRepository userRepository
-    ) {
-        return new UserCheckProcessor(userRepository);
-    }
-
-    @Bean
-    private static PasswordEncoder algorithm() {
-        return new BCryptPasswordEncoder();
     }
 }

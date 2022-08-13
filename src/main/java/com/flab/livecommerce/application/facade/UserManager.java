@@ -1,10 +1,10 @@
 package com.flab.livecommerce.application.facade;
 
-import com.flab.livecommerce.application.UserCheckProcessor;
 import com.flab.livecommerce.application.UserCreateProcessor;
 import com.flab.livecommerce.application.UserCreateProcessor.UserCreateCommand;
 import com.flab.livecommerce.application.UserLoginProcessor;
 import com.flab.livecommerce.application.UserLoginProcessor.LoginCommand;
+import com.flab.livecommerce.domain.user.UserRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,16 +12,16 @@ public class UserManager {
 
     private final UserCreateProcessor userCreateProcessor;
     private final UserLoginProcessor userLoginProcessor;
-    private final UserCheckProcessor userCheckProcessor;
+    private final UserRepository userRepository;
 
     public UserManager(
-        UserCreateProcessor userCreateProcessor,
-        UserLoginProcessor userLoginProcessor,
-        UserCheckProcessor userCheckProcessor
+            UserCreateProcessor userCreateProcessor,
+            UserLoginProcessor userLoginProcessor,
+            UserRepository userRepository
     ) {
         this.userCreateProcessor = userCreateProcessor;
         this.userLoginProcessor = userLoginProcessor;
-        this.userCheckProcessor = userCheckProcessor;
+        this.userRepository = userRepository;
     }
 
 
@@ -34,7 +34,9 @@ public class UserManager {
     }
 
     public void checkEmailDuplicated(String email) {
-        userCheckProcessor.execute(email);
+        if (null != userRepository.findByEmail(email)) {
+            throw new IllegalStateException();
+        }
     }
 
 }
