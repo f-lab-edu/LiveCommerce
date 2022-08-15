@@ -1,6 +1,8 @@
 package com.flab.livecommerce.presentation;
 
 import com.flab.livecommerce.application.facade.UserManager;
+import com.flab.livecommerce.application.facade.UserTokenManager;
+import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.presentation.dto.InputEmail;
 import com.flab.livecommerce.presentation.request.UserCreateRequest;
 import com.flab.livecommerce.presentation.request.UserLoginRequest;
@@ -18,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserManager userManager;
+    private final UserTokenManager userTokenManager;
 
-    public UserController(UserManager userManager) {
+    public UserController(UserManager userManager, UserTokenManager userTokenManager) {
         this.userManager = userManager;
+        this.userTokenManager = userTokenManager;
     }
 
     @PostMapping("/email/exists")
@@ -37,7 +41,8 @@ public class UserController {
 
     @PostMapping("/login")
     public ApiResponse login(@RequestBody @Valid UserLoginRequest request) {
-        String token = userManager.login(request.toCommand());
+        User loginUserInfo = userManager.login(request.toCommand());
+        String token = userTokenManager.save(loginUserInfo);
         return ApiResponse.success(token);
     }
 }

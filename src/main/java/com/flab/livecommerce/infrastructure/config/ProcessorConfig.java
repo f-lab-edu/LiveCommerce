@@ -2,6 +2,7 @@ package com.flab.livecommerce.infrastructure.config;
 
 import com.flab.livecommerce.application.UserCreateProcessor;
 import com.flab.livecommerce.application.UserLoginProcessor;
+import com.flab.livecommerce.application.facade.UserTokenManager;
 import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.domain.user.UserRepository;
 import com.flab.livecommerce.infrastructure.encryption.SecurityPasswordEncoder;
@@ -21,7 +22,7 @@ public class ProcessorConfig {
 
     @Bean
     public UserCreateProcessor userCreateProcessor(
-            UserRepository userRepository
+        UserRepository userRepository
     ) {
         return new UserCreateProcessor(
             userRepository,
@@ -31,14 +32,19 @@ public class ProcessorConfig {
 
     @Bean
     public UserLoginProcessor userLoginProcessor(
-        UserRepository userRepository,
-        TokenRepository tokenRepository
+        UserRepository userRepository
     ) {
         return new UserLoginProcessor(
             userRepository,
-            new SecurityPasswordEncoder(algorithm()),
-            new NonInfoTokenGenerator(),
-            tokenRepository
+            new SecurityPasswordEncoder(algorithm())
+        );
+    }
+
+    @Bean
+    public UserTokenManager userTokenManager(TokenRepository tokenRepository) {
+        return new UserTokenManager(
+            tokenRepository,
+            new NonInfoTokenGenerator()
         );
     }
 }

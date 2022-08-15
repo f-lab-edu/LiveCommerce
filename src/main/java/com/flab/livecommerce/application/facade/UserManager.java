@@ -4,6 +4,7 @@ import com.flab.livecommerce.application.UserCreateProcessor;
 import com.flab.livecommerce.application.UserCreateProcessor.UserCreateCommand;
 import com.flab.livecommerce.application.UserLoginProcessor;
 import com.flab.livecommerce.application.UserLoginProcessor.LoginCommand;
+import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,9 @@ public class UserManager {
     private final UserRepository userRepository;
 
     public UserManager(
-            UserCreateProcessor userCreateProcessor,
-            UserLoginProcessor userLoginProcessor,
-            UserRepository userRepository
+        UserCreateProcessor userCreateProcessor,
+        UserLoginProcessor userLoginProcessor,
+        UserRepository userRepository
     ) {
         this.userCreateProcessor = userCreateProcessor;
         this.userLoginProcessor = userLoginProcessor;
@@ -29,7 +30,7 @@ public class UserManager {
         userCreateProcessor.execute(command);
     }
 
-    public String login(LoginCommand command) {
+    public User login(LoginCommand command) {
         return userLoginProcessor.execute(command);
     }
 
