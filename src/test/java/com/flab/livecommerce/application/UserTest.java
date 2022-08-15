@@ -63,7 +63,7 @@ class UserTest {
     @Test
     void userLoginProcessor() {
         //given
-        UserLoginProcessor processor = new UserLoginProcessor(userRepository, encoder, tokenGenerator, tokenRepository);
+        UserLoginProcessor processor = new UserLoginProcessor(userRepository, encoder);
         String id = "sadasd@naver.com";
         String password = "test1234";
         String nickname = "asd";
