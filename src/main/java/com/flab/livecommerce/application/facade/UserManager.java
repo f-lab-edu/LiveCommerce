@@ -29,8 +29,8 @@ public class UserManager {
         userCreateProcessor.execute(command);
     }
 
-    public void login(LoginCommand command) {
-        userLoginProcessor.execute(command);
+    public String login(LoginCommand command) {
+        return userLoginProcessor.execute(command);
     }
 
     public void checkEmailDuplicated(String email) {

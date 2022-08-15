@@ -38,7 +38,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ApiResponse login(@RequestBody @Valid UserLoginRequest request) {
-        userManager.login(request.toCommand());
-        return ApiResponse.success(null);
+        String token = userManager.login(request.toCommand());
+        return ApiResponse.success(token);
     }
 }
