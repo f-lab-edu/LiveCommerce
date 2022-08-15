@@ -5,10 +5,15 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import com.flab.livecommerce.application.UserCreateProcessor.UserCreateCommand;
 import com.flab.livecommerce.application.UserLoginProcessor.LoginCommand;
 import com.flab.livecommerce.domain.user.PasswordEncryptor;
+import com.flab.livecommerce.domain.user.TokenGenerator;
+import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.UserRepository;
+import com.flab.livecommerce.infrastructure.TokenRepositoryAdapter;
 import com.flab.livecommerce.infrastructure.UserRepositoryAdapter;
 import com.flab.livecommerce.infrastructure.encryption.SecurityPasswordEncoder;
+import com.flab.livecommerce.infrastructure.generator.NonInfoTokenGenerator;
+import com.flab.livecommerce.infrastructure.persistence.inmemory.InMemoryTokenRepository;
 import com.flab.livecommerce.infrastructure.persistence.inmemory.InMemoryUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +23,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 class UserTest {
 
     UserRepository userRepository;
+    TokenRepository tokenRepository;
     PasswordEncryptor encoder;
+    TokenGenerator tokenGenerator;
     User user;
 
     @BeforeEach
@@ -30,6 +37,8 @@ class UserTest {
             "test1234",
             "test"
         );
+        tokenGenerator = new NonInfoTokenGenerator();
+        tokenRepository = new TokenRepositoryAdapter(new InMemoryTokenRepository());
     }
 
     @Test
@@ -54,7 +63,7 @@ class UserTest {
     @Test
     void userLoginProcessor() {
         //given
-        UserLoginProcessor processor = new UserLoginProcessor(userRepository, encoder);
+        UserLoginProcessor processor = new UserLoginProcessor(userRepository, encoder, tokenGenerator, tokenRepository);
         String id = "sadasd@naver.com";
         String password = "test1234";
         String nickname = "asd";
