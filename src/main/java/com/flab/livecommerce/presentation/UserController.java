@@ -1,13 +1,12 @@
 package com.flab.livecommerce.presentation;
 
 import com.flab.livecommerce.application.facade.UserManager;
+import com.flab.livecommerce.presentation.dto.InputEmail;
 import com.flab.livecommerce.presentation.request.UserCreateRequest;
 import com.flab.livecommerce.presentation.request.UserLoginRequest;
 import com.flab.livecommerce.presentation.shared.ApiResponse;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +23,9 @@ public class UserController {
         this.userManager = userManager;
     }
 
-    @GetMapping("/email/{email}/exists")
-    public ApiResponse checkEmail(@PathVariable String email) {
-        userManager.checkEmailDuplicated(email);
+    @PostMapping("/email/exists")
+    public ApiResponse checkEmail(@RequestBody @Valid InputEmail email) {
+        userManager.checkEmailDuplicated(email.getEmail());
         return ApiResponse.success(null);
     }
 
