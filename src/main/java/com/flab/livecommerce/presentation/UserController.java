@@ -3,8 +3,8 @@ package com.flab.livecommerce.presentation;
 import com.flab.livecommerce.application.facade.UserManager;
 import com.flab.livecommerce.application.facade.UserTokenManager;
 import com.flab.livecommerce.domain.user.User;
-import com.flab.livecommerce.presentation.dto.InputEmail;
 import com.flab.livecommerce.presentation.request.UserCreateRequest;
+import com.flab.livecommerce.presentation.request.UserEmailRequest;
 import com.flab.livecommerce.presentation.request.UserLoginRequest;
 import com.flab.livecommerce.presentation.shared.ApiResponse;
 import javax.validation.Valid;
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping("/email/exists")
-    public ApiResponse checkEmail(@RequestBody @Valid InputEmail email) {
+    public ApiResponse checkEmail(@RequestBody @Valid UserEmailRequest email) {
         userManager.checkEmailDuplicated(email.getEmail());
         return ApiResponse.success(null);
     }
