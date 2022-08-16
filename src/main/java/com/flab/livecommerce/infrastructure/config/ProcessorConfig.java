@@ -3,6 +3,7 @@ package com.flab.livecommerce.infrastructure.config;
 import com.flab.livecommerce.application.UserCreateProcessor;
 import com.flab.livecommerce.application.UserLoginProcessor;
 import com.flab.livecommerce.application.facade.UserTokenManager;
+import com.flab.livecommerce.domain.user.TokenGenerator;
 import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.domain.user.UserRepository;
 import com.flab.livecommerce.infrastructure.encryption.SecurityPasswordEncoder;
@@ -14,11 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ProcessorConfig {
-
-    @Bean
-    private static PasswordEncoder algorithm() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public UserCreateProcessor userCreateProcessor(
@@ -41,10 +37,13 @@ public class ProcessorConfig {
     }
 
     @Bean
-    public UserTokenManager userTokenManager(TokenRepository tokenRepository) {
-        return new UserTokenManager(
-            tokenRepository,
-            new NonInfoTokenGenerator()
-        );
+    public TokenGenerator tokenGenerator() {
+        //TODO 추후 processor 클래스 생기면 해당 bean 삭제
+        return new NonInfoTokenGenerator();
+    }
+
+    @Bean
+    private static PasswordEncoder algorithm() {
+        return new BCryptPasswordEncoder();
     }
 }

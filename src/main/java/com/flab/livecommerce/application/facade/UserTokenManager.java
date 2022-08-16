@@ -3,7 +3,9 @@ package com.flab.livecommerce.application.facade;
 import com.flab.livecommerce.domain.user.TokenGenerator;
 import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.domain.user.User;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserTokenManager {
 
     private final TokenRepository tokenRepository;
