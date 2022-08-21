@@ -18,4 +18,9 @@ public class TokenRepositoryAdapter implements TokenRepository {
     public void save(String token, User user) {
         inMemoryTokenRepository.save(token, user);
     }
+
+    @Override
+    public User findByToken(String token) {
+        return inMemoryTokenRepository.findByToken(token);
+    }
 }
