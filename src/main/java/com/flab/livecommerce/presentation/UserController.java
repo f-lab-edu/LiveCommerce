@@ -6,7 +6,7 @@ import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.presentation.request.UserCreateRequest;
 import com.flab.livecommerce.presentation.request.UserEmailRequest;
 import com.flab.livecommerce.presentation.request.UserLoginRequest;
-import com.flab.livecommerce.presentation.shared.ApiResponse;
+import com.flab.livecommerce.shared.ApiResponse;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -2,9 +2,7 @@ package com.flab.livecommerce.infrastructure.config;
 
 import com.flab.livecommerce.application.UserCreateProcessor;
 import com.flab.livecommerce.application.UserLoginProcessor;
-import com.flab.livecommerce.application.facade.UserTokenManager;
 import com.flab.livecommerce.domain.user.TokenGenerator;
-import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.domain.user.UserRepository;
 import com.flab.livecommerce.infrastructure.encryption.SecurityPasswordEncoder;
 import com.flab.livecommerce.infrastructure.generator.NonInfoTokenGenerator;
