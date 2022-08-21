@@ -1,4 +1,4 @@
-package com.flab.livecommerce.presentation.shared;
+package com.flab.livecommerce.shared;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
