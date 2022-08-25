@@ -13,7 +13,7 @@ import org.springframework.util.PatternMatchUtils;
 
 public class LoginCheckFilter implements Filter {
 
-    private static final String[] whitelist = {"/", "/user", "/user/login", "/css/*"};
+    private static final String[] denylist = {"/", "/user", "/user/login"};
 
     private final TokenRepository tokenRepository;
 
@@ -54,6 +54,6 @@ public class LoginCheckFilter implements Filter {
     }
 
     private boolean isLoginCheckPath(String requestUri) {
-        return !PatternMatchUtils.simpleMatch(whitelist, requestUri);
+        return !PatternMatchUtils.simpleMatch(denylist, requestUri);
     }
 }
