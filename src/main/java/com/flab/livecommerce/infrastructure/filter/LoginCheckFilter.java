@@ -9,11 +9,13 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.PatternMatchUtils;
 
+@Slf4j
 public class LoginCheckFilter implements Filter {
 
-    private static final String[] denylist = {"/", "/user", "/user/login"};
+    private static final String[] allowList = {"/", "/user", "/user/login"};
 
     private final TokenRepository tokenRepository;
 
@@ -31,7 +33,7 @@ public class LoginCheckFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        if (!isLoginCheckPath(httpRequest.getRequestURI())) {
+        if (isLoginExceptedPath(httpRequest.getRequestURI())) {
             chain.doFilter(request, response);
             return;
         }
@@ -53,7 +55,7 @@ public class LoginCheckFilter implements Filter {
         chain.doFilter(request, response);
     }
 
-    private boolean isLoginCheckPath(String requestUri) {
-        return !PatternMatchUtils.simpleMatch(denylist, requestUri);
+    private boolean isLoginExceptedPath(String requestUri) {
+        return PatternMatchUtils.simpleMatch(allowList, requestUri);
     }
 }
