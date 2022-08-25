@@ -13,4 +13,9 @@ public class InMemoryTokenRepository {
     public void save(String token, User user) {
         tokenMap.put(token, user);
     }
+
+    public User findByToken(String token) {
+
+        return tokenMap.get(token);
+    }
 }
