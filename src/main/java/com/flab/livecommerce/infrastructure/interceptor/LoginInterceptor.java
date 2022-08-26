@@ -6,10 +6,12 @@ import com.flab.livecommerce.infrastructure.annotation.LoginCheck;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 
+@Component
 public class LoginInterceptor implements HandlerInterceptor {
 
     private final UserTokenManager userTokenManager;

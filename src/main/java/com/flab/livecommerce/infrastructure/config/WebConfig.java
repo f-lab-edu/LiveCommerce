@@ -1,12 +1,10 @@
 package com.flab.livecommerce.infrastructure.config;
 
-import com.flab.livecommerce.application.facade.UserTokenManager;
 import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.infrastructure.filter.LoginCheckFilter;
 import com.flab.livecommerce.infrastructure.interceptor.LoginInterceptor;
 import javax.servlet.Filter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -21,13 +19,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     public WebConfig(LoginInterceptor loginInterceptor) {
         this.loginInterceptor = loginInterceptor;
-    }
-
-    @Bean
-    public LoginInterceptor loginInterceptor(
-        UserTokenManager userTokenManager
-    ) {
-        return new LoginInterceptor(userTokenManager);
     }
 
     @Override
