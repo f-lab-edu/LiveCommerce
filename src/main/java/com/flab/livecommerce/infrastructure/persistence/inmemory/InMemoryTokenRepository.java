@@ -15,7 +15,6 @@ public class InMemoryTokenRepository {
     }
 
     public User findByToken(String token) {
-
         return tokenMap.get(token);
     }
 }
