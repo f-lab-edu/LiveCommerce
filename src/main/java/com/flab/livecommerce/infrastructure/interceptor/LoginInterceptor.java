@@ -1,6 +1,7 @@
 package com.flab.livecommerce.infrastructure.interceptor;
 
 import com.flab.livecommerce.application.facade.UserTokenManager;
+import com.flab.livecommerce.domain.exception.user.UnauthenticatedUserException;
 import com.flab.livecommerce.infrastructure.annotation.LoginCheck;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,12 +35,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 
             String tokenHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-            if (hasNoAuthToken(tokenHeader)) {
-                throw new IllegalStateException();
-            }
-
-            if (hasNoLoginInfo(tokenHeader)) {
-                throw new IllegalStateException();
+            if (hasNoAuthToken(tokenHeader) || hasNoLoginInfo(tokenHeader)) {
+                throw new UnauthenticatedUserException();
             }
         }
         return true;
