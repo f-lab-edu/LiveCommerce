@@ -29,4 +29,8 @@ public class UserTokenManager {
         return tokenRepository.findByToken(token);
     }
 
+    public void delete(String authorization) {
+        String token = authorization.split(" ")[1];
+        tokenRepository.remove(token);
+    }
 }

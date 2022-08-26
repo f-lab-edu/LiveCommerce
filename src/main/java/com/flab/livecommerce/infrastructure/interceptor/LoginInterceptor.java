@@ -43,7 +43,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     }
 
     private boolean hasNoLoginInfo(String tokenHeader) {
-        String token = tokenHeader.replace("Bearer ", "");
+        String token = tokenHeader.split(" ")[1];
         return null == userTokenManager.getLoginUserInfo(token);
     }
 

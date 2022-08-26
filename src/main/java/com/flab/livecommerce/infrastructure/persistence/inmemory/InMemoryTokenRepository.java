@@ -17,4 +17,8 @@ public class InMemoryTokenRepository {
     public User findByToken(String token) {
         return tokenMap.get(token);
     }
+
+    public void remove(String token) {
+        tokenMap.remove(token);
+    }
 }
