@@ -1,8 +1,8 @@
-package com.flab.livecommerce.infrastructure.interceptor;
+package com.flab.livecommerce.infrastructure.user.interceptor;
 
-import com.flab.livecommerce.application.facade.UserTokenManager;
-import com.flab.livecommerce.domain.exception.user.UnauthorizedUserException;
-import com.flab.livecommerce.infrastructure.annotation.LoginCheck;
+import com.flab.livecommerce.application.user.facade.UserTokenManager;
+import com.flab.livecommerce.domain.user.exception.UnauthorizedUserException;
+import com.flab.livecommerce.infrastructure.user.annotation.LoginCheck;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
@@ -36,7 +36,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             String tokenHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
             if (hasNoLoginInfo(tokenHeader)) {
-                throw new UnauthorizedUserException();
+                throw new UnauthorizedUserException("유효하지 않은 토큰입니다.");
             }
         }
 

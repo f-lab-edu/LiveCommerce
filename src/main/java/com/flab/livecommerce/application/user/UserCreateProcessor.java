@@ -1,8 +1,9 @@
-package com.flab.livecommerce.application;
+package com.flab.livecommerce.application.user;
 
 import com.flab.livecommerce.domain.user.PasswordEncryptor;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.UserRepository;
+import com.flab.livecommerce.domain.user.exception.DuplicatedEmailException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -21,10 +22,10 @@ public class UserCreateProcessor {
 
     public void execute(UserCreateCommand command) {
 
-        User existUser = userRepository.findByEmail(command.getEmail());
+        User user = userRepository.findByEmail(command.getEmail());
 
-        if (null != existUser) {
-            throw new IllegalStateException();
+        if (null != user) {
+            throw new DuplicatedEmailException("이미 존재하는 회원입니다.");
         }
 
         userRepository.save(
