@@ -35,19 +35,16 @@ public class LoginInterceptor implements HandlerInterceptor {
 
             String tokenHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-            if (hasNoAuthToken(tokenHeader) || hasNoLoginInfo(tokenHeader)) {
+            if (hasNoLoginInfo(tokenHeader)) {
                 throw new UnauthorizedUserException();
             }
         }
+
         return true;
     }
 
     private boolean hasNoLoginInfo(String tokenHeader) {
-        String token = tokenHeader.split(" ")[1];
-        return null == userTokenManager.getLoginUserInfo(token);
+        return null == userTokenManager.getLoginUserInfo(tokenHeader.replace("Bearer ", ""));
     }
 
-    private boolean hasNoAuthToken(String tokenHeader) {
-        return null == tokenHeader || !tokenHeader.startsWith("Bearer");
-    }
 }
