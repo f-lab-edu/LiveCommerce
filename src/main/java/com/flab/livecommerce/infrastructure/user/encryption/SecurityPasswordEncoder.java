@@ -1,4 +1,4 @@
-package com.flab.livecommerce.infrastructure.encryption;
+package com.flab.livecommerce.infrastructure.user.encryption;
 
 import com.flab.livecommerce.domain.user.PasswordEncryptor;
 import org.springframework.security.crypto.password.PasswordEncoder;

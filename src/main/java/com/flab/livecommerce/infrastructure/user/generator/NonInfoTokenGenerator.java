@@ -1,4 +1,4 @@
-package com.flab.livecommerce.infrastructure.generator;
+package com.flab.livecommerce.infrastructure.user.generator;
 
 import com.flab.livecommerce.domain.user.TokenGenerator;
 import java.util.UUID;

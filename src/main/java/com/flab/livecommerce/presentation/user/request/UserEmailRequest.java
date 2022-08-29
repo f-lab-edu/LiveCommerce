@@ -1,4 +1,4 @@
-package com.flab.livecommerce.presentation.request;
+package com.flab.livecommerce.presentation.user.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

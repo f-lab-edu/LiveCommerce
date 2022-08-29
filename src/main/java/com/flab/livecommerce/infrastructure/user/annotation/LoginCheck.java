@@ -1,4 +1,4 @@
-package com.flab.livecommerce.infrastructure.annotation;
+package com.flab.livecommerce.infrastructure.user.annotation;
 
 
 import java.lang.annotation.ElementType;

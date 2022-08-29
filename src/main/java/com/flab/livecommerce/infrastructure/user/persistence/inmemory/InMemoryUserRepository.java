@@ -1,4 +1,4 @@
-package com.flab.livecommerce.infrastructure.persistence.inmemory;
+package com.flab.livecommerce.infrastructure.user.persistence.inmemory;
 
 
 import com.flab.livecommerce.domain.user.User;

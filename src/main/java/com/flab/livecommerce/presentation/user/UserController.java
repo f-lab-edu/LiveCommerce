@@ -1,13 +1,13 @@
-package com.flab.livecommerce.presentation;
+package com.flab.livecommerce.presentation.user;
 
-import com.flab.livecommerce.application.facade.UserManager;
-import com.flab.livecommerce.application.facade.UserTokenManager;
+import com.flab.livecommerce.application.user.facade.UserManager;
+import com.flab.livecommerce.application.user.facade.UserTokenManager;
+import com.flab.livecommerce.common.ApiResponse;
 import com.flab.livecommerce.domain.user.User;
-import com.flab.livecommerce.infrastructure.annotation.LoginCheck;
-import com.flab.livecommerce.presentation.request.UserCreateRequest;
-import com.flab.livecommerce.presentation.request.UserEmailRequest;
-import com.flab.livecommerce.presentation.request.UserLoginRequest;
-import com.flab.livecommerce.shared.ApiResponse;
+import com.flab.livecommerce.infrastructure.user.annotation.LoginCheck;
+import com.flab.livecommerce.presentation.user.request.UserCreateRequest;
+import com.flab.livecommerce.presentation.user.request.UserEmailRequest;
+import com.flab.livecommerce.presentation.user.request.UserLoginRequest;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;

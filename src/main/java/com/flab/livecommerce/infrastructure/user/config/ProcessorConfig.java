@@ -1,11 +1,11 @@
-package com.flab.livecommerce.infrastructure.config;
+package com.flab.livecommerce.infrastructure.user.config;
 
-import com.flab.livecommerce.application.UserCreateProcessor;
-import com.flab.livecommerce.application.UserLoginProcessor;
+import com.flab.livecommerce.application.user.UserCreateProcessor;
+import com.flab.livecommerce.application.user.UserLoginProcessor;
 import com.flab.livecommerce.domain.user.TokenGenerator;
 import com.flab.livecommerce.domain.user.UserRepository;
-import com.flab.livecommerce.infrastructure.encryption.SecurityPasswordEncoder;
-import com.flab.livecommerce.infrastructure.generator.NonInfoTokenGenerator;
+import com.flab.livecommerce.infrastructure.user.encryption.SecurityPasswordEncoder;
+import com.flab.livecommerce.infrastructure.user.generator.NonInfoTokenGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

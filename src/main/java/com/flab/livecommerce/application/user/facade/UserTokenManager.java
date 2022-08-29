@@ -1,4 +1,4 @@
-package com.flab.livecommerce.application.facade;
+package com.flab.livecommerce.application.user.facade;
 
 import com.flab.livecommerce.domain.user.TokenGenerator;
 import com.flab.livecommerce.domain.user.TokenRepository;

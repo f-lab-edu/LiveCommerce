@@ -1,9 +1,9 @@
-package com.flab.livecommerce.infrastructure.config;
+package com.flab.livecommerce.infrastructure.user.config;
 
-import com.flab.livecommerce.application.facade.UserTokenManager;
+import com.flab.livecommerce.application.user.facade.UserTokenManager;
 import com.flab.livecommerce.domain.user.TokenRepository;
-import com.flab.livecommerce.infrastructure.filter.LoginCheckFilter;
-import com.flab.livecommerce.infrastructure.interceptor.LoginInterceptor;
+import com.flab.livecommerce.infrastructure.user.filter.LoginCheckFilter;
+import com.flab.livecommerce.infrastructure.user.interceptor.LoginInterceptor;
 import javax.servlet.Filter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Configuration;

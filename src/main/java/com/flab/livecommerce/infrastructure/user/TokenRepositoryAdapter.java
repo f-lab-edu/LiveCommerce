@@ -1,8 +1,8 @@
-package com.flab.livecommerce.infrastructure;
+package com.flab.livecommerce.infrastructure.user;
 
 import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.domain.user.User;
-import com.flab.livecommerce.infrastructure.persistence.inmemory.InMemoryTokenRepository;
+import com.flab.livecommerce.infrastructure.user.persistence.inmemory.InMemoryTokenRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
