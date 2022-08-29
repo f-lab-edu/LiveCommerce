@@ -8,8 +8,13 @@ services:
       - ./db/data:/var/lib/mysql:rw
     ports:
       - 3306:3306
-    environment:
-      MYSQL_DATABASE: "${MYSQL_DATABASE}"
-      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-      MYSQL_USER: "${MYSQL_USER}"
-      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+    env_file:
+      - env/mysql.env
+  flyway:
+    container_name: livecommerce_flyway
+    image: flyway/flyway
+    command: -url=jdbc:mysql://livecommerce_db:3306/livecommerce?characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false -user=user -password=12345678! -locations=filesystem:/flyway/sql -connectRetries=60 migrate
+    volumes:
+      - $PWD/sql_versions:/flyway/sql
+    depends_on:
+      - db
