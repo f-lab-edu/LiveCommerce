@@ -1,0 +1,16 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://livecommerce_db:3306/livecommerce?characterEncoding=UTF-8 # ?? ?????, db ??
+    username: user
+    password: 12345678!
+
+mybatis:
+  type-aliases-package: com.flab.livecommerce.domain
+  configuration:
+    map-underscore-to-camel-case: true
+
+

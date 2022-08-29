@@ -1,8 +1,11 @@
 version: '3.7'
 services:
   db:
+    container_name: livecommerce_db
     image: mysql:8.0.28
     restart: on-failure
+    volumes:
+      - ./db/data:/var/lib/mysql:rw
     ports:
       - 3306:3306
     environment:
