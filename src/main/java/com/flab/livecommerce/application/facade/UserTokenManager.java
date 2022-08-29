@@ -24,4 +24,12 @@ public class UserTokenManager {
         tokenRepository.save(token, user);
         return token;
     }
+
+    public User getLoginUserInfo(String token) {
+        return tokenRepository.findByToken(token);
+    }
+
+    public void delete(String token) {
+        tokenRepository.remove(token);
+    }
 }

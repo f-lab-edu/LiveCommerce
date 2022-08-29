@@ -1,16 +1,35 @@
 package com.flab.livecommerce.infrastructure.config;
 
+import com.flab.livecommerce.application.facade.UserTokenManager;
 import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.infrastructure.filter.LoginCheckFilter;
+import com.flab.livecommerce.infrastructure.interceptor.LoginInterceptor;
 import javax.servlet.Filter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebConfig {
+public class WebConfig implements WebMvcConfigurer {
 
-    @Bean
+    /*
+     * 로그인 인가 - 스프링 인터셉터 사용
+     */
+    private final UserTokenManager userTokenManager;
+
+    public WebConfig(UserTokenManager userTokenManager) {
+        this.userTokenManager = userTokenManager;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginInterceptor(userTokenManager))
+            .order(1)
+            .excludePathPatterns("/error");
+    }
+
+    //@Bean
     public FilterRegistrationBean logCheckFilter(
         TokenRepository tokenRepository
     ) {

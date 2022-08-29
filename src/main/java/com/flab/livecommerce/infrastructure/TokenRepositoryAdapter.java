@@ -23,4 +23,9 @@ public class TokenRepositoryAdapter implements TokenRepository {
     public User findByToken(String token) {
         return inMemoryTokenRepository.findByToken(token);
     }
+
+    @Override
+    public void remove(String token) {
+        inMemoryTokenRepository.remove(token);
+    }
 }

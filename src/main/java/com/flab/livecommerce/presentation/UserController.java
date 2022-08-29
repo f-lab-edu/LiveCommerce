@@ -3,6 +3,7 @@ package com.flab.livecommerce.presentation;
 import com.flab.livecommerce.application.facade.UserManager;
 import com.flab.livecommerce.application.facade.UserTokenManager;
 import com.flab.livecommerce.domain.user.User;
+import com.flab.livecommerce.infrastructure.annotation.LoginCheck;
 import com.flab.livecommerce.presentation.request.UserCreateRequest;
 import com.flab.livecommerce.presentation.request.UserEmailRequest;
 import com.flab.livecommerce.presentation.request.UserLoginRequest;
@@ -11,6 +12,7 @@ import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,5 +46,12 @@ public class UserController {
         User loginUserInfo = userManager.login(request.toCommand());
         String token = userTokenManager.save(loginUserInfo);
         return ApiResponse.success(token);
+    }
+
+    @LoginCheck
+    @PostMapping("/logout")
+    public ApiResponse logout(@RequestHeader String authorization) {
+        userTokenManager.delete(authorization.replace("Bearer ", ""));
+        return ApiResponse.success(null);
     }
 }
