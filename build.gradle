@@ -43,7 +43,7 @@ dependencies {
 	// MyBatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
 	// flyway
-	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.flywaydb:flyway-mysql'
 }
 
 tasks.named('test') {

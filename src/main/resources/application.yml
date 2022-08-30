@@ -3,12 +3,14 @@ server:
 
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://livecommerce_database:3306/livecommerce?characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false # 도커 컨테이너 db 연결
+    url: jdbc:mysql://localhost:3306/livecommerce?characterEncoding=UTF-8
     username: user
     password: 12345678!
+    driver-class-name: com.mysql.cj.jdbc.Driver
   flyway:
-    baseline-on-migrate: true
+    user: user
+    password: 12345678!
+    url: jdbc:mysql://localhost:3306/livecommerce?characterEncoding=UTF-8
 
 mybatis:
   type-aliases-package: com.flab.livecommerce.domain
