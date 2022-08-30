@@ -42,6 +42,8 @@ dependencies {
 	implementation 'mysql:mysql-connector-java'
 	// MyBatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+	// flyway
+	implementation 'org.flywaydb:flyway-core'
 }
 
 tasks.named('test') {
