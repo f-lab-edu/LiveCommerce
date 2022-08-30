@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://livecommerce_db:3306/livecommerce?characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false # 도커 컨테이너 db 연결
+    url: jdbc:mysql://livecommerce_database:3306/livecommerce?characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false # 도커 컨테이너 db 연결
     username: user
     password: 12345678!
   flyway:
