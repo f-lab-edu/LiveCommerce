@@ -1,6 +1,7 @@
 version: '3.7'
 services:
   db:
+    container_name: livecommerce_database
     image: mysql:8.0.28
     restart: on-failure
     ports:
