@@ -32,7 +32,7 @@ class UserTest {
 
     @BeforeEach
     void before() {
-        userRepository = new UserRepositoryAdapter(new InMemoryUserRepository());
+        userRepository = new UserRepositoryAdapter(new InMemoryUserRepository(), null);
         encoder = new SecurityPasswordEncoder(new BCryptPasswordEncoder());
         user = new User(
             "test@gmail.com",
