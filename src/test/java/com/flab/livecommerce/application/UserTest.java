@@ -24,6 +24,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 class UserTest {
 
+    //todo Adapter 사용하지 않고 테스트 수정해야함, 테스트 책 읽고 수정하기
+
     UserRepository userRepository;
     TokenRepository tokenRepository;
     PasswordEncryptor encoder;
