@@ -20,4 +20,15 @@ public class Product {
     //옵션 그룹
     private List<OptionGroup> optionGroups = new ArrayList<>();
 
+    public Product(
+        String name, String description, int price, int salesPrice,
+        int stockQuantity, List<OptionGroup> optionGroups
+    ) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.salesPrice = salesPrice;
+        this.stockQuantity = stockQuantity;
+        this.optionGroups.addAll(optionGroups);
+    }
 }
