@@ -6,14 +6,14 @@ import com.flab.livecommerce.presentation.product.request.ProductRequest;
 
 public class ProductAddProcessor {
 
-    private final ProductRepository repository;
+    private final ProductRepository productRepository;
 
     public ProductAddProcessor(ProductRepository repository) {
-        this.repository = repository;
+        this.productRepository = repository;
     }
 
     public void execute(ProductRequest requestDto) {
-        repository.save(
+        productRepository.save(
             Product.builder()
                 .name(requestDto.getName())
                 .description(requestDto.getDescription())

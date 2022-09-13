@@ -20,8 +20,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public ApiResponse addProduct(@RequestBody @Valid ProductRequest productRequest) {
-        productManager.addProduct(productRequest);
+    public ApiResponse addProduct(@RequestBody @Valid ProductRequest requestDto) {
+        productManager.checkProductNameDuplicated(requestDto);
+        productManager.checkModelNumDuplicated(requestDto);
+        productManager.addProduct(requestDto);
         return ApiResponse.success(null);
     }
 }
