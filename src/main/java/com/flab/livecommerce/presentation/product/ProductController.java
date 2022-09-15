@@ -1,7 +1,7 @@
 package com.flab.livecommerce.presentation.product;
 
 import com.flab.livecommerce.application.product.facade.ProductManager;
-import com.flab.livecommerce.common.ApiResponse;
+import com.flab.livecommerce.common.response.CommonApiResponse;
 import com.flab.livecommerce.presentation.product.request.ProductRequest;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,10 +20,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public ApiResponse addProduct(@RequestBody @Valid ProductRequest requestDto) {
+    public CommonApiResponse addProduct(@RequestBody @Valid ProductRequest requestDto) {
         productManager.checkProductNameDuplicated(requestDto);
         productManager.checkModelNumDuplicated(requestDto);
         productManager.addProduct(requestDto);
-        return ApiResponse.success(null);
+        return CommonApiResponse.success(null);
     }
 }

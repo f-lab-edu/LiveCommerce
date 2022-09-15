@@ -2,7 +2,7 @@ package com.flab.livecommerce.presentation.user;
 
 import com.flab.livecommerce.application.user.facade.UserManager;
 import com.flab.livecommerce.application.user.facade.UserTokenManager;
-import com.flab.livecommerce.common.ApiResponse;
+import com.flab.livecommerce.common.response.CommonApiResponse;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.infrastructure.user.annotation.LoginCheck;
 import com.flab.livecommerce.presentation.user.request.UserCreateRequest;
@@ -30,28 +30,28 @@ public class UserController {
     }
 
     @PostMapping("/email/exists")
-    public ApiResponse checkEmail(@RequestBody @Valid UserEmailRequest email) {
+    public CommonApiResponse checkEmail(@RequestBody @Valid UserEmailRequest email) {
         userManager.checkEmailDuplicated(email.getEmail());
-        return ApiResponse.success(null);
+        return CommonApiResponse.success(null);
     }
 
     @PostMapping
-    public ApiResponse signUp(@RequestBody @Valid UserCreateRequest request) {
+    public CommonApiResponse signUp(@RequestBody @Valid UserCreateRequest request) {
         userManager.createUser(request.toCommand());
-        return ApiResponse.success(null);
+        return CommonApiResponse.success(null);
     }
 
     @PostMapping("/login")
-    public ApiResponse login(@RequestBody @Valid UserLoginRequest request) {
+    public CommonApiResponse login(@RequestBody @Valid UserLoginRequest request) {
         User loginUserInfo = userManager.login(request.toCommand());
         String token = userTokenManager.save(loginUserInfo);
-        return ApiResponse.success(token);
+        return CommonApiResponse.success(token);
     }
 
     @LoginCheck
     @PostMapping("/logout")
-    public ApiResponse logout(@RequestHeader String authorization) {
+    public CommonApiResponse logout(@RequestHeader String authorization) {
         userTokenManager.delete(authorization.replace("Bearer ", ""));
-        return ApiResponse.success(null);
+        return CommonApiResponse.success(null);
     }
 }

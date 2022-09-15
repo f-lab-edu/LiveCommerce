@@ -1,6 +1,6 @@
 package com.flab.livecommerce.presentation.user.handler;
 
-import com.flab.livecommerce.common.ApiResponse;
+import com.flab.livecommerce.common.response.CommonApiResponse;
 import com.flab.livecommerce.domain.user.exception.DuplicatedEmailException;
 import com.flab.livecommerce.domain.user.exception.InvalidUserException;
 import com.flab.livecommerce.domain.user.exception.PasswordNotMatchedException;
@@ -18,32 +18,32 @@ public class UserExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ApiResponse processValidationError(MethodArgumentNotValidException e) {
+    public CommonApiResponse processValidationError(MethodArgumentNotValidException e) {
 
-        return ApiResponse.fail("", e.getBindingResult().getFieldError().getDefaultMessage());
+        return CommonApiResponse.fail("", e.getBindingResult().getFieldError().getDefaultMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DuplicatedEmailException.class)
-    public ApiResponse duplicatedEmailException(DuplicatedEmailException e) {
-        return ApiResponse.fail("", e.getMessage());
+    public CommonApiResponse duplicatedEmailException(DuplicatedEmailException e) {
+        return CommonApiResponse.fail("", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(PasswordNotMatchedException.class)
-    public ApiResponse passwordNotMatchedException(PasswordNotMatchedException e) {
-        return ApiResponse.fail("", e.getMessage());
+    public CommonApiResponse passwordNotMatchedException(PasswordNotMatchedException e) {
+        return CommonApiResponse.fail("", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidUserException.class)
-    public ApiResponse invalidUserException(InvalidUserException e) {
-        return ApiResponse.fail("", e.getMessage());
+    public CommonApiResponse invalidUserException(InvalidUserException e) {
+        return CommonApiResponse.fail("", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(UnauthorizedUserException.class)
-    public ApiResponse unauthorizedUserException(UnauthorizedUserException e) {
-        return ApiResponse.fail("", e.getMessage());
+    public CommonApiResponse unauthorizedUserException(UnauthorizedUserException e) {
+        return CommonApiResponse.fail("", e.getMessage());
     }
 }
