@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@RequestMapping("/user")
+@RequestMapping("/api/v1/user")
 @RestController
 public class UserController {
 
@@ -29,11 +29,6 @@ public class UserController {
         this.userTokenManager = userTokenManager;
     }
 
-    @PostMapping("/email/exists")
-    public CommonApiResponse checkEmail(@RequestBody @Valid UserEmailRequest email) {
-        userManager.checkEmailDuplicated(email.getEmail());
-        return CommonApiResponse.success(null);
-    }
 
     @PostMapping
     public CommonApiResponse signUp(@RequestBody @Valid UserCreateRequest request) {
@@ -52,6 +47,12 @@ public class UserController {
     @PostMapping("/logout")
     public CommonApiResponse logout(@RequestHeader String authorization) {
         userTokenManager.delete(authorization.replace("Bearer ", ""));
+        return CommonApiResponse.success(null);
+    }
+
+    @PostMapping("/email/exists")
+    public CommonApiResponse checkEmail(@RequestBody @Valid UserEmailRequest email) {
+        userManager.checkEmailDuplicated(email.getEmail());
         return CommonApiResponse.success(null);
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/products")
+@RequestMapping("/api/v1/products")
 @RestController
 public class ProductController {
 
@@ -20,10 +20,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public CommonApiResponse addProduct(@RequestBody @Valid ProductRequest requestDto) {
-        productManager.checkProductNameDuplicated(requestDto);
-        productManager.checkModelNumDuplicated(requestDto);
-        productManager.addProduct(requestDto);
+    public CommonApiResponse registerProduct(@RequestBody @Valid ProductRequest request) {
+        productManager.checkProductNameDuplicated(request);
+        productManager.checkModelNumDuplicated(request);
+        productManager.register(request);
         return CommonApiResponse.success(null);
     }
 }

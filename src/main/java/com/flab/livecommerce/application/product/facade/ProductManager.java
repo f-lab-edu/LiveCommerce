@@ -21,7 +21,7 @@ public class ProductManager {
         this.productRepository = productRepository;
     }
 
-    public void addProduct(ProductRequest productRequest) {
+    public void register(ProductRequest productRequest) {
         productAddProcessor.execute(productRequest);
     }
 

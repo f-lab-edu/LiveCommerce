@@ -18,8 +18,12 @@ public class OptionGroup {
     private List<Option> options = new ArrayList<>();
 
     public OptionGroup(
-        String name, boolean basic, boolean exclusive, int minimumChoice,
-        int maximumChoice, List<Option> options
+        String name,
+        boolean basic,
+        boolean exclusive,
+        int minimumChoice,
+        int maximumChoice,
+        List<Option> options
     ) {
         this.name = name;
         this.basic = basic;
