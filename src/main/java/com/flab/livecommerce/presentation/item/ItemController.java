@@ -2,7 +2,7 @@ package com.flab.livecommerce.presentation.item;
 
 import com.flab.livecommerce.application.item.facade.ItemManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
-import com.flab.livecommerce.presentation.item.request.ItemRequest;
+import com.flab.livecommerce.presentation.item.request.RegisterItemRequest;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,10 +20,8 @@ public class ItemController {
     }
 
     @PostMapping
-    public CommonApiResponse registerProduct(@RequestBody @Valid ItemRequest request) {
-        itemManager.checkProductNameDuplicated(request);
-        itemManager.checkModelNumDuplicated(request);
-        itemManager.register(request);
+    public CommonApiResponse registerItem(@RequestBody @Valid RegisterItemRequest request) {
+        itemManager.register(request.toCommand());
         return CommonApiResponse.success(null);
     }
 }
