@@ -3,10 +3,11 @@ package com.flab.livecommerce.domain.item;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OptionGroup {
+public class ItemOptionGroup {
 
     private Long id;
     private String name;
+    private Integer ordering;
     //기본 옵션 여부
     private boolean basic;
     //배타 선택 여부
@@ -15,21 +16,26 @@ public class OptionGroup {
     private int minimumChoice;
     //최대 선택 개수
     private int maximumChoice;
-    private List<Option> options = new ArrayList<>();
+    private List<ItemOption> itemOptions = new ArrayList<>();
 
-    public OptionGroup(
+    public ItemOptionGroup(
         String name,
         boolean basic,
         boolean exclusive,
         int minimumChoice,
         int maximumChoice,
-        List<Option> options
+        List<ItemOption> itemOptions
     ) {
         this.name = name;
         this.basic = basic;
         this.exclusive = exclusive;
         this.minimumChoice = minimumChoice;
         this.maximumChoice = maximumChoice;
-        this.options.addAll(options);
+        this.itemOptions.addAll(itemOptions);
+    }
+
+    public ItemOptionGroup addItemOption(ItemOption itemOption) {
+        this.itemOptions.add(itemOption);
+        return this;
     }
 }

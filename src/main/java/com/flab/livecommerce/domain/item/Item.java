@@ -14,22 +14,26 @@ public class Item {
     //상품 설명
     private String description;
     //상품 원가
-    private int price;
+    private Integer price;
     //상품 판매가
-    private int salesPrice;
+    private Integer salesPrice;
     //상품 재고
-    private int stockQuantity;
+    private Integer stockQuantity;
 
     // 모델 번호
     private int modelNumber;
 
     //옵션 그룹
-    private List<OptionGroup> optionGroups = new ArrayList<>();
+    private List<ItemOptionGroup> itemOptionGroups = new ArrayList<>();
 
     @Builder
     public Item(
-        String name, String description, int price, int salesPrice,
-        int stockQuantity, int modelNumber, List<OptionGroup> optionGroups
+        String name,
+        String description,
+        Integer price,
+        Integer salesPrice,
+        Integer stockQuantity,
+        int modelNumber
     ) {
         this.name = name;
         this.description = description;
@@ -37,6 +41,5 @@ public class Item {
         this.salesPrice = salesPrice;
         this.stockQuantity = stockQuantity;
         this.modelNumber = modelNumber;
-        this.optionGroups.addAll(optionGroups);
     }
 }
