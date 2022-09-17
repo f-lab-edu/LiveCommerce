@@ -1,4 +1,4 @@
-package com.flab.livecommerce.domain.product;
+package com.flab.livecommerce.domain.item;
 
 import lombok.Getter;
 

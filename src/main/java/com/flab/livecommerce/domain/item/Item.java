@@ -1,4 +1,4 @@
-package com.flab.livecommerce.domain.product;
+package com.flab.livecommerce.domain.item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import lombok.Getter;
 
 // TODO 타이틀이미지, 상세 이미지 리스트 추가
 @Getter
-public class Product {
+public class Item {
 
     private Long id;
     private String name;
@@ -27,7 +27,7 @@ public class Product {
     private List<OptionGroup> optionGroups = new ArrayList<>();
 
     @Builder
-    public Product(
+    public Item(
         String name, String description, int price, int salesPrice,
         int stockQuantity, int modelNumber, List<OptionGroup> optionGroups
     ) {

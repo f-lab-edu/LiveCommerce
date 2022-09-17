@@ -1,6 +1,6 @@
-package com.flab.livecommerce.presentation.product.request;
+package com.flab.livecommerce.presentation.item.request;
 
-import com.flab.livecommerce.domain.product.OptionGroup;
+import com.flab.livecommerce.domain.item.OptionGroup;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.Range;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductRequest {
+public class ItemRequest {
 
     @NotBlank(message = "상품명을 작성하세요.")
     private String name;

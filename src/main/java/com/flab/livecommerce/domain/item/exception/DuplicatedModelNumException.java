@@ -1,4 +1,4 @@
-package com.flab.livecommerce.domain.product.exception;
+package com.flab.livecommerce.domain.item.exception;
 
 public class DuplicatedModelNumException extends RuntimeException {
 
