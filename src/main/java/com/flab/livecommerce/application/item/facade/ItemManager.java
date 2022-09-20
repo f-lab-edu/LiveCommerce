@@ -23,6 +23,8 @@ public class ItemManager {
     }
 
     public Item register(RegisterCommand command) {
+        checkProductNameDuplicated(command);
+        checkModelNumDuplicated(command);
         return registerItemProcessor.execute(command);
     }
 
