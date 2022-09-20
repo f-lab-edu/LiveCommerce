@@ -34,7 +34,8 @@ public class MysqlUserRepository {
             .addValue("password", user.getPassword())
             .addValue("nickname", user.getNickname());
 
-        user.setId(jdbcInsert.executeAndReturnKey(parameterSource).longValue());
+        Long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
+        user.setId(id);
 
         return user;
     }
