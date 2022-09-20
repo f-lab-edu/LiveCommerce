@@ -13,8 +13,8 @@ public class UserCreateProcessor {
     private final PasswordEncryptor passwordEncryption;
 
     public UserCreateProcessor(
-            UserRepository userRepository,
-            PasswordEncryptor passwordEncryption
+        UserRepository userRepository,
+        PasswordEncryptor passwordEncryption
     ) {
         this.userRepository = userRepository;
         this.passwordEncryption = passwordEncryption;
@@ -22,9 +22,7 @@ public class UserCreateProcessor {
 
     public void execute(UserCreateCommand command) {
 
-        User user = userRepository.findByEmail(command.getEmail());
-
-        if (null != user) {
+        if (null != userRepository.findByEmail(command.getEmail())) {
             throw new DuplicatedEmailException("이미 존재하는 회원입니다.");
         }
 
