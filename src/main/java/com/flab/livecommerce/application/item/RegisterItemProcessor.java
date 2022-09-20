@@ -1,7 +1,9 @@
 package com.flab.livecommerce.application.item;
 
 import com.flab.livecommerce.domain.item.Item;
+import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import com.flab.livecommerce.domain.item.ItemRepository;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -36,5 +38,6 @@ public class RegisterItemProcessor {
         private String description;
         private Integer stockQuantity;
         private int modelNumber;
+        private List<ItemOptionGroup> itemOptionGroup;
     }
 }

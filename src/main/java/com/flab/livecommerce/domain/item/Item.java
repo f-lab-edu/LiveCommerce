@@ -33,7 +33,8 @@ public class Item {
         Integer price,
         Integer salesPrice,
         Integer stockQuantity,
-        int modelNumber
+        int modelNumber,
+        List<ItemOptionGroup> itemOptionGroups
     ) {
         this.name = name;
         this.description = description;
@@ -41,5 +42,6 @@ public class Item {
         this.salesPrice = salesPrice;
         this.stockQuantity = stockQuantity;
         this.modelNumber = modelNumber;
+        this.itemOptionGroups.addAll(itemOptionGroups);
     }
 }

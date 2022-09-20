@@ -20,6 +20,7 @@ public class ItemOptionGroup {
 
     public ItemOptionGroup(
         String name,
+        Integer ordering,
         boolean basic,
         boolean exclusive,
         int minimumChoice,
@@ -27,6 +28,7 @@ public class ItemOptionGroup {
         List<ItemOption> itemOptions
     ) {
         this.name = name;
+        this.ordering = ordering;
         this.basic = basic;
         this.exclusive = exclusive;
         this.minimumChoice = minimumChoice;

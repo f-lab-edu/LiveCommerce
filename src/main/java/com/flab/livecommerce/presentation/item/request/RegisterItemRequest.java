@@ -46,7 +46,8 @@ public class RegisterItemRequest {
             salesPrice,
             description,
             stockQuantity,
-            modelNumber
+            modelNumber,
+            itemOptionGroups
         );
     }
 }
