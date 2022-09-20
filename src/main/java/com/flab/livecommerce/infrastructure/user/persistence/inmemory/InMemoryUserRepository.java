@@ -16,6 +16,7 @@ public class InMemoryUserRepository {
     private static Map<Long, User> userMap = new ConcurrentHashMap<>();
     private static AtomicLong sequence = new AtomicLong();
 
+    //todo 수정해야 할 부분 (외부에서 set 을 사용하여 private 에 접근)
     public User save(User user) {
         user.setId(sequence.incrementAndGet());
         userMap.put(user.getId(), user);
