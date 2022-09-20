@@ -21,23 +21,22 @@ public class MysqlUserRepository {
         this.template = new JdbcTemplate(dataSource);
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
             .withTableName("user") // user 테이블에 삽입
-            .usingGeneratedKeyColumns("id"); // id 컬럼의 값을 key로 반환
+            .usingGeneratedKeyColumns("id"); // id 컬럼의 값을 key 로 반환
     }
 
     public User save(User user) {
-        insertUser(user);
-
-        return user;
+        return insertUser(user);
     }
 
-    private Long insertUser(User user) {
+    private User insertUser(User user) {
         SqlParameterSource parameterSource = new MapSqlParameterSource()
             .addValue("email", user.getEmail())
             .addValue("password", user.getPassword())
             .addValue("nickname", user.getNickname());
 
-        //todo 해당 부분에서 user Id set??
-        return jdbcInsert.executeAndReturnKey(parameterSource).longValue();
+        user.setId(jdbcInsert.executeAndReturnKey(parameterSource).longValue());
+
+        return user;
     }
 
     private void updateUser(User user) {
