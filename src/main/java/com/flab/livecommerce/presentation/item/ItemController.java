@@ -2,6 +2,7 @@ package com.flab.livecommerce.presentation.item;
 
 import com.flab.livecommerce.application.item.facade.ItemManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
+import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.presentation.item.request.RegisterItemRequest;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class ItemController {
 
     @PostMapping
     public CommonApiResponse registerItem(@RequestBody @Valid RegisterItemRequest request) {
-        itemManager.register(request.toCommand());
-        return CommonApiResponse.success(null);
+        Item registeredItem = itemManager.register(request.toCommand());
+        return CommonApiResponse.success(registeredItem);
     }
 }
