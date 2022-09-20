@@ -1,0 +1,12 @@
+### 아이템 등록
+POST http://localhost:8080/api/v1/item
+Content-Type: application/json
+
+{
+  "name": "티셔츠",
+  "price": 30000,
+  "salesPrice": 28000,
+  "description": "샘플 상품 입니다",
+  "stockQuantity": "10",
+  "modelNumber": 123
+}

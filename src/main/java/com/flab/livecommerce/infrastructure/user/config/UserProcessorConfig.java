@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class ProcessorConfig {
+public class UserProcessorConfig {
 
     @Bean
     public UserCreateProcessor userCreateProcessor(
