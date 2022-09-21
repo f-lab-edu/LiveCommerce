@@ -1,9 +1,9 @@
 package com.flab.livecommerce.infrastructure.item.config;
 
 import com.flab.livecommerce.application.item.RegisterItemProcessor;
+import com.flab.livecommerce.domain.item.ItemOptionGroupRepository;
 import com.flab.livecommerce.domain.item.ItemOptionRepository;
 import com.flab.livecommerce.domain.item.ItemRepository;
-import com.flab.livecommerce.domain.item.ItemOptionGroupRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
