@@ -1,7 +1,10 @@
 package com.flab.livecommerce.application.item;
 
 import com.flab.livecommerce.domain.item.Item;
+import com.flab.livecommerce.domain.item.ItemOption;
 import com.flab.livecommerce.domain.item.ItemOptionGroup;
+import com.flab.livecommerce.domain.item.ItemOptionGroupRepository;
+import com.flab.livecommerce.domain.item.ItemOptionRepository;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -10,22 +13,51 @@ import lombok.Getter;
 public class RegisterItemProcessor {
 
     private final ItemRepository itemRepository;
+    private final ItemOptionGroupRepository itemOptionGroupRepository;
+    private final ItemOptionRepository itemOptionRepository;
 
-    public RegisterItemProcessor(ItemRepository repository) {
-        this.itemRepository = repository;
+    public RegisterItemProcessor(
+        ItemRepository itemRepository,
+        ItemOptionGroupRepository itemOptionGroupRepository,
+        ItemOptionRepository itemOptionRepository
+    ) {
+        this.itemRepository = itemRepository;
+        this.itemOptionGroupRepository = itemOptionGroupRepository;
+        this.itemOptionRepository = itemOptionRepository;
     }
 
     public Item execute(RegisterCommand command) {
+        var item = itemRepository.save(command.toEntity());
+        List<ItemOptionGroup> itemOptionGroup1 = command.getItemOptionGroup();
 
-        return itemRepository.save(
-            Item.builder()
-                .name(command.getName())
-                .description(command.getDescription())
-                .price(command.getPrice())
-                .salesPrice(command.getSalesPrice())
-                .stockQuantity(command.getStockQuantity())
-                .modelNumber(command.getModelNumber())
-                .build());
+        command.getItemOptionGroup().forEach(
+            requestItemOptionGroup -> {
+                var optionGroup = ItemOptionGroup.builder()
+                    .item(item)
+                    .ordering(requestItemOptionGroup.getOrdering())
+                    .name(requestItemOptionGroup.getName())
+                    .basic(requestItemOptionGroup.isBasic())
+                    .exclusive(requestItemOptionGroup.isExclusive())
+                    .minimumChoice(requestItemOptionGroup.getMinimumChoice())
+                    .maximumChoice(requestItemOptionGroup.getMaximumChoice())
+                    .build();
+                var itemOptionGroup = itemOptionGroupRepository.save(optionGroup);
+
+                itemOptionGroup.getItemOptions().forEach(
+                    requestItemOption -> {
+                        var option = ItemOption.builder()
+                            .itemOptionGroup(itemOptionGroup)
+                            .name(requestItemOption.getName())
+                            .ordering(requestItemOption.getOrdering())
+                            .price(requestItemOption.getPrice())
+                            .build();
+                        itemOptionRepository.save(option);
+                    }
+                );
+            }
+        );
+
+        return item;
     }
 
     @Getter
@@ -39,5 +71,16 @@ public class RegisterItemProcessor {
         private Integer stockQuantity;
         private int modelNumber;
         private List<ItemOptionGroup> itemOptionGroup;
+
+        public Item toEntity() {
+            return Item.builder()
+                .name(name)
+                .description(description)
+                .price(price)
+                .salesPrice(salesPrice)
+                .stockQuantity(stockQuantity)
+                .modelNumber(modelNumber)
+                .build();
+        }
     }
 }
