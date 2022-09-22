@@ -28,7 +28,6 @@ public class RegisterItemProcessor {
 
     public Item execute(RegisterCommand command) {
         var item = itemRepository.save(command.toEntity());
-        List<ItemOptionGroup> itemOptionGroup1 = command.getItemOptionGroup();
 
         command.getItemOptionGroup().forEach(
             requestItemOptionGroup -> {
