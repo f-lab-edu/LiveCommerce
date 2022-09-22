@@ -1,6 +1,5 @@
 package com.flab.livecommerce.domain.item;
 
-import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -12,6 +11,9 @@ public class ItemOption {
     private String name;
     private Integer ordering;
     private Long price;
+
+    protected ItemOption() {
+    }
 
     @Builder
     public ItemOption(ItemOptionGroup itemOptionGroup, String name, Integer ordering, Long price) {

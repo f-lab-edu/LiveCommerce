@@ -22,6 +22,9 @@ public class ItemOptionGroup {
     private int maximumChoice;
     private List<ItemOption> itemOptions = new ArrayList<>();
 
+    protected ItemOptionGroup() {
+    }
+
     @Builder
     public ItemOptionGroup(
         Item item,
