@@ -7,7 +7,7 @@ import lombok.Getter;
 public class ItemOption {
 
     private Long id;
-    private ItemOptionGroup itemOptionGroup;
+    private Long itemOptionGroupId;
     private String name;
     private Integer ordering;
     private Long price;
@@ -16,8 +16,8 @@ public class ItemOption {
     }
 
     @Builder
-    public ItemOption(ItemOptionGroup itemOptionGroup, String name, Integer ordering, Long price) {
-        this.itemOptionGroup = itemOptionGroup;
+    public ItemOption(Long itemOptionGroupId, String name, Integer ordering, Long price) {
+        this.itemOptionGroupId = itemOptionGroupId;
         this.name = name;
         this.ordering = ordering;
         this.price = price;

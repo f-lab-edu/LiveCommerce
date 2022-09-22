@@ -1,7 +1,7 @@
 package com.flab.livecommerce.application.item.facade;
 
 import com.flab.livecommerce.application.item.RegisterItemProcessor;
-import com.flab.livecommerce.application.item.RegisterItemProcessor.RegisterCommand;
+import com.flab.livecommerce.application.item.RegisterItemProcessor.RegisterItemCommand;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import com.flab.livecommerce.domain.item.exception.DuplicatedItemNameException;
@@ -22,19 +22,19 @@ public class ItemManager {
         this.itemRepository = itemRepository;
     }
 
-    public Item register(RegisterCommand command) {
+    public Item register(RegisterItemCommand command) {
         checkProductNameDuplicated(command);
         checkModelNumDuplicated(command);
         return registerItemProcessor.execute(command);
     }
 
-    public void checkModelNumDuplicated(RegisterCommand command) {
+    public void checkModelNumDuplicated(RegisterItemCommand command) {
         if (null != itemRepository.findByModelNumber(command.getModelNumber())) {
             throw new DuplicatedModelNumException("이미 존재하는 모델 번호입니다.");
         }
     }
 
-    public void checkProductNameDuplicated(RegisterCommand command) {
+    public void checkProductNameDuplicated(RegisterItemCommand command) {
         if (null != itemRepository.findByName(command.getName())) {
             throw new DuplicatedItemNameException("이미 존재하는 상품명입니다.");
         }

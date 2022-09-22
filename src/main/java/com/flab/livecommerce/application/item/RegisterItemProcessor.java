@@ -26,13 +26,13 @@ public class RegisterItemProcessor {
         this.itemOptionRepository = itemOptionRepository;
     }
 
-    public Item execute(RegisterCommand command) {
+    public Item execute(RegisterItemCommand command) {
         var item = itemRepository.save(command.toEntity());
 
         command.getItemOptionGroup().forEach(
             requestItemOptionGroup -> {
                 var optionGroup = ItemOptionGroup.builder()
-                    .item(item)
+                    .itemId(item.getId())
                     .ordering(requestItemOptionGroup.getOrdering())
                     .name(requestItemOptionGroup.getName())
                     .basic(requestItemOptionGroup.isBasic())
@@ -45,7 +45,7 @@ public class RegisterItemProcessor {
                 itemOptionGroup.getItemOptions().forEach(
                     requestItemOption -> {
                         var option = ItemOption.builder()
-                            .itemOptionGroup(itemOptionGroup)
+                            .itemOptionGroupId(itemOptionGroup.getItemId())
                             .name(requestItemOption.getName())
                             .ordering(requestItemOption.getOrdering())
                             .price(requestItemOption.getPrice())
@@ -61,7 +61,7 @@ public class RegisterItemProcessor {
 
     @Getter
     @AllArgsConstructor
-    public static class RegisterCommand {
+    public static class RegisterItemCommand {
 
         private String name;
         private Integer price;

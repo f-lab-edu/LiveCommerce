@@ -1,6 +1,6 @@
 package com.flab.livecommerce.presentation.item.request;
 
-import com.flab.livecommerce.application.item.RegisterItemProcessor.RegisterCommand;
+import com.flab.livecommerce.application.item.RegisterItemProcessor.RegisterItemCommand;
 import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
@@ -39,8 +39,8 @@ public class RegisterItemRequest {
 
     private List<ItemOptionGroup> itemOptionGroups;
 
-    public RegisterCommand toCommand() {
-        return new RegisterCommand(
+    public RegisterItemCommand toCommand() {
+        return new RegisterItemCommand(
             name,
             price,
             salesPrice,

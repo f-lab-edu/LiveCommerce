@@ -9,7 +9,7 @@ import lombok.Getter;
 public class ItemOptionGroup {
 
     private Long id;
-    private Item item;
+    private Long itemId;
     private String name;
     private Integer ordering;
     //기본 옵션 여부
@@ -27,7 +27,7 @@ public class ItemOptionGroup {
 
     @Builder
     public ItemOptionGroup(
-        Item item,
+        Long itemId,
         String name,
         Integer ordering,
         boolean basic,
@@ -35,7 +35,7 @@ public class ItemOptionGroup {
         int minimumChoice,
         int maximumChoice
     ) {
-        this.item = item;
+        this.itemId = itemId;
         this.name = name;
         this.ordering = ordering;
         this.basic = basic;
