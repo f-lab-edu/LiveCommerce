@@ -19,7 +19,6 @@ public class ItemController {
         this.itemManager = itemManager;
     }
 
-    //todo 옵션그룹, 옵션이 JSON 변환 안되는 부분 빠르게 수정 필요
     @PostMapping
     public CommonApiResponse registerItem(@RequestBody @Valid RegisterItemRequest request) {
         itemManager.register(request.toCommand());
