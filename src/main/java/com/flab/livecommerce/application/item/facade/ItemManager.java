@@ -1,7 +1,7 @@
 package com.flab.livecommerce.application.item.facade;
 
 import com.flab.livecommerce.application.item.RegisterItemProcessor;
-import com.flab.livecommerce.application.item.RegisterItemProcessor.RegisterItemCommand;
+import com.flab.livecommerce.application.item.command.RegisterItemCommand;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import com.flab.livecommerce.domain.item.exception.DuplicatedItemNameException;
