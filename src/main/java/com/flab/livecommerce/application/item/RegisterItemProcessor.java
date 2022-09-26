@@ -4,6 +4,7 @@ import com.flab.livecommerce.application.item.command.RegisterItemCommand;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemOptionSeriesService;
 import com.flab.livecommerce.domain.item.ItemRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 public class RegisterItemProcessor {
 
@@ -18,6 +19,7 @@ public class RegisterItemProcessor {
         this.itemOptionSeriesService = itemOptionSeriesService;
     }
 
+    @Transactional
     public Item execute(RegisterItemCommand command) {
         var item = itemRepository.save(command.toEntity());
         itemOptionSeriesService.save(command, item);
