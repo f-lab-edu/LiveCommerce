@@ -18,7 +18,8 @@ public class RegisterItemOptionCommand {
 
     public ItemOption toEntity(ItemOptionGroup itemOptionGroup) {
         return ItemOption.builder()
-            .itemOptionGroupId(itemOptionGroup.getItemId())
+            .itemOptionGroupId(itemOptionGroup.getId())
+            .ordering(ordering)
             .name(name)
             .price(price)
             .build();
