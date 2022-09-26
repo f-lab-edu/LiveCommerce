@@ -48,4 +48,9 @@ public class ItemOptionGroup {
         this.itemOptions.add(itemOption);
         return this;
     }
+
+    public ItemOptionGroup setId(Long id) {
+        this.id = id;
+        return this;
+    }
 }

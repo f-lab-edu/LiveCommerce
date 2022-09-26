@@ -42,4 +42,9 @@ public class Item {
         this.stockQuantity = stockQuantity;
         this.modelNumber = modelNumber;
     }
+
+    public Item setId(Long id) {
+        this.id = id;
+        return this;
+    }
 }

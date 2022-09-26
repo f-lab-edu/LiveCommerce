@@ -22,4 +22,9 @@ public class ItemOption {
         this.ordering = ordering;
         this.price = price;
     }
+
+    public ItemOption setId(Long id) {
+        this.id = id;
+        return this;
+    }
 }
