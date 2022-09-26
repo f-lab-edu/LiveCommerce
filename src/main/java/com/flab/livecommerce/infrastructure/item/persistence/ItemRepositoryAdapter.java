@@ -3,14 +3,15 @@ package com.flab.livecommerce.infrastructure.item.persistence;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import com.flab.livecommerce.infrastructure.item.persistence.inmemory.InMemoryItemRepository;
+import com.flab.livecommerce.infrastructure.item.persistence.mysql.MysqlItemRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ItemRepositoryAdapter implements ItemRepository {
 
-    private final InMemoryItemRepository itemRepository;
+    private final MysqlItemRepository itemRepository;
 
-    public ItemRepositoryAdapter(InMemoryItemRepository itemRepository) {
+    public ItemRepositoryAdapter(MysqlItemRepository itemRepository) {
         this.itemRepository = itemRepository;
     }
 
