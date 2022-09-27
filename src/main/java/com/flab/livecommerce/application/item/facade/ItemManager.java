@@ -33,12 +33,12 @@ public class ItemManager {
         this.itemRepository = itemRepository;
     }
 
-    public Item register(RegisterItemCommand command, MultipartFile thumbnailImg)
+    public void register(RegisterItemCommand command, MultipartFile thumbnailImg)
         throws IOException {
         checkProductNameDuplicated(command);
         checkModelNumDuplicated(command);
         Item item = registerItemProcessor.execute(command);
-        return uploadImageProcessor.execute(item, thumbnailImg);
+        uploadImageProcessor.execute(item, thumbnailImg);
     }
 
     public Item search(Long id) {
