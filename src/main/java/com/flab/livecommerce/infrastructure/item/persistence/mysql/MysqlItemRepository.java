@@ -1,8 +1,11 @@
 package com.flab.livecommerce.infrastructure.item.persistence.mysql;
 
 import com.flab.livecommerce.domain.item.Item;
+import java.util.List;
 import javax.sql.DataSource;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -26,6 +29,13 @@ public class MysqlItemRepository {
         return insertItem(item);
     }
 
+    public Item findById(Long id) {
+        String sql = "select * from item where id = ?";
+        List<Item> items = template.query(sql, itemRowMapper(), id);
+
+        return DataAccessUtils.singleResult(items);
+    }
+
     private Item insertItem(Item item) {
         SqlParameterSource parameterSource = new MapSqlParameterSource()
             .addValue("name", item.getName())
@@ -38,5 +48,19 @@ public class MysqlItemRepository {
         Long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
 
         return item.setId(id);
+    }
+
+    private RowMapper<Item> itemRowMapper() {
+        return (rs, rowNum) -> {
+            Item item = new Item(
+                rs.getString("name"),
+                rs.getString("description"),
+                rs.getInt("price"),
+                rs.getInt("sales_price"),
+                rs.getInt("stock_quantity"),
+                rs.getInt("model_number")
+            );
+            return item.setId(rs.getLong("id"));
+        };
     }
 }

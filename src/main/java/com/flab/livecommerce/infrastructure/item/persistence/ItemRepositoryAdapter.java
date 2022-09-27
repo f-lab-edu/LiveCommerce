@@ -2,7 +2,6 @@ package com.flab.livecommerce.infrastructure.item.persistence;
 
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemRepository;
-import com.flab.livecommerce.infrastructure.item.persistence.inmemory.InMemoryItemRepository;
 import com.flab.livecommerce.infrastructure.item.persistence.mysql.MysqlItemRepository;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +21,7 @@ public class ItemRepositoryAdapter implements ItemRepository {
 
     @Override
     public Item findById(Long id) {
-        return null;
+        return this.itemRepository.findById(id);
     }
 
     @Override
