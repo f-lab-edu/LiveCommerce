@@ -23,8 +23,8 @@ public class JdbcTemplateItemRepository {
 
 
     public Item save(Item item) {
-        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(item);
-        Long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
+        SqlParameterSource param = new BeanPropertySqlParameterSource(item);
+        Long id = jdbcInsert.executeAndReturnKey(param).longValue();
 
         return item.setId(id);
     }

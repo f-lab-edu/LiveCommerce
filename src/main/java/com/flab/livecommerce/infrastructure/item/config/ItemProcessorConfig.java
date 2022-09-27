@@ -2,6 +2,8 @@ package com.flab.livecommerce.infrastructure.item.config;
 
 import com.flab.livecommerce.application.item.RegisterItemProcessor;
 import com.flab.livecommerce.application.item.SearchItemProcessor;
+import com.flab.livecommerce.application.item.UploadImageProcessor;
+import com.flab.livecommerce.domain.item.ItemImageRepository;
 import com.flab.livecommerce.domain.item.ItemOptionGroupRepository;
 import com.flab.livecommerce.domain.item.ItemOptionRepository;
 import com.flab.livecommerce.domain.item.ItemOptionSeriesService;
@@ -22,6 +24,12 @@ public class ItemProcessorConfig {
             itemRepository,
             itemOptionSeriesService
         );
+    }
+    @Bean
+    public UploadImageProcessor uploadImageProcessor(
+        ItemImageRepository itemImageRepository
+    ) {
+        return new UploadImageProcessor(itemImageRepository);
     }
 
     @Bean
