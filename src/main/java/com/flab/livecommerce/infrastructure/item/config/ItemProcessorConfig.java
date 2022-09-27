@@ -25,6 +25,7 @@ public class ItemProcessorConfig {
             itemOptionSeriesService
         );
     }
+
     @Bean
     public UploadImageProcessor uploadImageProcessor(
         ItemImageRepository itemImageRepository
