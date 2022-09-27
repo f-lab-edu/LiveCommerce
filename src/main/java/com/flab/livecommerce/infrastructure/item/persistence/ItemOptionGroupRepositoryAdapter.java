@@ -2,16 +2,16 @@ package com.flab.livecommerce.infrastructure.item.persistence;
 
 import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import com.flab.livecommerce.domain.item.ItemOptionGroupRepository;
-import com.flab.livecommerce.infrastructure.item.persistence.inmemory.InMemoryItemOptionGroupRepository;
-import com.flab.livecommerce.infrastructure.item.persistence.mysql.MysqlItemOptionGroupRepository;
+import com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate.JdbcTemplateItemOptionGroupRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ItemOptionGroupRepositoryAdapter implements ItemOptionGroupRepository {
 
-    private final MysqlItemOptionGroupRepository itemOptionGroupRepository;
+    private final JdbcTemplateItemOptionGroupRepository itemOptionGroupRepository;
 
-    public ItemOptionGroupRepositoryAdapter(MysqlItemOptionGroupRepository itemOptionGroupRepository) {
+    public ItemOptionGroupRepositoryAdapter(
+        JdbcTemplateItemOptionGroupRepository itemOptionGroupRepository) {
         this.itemOptionGroupRepository = itemOptionGroupRepository;
     }
 

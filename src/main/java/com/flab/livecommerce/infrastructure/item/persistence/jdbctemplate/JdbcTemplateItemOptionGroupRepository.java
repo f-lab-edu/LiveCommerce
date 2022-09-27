@@ -1,4 +1,4 @@
-package com.flab.livecommerce.infrastructure.item.persistence.mysql;
+package com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate;
 
 import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import javax.sql.DataSource;
@@ -9,12 +9,12 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MysqlItemOptionGroupRepository {
+public class JdbcTemplateItemOptionGroupRepository {
 
     private JdbcTemplate template;
     private final SimpleJdbcInsert jdbcInsert;
 
-    public MysqlItemOptionGroupRepository(DataSource dataSource) {
+    public JdbcTemplateItemOptionGroupRepository(DataSource dataSource) {
         this.template = new JdbcTemplate(dataSource);
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
             .withTableName("item_option_group")

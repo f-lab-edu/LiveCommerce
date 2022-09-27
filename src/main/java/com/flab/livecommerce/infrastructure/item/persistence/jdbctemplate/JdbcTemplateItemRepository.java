@@ -1,4 +1,4 @@
-package com.flab.livecommerce.infrastructure.item.persistence.mysql;
+package com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate;
 
 import com.flab.livecommerce.domain.item.Item;
 import javax.sql.DataSource;
@@ -9,12 +9,12 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MysqlItemRepository {
+public class JdbcTemplateItemRepository {
 
     private JdbcTemplate template;
     private final SimpleJdbcInsert jdbcInsert;
 
-    public MysqlItemRepository(DataSource dataSource) {
+    public JdbcTemplateItemRepository(DataSource dataSource) {
         this.template = new JdbcTemplate(dataSource);
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
             .withTableName("item") // item 테이블에 삽입

@@ -2,16 +2,15 @@ package com.flab.livecommerce.infrastructure.item.persistence;
 
 import com.flab.livecommerce.domain.item.ItemOption;
 import com.flab.livecommerce.domain.item.ItemOptionRepository;
-import com.flab.livecommerce.infrastructure.item.persistence.inmemory.InMemoryItemOptionRepository;
-import com.flab.livecommerce.infrastructure.item.persistence.mysql.MysqlItemOptionRepository;
+import com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate.JdbcTemplateItemOptionRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ItemOptionRepositoryAdapter implements ItemOptionRepository {
 
-    private final MysqlItemOptionRepository itemOptionRepository;
+    private final JdbcTemplateItemOptionRepository itemOptionRepository;
 
-    public ItemOptionRepositoryAdapter(MysqlItemOptionRepository itemOptionRepository) {
+    public ItemOptionRepositoryAdapter(JdbcTemplateItemOptionRepository itemOptionRepository) {
         this.itemOptionRepository = itemOptionRepository;
     }
 
