@@ -1,6 +1,7 @@
 package com.flab.livecommerce.infrastructure.item.config;
 
 import com.flab.livecommerce.application.item.RegisterItemProcessor;
+import com.flab.livecommerce.application.item.SearchItemProcessor;
 import com.flab.livecommerce.domain.item.ItemOptionGroupRepository;
 import com.flab.livecommerce.domain.item.ItemOptionRepository;
 import com.flab.livecommerce.domain.item.ItemOptionSeriesService;
@@ -21,6 +22,13 @@ public class ItemProcessorConfig {
             itemRepository,
             itemOptionSeriesService
         );
+    }
+
+    @Bean
+    public SearchItemProcessor searchItemProcessor(
+        ItemRepository itemRepository
+    ) {
+        return new SearchItemProcessor(itemRepository);
     }
 
     @Bean
