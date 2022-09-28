@@ -33,13 +33,14 @@ public class UploadImageProcessor {
             throw new RuntimeException(e);
         }
 
-        item.setThumbnailImg(ItemImage.builder()
-            .name(uploadFileName)
-            .url(uploadPath)
-            .itemId(item.getId())
-            .build());
+        //item.setThumbnailImg(ItemImage.builder()
+            //.name(uploadFileName)
+            //.url(uploadPath)
+            //.itemId(item.getId())
+            //.build());
 
-        return item.getThumbnailImg();
+        //return item.getThumbnailImg();
+        return null;
     }
 
     // TODO 경로 변경 필요
