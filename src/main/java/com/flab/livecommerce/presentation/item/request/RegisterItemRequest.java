@@ -33,9 +33,6 @@ public class RegisterItemRequest {
     @Range(min = 1, message = "재고 수량은 1개 이상이어야 합니다.")
     private Integer stockQuantity;
 
-    @NotNull(message = "상품 모델명을 작성하세요.")
-    private int modelNumber;
-
     private List<RegisterItemOptionGroupCommand> itemOptionGroups;
 
     public RegisterItemCommand toCommand() {
@@ -45,7 +42,6 @@ public class RegisterItemRequest {
             salesPrice,
             description,
             stockQuantity,
-            modelNumber,
             itemOptionGroups
         );
     }

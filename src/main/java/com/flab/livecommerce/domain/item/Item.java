@@ -20,14 +20,8 @@ public class Item {
     //상품 재고
     private Integer stockQuantity;
 
-    // 모델 번호
-    private int modelNumber;
-
     //옵션 그룹
     private List<ItemOptionGroup> itemOptionGroups = new ArrayList<>();
-
-    // 썸네일 이미지
-    private ItemImage thumbnailImg;
 
     @Builder
     public Item(
@@ -35,23 +29,17 @@ public class Item {
         String description,
         Integer price,
         Integer salesPrice,
-        Integer stockQuantity,
-        int modelNumber
+        Integer stockQuantity
     ) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.salesPrice = salesPrice;
         this.stockQuantity = stockQuantity;
-        this.modelNumber = modelNumber;
     }
 
     public Item setId(Long id) {
         this.id = id;
         return this;
-    }
-
-    public void setThumbnailImg(ItemImage thumbnailImg) {
-        this.thumbnailImg = thumbnailImg;
     }
 }
