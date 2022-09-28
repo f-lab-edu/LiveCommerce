@@ -27,7 +27,10 @@ public class Item {
     private List<ItemOptionGroup> itemOptionGroups = new ArrayList<>();
 
     // 썸네일 이미지
-    private ItemImage thumbnailImg;
+    private ItemImage thumbnailImages;
+
+    // 상세 이미지
+    private List<ItemImage> specificImages;
 
     @Builder
     public Item(
@@ -51,7 +54,7 @@ public class Item {
         return this;
     }
 
-    public void setThumbnailImg(ItemImage thumbnailImg) {
-        this.thumbnailImg = thumbnailImg;
+    public void setThumbnailImg(ItemImage thumbnailImages) {
+        this.thumbnailImages = thumbnailImages;
     }
 }

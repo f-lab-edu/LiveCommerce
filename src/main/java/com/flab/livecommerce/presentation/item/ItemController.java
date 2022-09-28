@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-@RequestMapping("/api/v1/item")
+@RequestMapping("/api/v1/store/{storeId}/item")
 @RestController
 public class ItemController {
 
@@ -23,7 +23,6 @@ public class ItemController {
         this.itemManager = itemManager;
     }
 
-    // TODO 상세 이미지 리스트
     @PostMapping
     public CommonApiResponse registerItem(
         @RequestBody @Valid RegisterItemRequest request
@@ -32,13 +31,12 @@ public class ItemController {
         return CommonApiResponse.success(null);
     }
 
-    @PostMapping("image")
-    CommonApiResponse registerItemImage(
-        @Valid @RequestPart("itemData") RegisterItemRequest request,
-        @RequestPart("thumbnailUrl") MultipartFile thumbnailImg
+    @PostMapping("/{itemId}/image")
+    public CommonApiResponse uploadItemImage(
+        @RequestPart("thumbnailImg") MultipartFile thumbnailImage,
+        @RequestPart(value = "specificImg", required = false) MultipartFile[] specificImages
     ) {
-        //todo item 등록과 분리
-        //itemManager.register(request.toCommand(), thumbnailImg);
+        itemManager.uploadItemImage(thumbnailImage, specificImages);
         return CommonApiResponse.success(null);
     }
 

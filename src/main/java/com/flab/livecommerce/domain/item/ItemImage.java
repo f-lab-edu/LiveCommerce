@@ -10,9 +10,11 @@ public class ItemImage {
 
     private String name;
 
+    // 썸네일(필수) 이미지 여부
+    private boolean basic;
     private String url;
 
-    private Long  itemId;
+    private Long itemId;
 
 
     @Builder

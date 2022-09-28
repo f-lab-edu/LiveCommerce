@@ -1,6 +1,5 @@
 package com.flab.livecommerce.application.item;
 
-import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemImage;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
 import java.io.File;
@@ -16,30 +15,24 @@ public class UploadImageProcessor {
         this.itemImageRepository = itemImageRepository;
     }
 
-    // TODO 상세이미지
-    public void execute(Item item, MultipartFile thumbnailImg) {
-        ItemImage thumbnail = uploadThumbnailToLocal(item, thumbnailImg);
+    public void execute(MultipartFile thumbnailImage, MultipartFile[] specificImages) {
+        ItemImage thumbnail = uploadToLocal(thumbnailImage, specificImages);
         itemImageRepository.save(thumbnail);
     }
 
-    private ItemImage uploadThumbnailToLocal(Item item, MultipartFile thumbnailImg) {
+    private ItemImage uploadToLocal(MultipartFile thumbnailImage, MultipartFile[] specificImages) {
 
-        String originalFileName = thumbnailImg.getOriginalFilename();
-        String uploadFileName = UUID.randomUUID().toString().substring(0,10) + "_" + originalFileName;
-        String uploadPath = getLocalPath();
+        String originalFileName = thumbnailImage.getOriginalFilename();
+        String uploadFileName =
+            UUID.randomUUID().toString().substring(0, 10) + "_" + originalFileName;
+        String uploadPath = getLocalPath() + uploadFileName;
         try {
-            thumbnailImg.transferTo(new File(uploadPath + uploadFileName));
+            thumbnailImage.transferTo(new File(uploadPath));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        item.setThumbnailImg(ItemImage.builder()
-            .name(uploadFileName)
-            .url(uploadPath)
-            .itemId(item.getId())
-            .build());
-
-        return item.getThumbnailImg();
+        // TODO Item 객체 정보 저장, 상세 이미지 저장 - Util 클래스 분리 고려
+        return null;
     }
 
     // TODO 경로 변경 필요
