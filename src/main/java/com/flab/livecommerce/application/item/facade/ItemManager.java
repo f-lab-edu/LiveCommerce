@@ -6,8 +6,6 @@ import com.flab.livecommerce.application.item.UploadImageProcessor;
 import com.flab.livecommerce.application.item.command.RegisterItemCommand;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemRepository;
-import com.flab.livecommerce.domain.item.exception.DuplicatedItemNameException;
-import com.flab.livecommerce.domain.item.exception.DuplicatedModelNumException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,7 +38,7 @@ public class ItemManager {
         //uploadImageProcessor.execute(item, thumbnailImg);
     }
 
-    public Item search(Long id) {
+    public Item.Info search(Long id) {
         return searchItemProcessor.execute(id);
     }
 

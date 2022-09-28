@@ -1,7 +1,9 @@
 package com.flab.livecommerce.application.item;
 
 import com.flab.livecommerce.domain.item.Item;
+import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import com.flab.livecommerce.domain.item.ItemRepository;
+import java.util.List;
 
 public class SearchItemProcessor {
 
@@ -11,9 +13,10 @@ public class SearchItemProcessor {
         this.itemRepository = itemRepository;
     }
 
-    public Item execute(Long id) {
+    public Item.Info execute(Long id) {
         var item = itemRepository.findById(id);
+        var itemOptionGroupList = itemRepository.findItemOptionSeries(item);
 
-        return item;
+        return new Item.Info(item, itemOptionGroupList);
     }
 }

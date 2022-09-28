@@ -42,4 +42,25 @@ public class Item {
         this.id = id;
         return this;
     }
+
+    @Getter
+    public static class Info {
+
+        private String name;
+        private String description;
+        private Integer price;
+        private Integer salesPrice;
+        private Integer stockQuantity;
+        private List<ItemOptionGroup> itemOptionGroups;
+
+        public Info(Item item, List<ItemOptionGroup> itemOptionGroups) {
+            this.name = item.getName();
+            this.description = item.getDescription();
+            this.price = item.getPrice();
+            this.salesPrice = item.getSalesPrice();
+            this.salesPrice = item.getSalesPrice();
+            this.stockQuantity = item.getStockQuantity();
+            this.itemOptionGroups = itemOptionGroups;
+        }
+    }
 }

@@ -1,7 +1,9 @@
 package com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate;
 
 import com.flab.livecommerce.domain.item.Item;
+import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.RowMapper;
@@ -39,6 +41,11 @@ public class JdbcTemplateItemRepository {
         Item item = template.queryForObject(sql, parameters, itemRowMapper());
 
         return item;
+    }
+
+    public List<ItemOptionGroup> findItemOptionSeries(Item item) {
+        //todo 구현 필요
+        return null;
     }
 
 

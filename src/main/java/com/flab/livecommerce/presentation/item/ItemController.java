@@ -3,6 +3,7 @@ package com.flab.livecommerce.presentation.item;
 import com.flab.livecommerce.application.item.facade.ItemManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
 import com.flab.livecommerce.presentation.item.request.RegisterItemRequest;
+import com.flab.livecommerce.presentation.item.response.SearchItemResponse;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,7 +45,8 @@ public class ItemController {
 
     @GetMapping("/{itemId}")
     public CommonApiResponse searchItem(@PathVariable("itemId") Long id) {
-        var item = itemManager.search(id);
-        return CommonApiResponse.success(item);
+        var itemInfo = itemManager.search(id);
+
+        return CommonApiResponse.success(SearchItemResponse.form(itemInfo));
     }
 }
