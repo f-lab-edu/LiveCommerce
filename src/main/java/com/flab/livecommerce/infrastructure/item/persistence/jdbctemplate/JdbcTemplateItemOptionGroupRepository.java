@@ -22,8 +22,8 @@ public class JdbcTemplateItemOptionGroupRepository {
     }
 
     public ItemOptionGroup save(ItemOptionGroup itemOptionGroup) {
-        SqlParameterSource param = new BeanPropertySqlParameterSource(itemOptionGroup);
-        Long id = jdbcInsert.executeAndReturnKey(param).longValue();
+        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(itemOptionGroup);
+        Long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
 
         return itemOptionGroup.setId(id);
     }
