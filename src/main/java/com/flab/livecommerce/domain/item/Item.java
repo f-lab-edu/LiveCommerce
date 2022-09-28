@@ -26,6 +26,9 @@ public class Item {
     //옵션 그룹
     private List<ItemOptionGroup> itemOptionGroups = new ArrayList<>();
 
+    // 썸네일 이미지
+    private ItemImage thumbnailImg;
+
     @Builder
     public Item(
         String name,
@@ -41,5 +44,14 @@ public class Item {
         this.salesPrice = salesPrice;
         this.stockQuantity = stockQuantity;
         this.modelNumber = modelNumber;
+    }
+
+    public Item setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public void setThumbnailImg(ItemImage thumbnailImg) {
+        this.thumbnailImg = thumbnailImg;
     }
 }

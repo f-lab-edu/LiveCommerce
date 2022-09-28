@@ -1,40 +1,29 @@
 package com.flab.livecommerce.application.item;
 
+import com.flab.livecommerce.application.item.command.RegisterItemCommand;
 import com.flab.livecommerce.domain.item.Item;
+import com.flab.livecommerce.domain.item.ItemOptionSeriesService;
 import com.flab.livecommerce.domain.item.ItemRepository;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import org.springframework.transaction.annotation.Transactional;
 
 public class RegisterItemProcessor {
 
     private final ItemRepository itemRepository;
+    private final ItemOptionSeriesService itemOptionSeriesService;
 
-    public RegisterItemProcessor(ItemRepository repository) {
-        this.itemRepository = repository;
+    public RegisterItemProcessor(
+        ItemRepository itemRepository,
+        ItemOptionSeriesService itemOptionSeriesService
+    ) {
+        this.itemRepository = itemRepository;
+        this.itemOptionSeriesService = itemOptionSeriesService;
     }
 
-    public Item execute(RegisterCommand command) {
+    @Transactional
+    public Item execute(RegisterItemCommand command) {
+        var item = itemRepository.save(command.toEntity());
+        itemOptionSeriesService.save(command, item);
 
-        return itemRepository.save(
-            Item.builder()
-                .name(command.getName())
-                .description(command.getDescription())
-                .price(command.getPrice())
-                .salesPrice(command.getSalesPrice())
-                .stockQuantity(command.getStockQuantity())
-                .modelNumber(command.getModelNumber())
-                .build());
-    }
-
-    @Getter
-    @AllArgsConstructor
-    public static class RegisterCommand {
-
-        private String name;
-        private Integer price;
-        private Integer salesPrice;
-        private String description;
-        private Integer stockQuantity;
-        private int modelNumber;
+        return item;
     }
 }

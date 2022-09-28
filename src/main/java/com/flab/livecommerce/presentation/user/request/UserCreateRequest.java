@@ -4,15 +4,14 @@ import com.flab.livecommerce.application.user.UserCreateProcessor.UserCreateComm
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserCreateRequest {
 
     @NotBlank(message = "이메일을 입력해주세요.")
@@ -29,5 +28,4 @@ public class UserCreateRequest {
     public UserCreateCommand toCommand() {
         return new UserCreateCommand(email, password, nickname);
     }
-
 }
