@@ -1,20 +1,19 @@
 package com.flab.livecommerce.presentation.item.request;
 
-import com.flab.livecommerce.application.item.RegisterItemProcessor.RegisterCommand;
-import com.flab.livecommerce.domain.item.ItemOptionGroup;
+import com.flab.livecommerce.application.item.command.RegisterItemCommand;
+import com.flab.livecommerce.application.item.command.RegisterItemOptionGroupCommand;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
 @Getter
-@Setter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RegisterItemRequest {
 
     @NotBlank(message = "상품명을 작성하세요.")
@@ -37,16 +36,17 @@ public class RegisterItemRequest {
     @NotNull(message = "상품 모델명을 작성하세요.")
     private int modelNumber;
 
-    private List<ItemOptionGroup> itemOptionGroups;
+    private List<RegisterItemOptionGroupCommand> itemOptionGroups;
 
-    public RegisterCommand toCommand() {
-        return new RegisterCommand(
+    public RegisterItemCommand toCommand() {
+        return new RegisterItemCommand(
             name,
             price,
             salesPrice,
             description,
             stockQuantity,
-            modelNumber
+            modelNumber,
+            itemOptionGroups
         );
     }
 }

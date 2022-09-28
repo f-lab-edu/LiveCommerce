@@ -7,6 +7,58 @@ Content-Type: application/json
   "price": 30000,
   "salesPrice": 28000,
   "description": "샘플 상품 입니다",
-  "stockQuantity": "10",
-  "modelNumber": 123
+  "stockQuantity": 10,
+  "modelNumber": 123,
+  "itemOptionGroups": [
+    {
+      "ordering": 1,
+      "name": "사이즈",
+      "basic": true,
+      "exclusive": false,
+      "minimumChoice": 1,
+      "maximumChoice": 1,
+      "itemOptions": [
+        {
+          "ordering": 1,
+          "name": "SMALL",
+          "price": 0
+        },
+        {
+          "ordering": 2,
+          "name": "MEDIUM",
+          "price": 0
+        },
+        {
+          "ordering": 3,
+          "name": "LARGE",
+          "price": 0
+        }
+      ]
+    },
+    {
+      "ordering": 1,
+      "name": "컬러",
+      "basic": true,
+      "exclusive": false,
+      "minimumChoice": 1,
+      "maximumChoice": 1,
+      "itemOptions": [
+        {
+          "ordering": 1,
+          "name": "RED",
+          "price": 0
+        },
+        {
+          "ordering": 2,
+          "name": "BLUE",
+          "price": 0
+        },
+        {
+          "ordering": 3,
+          "name": "GREEN",
+          "price": 0
+        }
+      ]
+    }
+  ]
 }

@@ -3,9 +3,7 @@ package com.flab.livecommerce.domain.item;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ItemRepository {
+public interface ItemOptionGroupRepository {
 
-    Item save(Item item);
-
-    Item findById(Long id);
+    ItemOptionGroup save(ItemOptionGroup itemOptionGroup);
 }
