@@ -1,7 +1,10 @@
 package com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate;
 
 import com.flab.livecommerce.domain.item.Item;
+import java.util.Collections;
+import java.util.Map;
 import javax.sql.DataSource;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -27,5 +30,29 @@ public class JdbcTemplateItemRepository {
         Long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
 
         return item.setId(id);
+    }
+
+    public Item findById(Long id) {
+        String sql = "select * from item where id = :id";
+
+        Map<String, Long> parameters = Collections.singletonMap("id", id);
+        Item item = template.queryForObject(sql, parameters, itemRowMapper());
+
+        return item;
+    }
+
+
+    private RowMapper<Item> itemRowMapper() {
+        return (rs, rowNum) -> {
+            Item item = new Item(
+                rs.getString("name"),
+                rs.getString("description"),
+                rs.getInt("price"),
+                rs.getInt("sales_price"),
+                rs.getInt("stock_quantity")
+            );
+
+            return item.setId(rs.getLong("id"));
+        };
     }
 }

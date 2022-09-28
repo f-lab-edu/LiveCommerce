@@ -21,7 +21,7 @@ public class ItemRepositoryAdapter implements ItemRepository {
 
     @Override
     public Item findById(Long id) {
-        return null;
+        return this.itemRepository.findById(id);
     }
 
 }
