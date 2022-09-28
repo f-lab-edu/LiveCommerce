@@ -33,13 +33,7 @@ public class UploadImageProcessor {
             throw new RuntimeException(e);
         }
 
-        //item.setThumbnailImg(ItemImage.builder()
-            //.name(uploadFileName)
-            //.url(uploadPath)
-            //.itemId(item.getId())
-            //.build());
-
-        //return item.getThumbnailImg();
+        //TODO 다정님이 구현하실 파트
         return null;
     }
 
