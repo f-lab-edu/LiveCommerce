@@ -24,13 +24,4 @@ public class ItemRepositoryAdapter implements ItemRepository {
         return null;
     }
 
-    @Override
-    public Item findByModelNumber(int modelNumber) {
-        return null;
-    }
-
-    @Override
-    public Item findByName(String name) {
-        return null;
-    }
 }

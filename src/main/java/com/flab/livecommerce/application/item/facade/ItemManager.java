@@ -8,7 +8,6 @@ import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import com.flab.livecommerce.domain.item.exception.DuplicatedItemNameException;
 import com.flab.livecommerce.domain.item.exception.DuplicatedModelNumException;
-import java.io.IOException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,27 +32,16 @@ public class ItemManager {
         this.itemRepository = itemRepository;
     }
 
-    public void register(RegisterItemCommand command, MultipartFile thumbnailImg)
-        throws IOException {
-        checkProductNameDuplicated(command);
-        checkModelNumDuplicated(command);
-        Item item = registerItemProcessor.execute(command);
-        uploadImageProcessor.execute(item, thumbnailImg);
+    public Item register(RegisterItemCommand command) {
+        return registerItemProcessor.execute(command);
+    }
+
+    public void registerItemImage(MultipartFile thumbnailImg) {
+        //uploadImageProcessor.execute(item, thumbnailImg);
     }
 
     public Item search(Long id) {
         return searchItemProcessor.execute(id);
     }
 
-    public void checkModelNumDuplicated(RegisterItemCommand command) {
-        if (null != itemRepository.findByModelNumber(command.getModelNumber())) {
-            throw new DuplicatedModelNumException("이미 존재하는 모델 번호입니다.");
-        }
-    }
-
-    public void checkProductNameDuplicated(RegisterItemCommand command) {
-        if (null != itemRepository.findByName(command.getName())) {
-            throw new DuplicatedItemNameException("이미 존재하는 상품명입니다.");
-        }
-    }
 }
