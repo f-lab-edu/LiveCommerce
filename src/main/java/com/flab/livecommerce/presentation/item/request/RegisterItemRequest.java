@@ -16,6 +16,8 @@ import org.hibernate.validator.constraints.Range;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RegisterItemRequest {
 
+    private Long shopId;
+
     @NotBlank(message = "상품명을 작성하세요.")
     private String name;
 
@@ -37,6 +39,7 @@ public class RegisterItemRequest {
 
     public RegisterItemCommand toCommand() {
         return new RegisterItemCommand(
+            shopId,
             name,
             price,
             salesPrice,

@@ -9,6 +9,7 @@ import lombok.Getter;
 @Getter
 public class SearchItemResponse {
 
+    private Long shopId;
     private String name;
     private String description;
     private Integer price;
@@ -17,6 +18,7 @@ public class SearchItemResponse {
     private List<ItemOptionGroup> itemOptionGroups;
 
     public SearchItemResponse(
+        Long shopId,
         String name,
         String description,
         Integer price,
@@ -24,6 +26,7 @@ public class SearchItemResponse {
         Integer stockQuantity,
         List<ItemOptionGroup> itemOptionGroups
     ) {
+        this.shopId = shopId;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -35,6 +38,7 @@ public class SearchItemResponse {
     public static SearchItemResponse form(Info info) {
 
         return new SearchItemResponse(
+            info.getShopId(),
             info.getName(),
             info.getDescription(),
             info.getPrice(),

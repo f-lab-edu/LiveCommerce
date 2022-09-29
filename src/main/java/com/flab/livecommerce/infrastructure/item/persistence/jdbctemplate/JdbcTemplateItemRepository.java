@@ -52,6 +52,7 @@ public class JdbcTemplateItemRepository {
     private RowMapper<Item> itemRowMapper() {
         return (rs, rowNum) -> {
             Item item = new Item(
+                rs.getLong("shop_id"),
                 rs.getString("name"),
                 rs.getString("description"),
                 rs.getInt("price"),
