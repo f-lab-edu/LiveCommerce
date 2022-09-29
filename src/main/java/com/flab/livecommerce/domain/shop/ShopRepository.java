@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 public interface ShopRepository {
 
     Shop save(Shop shop);
+
+    Shop findById(Long id);
 }

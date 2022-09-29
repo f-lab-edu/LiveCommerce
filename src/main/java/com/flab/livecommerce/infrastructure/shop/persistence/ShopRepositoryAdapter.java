@@ -8,14 +8,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ShopRepositoryAdapter implements ShopRepository {
 
-    private final JdbcTemplateShopRepository partnerRepository;
+    private final JdbcTemplateShopRepository shopRepository;
 
-    public ShopRepositoryAdapter(JdbcTemplateShopRepository partnerRepository) {
-        this.partnerRepository = partnerRepository;
+    public ShopRepositoryAdapter(JdbcTemplateShopRepository shopRepository) {
+        this.shopRepository = shopRepository;
     }
 
     @Override
     public Shop save(Shop shop) {
-        return this.partnerRepository.save(shop);
+        return this.shopRepository.save(shop);
+    }
+
+    @Override
+    public Shop findById(Long id) {
+        return this.shopRepository.findById(id);
     }
 }

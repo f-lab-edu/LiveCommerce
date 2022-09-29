@@ -4,12 +4,14 @@ import com.flab.livecommerce.application.shop.facade.ShopManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
 import com.flab.livecommerce.presentation.shop.request.RegisterShopRequest;
 import javax.validation.Valid;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/shop")
 public class ShopController {
 
@@ -21,8 +23,14 @@ public class ShopController {
 
     @PostMapping
     public CommonApiResponse signUp(@RequestBody @Valid RegisterShopRequest request) {
-        shopManager.registerPartner(request.toCommand());
+        shopManager.registerShop(request.toCommand());
         return CommonApiResponse.success(null);
     }
 
+    @GetMapping("/{shopId}")
+    public CommonApiResponse searchShop(@PathVariable("shopId") Long id) {
+        shopManager.searchShop(id);
+        return CommonApiResponse.success(null);
+    }
 }
+

@@ -13,7 +13,7 @@ public class RegisterShopProcessor {
     }
 
     public Shop execute(RegisterShopCommand command) {
-        return shopRepository.save(command.toEntity());
+        return this.shopRepository.save(command.toEntity());
     }
 
 }
