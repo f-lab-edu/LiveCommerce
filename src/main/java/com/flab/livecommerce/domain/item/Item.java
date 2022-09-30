@@ -1,5 +1,6 @@
 package com.flab.livecommerce.domain.item;
 
+import com.flab.livecommerce.common.exception.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Builder;
@@ -33,6 +34,8 @@ public class Item {
         Integer salesPrice,
         Integer stockQuantity
     ) {
+        validCheck(shopId, name, description, price, salesPrice, stockQuantity);
+
         this.shopId = shopId;
         this.name = name;
         this.description = description;
@@ -66,6 +69,35 @@ public class Item {
             this.salesPrice = item.getSalesPrice();
             this.stockQuantity = item.getStockQuantity();
             this.itemOptionGroups = itemOptionGroups;
+        }
+    }
+
+    private static void validCheck(
+        Long shopId,
+        String name,
+        String description,
+        Integer price,
+        Integer salesPrice,
+        Integer stockQuantity
+    ) {
+        if (shopId == null) {
+            throw new InvalidParameterException("Item.shopId");
+        }
+        if (name == null && (name.length() == 0)) {
+            throw new InvalidParameterException("Item.name");
+        }
+        if (description == null && (description.length() == 0)) {
+            throw new InvalidParameterException("Item.description");
+        }
+        if (price == null) {
+            throw new InvalidParameterException("Item.price");
+        }
+
+        if (salesPrice == null) {
+            throw new InvalidParameterException("Item.salesPrice");
+        }
+        if (stockQuantity == null) {
+            throw new InvalidParameterException("Item.description");
         }
     }
 }
