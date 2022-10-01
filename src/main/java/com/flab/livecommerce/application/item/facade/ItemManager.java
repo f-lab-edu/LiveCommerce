@@ -42,4 +42,9 @@ public class ItemManager {
         return searchItemProcessor.execute(id);
     }
 
+    public void delete(Long id) {
+        Item item = itemRepository.findById(id);
+        itemRepository.deleteById(id);
+        // TODO 이미지 삭제 추가
+    }
 }

@@ -3,6 +3,7 @@ package com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate;
 import com.flab.livecommerce.domain.item.Item;
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -27,5 +28,11 @@ public class JdbcTemplateItemRepository {
         Long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
 
         return item.setId(id);
+    }
+
+    public void deleteById(Long id) {
+        SqlParameterSource param = new MapSqlParameterSource("id", id);
+        String sql = "delete from item where id=:id";
+        template.update(sql, param);
     }
 }

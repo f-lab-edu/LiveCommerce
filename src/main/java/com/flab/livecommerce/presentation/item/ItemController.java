@@ -4,6 +4,7 @@ import com.flab.livecommerce.application.item.facade.ItemManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
 import com.flab.livecommerce.presentation.item.request.RegisterItemRequest;
 import javax.validation.Valid;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,12 @@ public class ItemController {
         @RequestBody @Valid RegisterItemRequest request
     ) {
         itemManager.register(request.toCommand());
+        return CommonApiResponse.success(null);
+    }
+
+    @DeleteMapping("/{itemId}")
+    public CommonApiResponse deleteItem(@PathVariable("itemId") Long id) {
+        itemManager.delete(id);
         return CommonApiResponse.success(null);
     }
 
