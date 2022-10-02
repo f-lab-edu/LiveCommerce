@@ -52,6 +52,11 @@ services:
       MYSQL_USER: "${MYSQL_USER}"
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
 
+  redis:
+    container_name: livecommerce_redis
+    image: redis:7.0.5
+    ports:
+      - 6379:6379
 
 networks:
   elastic:

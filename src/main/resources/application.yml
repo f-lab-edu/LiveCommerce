@@ -11,6 +11,9 @@ spring:
     user: test
     password: 12345678!
     url: jdbc:mysql://localhost:3306/livecommerce?characterEncoding=UTF-8
+  redis:
+    host: localhost
+    port: 6379
 
 mybatis:
   type-aliases-package: com.flab.livecommerce.domain
