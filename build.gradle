@@ -46,6 +46,8 @@ dependencies {
 	implementation 'org.flywaydb:flyway-mysql'
 	// redis
 	implementation "org.springframework.boot:spring-boot-starter-data-redis"
+	// jdbc
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 }
 
 tasks.named('test') {
