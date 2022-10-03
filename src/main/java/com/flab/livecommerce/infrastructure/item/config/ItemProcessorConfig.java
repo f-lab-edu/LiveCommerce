@@ -9,6 +9,7 @@ import com.flab.livecommerce.domain.item.ItemOptionRepository;
 import com.flab.livecommerce.domain.item.ItemOptionSeriesService;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import com.flab.livecommerce.infrastructure.item.ItemOptionSeriesServiceImpl;
+import com.flab.livecommerce.infrastructure.item.LocalUploader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,11 +27,14 @@ public class ItemProcessorConfig {
         );
     }
 
+    /*
+     * AWS S3 서비스 사용 시 이미지 업로더 구현체 변경
+     */
     @Bean
     public UploadImageProcessor uploadImageProcessor(
         ItemImageRepository itemImageRepository
     ) {
-        return new UploadImageProcessor(itemImageRepository);
+        return new UploadImageProcessor(itemImageRepository, new LocalUploader());
     }
 
     @Bean

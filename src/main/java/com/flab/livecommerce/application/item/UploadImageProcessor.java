@@ -1,42 +1,37 @@
 package com.flab.livecommerce.application.item;
 
+import com.flab.livecommerce.domain.item.ImageUploader;
 import com.flab.livecommerce.domain.item.ItemImage;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
+import com.flab.livecommerce.domain.item.exception.HasNoItemImagesException;
 import org.springframework.web.multipart.MultipartFile;
 
 public class UploadImageProcessor {
 
     private final ItemImageRepository itemImageRepository;
+    private final ImageUploader imageUploader;
 
-    public UploadImageProcessor(ItemImageRepository itemImageRepository) {
+    public UploadImageProcessor(
+        ItemImageRepository itemImageRepository,
+        ImageUploader imageUploader
+    ) {
         this.itemImageRepository = itemImageRepository;
+        this.imageUploader = imageUploader;
     }
 
     public void execute(MultipartFile thumbnailImage, MultipartFile[] specificImages) {
-        ItemImage thumbnail = uploadToLocal(thumbnailImage, specificImages);
-        itemImageRepository.save(thumbnail);
-    }
 
-    private ItemImage uploadToLocal(MultipartFile thumbnailImage, MultipartFile[] specificImages) {
-
-        String originalFileName = thumbnailImage.getOriginalFilename();
-        String uploadFileName =
-            UUID.randomUUID().toString().substring(0, 10) + "_" + originalFileName;
-        String uploadPath = getLocalPath() + uploadFileName;
-        try {
-            thumbnailImage.transferTo(new File(uploadPath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (thumbnailImage.isEmpty()) {
+            throw new HasNoItemImagesException("썸네일 이미지는 필수입니다.");
         }
-        // TODO Item 객체 정보 저장, 상세 이미지 저장 - Util 클래스 분리 고려
-        return null;
-    }
+        String thumbnailUrl = imageUploader.upload(thumbnailImage);
+        itemImageRepository.save(ItemImage.builder().path(thumbnailUrl).basic(true).ordering(1).build());
 
-    // TODO 경로 변경 필요
-    private String getLocalPath() {
-        return "C:/study/img";
+        for (MultipartFile specificImage : specificImages) {
+            if (!specificImage.isEmpty()) {
+                String specificUrl = imageUploader.upload(specificImage);
+                itemImageRepository.save(ItemImage.builder().path(specificUrl).basic(false).build());
+            }
+        }
     }
 }

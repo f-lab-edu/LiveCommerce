@@ -10,24 +10,20 @@ public class ItemImage {
 
     private Long itemId;
 
-    // 이미지 순서
-    private int order;
+    // 이미지 순서 - 썸네일 이미지 ordering=1
+    private int ordering;
 
     // 썸네일(필수) 이미지 여부
     private boolean basic;
-    // 이미지 파일 이름
-    private String name;
 
     // 이미지 경로
     private String path;
 
-
     @Builder
-    public ItemImage(Long id, String name, String path, Long itemId) {
-        this.id = id;
-        this.name = name;
+    public ItemImage(int ordering, boolean basic, String path) {
+        this.ordering = ordering;
+        this.basic = basic;
         this.path = path;
-        this.itemId = itemId;
     }
 
     public void setId(Long id) {

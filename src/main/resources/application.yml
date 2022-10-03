@@ -11,6 +11,11 @@ spring:
     user: test
     password: 12345678!
     url: jdbc:mysql://127.0.0.1:13306/livecommerce?characterEncoding=UTF-8
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 
 mybatis:
   type-aliases-package: com.flab.livecommerce.domain

@@ -1,6 +1,6 @@
 package com.flab.livecommerce.presentation.item;
 
-import com.flab.livecommerce.application.item.facade.ItemManager;
+import com.flab.livecommerce.application.item.facade.ItemImageManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 public class ItemImageController {
 
-    private final ItemManager itemManager;
+    private final ItemImageManager itemImageManager;
 
-    public ItemImageController(ItemManager itemManager) {
-        this.itemManager = itemManager;
+    public ItemImageController(ItemImageManager itemImageManager) {
+        this.itemImageManager = itemImageManager;
     }
 
     @PostMapping("/{itemId}/image")
@@ -23,7 +23,7 @@ public class ItemImageController {
         @RequestPart("thumbnailImg") MultipartFile thumbnailImage,
         @RequestPart(value = "specificImg", required = false) MultipartFile[] specificImages
     ) {
-        itemManager.uploadItemImage(thumbnailImage, specificImages);
+        itemImageManager.uploadItemImage(thumbnailImage, specificImages);
         return CommonApiResponse.success(null);
     }
 }

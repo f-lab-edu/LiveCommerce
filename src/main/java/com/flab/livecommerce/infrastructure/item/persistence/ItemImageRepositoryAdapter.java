@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ItemImageRepositoryAdapter implements ItemImageRepository {
+
     private final JdbcTemplateItemImageRepository itemImageRepository;
 
     public ItemImageRepositoryAdapter(JdbcTemplateItemImageRepository itemImageRepository) {
@@ -20,7 +21,7 @@ public class ItemImageRepositoryAdapter implements ItemImageRepository {
     }
 
     @Override
-    public void save(ItemImage thumbnail) {
-        itemImageRepository.save(thumbnail);
+    public void save(ItemImage itemImage) {
+        itemImageRepository.save(itemImage);
     }
 }

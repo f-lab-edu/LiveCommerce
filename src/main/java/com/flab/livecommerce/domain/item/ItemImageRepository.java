@@ -6,5 +6,5 @@ public interface ItemImageRepository {
 
     void saveAll(List<ItemImage> imageList);
 
-    void save(ItemImage thumbnail);
+    void save(ItemImage itemImage);
 }
