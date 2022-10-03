@@ -8,20 +8,25 @@ public class ItemImage {
 
     private Long id;
 
-    private String name;
+    private Long itemId;
+
+    // 이미지 순서
+    private int order;
 
     // 썸네일(필수) 이미지 여부
     private boolean basic;
-    private String url;
+    // 이미지 파일 이름
+    private String name;
 
-    private Long itemId;
+    // 이미지 경로
+    private String path;
 
 
     @Builder
-    public ItemImage(Long id, String name, String url, Long itemId) {
+    public ItemImage(Long id, String name, String path, Long itemId) {
         this.id = id;
         this.name = name;
-        this.url = url;
+        this.path = path;
         this.itemId = itemId;
     }
 
