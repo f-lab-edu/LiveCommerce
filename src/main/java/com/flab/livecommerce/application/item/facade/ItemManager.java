@@ -34,7 +34,7 @@ public class ItemManager {
         //uploadImageProcessor.execute(item, thumbnailImg);
     }
 
-    public Item.Info search(Long id) {
+    public Item search(Long id) {
         return searchItemProcessor.execute(id);
     }
 

@@ -47,6 +47,6 @@ public class ItemController {
     public CommonApiResponse searchItem(@PathVariable("itemId") Long id) {
         var itemInfo = itemManager.search(id);
 
-        return CommonApiResponse.success(SearchItemResponse.form(itemInfo));
+        return CommonApiResponse.success(itemInfo);
     }
 }

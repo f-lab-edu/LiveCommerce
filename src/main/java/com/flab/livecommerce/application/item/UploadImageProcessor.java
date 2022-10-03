@@ -16,7 +16,6 @@ public class UploadImageProcessor {
         this.itemImageRepository = itemImageRepository;
     }
 
-    // TODO 상세이미지
     public void execute(Item item, MultipartFile thumbnailImg) {
         ItemImage thumbnail = uploadThumbnailToLocal(item, thumbnailImg);
         itemImageRepository.save(thumbnail);

@@ -25,6 +25,9 @@ public class Item {
     //옵션 그룹
     private List<ItemOptionGroup> itemOptionGroups = new ArrayList<>();
 
+    protected Item() {
+    }
+
     @Builder
     public Item(
         Long shopId,
@@ -46,6 +49,11 @@ public class Item {
 
     public Item setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public Item addItemOptionGroup(ItemOptionGroup itemOptionGroups) {
+        this.itemOptionGroups.add(itemOptionGroups);
         return this;
     }
 

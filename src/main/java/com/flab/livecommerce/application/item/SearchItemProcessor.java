@@ -13,10 +13,7 @@ public class SearchItemProcessor {
         this.itemRepository = itemRepository;
     }
 
-    public Item.Info execute(Long id) {
-        var item = itemRepository.findById(id);
-        var itemOptionGroupList = itemRepository.findItemOptionSeries(item);
-
-        return new Item.Info(item, itemOptionGroupList);
+    public Item execute(Long id) {
+        return itemRepository.findById(id);
     }
 }
