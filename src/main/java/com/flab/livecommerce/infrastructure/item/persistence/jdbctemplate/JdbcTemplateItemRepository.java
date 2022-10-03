@@ -32,7 +32,11 @@ public class JdbcTemplateItemRepository {
 
     public void deleteById(Long id) {
         SqlParameterSource param = new MapSqlParameterSource("id", id);
-        String sql = "delete from item where id=:id";
+        String sql = "DELETE item, iog, io FROM item "
+            + "INNER JOIN item_option_group AS iog INNER JOIN item_option AS io "
+            + "WHERE item.id = iog.item_id AND iog.id = io.item_option_group_id "
+            + "AND item.id = :id";
+
         template.update(sql, param);
     }
 }
