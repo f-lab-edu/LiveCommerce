@@ -25,12 +25,22 @@ public class UploadImageProcessor {
             throw new HasNoItemImagesException("썸네일 이미지는 필수입니다.");
         }
         String thumbnailUrl = imageUploader.upload(thumbnailImage);
-        itemImageRepository.save(ItemImage.builder().path(thumbnailUrl).basic(true).ordering(1).build());
+        itemImageRepository.save(
+            ItemImage.builder()
+                .url(thumbnailUrl)
+                .isThumbnail(true)
+                .build()
+        );
 
         for (MultipartFile specificImage : specificImages) {
             if (!specificImage.isEmpty()) {
                 String specificUrl = imageUploader.upload(specificImage);
-                itemImageRepository.save(ItemImage.builder().path(specificUrl).basic(false).build());
+                itemImageRepository.save(
+                    ItemImage.builder()
+                        .url(specificUrl)
+                        .isThumbnail(false)
+                        .build()
+                );
             }
         }
     }

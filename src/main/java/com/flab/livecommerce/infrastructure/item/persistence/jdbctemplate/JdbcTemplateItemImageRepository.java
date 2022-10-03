@@ -31,7 +31,6 @@ public class JdbcTemplateItemImageRepository {
 
     public void save(ItemImage image) {
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(image);
-        Long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
-        image.setId(id);
+        jdbcInsert.execute(parameterSource);
     }
 }
