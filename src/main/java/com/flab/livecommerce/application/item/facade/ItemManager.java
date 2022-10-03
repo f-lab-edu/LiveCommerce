@@ -33,7 +33,6 @@ public class ItemManager {
     }
 
     public void delete(Long id) {
-        Item item = itemRepository.findById(id);
         itemRepository.deleteById(id);
     }
 }
