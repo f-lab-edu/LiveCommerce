@@ -37,7 +37,7 @@ public class JdbcTemplateItemRepository {
 
         String sql = "select * from item i "
             + "join item_option_group iog on i.id = iog.item_id "
-            + "join item_option iop on iog.id = iop.item_option_group_id "
+            + "join item_option io on iog.id = io.item_option_group_id "
             + "where i.id = ?";
 
         Item item = jdbcTemplate.query(sql, resultSetExtractor(), id);
@@ -87,11 +87,11 @@ public class JdbcTemplateItemRepository {
 
                 ItemOption itemOption = new ItemOption(
                     itemOptionGroup.getId(),
-                    rs.getString("iop.name"),
-                    rs.getInt("iop.ordering"),
-                    rs.getLong("iop.price")
+                    rs.getString("io.name"),
+                    rs.getInt("io.ordering"),
+                    rs.getLong("io.price")
                 );
-                itemOption.setId(rs.getLong("iop.id"));
+                itemOption.setId(rs.getLong("io.id"));
                 itemOptionGroup.addItemOption(itemOption);
             }
             return item;
