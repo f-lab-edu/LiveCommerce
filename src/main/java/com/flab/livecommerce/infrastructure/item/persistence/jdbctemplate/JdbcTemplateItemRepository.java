@@ -43,7 +43,7 @@ public class JdbcTemplateItemRepository {
         Item item = jdbcTemplate.query(sql, resultSetExtractor(), id);
 
         if (item == null) {
-            throw new EntityNotFoundException("Item");
+            throw new EntityNotFoundException();
         }
 
         return item;
