@@ -3,6 +3,7 @@ package com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate;
 import com.flab.livecommerce.domain.item.ItemOption;
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -26,5 +27,19 @@ public class JdbcTemplateItemOptionRepository {
         Long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
 
         return itemOption.setId(id);
+    }
+
+    public void update(ItemOption itemOption) {
+        String sql = "UPDATE item_option "
+            + "SET item_option_group_id=:itemOptionGroupId, ordering=:ordering, name=:name, price=:price "
+            + "WHERE id=:id";
+        SqlParameterSource param = new MapSqlParameterSource()
+            .addValue("id", itemOption.getId())
+            .addValue("itemOptionGroupId", itemOption.getItemOptionGroupId())
+            .addValue("ordering", itemOption.getOrdering())
+            .addValue("name", itemOption.getName())
+            .addValue("price", itemOption.getPrice());
+
+        template.update(sql, param);
     }
 }

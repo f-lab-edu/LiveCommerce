@@ -18,4 +18,9 @@ public class ItemOptionRepositoryAdapter implements ItemOptionRepository {
     public ItemOption save(ItemOption itemOption) {
         return itemOptionRepository.save(itemOption);
     }
+
+    @Override
+    public void update(ItemOption itemOption) {
+        itemOptionRepository.update(itemOption);
+    }
 }
