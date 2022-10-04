@@ -14,7 +14,9 @@ public class RegisterItemCommand {
     private Integer salesPrice;
     private String description;
     private Integer stockQuantity;
+    /*
     private int modelNumber;
+     */
     private List<RegisterItemOptionGroupCommand> itemOptionGroup;
 
     public Item toEntity() {
@@ -24,7 +26,6 @@ public class RegisterItemCommand {
             .price(price)
             .salesPrice(salesPrice)
             .stockQuantity(stockQuantity)
-            .modelNumber(modelNumber)
             .build();
     }
 }

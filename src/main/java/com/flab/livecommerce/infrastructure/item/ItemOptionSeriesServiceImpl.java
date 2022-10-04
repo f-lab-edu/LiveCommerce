@@ -34,17 +34,40 @@ public class ItemOptionSeriesServiceImpl implements ItemOptionSeriesService {
 
         return itemOptionGroupList.stream().map(
             requestItemOptionGroup -> {
-                var optionGroup = requestItemOptionGroup.toEntity(item);
-                var itemOptionGroup = itemOptionGroupRepository.save(optionGroup);
+                var optionGroup = requestItemOptionGroup.toEntity(item.getId());
+                var itemOptionGroupId = itemOptionGroupRepository.save(optionGroup);
 
                 requestItemOptionGroup.getItemOptions().forEach(
                     requestItemOption -> {
-                        var itemOption = requestItemOption.toEntity(itemOptionGroup);
+                        var itemOption = requestItemOption.toEntity(itemOptionGroupId);
                         itemOptionRepository.save(itemOption);
                     }
                 );
-                return itemOptionGroup;
+                return itemOptionGroupRepository.findById(itemOptionGroupId);
             }
         ).collect(Collectors.toList());
+    }
+
+    @Override
+    public void update(RegisterItemCommand command, Long itemId) {
+        var itemOptionGroupList = command.getItemOptionGroup();
+
+        if (itemOptionGroupList.isEmpty()) {
+            // TODO
+        }
+
+        itemOptionGroupList.forEach(
+            requestItemOptionGroup -> {
+                var optionGroup = requestItemOptionGroup.toEntity(itemId);
+                var itemOptionGroupId = itemOptionGroupRepository.update(optionGroup);
+
+                requestItemOptionGroup.getItemOptions().forEach(
+                    requestItemOption -> {
+                        var itemOption = requestItemOption.toEntity(itemOptionGroupId);
+                        itemOptionRepository.update(itemOption);
+                    }
+                );
+            }
+        );
     }
 }

@@ -29,4 +29,9 @@ public class ItemRepositoryAdapter implements ItemRepository {
         this.itemRepository.deleteById(id);
     }
 
+    @Override
+    public void update(Item item, Long id) {
+        this.itemRepository.update(item, id);
+    }
+
 }

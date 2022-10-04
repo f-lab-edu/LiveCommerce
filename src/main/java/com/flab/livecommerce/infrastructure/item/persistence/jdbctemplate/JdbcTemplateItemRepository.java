@@ -39,4 +39,19 @@ public class JdbcTemplateItemRepository {
 
         template.update(sql, param);
     }
+
+    public void update(Item item, Long id) {
+        String sql = "UPDATE item "
+            + "SET name=:name, description=:description, price=:price, sales_price=:salesPrice, stock_quantity=:stockQuantity "
+            + "WHERE id=:id";
+        SqlParameterSource param = new MapSqlParameterSource()
+            .addValue("id", id)
+            .addValue("name", item.getName())
+            .addValue("description", item.getDescription())
+            .addValue("price", item.getPrice())
+            .addValue("salesPrice", item.getSalesPrice())
+            .addValue("stockQuantity", item.getStockQuantity());
+
+        template.update(sql, param);
+    }
 }
