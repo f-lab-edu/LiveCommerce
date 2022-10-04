@@ -1,5 +1,6 @@
 package com.flab.livecommerce.infrastructure.shop.persistence.jdbctemplate;
 
+import com.flab.livecommerce.common.exception.EntityNotFoundException;
 import com.flab.livecommerce.domain.shop.Shop;
 import java.util.Collections;
 import java.util.Map;
@@ -36,6 +37,10 @@ public class JdbcTemplateShopRepository {
 
         Map<String, Long> parameters = Collections.singletonMap("id", id);
         Shop shop = template.queryForObject(sql, parameters, shopRowMapper());
+
+        if (shop == null) {
+            throw new EntityNotFoundException();
+        }
 
         return shop;
     }
