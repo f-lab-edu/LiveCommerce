@@ -44,6 +44,8 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
 	// flyway
 	implementation 'org.flywaydb:flyway-mysql'
+	// redis
+	implementation "org.springframework.boot:spring-boot-starter-data-redis"
 }
 
 tasks.named('test') {

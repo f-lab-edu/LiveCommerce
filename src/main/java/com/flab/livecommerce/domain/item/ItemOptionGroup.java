@@ -1,5 +1,6 @@
 package com.flab.livecommerce.domain.item;
 
+import com.flab.livecommerce.common.exception.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Builder;
@@ -35,6 +36,16 @@ public class ItemOptionGroup {
         int minimumChoice,
         int maximumChoice
     ) {
+        if (itemId == null) {
+            throw new InvalidParameterException("ItemOptionGroup.itemId");
+        }
+        if (name == null && name.length() == 0) {
+            throw new InvalidParameterException("ItemOptionGroup.name");
+        }
+        if (ordering == null) {
+            throw new InvalidParameterException("ItemOptionGroup.itemId");
+        }
+
         this.itemId = itemId;
         this.name = name;
         this.ordering = ordering;
@@ -53,4 +64,5 @@ public class ItemOptionGroup {
         this.id = id;
         return this;
     }
+
 }

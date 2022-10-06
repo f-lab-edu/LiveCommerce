@@ -1,5 +1,6 @@
 package com.flab.livecommerce.domain.item;
 
+import com.flab.livecommerce.common.exception.InvalidParameterException;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,6 +18,19 @@ public class ItemOption {
 
     @Builder
     public ItemOption(Long itemOptionGroupId, String name, Integer ordering, Long price) {
+        if (itemOptionGroupId == null) {
+            throw new InvalidParameterException("ItemOption.itemOptionGroupId");
+        }
+        if (name == null && name.length() == 0) {
+            throw new InvalidParameterException("ItemOptionGroup.name");
+        }
+        if (ordering == null) {
+            throw new InvalidParameterException("ItemOptionGroup.ordering");
+        }
+        if (price == null) {
+            throw new InvalidParameterException("ItemOptionGroup.price");
+        }
+
         this.itemOptionGroupId = itemOptionGroupId;
         this.name = name;
         this.ordering = ordering;
@@ -27,4 +41,5 @@ public class ItemOption {
         this.id = id;
         return this;
     }
+
 }
