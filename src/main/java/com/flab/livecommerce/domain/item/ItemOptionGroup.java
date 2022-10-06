@@ -36,7 +36,15 @@ public class ItemOptionGroup {
         int minimumChoice,
         int maximumChoice
     ) {
-        validCheck(itemId, name, ordering);
+        if (itemId == null) {
+            throw new InvalidParameterException("ItemOptionGroup.itemId");
+        }
+        if (name == null && name.length() == 0) {
+            throw new InvalidParameterException("ItemOptionGroup.name");
+        }
+        if (ordering == null) {
+            throw new InvalidParameterException("ItemOptionGroup.itemId");
+        }
 
         this.itemId = itemId;
         this.name = name;
@@ -57,15 +65,4 @@ public class ItemOptionGroup {
         return this;
     }
 
-    private static void validCheck(Long itemId, String name, Integer ordering) {
-        if (itemId == null) {
-            throw new InvalidParameterException("ItemOptionGroup.itemId");
-        }
-        if (name == null && name.length() == 0) {
-            throw new InvalidParameterException("ItemOptionGroup.name");
-        }
-        if (ordering == null) {
-            throw new InvalidParameterException("ItemOptionGroup.itemId");
-        }
-    }
 }

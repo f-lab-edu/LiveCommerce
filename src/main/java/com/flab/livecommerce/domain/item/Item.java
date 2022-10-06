@@ -37,7 +37,24 @@ public class Item {
         Integer salesPrice,
         Integer stockQuantity
     ) {
-        validCheck(shopId, name, description, price, salesPrice, stockQuantity);
+        if (shopId == null) {
+            throw new InvalidParameterException("Item.shopId");
+        }
+        if (name == null && (name.length() == 0)) {
+            throw new InvalidParameterException("Item.name");
+        }
+        if (description == null && (description.length() == 0)) {
+            throw new InvalidParameterException("Item.description");
+        }
+        if (price == null) {
+            throw new InvalidParameterException("Item.price");
+        }
+        if (salesPrice == null) {
+            throw new InvalidParameterException("Item.salesPrice");
+        }
+        if (stockQuantity == null) {
+            throw new InvalidParameterException("Item.description");
+        }
 
         this.shopId = shopId;
         this.name = name;
@@ -80,32 +97,4 @@ public class Item {
         }
     }
 
-    private static void validCheck(
-        Long shopId,
-        String name,
-        String description,
-        Integer price,
-        Integer salesPrice,
-        Integer stockQuantity
-    ) {
-        if (shopId == null) {
-            throw new InvalidParameterException("Item.shopId");
-        }
-        if (name == null && (name.length() == 0)) {
-            throw new InvalidParameterException("Item.name");
-        }
-        if (description == null && (description.length() == 0)) {
-            throw new InvalidParameterException("Item.description");
-        }
-        if (price == null) {
-            throw new InvalidParameterException("Item.price");
-        }
-
-        if (salesPrice == null) {
-            throw new InvalidParameterException("Item.salesPrice");
-        }
-        if (stockQuantity == null) {
-            throw new InvalidParameterException("Item.description");
-        }
-    }
 }

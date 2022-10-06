@@ -18,21 +18,6 @@ public class ItemOption {
 
     @Builder
     public ItemOption(Long itemOptionGroupId, String name, Integer ordering, Long price) {
-        validCheck(itemOptionGroupId, name, ordering, price);
-
-        this.itemOptionGroupId = itemOptionGroupId;
-        this.name = name;
-        this.ordering = ordering;
-        this.price = price;
-    }
-
-    public ItemOption setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    private static void validCheck(Long itemOptionGroupId, String name, Integer ordering,
-        Long price) {
         if (itemOptionGroupId == null) {
             throw new InvalidParameterException("ItemOption.itemOptionGroupId");
         }
@@ -45,5 +30,16 @@ public class ItemOption {
         if (price == null) {
             throw new InvalidParameterException("ItemOptionGroup.price");
         }
+
+        this.itemOptionGroupId = itemOptionGroupId;
+        this.name = name;
+        this.ordering = ordering;
+        this.price = price;
     }
+
+    public ItemOption setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
 }
