@@ -4,7 +4,9 @@ import com.flab.livecommerce.common.exception.EntityNotFoundException;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemOption;
 import com.flab.livecommerce.domain.item.ItemOptionGroup;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -61,6 +63,8 @@ public class JdbcTemplateItemRepository {
 
         return (rs -> {
             Item item = null;
+            ItemOptionGroup itemOptionGroup = null;
+            Map<Long, ItemOptionGroup> itemOptionGroupMap = new HashMap<>();
 
             while (rs.next()) {
                 if (item == null) {
@@ -73,20 +77,26 @@ public class JdbcTemplateItemRepository {
                         rs.getInt("stock_quantity"));
                     item.setId(rs.getLong("id"));
                 }
-                ItemOptionGroup itemOptionGroup = new ItemOptionGroup(
-                    rs.getLong("item_id"),
-                    rs.getString("iog.name"),
-                    rs.getInt("ordering"),
-                    rs.getBoolean("basic"),
-                    rs.getBoolean("exclusive"),
-                    rs.getInt("minimum_choice"),
-                    rs.getInt("maximum_choice")
-                );
-                itemOptionGroup.setId(rs.getLong("iog.id"));
-                item.addItemOptionGroup(itemOptionGroup);
+
+                long itemOptionGroupId = rs.getLong("iog.id");
+                if (!itemOptionGroupMap.containsKey(itemOptionGroupId)) {
+                    itemOptionGroup = new ItemOptionGroup(
+                        rs.getLong("item_id"),
+                        rs.getString("iog.name"),
+                        rs.getInt("ordering"),
+                        rs.getBoolean("basic"),
+                        rs.getBoolean("exclusive"),
+                        rs.getInt("minimum_choice"),
+                        rs.getInt("maximum_choice")
+                    );
+                    itemOptionGroup.setId(rs.getLong("iog.id"));
+                    item.addItemOptionGroup(itemOptionGroup);
+
+                    itemOptionGroupMap.put(itemOptionGroupId, itemOptionGroup);
+                }
 
                 ItemOption itemOption = new ItemOption(
-                    itemOptionGroup.getId(),
+                    rs.getLong("iog.id"),
                     rs.getString("io.name"),
                     rs.getInt("io.ordering"),
                     rs.getLong("io.price")
