@@ -17,8 +17,8 @@ public class OrderLineItem {
     private Integer orderCount;
     private Long shopId;
     private Long itemId;
-    private String itemName;
-    private Long itemPrice;
+    private String name;
+    private Long price;
     private List<OrderItemOptionGroup> orderItemOptionGroups = new ArrayList<>();
 
     @Builder
@@ -27,8 +27,8 @@ public class OrderLineItem {
         Integer orderCount,
         Long shopId,
         Long itemId,
-        String itemName,
-        Long itemPrice
+        String name,
+        Long price
     ) {
         if (orderId == null) {
             throw new InvalidParameterException("OrderLineItem.order");
@@ -42,10 +42,10 @@ public class OrderLineItem {
         if (itemId == null) {
             throw new InvalidParameterException("OrderLineItem.itemId");
         }
-        if (itemName == null && itemName.length() == 0) {
+        if (name == null && name.length() == 0) {
             throw new InvalidParameterException("OrderLineItem.itemName");
         }
-        if (itemPrice == null) {
+        if (price == null) {
             throw new InvalidParameterException("OrderLineItem.itemPrice");
         }
 
@@ -53,7 +53,7 @@ public class OrderLineItem {
         this.orderCount = orderCount;
         this.shopId = shopId;
         this.itemId = itemId;
-        this.itemName = itemName;
-        this.itemPrice = itemPrice;
+        this.name = name;
+        this.price = price;
     }
 }
