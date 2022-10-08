@@ -1,0 +1,74 @@
+### 주문 요청 초기 저장
+POST http://localhost:8080/api/v1/orders/init
+Content-Type: application/json
+
+{
+  "userId": "1",
+  "payMethod": "NAVER_PAY",
+  "receiverName": "정명구",
+  "receiverPhone": "01011112222",
+  "receiverZipcode": "12345",
+  "receiverAddress1": "수원시 영통구",
+  "receiverAddress2": "어디어디 몇층 몇호",
+  "etcMessage": "감사합니다",
+  "orderLineItems": [
+    {
+      "orderCount": 2,
+      "name": "티셔츠",
+      "price": "30000",
+      "orderItemOptionGroups": [
+        {
+          "ordering": 1,
+          "name": "사이즈",
+          "orderItemOptions": [
+            {
+              "ordering": 1,
+              "name": "MEDIUM",
+              "price": 0
+            }
+          ]
+        },
+        {
+          "ordering": 2,
+          "name": "컬러",
+          "orderItemOptions": [
+            {
+              "ordering": 1,
+              "name": "GOLD",
+              "price": 1000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "orderCount": 1,
+      "name": "양말",
+      "price": "10000",
+      "orderItemOptionGroups": [
+        {
+          "ordering": 1,
+          "name": "사이즈",
+          "orderItemOptions": [
+            {
+              "ordering": 1,
+              "name": "LARGE",
+              "price": 0
+            }
+          ]
+        },
+        {
+          "ordering": 2,
+          "itemOptionGroupName": "컬러",
+          "orderItemOptions": [
+            {
+              "ordering": 1,
+              "itemOptionName": "RED",
+              "itemOptionPrice": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
