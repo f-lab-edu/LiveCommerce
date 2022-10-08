@@ -1,5 +1,6 @@
 package com.flab.livecommerce.presentation.order.request;
 
+import com.flab.livecommerce.application.order.command.RegisterOrderItemOptionCommand;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -21,4 +22,11 @@ public class RegisterOrderItemOptionRequest {
     @NotNull(message = "price 를 작성하세요.")
     private Long price;
 
+    public RegisterOrderItemOptionCommand toCommand() {
+        return RegisterOrderItemOptionCommand.builder()
+            .ordering(this.ordering)
+            .name(this.name)
+            .price(this.price)
+            .build();
+    }
 }

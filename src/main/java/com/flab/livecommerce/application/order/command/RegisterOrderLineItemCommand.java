@@ -1,6 +1,5 @@
 package com.flab.livecommerce.application.order.command;
 
-import com.flab.livecommerce.application.item.command.RegisterItemOptionGroupCommand;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.order.Order;
 import com.flab.livecommerce.domain.order.OrderLineItem;
@@ -13,16 +12,17 @@ import lombok.Getter;
 public class RegisterOrderLineItemCommand {
 
     private Integer orderCount;
+    private Long itemId;
     private String name;
     private Long price;
-    private List<RegisterItemOptionGroupCommand> orderItemOptionGroups;
+    private List<RegisterOrderItemOptionGroupCommand> orderItemOptionGroups;
 
     public OrderLineItem toEntity(Order order, Item item) {
         return OrderLineItem.builder()
             .orderId(order.getId())
             .orderCount(this.orderCount)
             .shopId(item.getShopId())
-            .itemId(item.getId())
+            .itemId(this.getItemId())
             .name(this.name)
             .price(this.price)
             .build();
