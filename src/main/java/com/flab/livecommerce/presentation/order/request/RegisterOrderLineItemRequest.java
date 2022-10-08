@@ -1,5 +1,6 @@
 package com.flab.livecommerce.presentation.order.request;
 
+import com.flab.livecommerce.application.order.command.RegisterOrderLineItemCommand;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -26,4 +27,8 @@ public class RegisterOrderLineItemRequest {
     private Long price;
 
     private List<RegisterOrderItemOptionGroupRequest> registerOrderItemOptionGroups;
+
+    public RegisterOrderLineItemCommand toCommand() {
+        return null;
+    }
 }

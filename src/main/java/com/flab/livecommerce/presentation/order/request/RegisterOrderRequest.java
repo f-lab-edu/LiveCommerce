@@ -1,7 +1,9 @@
 package com.flab.livecommerce.presentation.order.request;
 
 import com.flab.livecommerce.application.order.command.RegisterOrderCommand;
+import com.flab.livecommerce.application.order.command.RegisterOrderLineItemCommand;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -42,7 +44,25 @@ public class RegisterOrderRequest {
 
     public RegisterOrderCommand toCommand() {
         return new RegisterOrderCommand(
-
+            this.userId,
+            this.payMethod,
+            this.receiverName,
+            this.receiverPhoneNumber,
+            this.receiverZipcode,
+            this.receiverAddress,
+            this.receiverDetailAddress,
+            this.receiverMessage,
+            toLineItemCommand()
         );
+    }
+
+    public List<RegisterOrderLineItemCommand> toLineItemCommand() {
+        return this.orderLineItems.stream().map(
+            lineItemRequest -> RegisterOrderLineItemCommand.builder()
+                .orderCount(lineItemRequest.getOrderCount())
+                .name(lineItemRequest.getName())
+                .price(lineItemRequest.getPrice())
+                .build()
+        ).collect(Collectors.toList());
     }
 }
