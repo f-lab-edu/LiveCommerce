@@ -6,14 +6,15 @@ Content-Type: application/json
   "userId": "1",
   "payMethod": "NAVER_PAY",
   "receiverName": "정명구",
-  "receiverPhone": "01011112222",
+  "receiverPhoneNumber": "01011112222",
   "receiverZipcode": "12345",
-  "receiverAddress1": "수원시 영통구",
-  "receiverAddress2": "어디어디 몇층 몇호",
-  "etcMessage": "감사합니다",
+  "receiverAddress": "수원시 영통구",
+  "receiverDetailAddress": "어디어디 몇층 몇호",
+  "receiverMessage": "감사합니다",
   "orderLineItems": [
     {
       "orderCount": 2,
+      "itemId": 1,
       "name": "티셔츠",
       "price": "30000",
       "orderItemOptionGroups": [
@@ -43,6 +44,7 @@ Content-Type: application/json
     },
     {
       "orderCount": 1,
+      "itemId": 2,
       "name": "양말",
       "price": "10000",
       "orderItemOptionGroups": [
