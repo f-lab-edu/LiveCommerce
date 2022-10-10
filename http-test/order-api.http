@@ -1,5 +1,5 @@
 ### 주문 요청 초기 저장
-POST http://localhost:8080/api/v1/orders/init
+POST http://localhost:8080/api/v1/order
 Content-Type: application/json
 
 {
@@ -15,12 +15,12 @@ Content-Type: application/json
     {
       "orderCount": 2,
       "itemId": 1,
-      "name": "티셔츠",
-      "price": "30000",
+      "name": " ",
+      "price": 30000,
       "orderItemOptionGroups": [
         {
           "ordering": 1,
-          "name": "사이즈",
+          "name": " ",
           "orderItemOptions": [
             {
               "ordering": 1,
