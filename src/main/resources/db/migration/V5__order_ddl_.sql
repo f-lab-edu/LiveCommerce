@@ -15,8 +15,8 @@ create table orders
 );
 
 
--- order_items
-create table order_line_items
+-- order_item
+create table order_line_item
 (
     id          bigint auto_increment primary key comment 'ID',
     order_id    bigint       not null comment 'order_id',
@@ -28,8 +28,8 @@ create table order_line_items
 );
 
 
--- order_item_option_groups
-create table order_item_option_groups
+-- order_item_option_group
+create table order_item_option_group
 (
     id                 bigint auto_increment primary key comment 'ID',
     order_line_item_id bigint       not null comment 'order_line_item_id',
@@ -38,8 +38,8 @@ create table order_item_option_groups
 );
 
 
--- order_item_options
-create table order_item_options
+-- order_item_option
+create table order_item_option
 (
     id                         bigint auto_increment primary key comment 'ID',
     order_item_option_group_id bigint       not null comment 'order_item_option_group_id',
