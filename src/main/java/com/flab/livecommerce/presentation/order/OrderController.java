@@ -21,7 +21,7 @@ public class OrderController {
 
     @PostMapping
     public CommonApiResponse registerOrder(@RequestBody @Valid RegisterOrderRequest request) {
-        orderManager.register(request.toCommand());
-        return CommonApiResponse.success("ok");
+        var order = orderManager.register(request.toCommand());
+        return CommonApiResponse.success(order);
     }
 }

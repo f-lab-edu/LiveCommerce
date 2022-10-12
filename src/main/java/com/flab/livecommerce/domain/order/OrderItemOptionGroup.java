@@ -38,4 +38,9 @@ public class OrderItemOptionGroup {
         this.ordering = ordering;
         this.name = name;
     }
+
+    public OrderItemOptionGroup setId(Long id) {
+        this.id = id;
+        return this;
+    }
 }

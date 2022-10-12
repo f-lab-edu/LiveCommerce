@@ -42,4 +42,8 @@ public class OrderItemOption {
         this.price = price;
     }
 
+    public OrderItemOption setId(Long id) {
+        this.id = id;
+        return this;
+    }
 }

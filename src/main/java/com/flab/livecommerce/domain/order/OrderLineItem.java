@@ -56,4 +56,9 @@ public class OrderLineItem {
         this.name = name;
         this.price = price;
     }
+
+    public OrderLineItem setId(Long id) {
+        this.id = id;
+        return this;
+    }
 }
