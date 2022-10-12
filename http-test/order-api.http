@@ -15,12 +15,12 @@ Content-Type: application/json
     {
       "orderCount": 2,
       "itemId": 1,
-      "name": " ",
+      "name": "티셔츠",
       "price": 30000,
       "orderItemOptionGroups": [
         {
           "ordering": 1,
-          "name": " ",
+          "name": "사이즈",
           "orderItemOptions": [
             {
               "ordering": 1,
@@ -46,7 +46,7 @@ Content-Type: application/json
       "orderCount": 1,
       "itemId": 2,
       "name": "양말",
-      "price": "10000",
+      "price": 10000,
       "orderItemOptionGroups": [
         {
           "ordering": 1,
@@ -61,12 +61,12 @@ Content-Type: application/json
         },
         {
           "ordering": 2,
-          "itemOptionGroupName": "컬러",
+          "name": "컬러",
           "orderItemOptions": [
             {
               "ordering": 1,
-              "itemOptionName": "RED",
-              "itemOptionPrice": 0
+              "name": "RED",
+              "price": 0
             }
           ]
         }
