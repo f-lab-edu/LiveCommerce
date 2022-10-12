@@ -4,6 +4,7 @@ import com.flab.livecommerce.application.order.command.RegisterOrderCommand;
 import com.flab.livecommerce.application.order.command.RegisterOrderLineItemCommand;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -40,6 +41,7 @@ public class RegisterOrderRequest {
     @NotBlank(message = "receiverMessage 를 작성하세요.")
     private String receiverMessage;
 
+    @Valid
     private List<RegisterOrderLineItemRequest> orderLineItems;
 
     public RegisterOrderCommand toCommand() {

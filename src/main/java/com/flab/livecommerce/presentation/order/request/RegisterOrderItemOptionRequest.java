@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RegisterOrderItemOptionRequest {
 
-    @NotNull(message = "ordering 를 작성하세요.")
+    @NotNull(message = "ordering 을 작성하세요.")
     private Integer ordering;
 
-    @NotBlank(message = "name 를 작성하세요.")
+    @NotBlank(message = "name 을 작성하세요.")
     private String name;
 
     @NotNull(message = "price 를 작성하세요.")

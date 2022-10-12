@@ -4,6 +4,7 @@ import com.flab.livecommerce.application.order.command.RegisterOrderItemOptionCo
 import com.flab.livecommerce.application.order.command.RegisterOrderItemOptionGroupCommand;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -16,12 +17,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RegisterOrderItemOptionGroupRequest {
 
-    @NotNull(message = "ordering 를 작성하세요.")
+    @NotNull(message = "ordering을 작성하세요.")
     private Integer ordering;
 
-    @NotBlank(message = "name 를 작성하세요.")
+    @NotBlank(message = "name을 작성하세요.")
     private String name;
 
+    @Valid
     private List<RegisterOrderItemOptionRequest> orderItemOptions;
 
     public RegisterOrderItemOptionGroupCommand toCommand() {

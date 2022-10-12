@@ -4,6 +4,7 @@ import com.flab.livecommerce.application.order.command.RegisterOrderItemOptionGr
 import com.flab.livecommerce.application.order.command.RegisterOrderLineItemCommand;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -22,13 +23,14 @@ public class RegisterOrderLineItemRequest {
     @NotNull(message = "itemId 를 작성하세요.")
     private Long itemId;
 
-    @NotBlank(message = "name 를 작성하세요.")
+    @NotBlank(message = "name 을 작성하세요.")
     private String name;
 
     @NotNull(message = "price 를 작성하세요.")
     private Long price;
 
-    private List<RegisterOrderItemOptionGroupRequest> registerOrderItemOptionGroups;
+    @Valid
+    private List<RegisterOrderItemOptionGroupRequest> orderItemOptionGroups;
 
     public RegisterOrderLineItemCommand toCommand() {
         return RegisterOrderLineItemCommand.builder()
@@ -41,7 +43,7 @@ public class RegisterOrderLineItemRequest {
     }
 
     public List<RegisterOrderItemOptionGroupCommand> toItemOptionGroupCommand() {
-        return this.registerOrderItemOptionGroups.stream().map(
+        return this.orderItemOptionGroups.stream().map(
             itemOptionGroupRequest -> RegisterOrderItemOptionGroupCommand.builder()
                 .ordering(itemOptionGroupRequest.getOrdering())
                 .name(itemOptionGroupRequest.getName())
