@@ -17,13 +17,6 @@ public class UserExceptionHandler {
     //TODO 응답에 빈 "" 무엇으로 할지 논의
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public CommonApiResponse processValidationError(MethodArgumentNotValidException e) {
-
-        return CommonApiResponse.fail("", e.getBindingResult().getFieldError().getDefaultMessage());
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DuplicatedEmailException.class)
     public CommonApiResponse duplicatedEmailException(DuplicatedEmailException e) {
         return CommonApiResponse.fail("", e.getMessage());
