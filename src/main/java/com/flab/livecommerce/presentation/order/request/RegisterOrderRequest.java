@@ -61,9 +61,11 @@ public class RegisterOrderRequest {
     public List<RegisterOrderLineItemCommand> toLineItemCommand() {
         return this.orderLineItems.stream().map(
             lineItemRequest -> RegisterOrderLineItemCommand.builder()
+                .itemId(lineItemRequest.getItemId())
                 .orderCount(lineItemRequest.getOrderCount())
                 .name(lineItemRequest.getName())
                 .price(lineItemRequest.getPrice())
+                .orderItemOptionGroups(lineItemRequest.toItemOptionGroupCommand())
                 .build()
         ).collect(Collectors.toList());
     }

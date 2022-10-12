@@ -32,21 +32,12 @@ public class RegisterOrderLineItemRequest {
     @Valid
     private List<RegisterOrderItemOptionGroupRequest> orderItemOptionGroups;
 
-    public RegisterOrderLineItemCommand toCommand() {
-        return RegisterOrderLineItemCommand.builder()
-            .orderCount(this.orderCount)
-            .itemId(this.itemId)
-            .name(this.name)
-            .price(this.price)
-            .orderItemOptionGroups(toItemOptionGroupCommand())
-            .build();
-    }
-
     public List<RegisterOrderItemOptionGroupCommand> toItemOptionGroupCommand() {
         return this.orderItemOptionGroups.stream().map(
             itemOptionGroupRequest -> RegisterOrderItemOptionGroupCommand.builder()
                 .ordering(itemOptionGroupRequest.getOrdering())
                 .name(itemOptionGroupRequest.getName())
+                .orderItemOptions(itemOptionGroupRequest.toItemOptionCommand())
                 .build()
         ).collect(Collectors.toList());
     }

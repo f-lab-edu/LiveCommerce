@@ -26,14 +26,6 @@ public class RegisterOrderItemOptionGroupRequest {
     @Valid
     private List<RegisterOrderItemOptionRequest> orderItemOptions;
 
-    public RegisterOrderItemOptionGroupCommand toCommand() {
-        return RegisterOrderItemOptionGroupCommand.builder()
-            .ordering(this.ordering)
-            .name(this.name)
-            .orderItemOptions(toItemOptionCommand())
-            .build();
-    }
-
     public List<RegisterOrderItemOptionCommand> toItemOptionCommand() {
         return this.orderItemOptions.stream().map(
             itemOptionRequest -> RegisterOrderItemOptionCommand.builder()
