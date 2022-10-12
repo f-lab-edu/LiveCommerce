@@ -85,4 +85,8 @@ public class Order {
         this.orderStatus = OrderStatus.ORDER_CREATED;
     }
 
+    public Order setId(Long id) {
+        this.id = id;
+        return this;
+    }
 }

@@ -6,7 +6,7 @@ public interface OrderRepository {
 
     OrderLineItem save(OrderLineItem orderLineItem);
 
-    OrderItemOptionGroup save(OrderItemOptionGroup orderItemOption);
+    OrderItemOptionGroup save(OrderItemOptionGroup orderItemOptionGroup);
 
     OrderItemOption save(OrderItemOption orderItemOption);
 }

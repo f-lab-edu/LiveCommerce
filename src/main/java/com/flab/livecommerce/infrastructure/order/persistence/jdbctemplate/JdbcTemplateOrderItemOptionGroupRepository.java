@@ -1,6 +1,6 @@
 package com.flab.livecommerce.infrastructure.order.persistence.jdbctemplate;
 
-import com.flab.livecommerce.domain.order.Order;
+import com.flab.livecommerce.domain.order.OrderItemOptionGroup;
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -9,22 +9,22 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class JdbcTemplateOrderRepository {
+public class JdbcTemplateOrderItemOptionGroupRepository {
 
     private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert jdbcInsert;
 
-    public JdbcTemplateOrderRepository(DataSource dataSource) {
+    public JdbcTemplateOrderItemOptionGroupRepository(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
-            .withTableName("orders")
+            .withTableName("order_item_option_group")
             .usingGeneratedKeyColumns("id");
     }
 
-    public Order save(Order order) {
-        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(order);
+    public OrderItemOptionGroup save(OrderItemOptionGroup orderItemOptionGroup) {
+        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(orderItemOptionGroup);
         long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
 
-        return order.setId(id);
+        return orderItemOptionGroup.setId(id);
     }
 }
