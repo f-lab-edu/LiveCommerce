@@ -2,18 +2,14 @@ package com.flab.livecommerce.application.item.command;
 
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemOptionGroup;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class RegisterItemOptionGroupCommand {
-
 
     private String name;
     private Integer ordering;
@@ -25,17 +21,17 @@ public class RegisterItemOptionGroupCommand {
     private int minimumChoice;
     //최대 선택 개수
     private int maximumChoice;
-    private List<RegisterItemOptionCommand> itemOptions = new ArrayList<>();
+    private List<RegisterItemOptionCommand> itemOptions;
 
     public ItemOptionGroup toEntity(Item item) {
         return ItemOptionGroup.builder()
             .itemId(item.getId())
-            .ordering(ordering)
-            .name(name)
-            .basic(basic)
-            .exclusive(exclusive)
-            .minimumChoice(minimumChoice)
-            .maximumChoice(maximumChoice)
+            .ordering(this.ordering)
+            .name(this.name)
+            .basic(this.basic)
+            .exclusive(this.exclusive)
+            .minimumChoice(this.minimumChoice)
+            .maximumChoice(this.maximumChoice)
             .build();
     }
 }
