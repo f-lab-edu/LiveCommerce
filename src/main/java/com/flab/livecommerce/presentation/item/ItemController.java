@@ -9,7 +9,6 @@ import java.net.URI;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Slf4j
@@ -38,11 +35,9 @@ public class ItemController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping
     public ResponseEntity registerItem(
-        @RequestPart("ItemRegisterRequest") @Valid ItemFormRequest request,
-        @RequestPart("thumbnailImg") MultipartFile thumbnailImage,
-        @RequestPart(value = "specificImg", required = false) MultipartFile[] specificImages
+        @RequestBody @Valid ItemFormRequest request
     ) {
         Item registeredItem = itemManager.register(request.toCommand());
 
@@ -52,9 +47,7 @@ public class ItemController {
             .path("/image")
             .buildAndExpand(registeredItem.getId())
             .toUri();
-        log.info("location:{}", location);
-
-        //itemImageManager.uploadItemImage(thumbnailImage, specificImages);
+        log.info("item image location:{}", location);
 
         return ResponseEntity.created(location).build();
     }

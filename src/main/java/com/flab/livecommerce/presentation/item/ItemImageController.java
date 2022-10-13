@@ -2,6 +2,8 @@ package com.flab.livecommerce.presentation.item;
 
 import com.flab.livecommerce.application.item.facade.ItemImageManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
+import java.io.IOException;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -20,10 +22,11 @@ public class ItemImageController {
 
     @PostMapping("/{itemId}/image")
     public CommonApiResponse uploadItemImage(
+        @PathVariable ("itemId") Long id,
         @RequestPart("thumbnailImg") MultipartFile thumbnailImage,
         @RequestPart(value = "specificImg", required = false) MultipartFile[] specificImages
-    ) {
-        itemImageManager.uploadItemImage(thumbnailImage, specificImages);
+    ) throws IOException {
+        itemImageManager.uploadItemImage(id, thumbnailImage, specificImages);
         return CommonApiResponse.success(null);
     }
 }

@@ -4,6 +4,8 @@ import com.flab.livecommerce.domain.item.ImageUploader;
 import com.flab.livecommerce.domain.item.ItemImage;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
 import com.flab.livecommerce.domain.item.exception.HasNoItemImagesException;
+import java.io.IOException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 public class UploadImageProcessor {
@@ -18,29 +20,21 @@ public class UploadImageProcessor {
         this.itemImageRepository = itemImageRepository;
         this.imageUploader = imageUploader;
     }
-
-    public void execute(MultipartFile thumbnailImage, MultipartFile[] specificImages) {
+    @Transactional
+    public void execute(Long itemId, MultipartFile thumbnailImage, MultipartFile[] specificImages)
+        throws IOException {
 
         if (thumbnailImage.isEmpty()) {
             throw new HasNoItemImagesException("썸네일 이미지는 필수입니다.");
         }
-        String thumbnailUrl = imageUploader.upload(thumbnailImage);
-        itemImageRepository.save(
-            ItemImage.builder()
-                .url(thumbnailUrl)
-                .isThumbnail(true)
-                .build()
-        );
+
+        ItemImage storedThumbnail = imageUploader.upload(itemId, thumbnailImage);
+        itemImageRepository.save(storedThumbnail);
 
         for (MultipartFile specificImage : specificImages) {
             if (!specificImage.isEmpty()) {
-                String specificUrl = imageUploader.upload(specificImage);
-                itemImageRepository.save(
-                    ItemImage.builder()
-                        .url(specificUrl)
-                        .isThumbnail(false)
-                        .build()
-                );
+                ItemImage storedSpecific = imageUploader.upload(itemId, specificImage);
+                itemImageRepository.save(storedSpecific);
             }
         }
     }

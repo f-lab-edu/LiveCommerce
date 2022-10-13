@@ -17,13 +17,10 @@ public class JdbcTemplateItemImageRepository {
     public JdbcTemplateItemImageRepository(DataSource dataSource) {
         this.template = new NamedParameterJdbcTemplate(dataSource);
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
-            .withTableName("item_image")
-            .usingGeneratedKeyColumns("item_id", "ordering");
+            .withTableName("item_image");
     }
-
-    // TODO ordering 추가
     public void save(ItemImage image) {
-        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(image);
-        jdbcInsert.execute(parameterSource);
+        SqlParameterSource param = new BeanPropertySqlParameterSource(image);
+        jdbcInsert.execute(param);
     }
 }
