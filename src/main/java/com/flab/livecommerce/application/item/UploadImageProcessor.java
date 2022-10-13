@@ -3,7 +3,7 @@ package com.flab.livecommerce.application.item;
 import com.flab.livecommerce.domain.item.ImageUploader;
 import com.flab.livecommerce.domain.item.ItemImage;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
-import com.flab.livecommerce.domain.item.exception.HasNoItemImagesException;
+import com.flab.livecommerce.domain.item.exception.ItemImageNotFoundException;
 import java.io.IOException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +25,7 @@ public class UploadImageProcessor {
         throws IOException {
 
         if (thumbnailImage.isEmpty()) {
-            throw new HasNoItemImagesException("썸네일 이미지는 필수입니다.");
+            throw new ItemImageNotFoundException("썸네일 이미지는 필수입니다.");
         }
 
         ItemImage storedThumbnail = imageUploader.upload(itemId, thumbnailImage);

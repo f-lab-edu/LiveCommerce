@@ -1,7 +1,11 @@
 package com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate;
 
 import com.flab.livecommerce.domain.item.Item;
+import com.flab.livecommerce.domain.item.exception.ItemNotFoundException;
 import javax.sql.DataSource;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -32,12 +36,12 @@ public class JdbcTemplateItemRepository {
 
     public void deleteById(Long id) {
         SqlParameterSource param = new MapSqlParameterSource("id", id);
-        String sql = "DELETE item, iog, io FROM item "
-            + "INNER JOIN item_option_group AS iog INNER JOIN item_option AS io "
-            + "WHERE item.id = iog.item_id AND iog.id = io.item_option_group_id "
-            + "AND item.id = :id";
-
-        template.update(sql, param);
+        String optionSql = "DELETE FROM item_option WHERE item_option.item_id = :id";
+        template.update(optionSql, param);
+        String optionGroupSql = "DELETE FROM item_option_group WHERE item_option_group.item_id = :id";
+        template.update(optionGroupSql, param);
+        String itemSql = "DELETE FROM item WHERE item.id = :id";
+        template.update(itemSql, param);
     }
 
     public void update(Item item, Long id) {
@@ -53,5 +57,20 @@ public class JdbcTemplateItemRepository {
             .addValue("stockQuantity", item.getStockQuantity());
 
         template.update(sql, param);
+    }
+
+    public Item findById(Long id) {
+        String sql = "SELECT * FROM item where id = :id";
+        try {
+            SqlParameterSource param = new MapSqlParameterSource("id", id);
+            Item item = template.queryForObject(sql, param, itemRowMapper());
+            return item;
+        } catch (EmptyResultDataAccessException e) {
+            throw new ItemNotFoundException("상품 데이터가 존재하지 않습니다.");
+        }
+    }
+
+    private RowMapper<Item> itemRowMapper() {
+        return BeanPropertyRowMapper.newInstance(Item.class);
     }
 }

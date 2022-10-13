@@ -1,5 +1,6 @@
 package com.flab.livecommerce.application.item.command;
 
+import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +27,9 @@ public class RegisterItemOptionGroupCommand {
     private int maximumChoice;
     private List<RegisterItemOptionCommand> itemOptions = new ArrayList<>();
 
-    public ItemOptionGroup toEntity(Long itemId) {
+    public ItemOptionGroup toEntity(Item item) {
         return ItemOptionGroup.builder()
-            .itemId(itemId)
+            .itemId(item.getId())
             .ordering(ordering)
             .name(name)
             .basic(basic)

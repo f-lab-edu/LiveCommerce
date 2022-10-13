@@ -34,16 +34,16 @@ public class ItemOptionSeriesServiceImpl implements ItemOptionSeriesService {
 
         return itemOptionGroupList.stream().map(
             requestItemOptionGroup -> {
-                var optionGroup = requestItemOptionGroup.toEntity(item.getId());
-                var itemOptionGroupId = itemOptionGroupRepository.save(optionGroup);
+                var optionGroup = requestItemOptionGroup.toEntity(item);
+                var itemOptionGroup = itemOptionGroupRepository.save(optionGroup);
 
                 requestItemOptionGroup.getItemOptions().forEach(
                     requestItemOption -> {
-                        var itemOption = requestItemOption.toEntity(itemOptionGroupId);
+                        var itemOption = requestItemOption.toEntity(itemOptionGroup);
                         itemOptionRepository.save(itemOption);
                     }
                 );
-                return itemOptionGroupRepository.findById(itemOptionGroupId);
+                return itemOptionGroup;
             }
         ).collect(Collectors.toList());
     }
@@ -55,7 +55,7 @@ public class ItemOptionSeriesServiceImpl implements ItemOptionSeriesService {
         if (itemOptionGroupList.isEmpty()) {
             // TODO
         }
-
+/*
         itemOptionGroupList.forEach(
             requestItemOptionGroup -> {
                 var optionGroup = requestItemOptionGroup.toEntity(itemId);
@@ -69,5 +69,7 @@ public class ItemOptionSeriesServiceImpl implements ItemOptionSeriesService {
                 );
             }
         );
+
+ */
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ItemOptionGroupRepository {
 
-    Long save(ItemOptionGroup itemOptionGroup);
+    ItemOptionGroup save(ItemOptionGroup itemOptionGroup);
 
     Long update(ItemOptionGroup optionGroup);
 

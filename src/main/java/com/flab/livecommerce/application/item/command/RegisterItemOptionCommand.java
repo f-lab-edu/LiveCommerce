@@ -1,6 +1,7 @@
 package com.flab.livecommerce.application.item.command;
 
 import com.flab.livecommerce.domain.item.ItemOption;
+import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,12 +16,13 @@ public class RegisterItemOptionCommand {
     private Integer ordering;
     private Long price;
 
-    public ItemOption toEntity(Long itemOptionGroupId) {
+    public ItemOption toEntity(ItemOptionGroup itemOptionGroup) {
         return ItemOption.builder()
-            .itemOptionGroupId(itemOptionGroupId)
+            .itemOptionGroupId(itemOptionGroup.getId())
             .ordering(ordering)
             .name(name)
             .price(price)
+            .itemId(itemOptionGroup.getItemId())
             .build();
     }
 }

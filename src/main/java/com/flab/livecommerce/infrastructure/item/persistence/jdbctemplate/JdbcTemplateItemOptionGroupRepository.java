@@ -25,9 +25,10 @@ public class JdbcTemplateItemOptionGroupRepository {
             .usingGeneratedKeyColumns("id");
     }
 
-    public Long save(ItemOptionGroup itemOptionGroup) {
+    public ItemOptionGroup save(ItemOptionGroup itemOptionGroup) {
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(itemOptionGroup);
-        return jdbcInsert.executeAndReturnKey(parameterSource).longValue();
+        long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
+        return itemOptionGroup.setId(id);
     }
 
     public Long update(ItemOptionGroup itemOptionGroup) {
@@ -46,6 +47,7 @@ public class JdbcTemplateItemOptionGroupRepository {
         template.update(sql, param);
         return itemOptionGroup.getId();
     }
+
 
     public ItemOptionGroup findById(Long itemOptionGroupId) {
         String sql = "SELECT id, item_id, name, basic, exclusive, minimum_choice, maximum_choice "

@@ -12,15 +12,18 @@ public class ItemOption {
     private Integer ordering;
     private Long price;
 
+    private Long itemId;
+
     protected ItemOption() {
     }
 
     @Builder
-    public ItemOption(Long itemOptionGroupId, String name, Integer ordering, Long price) {
+    public ItemOption(Long itemOptionGroupId, String name, Integer ordering, Long price, Long itemId) {
         this.itemOptionGroupId = itemOptionGroupId;
         this.name = name;
         this.ordering = ordering;
         this.price = price;
+        this.itemId = itemId;
     }
 
     public ItemOption setId(Long id) {

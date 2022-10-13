@@ -2,6 +2,7 @@ package com.flab.livecommerce.infrastructure.item.persistence;
 
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemRepository;
+import com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate.JdbcTemplateItemImageRepository;
 import com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate.JdbcTemplateItemRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +11,9 @@ public class ItemRepositoryAdapter implements ItemRepository {
 
     private final JdbcTemplateItemRepository itemRepository;
 
-    public ItemRepositoryAdapter(JdbcTemplateItemRepository itemRepository) {
+    public ItemRepositoryAdapter(
+        JdbcTemplateItemRepository itemRepository
+    ) {
         this.itemRepository = itemRepository;
     }
 
@@ -21,7 +24,7 @@ public class ItemRepositoryAdapter implements ItemRepository {
 
     @Override
     public Item findById(Long id) {
-        return null;
+        return itemRepository.findById(id);
     }
 
     @Override
@@ -33,5 +36,4 @@ public class ItemRepositoryAdapter implements ItemRepository {
     public void update(Item item, Long id) {
         this.itemRepository.update(item, id);
     }
-
 }

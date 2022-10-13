@@ -16,7 +16,7 @@ public class ItemOptionGroupRepositoryAdapter implements ItemOptionGroupReposito
     }
 
     @Override
-    public Long save(ItemOptionGroup itemOptionGroup) {
+    public ItemOptionGroup save(ItemOptionGroup itemOptionGroup) {
         return itemOptionGroupRepository.save(itemOptionGroup);
     }
 

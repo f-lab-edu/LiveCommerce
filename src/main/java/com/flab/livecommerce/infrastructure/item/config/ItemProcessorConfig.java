@@ -1,5 +1,6 @@
 package com.flab.livecommerce.infrastructure.item.config;
 
+import com.flab.livecommerce.application.item.DeleteItemProcessor;
 import com.flab.livecommerce.application.item.RegisterItemProcessor;
 import com.flab.livecommerce.application.item.SearchItemProcessor;
 import com.flab.livecommerce.application.item.UpdateItemProcessor;
@@ -37,6 +38,14 @@ public class ItemProcessorConfig {
             itemRepository,
             itemOptionSeriesService
         );
+    }
+
+    @Bean
+    public DeleteItemProcessor deleteItemProcessor(
+        ItemRepository itemRepository,
+        ItemImageRepository itemImageRepository
+    ) {
+        return new DeleteItemProcessor(itemRepository, itemImageRepository);
     }
 
     @Bean

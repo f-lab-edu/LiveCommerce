@@ -18,4 +18,9 @@ public class ItemImageRepositoryAdapter implements ItemImageRepository {
     public void save(ItemImage itemImage) {
         itemImageRepository.save(itemImage);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        itemImageRepository.deleteAllById(id);
+    }
 }

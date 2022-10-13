@@ -20,7 +20,7 @@ public class UpdateItemProcessor {
 
     @Transactional
     public void execute(RegisterItemCommand command, Long id) {
-        itemRepository.update(command.toEntity(), id);
+        itemRepository.update(command.toEntity(),id);
         itemOptionSeriesService.update(command, id);
     }
 }
