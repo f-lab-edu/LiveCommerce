@@ -12,9 +12,5 @@
     VALUES (
     #{userId}, #{payMethod}, #{receiverName}, #{receiverPhoneNumber}, #{receiverZipcode},
     #{receiverAddress}, #{receiverDetailAddress}, #{receiverMessage}, #{orderedAt}, #{orderStatus})
-
-    <selectKey keyProperty="order" resultType="com.flab.livecommerce.domain.order.Order" order="AFTER">
-      SELECT * FROM orders WHERE id = (SELECT LAST_INSERT_ID())
-    </selectKey>
   </insert>
 </mapper>

@@ -8,19 +8,20 @@ import com.flab.livecommerce.domain.order.OrderRepository;
 import com.flab.livecommerce.infrastructure.order.persistence.jdbctemplate.JdbcTemplateOrderItemOptionGroupRepository;
 import com.flab.livecommerce.infrastructure.order.persistence.jdbctemplate.JdbcTemplateOrderItemOptionRepository;
 import com.flab.livecommerce.infrastructure.order.persistence.jdbctemplate.JdbcTemplateOrderLineItemRepository;
-import com.flab.livecommerce.infrastructure.order.persistence.jdbctemplate.JdbcTemplateOrderRepository;
+import com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class OrderRepositoryAdapter implements OrderRepository {
 
-    private final JdbcTemplateOrderRepository orderRepository;
+    private final MyBatisOrderRepository orderRepository;
+
     private final JdbcTemplateOrderLineItemRepository orderLineItemRepository;
     private final JdbcTemplateOrderItemOptionGroupRepository orderItemOptionGroupRepository;
     private final JdbcTemplateOrderItemOptionRepository orderItemOptionRepository;
 
     public OrderRepositoryAdapter(
-        JdbcTemplateOrderRepository orderRepository,
+        MyBatisOrderRepository orderRepository,
         JdbcTemplateOrderLineItemRepository orderLineItemRepository,
         JdbcTemplateOrderItemOptionGroupRepository orderItemOptionGroupRepository,
         JdbcTemplateOrderItemOptionRepository orderItemOptionRepository
@@ -33,7 +34,8 @@ public class OrderRepositoryAdapter implements OrderRepository {
 
     @Override
     public Order save(Order order) {
-        return this.orderRepository.save(order);
+        this.orderRepository.save(order);
+        return order;
     }
 
     @Override

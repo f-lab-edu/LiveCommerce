@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MyBatisOrderRepository {
 
-    Order save(Order order);
+    void save(Order order);
 }
