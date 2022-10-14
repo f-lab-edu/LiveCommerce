@@ -51,4 +51,9 @@ public class JdbcTemplateItemImageRepository {
 
         template.update(sql, param);
     }
+
+    public void updateOrdering(Long itemId, List<Integer> orderList) {
+        String sql = "UPDATE item_image SET ordering= ? WHERE item_id= ?";
+        // TODO
+    }
 }

@@ -3,15 +3,15 @@ package com.flab.livecommerce.application.item;
 import com.flab.livecommerce.domain.item.ImageUploader;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
 import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
 
-public class DeleteImageProcessor {
+public class UpdateImagePriorityProcessor {
 
     private final ItemImageRepository itemImageRepository;
+
     private final ImageUploader imageUploader;
 
 
-    public DeleteImageProcessor(
+    public UpdateImagePriorityProcessor(
         ItemImageRepository itemImageRepository,
         ImageUploader imageUploader
     ) {
@@ -20,8 +20,7 @@ public class DeleteImageProcessor {
     }
 
 
-    @Transactional
     public void execute(Long itemId, List<Integer> orderList) {
-        itemImageRepository.deleteAll(itemId, orderList);
+        itemImageRepository.updateOrdering(itemId, orderList);
     }
 }

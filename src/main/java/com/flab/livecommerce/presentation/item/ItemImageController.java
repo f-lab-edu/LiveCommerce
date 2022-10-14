@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -25,7 +26,7 @@ public class ItemImageController {
 
     @PostMapping("/{itemId}/image")
     public CommonApiResponse uploadItemImage(
-        @PathVariable ("itemId") Long id,
+        @PathVariable("itemId") Long id,
         @RequestPart("thumbnailImg") MultipartFile thumbnailImage,
         @RequestPart(value = "specificImg", required = false) MultipartFile[] specificImages
     ) throws IOException {
@@ -37,16 +38,20 @@ public class ItemImageController {
     @DeleteMapping("/{itemId}/image")
     public CommonApiResponse deleteItemImage(
         @PathVariable("itemId") Long itemId,
-        @RequestBody List<Integer> ordering
+        @RequestBody List<Integer> orderList
     ) {
-        itemImageManager.delete(itemId, ordering);
+        itemImageManager.delete(itemId, orderList);
         return CommonApiResponse.success(null);
     }
 
 
+    @PutMapping("/{itemId}/image/priority")
+    public void updateImagePriority(
+        @PathVariable("itemId") Long itemId,
+        @RequestBody List<Integer> ordering
+    ) {
+        itemImageManager.updatePriority(itemId, ordering);
+    }
+
     // 이미지 추가 (기존 이미지, 순서 유지)
-
-
-    // 이미지 순서 바꾸기
-
 }

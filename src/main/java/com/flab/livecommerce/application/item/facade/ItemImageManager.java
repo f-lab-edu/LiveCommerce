@@ -1,6 +1,7 @@
 package com.flab.livecommerce.application.item.facade;
 
 import com.flab.livecommerce.application.item.DeleteImageProcessor;
+import com.flab.livecommerce.application.item.UpdateImagePriorityProcessor;
 import com.flab.livecommerce.application.item.UploadImageProcessor;
 import java.io.IOException;
 import java.util.List;
@@ -13,13 +14,17 @@ public class ItemImageManager {
     private final UploadImageProcessor uploadImageProcessor;
     private final DeleteImageProcessor deleteImageProcessor;
 
+    private final UpdateImagePriorityProcessor updateImagePriorityProcessor;
+
 
     public ItemImageManager(
         UploadImageProcessor uploadImageProcessor,
-        DeleteImageProcessor deleteImageProcessor
+        DeleteImageProcessor deleteImageProcessor,
+        UpdateImagePriorityProcessor updateImagePriorityProcessor
     ) {
         this.uploadImageProcessor = uploadImageProcessor;
         this.deleteImageProcessor = deleteImageProcessor;
+        this.updateImagePriorityProcessor = updateImagePriorityProcessor;
     }
 
     public void upload(Long itemId, MultipartFile thumbnailImage, MultipartFile[] specificImages)
@@ -27,7 +32,11 @@ public class ItemImageManager {
         uploadImageProcessor.execute(itemId, thumbnailImage, specificImages);
     }
 
-    public void delete(Long itemId, List<Integer> ordering) {
-        deleteImageProcessor.execute(itemId, ordering);
+    public void delete(Long itemId, List<Integer> orderList) {
+        deleteImageProcessor.execute(itemId, orderList);
+    }
+
+    public void updatePriority(Long itemId, List<Integer> orderList) {
+        updateImagePriorityProcessor.execute(itemId, orderList);
     }
 }
