@@ -4,6 +4,8 @@ import com.flab.livecommerce.domain.item.ImageUploader;
 import com.flab.livecommerce.domain.item.ItemImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,6 +13,7 @@ public class LocalUploader implements ImageUploader {
 
     /*
      * 임의의 로컬 경로
+     * // TODO 경로 변경
      */
     private static final String LOCAL_PATH = "C:/study/";
 
@@ -32,6 +35,11 @@ public class LocalUploader implements ImageUploader {
         }
     }
 
+    @Override
+    public void deleteAll(List<String> deletedPath) {
+
+    }
+
     private static String getRandomFilename(MultipartFile image) {
         String originalFilename = image.getOriginalFilename();
         String uploadFileName =
@@ -39,10 +47,6 @@ public class LocalUploader implements ImageUploader {
         return uploadFileName;
     }
 
-    @Override
-    public void deleteAll() {
-
-    }
 
 
 }

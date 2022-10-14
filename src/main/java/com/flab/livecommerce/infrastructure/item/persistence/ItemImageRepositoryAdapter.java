@@ -3,6 +3,7 @@ package com.flab.livecommerce.infrastructure.item.persistence;
 import com.flab.livecommerce.domain.item.ItemImage;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
 import com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate.JdbcTemplateItemImageRepository;
+import java.util.List;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,11 +17,16 @@ public class ItemImageRepositoryAdapter implements ItemImageRepository {
 
     @Override
     public void save(ItemImage itemImage) {
-        itemImageRepository.save(itemImage);
+        this.itemImageRepository.save(itemImage);
     }
 
     @Override
     public void deleteById(Long id) {
-        itemImageRepository.deleteAllById(id);
+        this.itemImageRepository.deleteAllById(id);
+    }
+
+    @Override
+    public void deleteAll(Long id, List<Integer> ordering) {
+        this.itemImageRepository.deleteAll(id, ordering);
     }
 }

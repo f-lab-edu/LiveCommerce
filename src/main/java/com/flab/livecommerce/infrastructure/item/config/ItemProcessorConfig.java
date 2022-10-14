@@ -49,13 +49,6 @@ public class ItemProcessorConfig {
     }
 
     @Bean
-    public UploadImageProcessor uploadImageProcessor(
-        ItemImageRepository itemImageRepository
-    ) {
-        return new UploadImageProcessor(itemImageRepository, new LocalUploader());
-    }
-
-    @Bean
     public SearchItemProcessor searchItemProcessor(
         ItemRepository itemRepository
     ) {

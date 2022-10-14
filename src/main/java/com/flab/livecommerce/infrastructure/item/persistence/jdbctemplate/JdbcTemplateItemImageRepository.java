@@ -1,7 +1,9 @@
 package com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate;
 
 import com.flab.livecommerce.domain.item.ItemImage;
+import java.util.List;
 import javax.sql.DataSource;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -20,6 +22,16 @@ public class JdbcTemplateItemImageRepository {
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
             .withTableName("item_image");
     }
+
+    private static RowMapper<ItemImage> getItemImageRowMapper() {
+        return (rs, rowNum) -> new ItemImage(
+            rs.getLong("item_id"),
+            rs.getInt("ordering"),
+            rs.getString("name"),
+            rs.getString("url")
+        );
+    }
+
     public void save(ItemImage image) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(image);
         jdbcInsert.execute(param);
@@ -29,5 +41,14 @@ public class JdbcTemplateItemImageRepository {
         SqlParameterSource param = new MapSqlParameterSource("id", id);
         String sql = "DELETE FROM item_image WHERE item_image.item_id = :id";
         template.update(sql, param);
+    }
+
+    public void deleteAll(Long id, List<Integer> ordering) {
+        SqlParameterSource param = new MapSqlParameterSource()
+            .addValue("id", id)
+            .addValue("ordering", ordering);
+        String sql = "DELETE FROM item_image AS ii WHERE ii.item_id = :id AND ii.ordering IN (:ordering)";
+
+        template.query(sql, param, getItemImageRowMapper());
     }
 }
