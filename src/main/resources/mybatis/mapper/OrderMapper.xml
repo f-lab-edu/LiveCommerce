@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+  namespace="com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderRepository">
+
+  <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO orders (user_id, pay_method, receiver_name, receiver_phone_number, receiver_zipcode,
+    receiver_address, receiver_detail_address, receiver_message, ordered_at, order_status)
+
+    VALUES (
+    #{userId}, #{payMethod}, #{receiverName}, #{receiverPhoneNumber}, #{receiverZipcode},
+    #{receiverAddress}, #{receiverDetailAddress}, #{receiverMessage}, #{orderedAt}, #{orderStatus})
+
+    <selectKey keyProperty="order" resultType="com.flab.livecommerce.domain.order.Order" order="AFTER">
+      SELECT * FROM orders WHERE id = (SELECT LAST_INSERT_ID())
+    </selectKey>
+  </insert>
+</mapper>
