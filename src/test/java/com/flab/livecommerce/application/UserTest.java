@@ -15,10 +15,11 @@ import com.flab.livecommerce.infrastructure.user.TokenRepositoryAdapter;
 import com.flab.livecommerce.infrastructure.user.UserRepositoryAdapter;
 import com.flab.livecommerce.infrastructure.user.encryption.SecurityPasswordEncoder;
 import com.flab.livecommerce.infrastructure.user.generator.NonInfoTokenGenerator;
-import com.flab.livecommerce.infrastructure.user.persistence.inmemory.InMemoryTokenRepository;
 import com.flab.livecommerce.infrastructure.user.persistence.inmemory.InMemoryUserRepository;
+import com.flab.livecommerce.infrastructure.user.persistence.redis.RedisTokenRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -42,7 +43,7 @@ class UserTest {
             "test"
         );
         tokenGenerator = new NonInfoTokenGenerator();
-        tokenRepository = new TokenRepositoryAdapter(new InMemoryTokenRepository());
+        tokenRepository = new TokenRepositoryAdapter(new RedisTokenRepository(new RedisTemplate<>()));
     }
 
     @Test
