@@ -7,9 +7,7 @@ import com.flab.livecommerce.domain.item.exception.ItemNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -64,12 +62,17 @@ public class JdbcTemplateItemRepository {
         return item.setId(id);
     }
 
+    /*
+     * findById 조회 코드가 필요하여 변경된 엔티티 변수를 적용하여 사용
+     * TODO 병합 시 주의하여 병합할 것
+     */
+
     public Item findById(Long id) {
 
-        String sql = "select * from item i "
-            + "join item_option_group iog on i.id = iog.item_id "
-            + "join item_option io on iog.id = io.item_option_group_id "
-            + "where i.id = :id";
+        String sql = "SELECT * FROM item i "
+            + "JOIN item_option_group iog ON i.id = iog.item_id "
+            + "JOIN item_option io ON iog.id = io.item_option_group_id "
+            + "WHERE i.id = :id";
 
         Map<String, Object> param = Map.of("id", id);
         Item item = template.query(sql, param, resultSetExtractor());
@@ -129,9 +132,5 @@ public class JdbcTemplateItemRepository {
             }
             return item;
         });
-    }
-
-    private RowMapper<Item> itemRowMapper() {
-        return BeanPropertyRowMapper.newInstance(Item.class);
     }
 }

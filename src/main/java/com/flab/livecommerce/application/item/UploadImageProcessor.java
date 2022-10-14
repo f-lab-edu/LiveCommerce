@@ -20,6 +20,7 @@ public class UploadImageProcessor {
         this.itemImageRepository = itemImageRepository;
         this.imageUploader = imageUploader;
     }
+
     @Transactional
     public void execute(Long itemId, MultipartFile thumbnailImage, MultipartFile[] specificImages)
         throws IOException {
@@ -31,9 +32,10 @@ public class UploadImageProcessor {
         ItemImage storedThumbnail = imageUploader.upload(itemId, thumbnailImage);
         itemImageRepository.save(storedThumbnail);
 
-        for (MultipartFile specificImage : specificImages) {
-            if (!specificImage.isEmpty()) {
-                ItemImage storedSpecific = imageUploader.upload(itemId, specificImage);
+        for (int i = 1; i <= specificImages.length; i++) {
+            if (!specificImages[i-1].isEmpty()) {
+                ItemImage storedSpecific = imageUploader.upload(itemId, specificImages[i-1]);
+                storedSpecific.setOrdering(i);
                 itemImageRepository.save(storedSpecific);
             }
         }

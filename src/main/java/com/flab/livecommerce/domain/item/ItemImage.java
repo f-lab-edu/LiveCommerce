@@ -24,4 +24,8 @@ public class ItemImage {
         this.name = name;
         this.url = url;
     }
+
+    public void setOrdering(int ordering) {
+        this.ordering = ordering;
+    }
 }
