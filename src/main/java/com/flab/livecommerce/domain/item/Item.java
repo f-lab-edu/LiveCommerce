@@ -23,10 +23,13 @@ public class Item {
     /*
     // 모델 번호
     private int modelNumber;
-     */
+    */
 
     //옵션 그룹
     private List<ItemOptionGroup> itemOptionGroups = new ArrayList<>();
+
+    protected Item() {
+    }
 
     @Builder
     public Item(
@@ -34,8 +37,7 @@ public class Item {
         String description,
         Integer price,
         Integer salesPrice,
-        Integer stockQuantity,
-        int modelNumber
+        Integer stockQuantity
     ) {
         this.name = name;
         this.description = description;
@@ -46,6 +48,11 @@ public class Item {
 
     public Item setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public Item addItemOptionGroup(ItemOptionGroup itemOptionGroup) {
+        this.itemOptionGroups.add(itemOptionGroup);
         return this;
     }
 }

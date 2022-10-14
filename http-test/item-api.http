@@ -35,7 +35,7 @@ Content-Type: application/json
       ]
     },
     {
-      "ordering": 1,
+      "ordering": 2,
       "name": "컬러",
       "basic": true,
       "exclusive": false,

@@ -1,14 +1,19 @@
 package com.flab.livecommerce.infrastructure.item;
 
-import com.flab.livecommerce.application.item.command.RegisterItemCommand;
+import com.flab.livecommerce.application.item.command.ItemFormCommand;
+import com.flab.livecommerce.application.item.command.ItemOptionGroupFormCommand;
 import com.flab.livecommerce.domain.item.Item;
+import com.flab.livecommerce.domain.item.ItemOption;
 import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import com.flab.livecommerce.domain.item.ItemOptionGroupRepository;
 import com.flab.livecommerce.domain.item.ItemOptionRepository;
 import com.flab.livecommerce.domain.item.ItemOptionSeriesService;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ItemOptionSeriesServiceImpl implements ItemOptionSeriesService {
 
@@ -25,7 +30,7 @@ public class ItemOptionSeriesServiceImpl implements ItemOptionSeriesService {
 
 
     @Override
-    public List<ItemOptionGroup> save(RegisterItemCommand command, Item item) {
+    public List<ItemOptionGroup> save(ItemFormCommand command, Item item) {
         var itemOptionGroupList = command.getItemOptionGroup();
 
         if (itemOptionGroupList.isEmpty()) {
@@ -49,27 +54,40 @@ public class ItemOptionSeriesServiceImpl implements ItemOptionSeriesService {
     }
 
     @Override
-    public void update(RegisterItemCommand command, Long itemId) {
+    public void update(ItemFormCommand command, Item item) {
         var itemOptionGroupList = command.getItemOptionGroup();
+        var originalOptionGroupList = item.getItemOptionGroups();
 
-        if (itemOptionGroupList.isEmpty()) {
-            // TODO
-        }
-/*
+
+        var itemOptionGroupMap =
+            IntStream.range(0, itemOptionGroupList.size())
+                .boxed()
+                .collect(Collectors.toMap(originalOptionGroupList::get, itemOptionGroupList::get));
+
+        var itemOptionMap = new HashMap<Long, ItemOption>();
+
+        itemOptionGroupMap.forEach((k, v) -> {
+            itemOptionGroupRepository.update(v.toEntity(item), k.getId());
+        });
+
         itemOptionGroupList.forEach(
             requestItemOptionGroup -> {
-                var optionGroup = requestItemOptionGroup.toEntity(itemId);
-                var itemOptionGroupId = itemOptionGroupRepository.update(optionGroup);
+                var optionGroup = requestItemOptionGroup.toEntity(item);
+                var itemOptionGroup = itemOptionGroupRepository.save(optionGroup);
 
                 requestItemOptionGroup.getItemOptions().forEach(
                     requestItemOption -> {
-                        var itemOption = requestItemOption.toEntity(itemOptionGroupId);
-                        itemOptionRepository.update(itemOption);
+                        var itemOption = requestItemOption.toEntity(itemOptionGroup);
+
+                        //itemOptionMap.put(, itemOption);
                     }
                 );
+                itemOptionMap.forEach((k, v) -> {
+                    itemOptionRepository.update(v, k);
+                });
             }
         );
 
- */
+
     }
 }

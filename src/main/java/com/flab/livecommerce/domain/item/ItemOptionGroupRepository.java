@@ -7,7 +7,7 @@ public interface ItemOptionGroupRepository {
 
     ItemOptionGroup save(ItemOptionGroup itemOptionGroup);
 
-    Long update(ItemOptionGroup optionGroup);
+    ItemOptionGroup update(ItemOptionGroup optionGroup, Long optionGroupId);
 
     ItemOptionGroup findById(Long itemOptionGroupId);
 }

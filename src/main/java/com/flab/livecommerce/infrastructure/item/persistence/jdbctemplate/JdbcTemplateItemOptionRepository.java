@@ -29,12 +29,13 @@ public class JdbcTemplateItemOptionRepository {
         return itemOption.setId(id);
     }
 
-    public void update(ItemOption itemOption) {
+    public void update(ItemOption itemOption, Long optionId) {
         String sql = "UPDATE item_option "
-            + "SET item_option_group_id=:itemOptionGroupId, ordering=:ordering, name=:name, price=:price "
+            + "SET ordering=:ordering, name=:name, price=:price "
             + "WHERE id=:id";
+
         SqlParameterSource param = new MapSqlParameterSource()
-            .addValue("id", itemOption.getId())
+            .addValue("id", optionId)
             .addValue("itemOptionGroupId", itemOption.getItemOptionGroupId())
             .addValue("ordering", itemOption.getOrdering())
             .addValue("name", itemOption.getName())

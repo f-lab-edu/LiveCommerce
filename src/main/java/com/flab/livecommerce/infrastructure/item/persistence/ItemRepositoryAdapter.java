@@ -33,7 +33,7 @@ public class ItemRepositoryAdapter implements ItemRepository {
     }
 
     @Override
-    public void update(Item item, Long id) {
-        this.itemRepository.update(item, id);
+    public Item update(Item item, Long id) {
+        return this.itemRepository.update(item, id);
     }
 }

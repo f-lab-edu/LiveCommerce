@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RegisterItemOptionCommand {
+public class ItemOptionFormCommand {
 
     private String name;
     private Integer ordering;

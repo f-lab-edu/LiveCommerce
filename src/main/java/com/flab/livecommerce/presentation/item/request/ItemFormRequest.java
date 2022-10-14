@@ -1,7 +1,7 @@
 package com.flab.livecommerce.presentation.item.request;
 
-import com.flab.livecommerce.application.item.command.RegisterItemCommand;
-import com.flab.livecommerce.application.item.command.RegisterItemOptionGroupCommand;
+import com.flab.livecommerce.application.item.command.ItemFormCommand;
+import com.flab.livecommerce.application.item.command.ItemOptionGroupFormCommand;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -37,10 +37,10 @@ public class ItemFormRequest {
     @NotNull(message = "상품 모델명을 작성하세요.")
     private int modelNumber;
      */
-    private List<RegisterItemOptionGroupCommand> itemOptionGroups;
+    private List<ItemOptionGroupFormCommand> itemOptionGroups;
 
-    public RegisterItemCommand toCommand() {
-        return new RegisterItemCommand(
+    public ItemFormCommand toCommand() {
+        return new ItemFormCommand(
             name,
             price,
             salesPrice,

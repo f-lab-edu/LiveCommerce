@@ -4,5 +4,5 @@ public interface ItemOptionRepository {
 
     ItemOption save(ItemOption itemOption);
 
-    void update(ItemOption itemOption);
+    void update(ItemOption itemOption, Long optionId);
 }

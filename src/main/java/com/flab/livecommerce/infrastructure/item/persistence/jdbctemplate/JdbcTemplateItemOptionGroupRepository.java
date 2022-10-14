@@ -31,12 +31,14 @@ public class JdbcTemplateItemOptionGroupRepository {
         return itemOptionGroup.setId(id);
     }
 
-    public Long update(ItemOptionGroup itemOptionGroup) {
-        String sql = "UPDATE item_option_group SET item_id=:itemId, name=:name, ordering=:ordering, "
+    public ItemOptionGroup update(ItemOptionGroup itemOptionGroup, Long id) {
+        String sql = "UPDATE item_option_group "
+            + "SET name=:name, ordering=:ordering, "
             + "basic=:basic, exclusive=:exclusive, minimum_choice=:minimumChoice, maximum_choice=:maximumChoice "
             + "WHERE id=:id";
+
         SqlParameterSource param = new MapSqlParameterSource()
-            .addValue("id", itemOptionGroup.getId())
+            .addValue("id", id)
             .addValue("itemId", itemOptionGroup.getItemId())
             .addValue("name", itemOptionGroup.getName())
             .addValue("ordering", itemOptionGroup.getOrdering())
@@ -44,8 +46,9 @@ public class JdbcTemplateItemOptionGroupRepository {
             .addValue("exclusive", itemOptionGroup.isExclusive())
             .addValue("minimumChoice", itemOptionGroup.getMinimumChoice())
             .addValue("maximumChoice", itemOptionGroup.getMaximumChoice());
+
         template.update(sql, param);
-        return itemOptionGroup.getId();
+        return itemOptionGroup;
     }
 
 

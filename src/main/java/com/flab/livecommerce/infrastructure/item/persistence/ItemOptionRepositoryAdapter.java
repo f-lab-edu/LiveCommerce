@@ -20,7 +20,7 @@ public class ItemOptionRepositoryAdapter implements ItemOptionRepository {
     }
 
     @Override
-    public void update(ItemOption itemOption) {
-        itemOptionRepository.update(itemOption);
+    public void update(ItemOption itemOption, Long optionId) {
+        itemOptionRepository.update(itemOption, optionId);
     }
 }

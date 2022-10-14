@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RegisterItemOptionGroupCommand {
+public class ItemOptionGroupFormCommand {
 
 
     private String name;
@@ -25,7 +25,7 @@ public class RegisterItemOptionGroupCommand {
     private int minimumChoice;
     //최대 선택 개수
     private int maximumChoice;
-    private List<RegisterItemOptionCommand> itemOptions = new ArrayList<>();
+    private List<ItemOptionFormCommand> itemOptions = new ArrayList<>();
 
     public ItemOptionGroup toEntity(Item item) {
         return ItemOptionGroup.builder()

@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class RegisterItemCommand {
+public class ItemFormCommand {
 
     private String name;
     private Integer price;
@@ -17,7 +17,7 @@ public class RegisterItemCommand {
     /*
     private int modelNumber;
      */
-    private List<RegisterItemOptionGroupCommand> itemOptionGroup;
+    private List<ItemOptionGroupFormCommand> itemOptionGroup;
 
     public Item toEntity() {
         return Item.builder()

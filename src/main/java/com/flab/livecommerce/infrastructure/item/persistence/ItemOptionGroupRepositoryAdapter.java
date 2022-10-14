@@ -21,8 +21,8 @@ public class ItemOptionGroupRepositoryAdapter implements ItemOptionGroupReposito
     }
 
     @Override
-    public Long update(ItemOptionGroup itemOptionGroup) {
-        return itemOptionGroupRepository.update(itemOptionGroup);
+    public ItemOptionGroup update(ItemOptionGroup itemOptionGroup, Long id) {
+        return itemOptionGroupRepository.update(itemOptionGroup, id);
     }
 
     @Override

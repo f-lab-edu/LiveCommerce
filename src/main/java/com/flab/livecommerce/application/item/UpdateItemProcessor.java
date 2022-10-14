@@ -1,6 +1,7 @@
 package com.flab.livecommerce.application.item;
 
-import com.flab.livecommerce.application.item.command.RegisterItemCommand;
+import com.flab.livecommerce.application.item.command.ItemFormCommand;
+import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemOptionSeriesService;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +20,9 @@ public class UpdateItemProcessor {
     }
 
     @Transactional
-    public void execute(RegisterItemCommand command, Long id) {
-        itemRepository.update(command.toEntity(),id);
-        itemOptionSeriesService.update(command, id);
+    public void execute(ItemFormCommand command, Long id) {
+        Item originalItem = itemRepository.findById(id);
+        itemRepository.update(command.toEntity(), id);
+        itemOptionSeriesService.update(command, originalItem);
     }
 }

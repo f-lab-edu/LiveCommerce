@@ -1,6 +1,6 @@
 package com.flab.livecommerce.application.item;
 
-import com.flab.livecommerce.application.item.command.RegisterItemCommand;
+import com.flab.livecommerce.application.item.command.ItemFormCommand;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemOptionSeriesService;
 import com.flab.livecommerce.domain.item.ItemRepository;
@@ -20,7 +20,7 @@ public class RegisterItemProcessor {
     }
 
     @Transactional
-    public Item execute(RegisterItemCommand command) {
+    public Item execute(ItemFormCommand command) {
         var item = itemRepository.save(command.toEntity());
         itemOptionSeriesService.save(command, item);
 

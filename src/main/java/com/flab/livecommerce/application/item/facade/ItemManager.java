@@ -4,7 +4,7 @@ import com.flab.livecommerce.application.item.DeleteItemProcessor;
 import com.flab.livecommerce.application.item.RegisterItemProcessor;
 import com.flab.livecommerce.application.item.SearchItemProcessor;
 import com.flab.livecommerce.application.item.UpdateItemProcessor;
-import com.flab.livecommerce.application.item.command.RegisterItemCommand;
+import com.flab.livecommerce.application.item.command.ItemFormCommand;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class ItemManager {
         this.itemRepository = itemRepository;
     }
 
-    public Item register(RegisterItemCommand command) {
+    public Item register(ItemFormCommand command) {
         return registerItemProcessor.execute(command);
     }
 
@@ -45,7 +45,7 @@ public class ItemManager {
         deleteItemProcessor.execute(id);
     }
 
-    public void update(RegisterItemCommand command, Long id) {
+    public void update(ItemFormCommand command, Long id) {
         updateItemProcessor.execute(command, id);
     }
 }
