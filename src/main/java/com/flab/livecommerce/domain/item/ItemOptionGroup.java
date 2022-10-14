@@ -2,6 +2,7 @@ package com.flab.livecommerce.domain.item;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -52,5 +53,11 @@ public class ItemOptionGroup {
     public ItemOptionGroup setId(Long id) {
         this.id = id;
         return this;
+    }
+
+    public List<Long> getOptionId() {
+        return this.itemOptions.stream()
+            .map(ItemOption::getId)
+            .collect(Collectors.toList());
     }
 }

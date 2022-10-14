@@ -4,14 +4,12 @@ import com.flab.livecommerce.application.item.DeleteItemProcessor;
 import com.flab.livecommerce.application.item.RegisterItemProcessor;
 import com.flab.livecommerce.application.item.SearchItemProcessor;
 import com.flab.livecommerce.application.item.UpdateItemProcessor;
-import com.flab.livecommerce.application.item.UploadImageProcessor;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
 import com.flab.livecommerce.domain.item.ItemOptionGroupRepository;
 import com.flab.livecommerce.domain.item.ItemOptionRepository;
 import com.flab.livecommerce.domain.item.ItemOptionSeriesService;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import com.flab.livecommerce.infrastructure.item.ItemOptionSeriesServiceImpl;
-import com.flab.livecommerce.infrastructure.item.image.LocalUploader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -53,5 +53,4 @@ public class ItemImageController {
         itemImageManager.updatePriority(itemId, ordering);
     }
 
-    // 이미지 추가 (기존 이미지, 순서 유지)
 }

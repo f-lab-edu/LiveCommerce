@@ -23,6 +23,7 @@ public class UpdateItemProcessor {
     public void execute(ItemFormCommand command, Long id) {
         Item originalItem = itemRepository.findById(id);
         itemRepository.update(command.toEntity(), id);
+
         itemOptionSeriesService.update(command, originalItem);
     }
 }
