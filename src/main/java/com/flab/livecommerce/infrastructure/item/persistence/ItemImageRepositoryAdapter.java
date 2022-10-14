@@ -26,7 +26,7 @@ public class ItemImageRepositoryAdapter implements ItemImageRepository {
     }
 
     @Override
-    public void deleteAll(Long id, List<Integer> ordering) {
-        this.itemImageRepository.deleteAll(id, ordering);
+    public void deleteAll(Long itemId, List<Integer> ordering) {
+        this.itemImageRepository.deleteAll(itemId, ordering);
     }
 }

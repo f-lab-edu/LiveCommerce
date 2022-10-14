@@ -63,7 +63,7 @@ public class JdbcTemplateItemRepository {
     }
 
     /*
-     * findById 조회 코드가 필요하여 변경된 엔티티 변수를 적용하여 사용
+     * findById 조회 코드가 필요하여 변경된 엔티티 변수를 넣어서 사용
      * TODO 병합 시 주의하여 병합할 것
      */
 

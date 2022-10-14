@@ -43,12 +43,12 @@ public class JdbcTemplateItemImageRepository {
         template.update(sql, param);
     }
 
-    public void deleteAll(Long id, List<Integer> ordering) {
+    public void deleteAll(Long itemId, List<Integer> ordering) {
         SqlParameterSource param = new MapSqlParameterSource()
-            .addValue("id", id)
+            .addValue("itemId", itemId)
             .addValue("ordering", ordering);
-        String sql = "DELETE FROM item_image AS ii WHERE ii.item_id = :id AND ii.ordering IN (:ordering)";
+        String sql = "DELETE FROM item_image AS ii WHERE ii.item_id = :itemId AND ii.ordering IN (:ordering)";
 
-        template.query(sql, param, getItemImageRowMapper());
+        template.update(sql, param);
     }
 }

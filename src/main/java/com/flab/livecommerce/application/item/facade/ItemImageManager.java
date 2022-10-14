@@ -27,7 +27,7 @@ public class ItemImageManager {
         uploadImageProcessor.execute(itemId, thumbnailImage, specificImages);
     }
 
-    public void delete(Long id, List<Integer> ordering) {
-        deleteImageProcessor.execute(id, ordering);
+    public void delete(Long itemId, List<Integer> ordering) {
+        deleteImageProcessor.execute(itemId, ordering);
     }
 }

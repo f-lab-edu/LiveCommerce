@@ -34,13 +34,12 @@ public class ItemImageController {
     }
 
 
-    // 이미지 삭제 (단일, 다수 삭제 가능)
     @DeleteMapping("/{itemId}/image")
     public CommonApiResponse deleteItemImage(
-        @PathVariable("itemId") Long id,
+        @PathVariable("itemId") Long itemId,
         @RequestBody List<Integer> ordering
     ) {
-        itemImageManager.delete(id, ordering);
+        itemImageManager.delete(itemId, ordering);
         return CommonApiResponse.success(null);
     }
 
