@@ -5,6 +5,7 @@ import com.flab.livecommerce.domain.item.ItemRepository;
 import com.flab.livecommerce.domain.order.Order;
 import com.flab.livecommerce.domain.order.OrderItemSeriesService;
 import com.flab.livecommerce.domain.order.OrderLineItem;
+import com.flab.livecommerce.domain.order.OrderRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,11 +13,11 @@ import java.util.stream.Collectors;
 public class OrderItemSeriesServiceImpl implements OrderItemSeriesService {
 
     private final ItemRepository itemRepository;
-    private final OrderRepositoryAdapter orderRepository;
+    private final OrderRepository orderRepository;
 
     public OrderItemSeriesServiceImpl(
         ItemRepository itemRepository,
-        OrderRepositoryAdapter orderRepositoryAdapter
+        OrderRepository orderRepositoryAdapter
     ) {
         this.itemRepository = itemRepository;
         this.orderRepository = orderRepositoryAdapter;
