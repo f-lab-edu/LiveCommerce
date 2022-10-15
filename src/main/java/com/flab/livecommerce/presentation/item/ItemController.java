@@ -8,8 +8,6 @@ import com.flab.livecommerce.presentation.item.request.ItemFormRequest;
 import java.net.URI;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -34,22 +31,21 @@ public class ItemController {
         this.itemImageManager = itemImageManager;
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity registerItem(
+    public CommonApiResponse registerItem(
         @RequestBody @Valid ItemFormRequest request
     ) {
         Item registeredItem = itemManager.register(request.toCommand());
 
-        URI location = ServletUriComponentsBuilder
+        URI contentUrl = ServletUriComponentsBuilder
             .fromCurrentRequest()
             .path("/{id}")
             .path("/image")
             .buildAndExpand(registeredItem.getId())
             .toUri();
-        log.info("item image location:{}", location);
+        log.info("item image location:{}", contentUrl);
 
-        return ResponseEntity.created(location).build();
+        return CommonApiResponse.success(contentUrl);
     }
 
     @GetMapping("/{itemId}")
