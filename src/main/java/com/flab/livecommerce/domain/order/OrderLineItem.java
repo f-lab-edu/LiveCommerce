@@ -28,7 +28,8 @@ public class OrderLineItem {
         Long shopId,
         Long itemId,
         String name,
-        Long price
+        Long price,
+        List<OrderItemOptionGroup> orderItemOptionGroups
     ) {
         if (orderId == null) {
             throw new InvalidParameterException("OrderLineItem.order");
@@ -55,6 +56,7 @@ public class OrderLineItem {
         this.itemId = itemId;
         this.name = name;
         this.price = price;
+        this.orderItemOptionGroups = orderItemOptionGroups;
     }
 
     public OrderLineItem setId(Long id) {

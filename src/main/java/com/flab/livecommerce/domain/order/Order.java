@@ -49,7 +49,8 @@ public class Order {
         String receiverZipcode,
         String receiverAddress,
         String receiverDetailAddress,
-        String receiverMessage
+        String receiverMessage,
+        List<OrderLineItem> orderLineItems
     ) {
         if (userId == null) {
             throw new InvalidParameterException("Order.userId");
@@ -83,6 +84,7 @@ public class Order {
         this.receiverMessage = receiverMessage;
         this.orderedAt = LocalDateTime.now();
         this.orderStatus = OrderStatus.ORDER_CREATED;
+        this.orderLineItems = orderLineItems;
     }
 
     public Order setId(Long id) {
