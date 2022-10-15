@@ -60,8 +60,8 @@ public class ItemOptionSeriesServiceImpl implements ItemOptionSeriesService {
                 .boxed()
                 .collect(Collectors.toMap(optionGroupIdList::get, requestItemOptionGroups::get));
 
-        itemOptionGroupMap.forEach((optionGroupId, OptionGroupRequest) -> {
-            var optionGroup = OptionGroupRequest.toEntity(item);
+        itemOptionGroupMap.forEach((optionGroupId, optiongrouprequest) -> {
+            var optionGroup = optiongrouprequest.toEntity(item);
             itemOptionGroupRepository.update(optionGroup, optionGroupId);
 
             var requestItemOptions = optionGroup.getItemOptions();
@@ -70,7 +70,7 @@ public class ItemOptionSeriesServiceImpl implements ItemOptionSeriesService {
             var itemOptionMap = IntStream.range(0, requestItemOptions.size()).boxed()
                 .collect(Collectors.toMap(optionIdList::get, requestItemOptions::get));
 
-            itemOptionMap.forEach((optionId, optionRequest)-> {
+            itemOptionMap.forEach((optionId, optionRequest) -> {
                 itemOptionRepository.update(optionRequest, optionId);
             });
         });
