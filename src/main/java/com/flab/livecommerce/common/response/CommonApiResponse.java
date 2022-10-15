@@ -19,6 +19,12 @@ public class CommonApiResponse<T> {
         return new CommonApiResponse<>(false, null, error);
     }
 
+    public static CommonApiResponse fail(ErrorCode errorCode) {
+        return new CommonApiResponse(
+            false, null, new Error(errorCode.name(), errorCode.getMessage())
+        );
+    }
+
     public static CommonApiResponse fail(String code, String message) {
         return new CommonApiResponse<>(false, null, new Error(code, message));
     }

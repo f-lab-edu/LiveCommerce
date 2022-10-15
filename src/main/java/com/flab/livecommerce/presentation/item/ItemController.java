@@ -50,8 +50,8 @@ public class ItemController {
 
     @GetMapping("/{itemId}")
     public CommonApiResponse searchItem(@PathVariable("itemId") Long id) {
-        var item = itemManager.search(id);
-        return CommonApiResponse.success(item);
+        var itemInfo = itemManager.search(id);
+        return CommonApiResponse.success(itemInfo);
     }
 
     @PutMapping("/{itemId}")

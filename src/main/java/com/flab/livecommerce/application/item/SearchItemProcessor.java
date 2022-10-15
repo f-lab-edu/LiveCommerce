@@ -12,8 +12,6 @@ public class SearchItemProcessor {
     }
 
     public Item execute(Long id) {
-        var item = itemRepository.findById(id);
-
-        return item;
+        return itemRepository.findById(id);
     }
 }

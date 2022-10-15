@@ -6,7 +6,6 @@ import com.flab.livecommerce.domain.user.exception.InvalidUserException;
 import com.flab.livecommerce.domain.user.exception.PasswordNotMatchedException;
 import com.flab.livecommerce.domain.user.exception.UnauthorizedUserException;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -15,13 +14,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class UserExceptionHandler {
 
     //TODO 응답에 빈 "" 무엇으로 할지 논의
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public CommonApiResponse processValidationError(MethodArgumentNotValidException e) {
-
-        return CommonApiResponse.fail("", e.getBindingResult().getFieldError().getDefaultMessage());
-    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DuplicatedEmailException.class)

@@ -1,16 +1,17 @@
 package com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate;
 
+import com.flab.livecommerce.common.exception.EntityNotFoundException;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemOption;
 import com.flab.livecommerce.domain.item.ItemOptionGroup;
-import com.flab.livecommerce.domain.item.exception.ItemNotFoundException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
@@ -18,16 +19,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class JdbcTemplateItemRepository {
 
-    private final NamedParameterJdbcTemplate template;
+    private final JdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert jdbcInsert;
 
     public JdbcTemplateItemRepository(DataSource dataSource) {
-        this.template = new NamedParameterJdbcTemplate(dataSource);
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
             .withTableName("item") // item 테이블에 삽입
             .usingGeneratedKeyColumns("id"); // id 컬럼의 값을 key 로 반환
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
-
 
     public Item save(Item item) {
         SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(item);
@@ -39,11 +39,11 @@ public class JdbcTemplateItemRepository {
     public void deleteById(Long id) {
         SqlParameterSource param = new MapSqlParameterSource("id", id);
         String optionSql = "DELETE FROM item_option WHERE item_option.item_id = :id";
-        template.update(optionSql, param);
+        jdbcTemplate.update(optionSql, param);
         String optionGroupSql = "DELETE FROM item_option_group WHERE item_option_group.item_id = :id";
-        template.update(optionGroupSql, param);
+        jdbcTemplate.update(optionGroupSql, param);
         String itemSql = "DELETE FROM item WHERE item.id = :id";
-        template.update(itemSql, param);
+        jdbcTemplate.update(itemSql, param);
     }
 
     public Item update(Item item, Long id) {
@@ -58,30 +58,30 @@ public class JdbcTemplateItemRepository {
             .addValue("salesPrice", item.getSalesPrice())
             .addValue("stockQuantity", item.getStockQuantity());
 
-        template.update(sql, param);
+        jdbcTemplate.update(sql, param);
         return item.setId(id);
     }
 
-    /*
-     * findById 조회 코드가 필요하여 변경된 엔티티 변수를 넣어서 사용
-     * TODO 병합 시 주의하여 병합할 것
-     */
-
     public Item findById(Long id) {
-
         String sql = "SELECT * FROM item i "
             + "JOIN item_option_group iog ON i.id = iog.item_id "
             + "JOIN item_option io ON iog.id = io.item_option_group_id "
             + "WHERE i.id = :id";
 
-        Map<String, Object> param = Map.of("id", id);
-        Item item = template.query(sql, param, resultSetExtractor());
+        Item item = jdbcTemplate.query(sql, resultSetExtractor(), id);
 
         if (item == null) {
-            throw new ItemNotFoundException("해당하는 상품이 존재하지 않습니다.");
+            throw new EntityNotFoundException();
         }
-
         return item;
+    }
+
+
+    public List<ItemOptionGroup> findItemOptionSeries(Item item) {
+        //todo 구현 필요
+        var itemOptionGroupsList = item.getItemOptionGroups();
+
+        return null;
     }
 
     private ResultSetExtractor<Item> resultSetExtractor() {
@@ -94,6 +94,7 @@ public class JdbcTemplateItemRepository {
             while (rs.next()) {
                 if (item == null) {
                     item = new Item(
+                        rs.getLong("shop_id"),
                         rs.getString("i.name"),
                         rs.getString("description"),
                         rs.getInt("price"),

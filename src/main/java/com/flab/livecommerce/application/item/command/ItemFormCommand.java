@@ -9,18 +9,18 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ItemFormCommand {
 
+    private Long shopId;
     private String name;
     private Integer price;
     private Integer salesPrice;
     private String description;
     private Integer stockQuantity;
-    /*
-    private int modelNumber;
-     */
+
     private List<ItemOptionGroupFormCommand> itemOptionGroup;
 
     public Item toEntity() {
         return Item.builder()
+            .shopId(shopId)
             .name(name)
             .description(description)
             .price(price)

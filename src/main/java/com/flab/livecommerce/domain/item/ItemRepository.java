@@ -1,8 +1,7 @@
 package com.flab.livecommerce.domain.item;
 
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-@Repository
 public interface ItemRepository {
 
     Item save(Item item);
@@ -12,4 +11,7 @@ public interface ItemRepository {
     void deleteById(Long id);
 
     Item update(Item item, Long id);
+
+    List<ItemOptionGroup> findItemOptionSeries(Item item);
+
 }

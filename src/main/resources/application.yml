@@ -7,15 +7,20 @@ spring:
     username: test
     password: 12345678!
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   flyway:
     user: test
     password: 12345678!
     url: jdbc:mysql://127.0.0.1:13306/livecommerce?characterEncoding=UTF-8
+
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
 
+  redis:
+    host: localhost
+    port: 6379
 
 mybatis:
   type-aliases-package: com.flab.livecommerce.domain

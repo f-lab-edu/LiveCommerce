@@ -33,8 +33,8 @@ public class UploadImageProcessor {
         itemImageRepository.save(storedThumbnail);
 
         for (int i = 1; i <= specificImages.length; i++) {
-            if (!specificImages[i-1].isEmpty()) {
-                ItemImage storedSpecific = imageUploader.upload(itemId, specificImages[i-1]);
+            if (!specificImages[i - 1].isEmpty()) {
+                ItemImage storedSpecific = imageUploader.upload(itemId, specificImages[i - 1]);
                 storedSpecific.setOrdering(i);
                 itemImageRepository.save(storedSpecific);
             }

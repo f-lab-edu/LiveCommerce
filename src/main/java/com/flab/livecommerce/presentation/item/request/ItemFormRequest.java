@@ -16,6 +16,8 @@ import org.hibernate.validator.constraints.Range;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ItemFormRequest {
 
+    private Long shopId;
+
     @NotBlank(message = "상품명을 작성하세요.")
     private String name;
 
@@ -33,14 +35,11 @@ public class ItemFormRequest {
     @Range(min = 1, message = "재고 수량은 1개 이상이어야 합니다.")
     private Integer stockQuantity;
 
-    /*
-    @NotNull(message = "상품 모델명을 작성하세요.")
-    private int modelNumber;
-     */
     private List<ItemOptionGroupFormCommand> itemOptionGroups;
 
     public ItemFormCommand toCommand() {
         return new ItemFormCommand(
+            shopId,
             name,
             price,
             salesPrice,
