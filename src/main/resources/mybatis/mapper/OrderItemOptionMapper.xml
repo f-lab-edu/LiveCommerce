@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+  namespace="com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderItemOptionRepository">
+
+  <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO order_item_option (order_item_option_group_id, ordering, name, price)
+
+    VALUES (#{orderItemOptionGroupId}, #{ordering}, #{name}, #{price})
+  </insert>
+</mapper>

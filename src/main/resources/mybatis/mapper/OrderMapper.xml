@@ -7,10 +7,11 @@
 
   <insert id="save" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO orders (user_id, pay_method, receiver_name, receiver_phone_number, receiver_zipcode,
-    receiver_address, receiver_detail_address, receiver_message, ordered_at, order_status)
+                        receiver_address, receiver_detail_address, receiver_message, ordered_at,
+                        order_status)
 
-    VALUES (
-    #{userId}, #{payMethod}, #{receiverName}, #{receiverPhoneNumber}, #{receiverZipcode},
-    #{receiverAddress}, #{receiverDetailAddress}, #{receiverMessage}, #{orderedAt}, #{orderStatus})
+    VALUES (#{userId}, #{payMethod}, #{receiverName}, #{receiverPhoneNumber}, #{receiverZipcode},
+            #{receiverAddress}, #{receiverDetailAddress}, #{receiverMessage}, #{orderedAt},
+            #{orderStatus})
   </insert>
 </mapper>
