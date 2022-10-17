@@ -18,10 +18,10 @@ public class Coupon {
     // 쿠폰 이름
     private String name;
 
-    // 사용 기간
-    private LocalDateTime endDate;
+    // 쿠폰 사용 만료 날짜
+    private LocalDateTime expirationDate;
 
-    // 최소 주문 금액
+    // 최소 상품 주문 금액
     private Integer minPrice;
 
     // 할인 금액
@@ -31,7 +31,7 @@ public class Coupon {
     private CouponStatus couponStatus;
 
     public enum CouponStatus {
-        DEFAULT("쿠폰 사용 전"), USED("쿠폰 사용 완료");
+        AVAILABLE("쿠폰 사용 가능"), USED("쿠폰 사용 완료");
         private final String description;
 
         CouponStatus(String description) {
@@ -44,7 +44,7 @@ public class Coupon {
         Long id,
         Long categoryId,
         String name,
-        LocalDateTime endDate,
+        LocalDateTime expirationDate,
         Integer minPrice,
         Integer discountPrice,
         CouponStatus couponStatus
@@ -52,7 +52,7 @@ public class Coupon {
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;
-        this.endDate = endDate;
+        this.expirationDate = expirationDate;
         this.minPrice = minPrice;
         this.discountPrice = discountPrice;
         this.couponStatus = couponStatus;
