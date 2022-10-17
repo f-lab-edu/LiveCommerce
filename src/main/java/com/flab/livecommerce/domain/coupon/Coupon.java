@@ -1,4 +1,4 @@
-package com.flab.livecommerce.domain;
+package com.flab.livecommerce.domain.coupon;
 
 import java.time.LocalDateTime;
 import lombok.Builder;
@@ -21,6 +21,9 @@ public class Coupon {
     // 사용 기간
     private LocalDateTime endDate;
 
+    // 최소 주문 금액
+    private Integer minPrice;
+
     // 할인 금액
     private Integer discountPrice;
 
@@ -42,6 +45,7 @@ public class Coupon {
         Long categoryId,
         String name,
         LocalDateTime endDate,
+        Integer minPrice,
         Integer discountPrice,
         CouponStatus couponStatus
     ) {
@@ -49,6 +53,7 @@ public class Coupon {
         this.categoryId = categoryId;
         this.name = name;
         this.endDate = endDate;
+        this.minPrice = minPrice;
         this.discountPrice = discountPrice;
         this.couponStatus = couponStatus;
     }
