@@ -9,4 +9,6 @@ public interface OrderRepository {
     OrderItemOptionGroup save(OrderItemOptionGroup orderItemOptionGroup);
 
     OrderItemOption save(OrderItemOption orderItemOption);
+
+    Order findById(Long id);
 }

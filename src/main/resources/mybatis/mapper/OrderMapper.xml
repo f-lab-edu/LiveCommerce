@@ -3,7 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
-  namespace="com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderRepository">
+  namespace="com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderMapper">
 
   <insert id="save" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO orders (user_id, pay_method, receiver_name, receiver_phone_number, receiver_zipcode,
@@ -14,4 +14,57 @@
             #{receiverAddress}, #{receiverDetailAddress}, #{receiverMessage}, #{orderedAt},
             #{orderStatus})
   </insert>
+
+  <select id="findById" resultMap="order">
+    select *
+    from orders o
+           inner join order_line_item oli on o.id = oli.order_id
+           inner join order_item_option_group oiog on oli.id = oiog.order_line_item_id
+           inner join order_item_option oio on oiog.id = oio.order_item_option_group_id
+    where o.id = #{id}
+  </select>
+
+
+  <resultMap id="order" type="com.flab.livecommerce.domain.order.Order">
+    <result property="id" column="orderId"/>
+    <result property="userId" column="userId"/>
+    <result property="payMethod" column="payMethod"/>
+    <result property="receiverName" column="receiverName"/>
+    <result property="receiverPhoneNumber" column="receiverPhoneNumber"/>
+    <result property="receiverZipcode" column="receiverZipcode"/>
+    <result property="receiverAddress" column="receiverAddress"/>
+    <result property="receiverDetailAddress" column="receiverDetailAddress"/>
+    <result property="receiverMessage" column="receiverMessage"/>
+    <result property="orderedAt" column="orderedAt"/>
+    <result property="orderStatus" column="orderStatus"/>
+    <collection property="orderLineItems" resultMap="lineItem"/>
+  </resultMap>
+
+  <resultMap id="lineItem" type="com.flab.livecommerce.domain.order.OrderLineItem">
+    <result property="id" column="lineItemId"/>
+    <result property="orderId" column="lineItemOrderId"/>
+    <result property="orderCount" column="orderCount"/>
+    <result property="shopId" column="shopId"/>
+    <result property="itemId" column="itemId"/>
+    <result property="name" column="lineItemName"/>
+    <result property="price" column="lineItemPrice"/>
+    <collection property="orderItemOptionGroups" resultMap="itemOptionGroup"/>
+  </resultMap>
+
+  <resultMap id="itemOptionGroup" type="com.flab.livecommerce.domain.order.OrderItemOptionGroup">
+    <result property="id" column="optionGroupId"/>
+    <result property="orderLineItemId" column="orderLineItemId"/>
+    <result property="ordering" column="optionGroupOrdering"/>
+    <result property="name" column="optionGroupName"/>
+    <collection property="orderItemOptions" resultMap="itemOption"/>
+  </resultMap>
+
+  <resultMap id="itemOption" type="com.flab.livecommerce.domain.order.OrderItemOption">
+    <result property="id" column="optionId"/>
+    <result property="orderItemOptionGroupId" column="orderItemOptionGroupId"/>
+    <result property="ordering" column="optionOrdering"/>
+    <result property="name" column="optionName"/>
+    <result property="price" column="optionPrice"/>
+  </resultMap>
+
 </mapper>

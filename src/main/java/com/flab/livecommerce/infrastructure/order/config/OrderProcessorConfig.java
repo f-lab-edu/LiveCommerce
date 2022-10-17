@@ -1,6 +1,7 @@
 package com.flab.livecommerce.infrastructure.order.config;
 
 import com.flab.livecommerce.application.order.RegisterOrderProcessor;
+import com.flab.livecommerce.application.order.SearchOrderProcessor;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import com.flab.livecommerce.domain.order.OrderItemSeriesService;
 import com.flab.livecommerce.domain.order.OrderRepository;
@@ -20,6 +21,13 @@ public class OrderProcessorConfig {
             orderRepository,
             orderItemSeriesService
         );
+    }
+
+    @Bean
+    public SearchOrderProcessor searchOrderProcessor(
+        OrderRepository orderRepository
+    ) {
+        return new SearchOrderProcessor(orderRepository);
     }
 
     @Bean
