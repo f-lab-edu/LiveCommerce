@@ -55,6 +55,6 @@ public class Coupon {
         this.expirationDate = expirationDate;
         this.minPrice = minPrice;
         this.discountPrice = discountPrice;
-        this.couponStatus = couponStatus;
+        this.couponStatus = CouponStatus.AVAILABLE;
     }
 }

@@ -2,7 +2,9 @@ package com.flab.livecommerce.application.coupon;
 
 import com.flab.livecommerce.domain.coupon.Coupon;
 import com.flab.livecommerce.domain.coupon.CouponRepository;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GetCouponsProcessor {
 
@@ -13,7 +15,10 @@ public class GetCouponsProcessor {
     }
 
     public List<Coupon> execute() {
-        List<Coupon> coupons = couponRepository.getAllCoupons();
+        List<Coupon> allCoupons = couponRepository.getAllCoupons();
+        List<Coupon> coupons = allCoupons.stream()
+            .filter(coupon -> coupon.getExpirationDate().isAfter(LocalDateTime.now()))
+            .collect(Collectors.toList());
         return coupons;
     }
 }
