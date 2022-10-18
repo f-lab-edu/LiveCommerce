@@ -15,6 +15,8 @@ public class Coupon {
 
     private Long id;
 
+    private Long discountPolicyId;
+
     // 쿠폰 이름
     private String name;
 
@@ -32,17 +34,17 @@ public class Coupon {
     @Builder
     public Coupon(
         Long id,
+        Long discountPolicyId,
         String name,
         LocalDateTime expirationDate,
         Long discountPrice,
-        CouponStatus couponStatus,
-        DiscountPolicy discountPolicy) {
+        CouponStatus couponStatus) {
         this.id = id;
+        this.discountPolicyId = discountPolicyId;
         this.name = name;
         this.expirationDate = expirationDate;
         this.discountPrice = discountPrice;
-        this.couponStatus = CouponStatus.AVAILABLE;
-        this.discountPolicy = discountPolicy;
+        this.couponStatus = couponStatus;
     }
 
     public Long calculateDiscountPrice(OrderLineItem orderLineItem) {
