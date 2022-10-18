@@ -1,7 +1,7 @@
 package com.flab.livecommerce.infrastructure.coupon.condition;
 
-import com.flab.livecommerce.domain.coupon.Coupon;
 import com.flab.livecommerce.domain.coupon.DiscountCondition;
+import com.flab.livecommerce.domain.order.OrderLineItem;
 
 /*
  * 특정 카테고리 조건
@@ -9,7 +9,7 @@ import com.flab.livecommerce.domain.coupon.DiscountCondition;
 public class CategoryCondition implements DiscountCondition {
 
     @Override
-    public boolean isSatisfied(Coupon coupon) {
+    public boolean isSatisfiedBy(OrderLineItem orderLineItem) {
         return false;
     }
 }

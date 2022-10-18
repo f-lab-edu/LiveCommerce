@@ -1,9 +1,9 @@
 package com.flab.livecommerce.infrastructure.coupon.policy;
 
-import com.flab.livecommerce.domain.coupon.DiscountPolicy;
+import com.flab.livecommerce.domain.coupon.DefaultDiscountPolicy;
 import com.flab.livecommerce.domain.order.OrderLineItem;
 
-public class PercentDiscountPolicy implements DiscountPolicy {
+public class PercentDiscountPolicy extends DefaultDiscountPolicy {
 
     private double percent;
 
@@ -11,9 +11,9 @@ public class PercentDiscountPolicy implements DiscountPolicy {
         this.percent = percent;
     }
 
+
     @Override
-    public Long calculateDiscountAmount(OrderLineItem orderLineItem) {
-        double doublePrice = (orderLineItem.getPrice() * percent) * orderLineItem.getOrderCount();
-        return (long) doublePrice;
+    protected Long getDiscountAmount(OrderLineItem orderLineItem) {
+        return (long) (percent * orderLineItem.getPrice() * orderLineItem.getOrderCount());
     }
 }
