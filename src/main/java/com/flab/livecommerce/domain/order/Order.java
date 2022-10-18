@@ -16,7 +16,6 @@ public class Order {
     private Long id;
     private Long userId;
     private String payMethod;
-    private List<OrderLineItem> orderLineItems = new ArrayList<>();
 
     //배송 정보
     private String receiverName;
@@ -29,6 +28,8 @@ public class Order {
     //주문 생성시간
     private LocalDateTime orderedAt;
     private OrderStatus orderStatus;
+
+    private List<OrderLineItem> orderLineItems = new ArrayList<>();
 
     public enum OrderStatus {
         ORDER_CREATED("주문 생성"),
@@ -52,27 +53,27 @@ public class Order {
         String receiverMessage,
         List<OrderLineItem> orderLineItems
     ) {
-        if (userId == null) {
-            throw new InvalidParameterException("Order.userId");
-        }
-        if (receiverName == null && receiverName.length() == 0) {
-            throw new InvalidParameterException("Order.receiverName");
-        }
-        if (receiverPhoneNumber == null && receiverPhoneNumber.length() == 0) {
-            throw new InvalidParameterException("Order.payMethod");
-        }
-        if (receiverZipcode == null && receiverZipcode.length() == 0) {
-            throw new InvalidParameterException("Order.payMethod");
-        }
-        if (receiverAddress == null && receiverAddress.length() == 0) {
-            throw new InvalidParameterException("Order.payMethod");
-        }
-        if (receiverDetailAddress == null && receiverDetailAddress.length() == 0) {
-            throw new InvalidParameterException("Order.payMethod");
-        }
-        if (receiverMessage == null && receiverMessage.length() == 0) {
-            throw new InvalidParameterException("Order.payMethod");
-        }
+//        if (userId == null) {
+//            throw new InvalidParameterException("Order.userId");
+//        }
+//        if (receiverName == null && receiverName.length() == 0) {
+//            throw new InvalidParameterException("Order.receiverName");
+//        }
+//        if (receiverPhoneNumber == null && receiverPhoneNumber.length() == 0) {
+//            throw new InvalidParameterException("Order.payMethod");
+//        }
+//        if (receiverZipcode == null && receiverZipcode.length() == 0) {
+//            throw new InvalidParameterException("Order.payMethod");
+//        }
+//        if (receiverAddress == null && receiverAddress.length() == 0) {
+//            throw new InvalidParameterException("Order.payMethod");
+//        }
+//        if (receiverDetailAddress == null && receiverDetailAddress.length() == 0) {
+//            throw new InvalidParameterException("Order.payMethod");
+//        }
+//        if (receiverMessage == null && receiverMessage.length() == 0) {
+//            throw new InvalidParameterException("Order.payMethod");
+//        }
 
         this.userId = userId;
         this.payMethod = payMethod;

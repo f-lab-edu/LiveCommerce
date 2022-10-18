@@ -15,56 +15,85 @@
             #{orderStatus})
   </insert>
 
-  <select id="findById" resultMap="order">
+  <!--  <select id="findById" resultMap="orderResultMap">-->
+  <!--    select o.user_id               AS o_userId,-->
+  <!--           o.pay_method            AS o_payMethod,-->
+  <!--           oli.order_count         AS oli_orderCount,-->
+  <!--           oli.shop_id             AS oli_shopId,-->
+  <!--           oiog.name               AS olog_name,-->
+  <!--           oiog.ordering           AS olog_ordering,-->
+  <!--           oio.name                AS oio_name,-->
+  <!--           oio.price               AS oio_price-->
+  <!--    from orders o-->
+  <!--           inner join order_line_item oli on o.id = oli.order_id-->
+  <!--           inner join order_item_option_group oiog on oli.id = oiog.order_line_item_id-->
+  <!--           inner join order_item_option oio on oiog.id = oio.order_item_option_group_id-->
+  <!--    where o.id = #{id}-->
+  <!--  </select>-->
+
+  <select id="findOne" resultType="order">
     select *
     from orders o
-           inner join order_line_item oli on o.id = oli.order_id
-           inner join order_item_option_group oiog on oli.id = oiog.order_line_item_id
-           inner join order_item_option oio on oiog.id = oio.order_item_option_group_id
     where o.id = #{id}
   </select>
 
+  <select id="findById" resultMap="orderResultMap">
+    select o.user_id                 AS o_userId,
+           o.pay_method              AS o_payMethod,
+           o.receiver_name           AS o_receiverName,
+           o.receiver_phone_number   AS o_receiverPhoneNumber,
+           o.receiver_zipcode        AS o_receiverZipcode,
+           o.receiver_address        AS o_receiverAddress,
+           o.receiver_detail_address AS o_receiverDetailAddress,
+           o.receiver_message        AS o_receiverMessage,
+           o.ordered_at              AS o_orderedAt,
+           o.order_status            AS o_orderStatus,
+           oli.order_id              AS oli_orderId,
+           oli.order_count           AS oli_orderCount,
+           oli.shop_id               AS oli_shopId,
+           oli.item_id               AS oli_itemId,
+           oli.name                  AS oli_name,
+           oli.price                 AS oli_price
+    from orders o
+           inner join order_line_item oli on o.id = oli.order_id
+    where o.id = #{id};
+  </select>
 
-  <resultMap id="order" type="com.flab.livecommerce.domain.order.Order">
-    <result property="id" column="orderId"/>
-    <result property="userId" column="userId"/>
-    <result property="payMethod" column="payMethod"/>
-    <result property="receiverName" column="receiverName"/>
-    <result property="receiverPhoneNumber" column="receiverPhoneNumber"/>
-    <result property="receiverZipcode" column="receiverZipcode"/>
-    <result property="receiverAddress" column="receiverAddress"/>
-    <result property="receiverDetailAddress" column="receiverDetailAddress"/>
-    <result property="receiverMessage" column="receiverMessage"/>
-    <result property="orderedAt" column="orderedAt"/>
-    <result property="orderStatus" column="orderStatus"/>
-    <collection property="orderLineItems" resultMap="lineItem"/>
-  </resultMap>
 
-  <resultMap id="lineItem" type="com.flab.livecommerce.domain.order.OrderLineItem">
-    <result property="id" column="lineItemId"/>
-    <result property="orderId" column="lineItemOrderId"/>
-    <result property="orderCount" column="orderCount"/>
-    <result property="shopId" column="shopId"/>
-    <result property="itemId" column="itemId"/>
-    <result property="name" column="lineItemName"/>
-    <result property="price" column="lineItemPrice"/>
-    <collection property="orderItemOptionGroups" resultMap="itemOptionGroup"/>
-  </resultMap>
-
-  <resultMap id="itemOptionGroup" type="com.flab.livecommerce.domain.order.OrderItemOptionGroup">
-    <result property="id" column="optionGroupId"/>
-    <result property="orderLineItemId" column="orderLineItemId"/>
-    <result property="ordering" column="optionGroupOrdering"/>
-    <result property="name" column="optionGroupName"/>
-    <collection property="orderItemOptions" resultMap="itemOption"/>
-  </resultMap>
-
-  <resultMap id="itemOption" type="com.flab.livecommerce.domain.order.OrderItemOption">
-    <result property="id" column="optionId"/>
-    <result property="orderItemOptionGroupId" column="orderItemOptionGroupId"/>
-    <result property="ordering" column="optionOrdering"/>
-    <result property="name" column="optionName"/>
-    <result property="price" column="optionPrice"/>
+  <resultMap id="orderResultMap" type="Order">
+    <id property="id" column="o_id"/>
+    <result property="userId" column="o_userId"/>
+    <result property="payMethod" column="o_payMethod"/>
+    <result property="receiverName" column="o_receiverName"/>
+    <result property="receiverPhoneNumber" column="o_receiverPhoneNumber"/>
+    <result property="receiverZipcode" column="o_receiverZipcode"/>
+    <result property="receiverAddress" column="o_receiverAddress"/>
+    <result property="receiverDetailAddress" column="o_receiverDetailAddress"/>
+    <result property="receiverMessage" column="o_receiverMessage"/>
+    <result property="orderedAt" column="o_orderedAt"/>
+    <result property="orderStatus" column="o_orderStatus"/>
+    <collection property="orderLineItems" ofType="OrderLineItem">
+      <id property="id" column="oli_id"/>
+      <result property="orderId" column="oli_orderId"/>
+      <result property="orderCount" column="oli_orderCount"/>
+      <result property="shopId" column="oli_shopId"/>
+      <result property="itemId" column="oli_itemId"/>
+      <result property="name" column="oli_name"/>
+      <result property="price" column="oli_price"/>
+      <collection property="orderItemOptionGroups" ofType="OrderItemOptionGroup">
+        <id property="id" column="olog_id"/>
+        <result property="orderLineItemId" column="olog_orderLineItemId"/>
+        <result property="ordering" column="olog_ordering"/>
+        <result property="name" column="olog_name"/>
+        <collection property="orderItemOptions" ofType="OrderItemOption">
+          <id property="id" column="oio_id"/>
+          <result property="orderItemOptionGroupId" column="oio_orderItemOptionGroupId"/>
+          <result property="ordering" column="oio_ordering"/>
+          <result property="name" column="oio_name"/>
+          <result property="price" column="oio_price"/>
+        </collection>
+      </collection>
+    </collection>
   </resultMap>
 
 </mapper>
