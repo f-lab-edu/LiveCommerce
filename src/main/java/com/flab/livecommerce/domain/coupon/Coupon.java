@@ -13,16 +13,11 @@ public class Coupon {
 
     private Long id;
 
-    private Long categoryId;
-
     // 쿠폰 이름
     private String name;
 
     // 쿠폰 사용 만료 날짜
     private LocalDateTime expirationDate;
-
-    // 최소 상품 주문 금액
-    private Integer minPrice;
 
     // 할인 금액
     private Integer discountPrice;
@@ -42,18 +37,14 @@ public class Coupon {
     @Builder
     public Coupon(
         Long id,
-        Long categoryId,
         String name,
         LocalDateTime expirationDate,
-        Integer minPrice,
         Integer discountPrice,
         CouponStatus couponStatus
     ) {
         this.id = id;
-        this.categoryId = categoryId;
         this.name = name;
         this.expirationDate = expirationDate;
-        this.minPrice = minPrice;
         this.discountPrice = discountPrice;
         this.couponStatus = CouponStatus.AVAILABLE;
     }
