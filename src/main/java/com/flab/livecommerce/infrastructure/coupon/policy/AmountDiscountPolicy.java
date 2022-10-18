@@ -1,5 +1,6 @@
-package com.flab.livecommerce.domain.coupon;
+package com.flab.livecommerce.infrastructure.coupon.policy;
 
+import com.flab.livecommerce.domain.coupon.DiscountPolicy;
 import com.flab.livecommerce.domain.order.OrderLineItem;
 
 public class AmountDiscountPolicy implements DiscountPolicy {

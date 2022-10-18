@@ -22,6 +22,7 @@ public class Coupon {
     // 할인 금액
     private Integer discountPrice;
 
+
     // 상태
     private CouponStatus couponStatus;
 
