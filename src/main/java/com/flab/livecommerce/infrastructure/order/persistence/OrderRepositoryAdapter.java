@@ -2,13 +2,8 @@ package com.flab.livecommerce.infrastructure.order.persistence;
 
 import com.flab.livecommerce.common.exception.EntityNotFoundException;
 import com.flab.livecommerce.domain.order.Order;
-import com.flab.livecommerce.domain.order.OrderItemOption;
-import com.flab.livecommerce.domain.order.OrderItemOptionGroup;
-import com.flab.livecommerce.domain.order.OrderLineItem;
+import com.flab.livecommerce.domain.order.OrderItemSeriesService;
 import com.flab.livecommerce.domain.order.OrderRepository;
-import com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderItemOptionGroupRepository;
-import com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderItemOptionRepository;
-import com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderLineItemRepository;
 import com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderMapper;
 import org.springframework.stereotype.Repository;
 
@@ -16,44 +11,23 @@ import org.springframework.stereotype.Repository;
 public class OrderRepositoryAdapter implements OrderRepository {
 
     private final MyBatisOrderMapper orderRepository;
-    private final MyBatisOrderLineItemRepository orderLineItemRepository;
-    private final MyBatisOrderItemOptionGroupRepository orderItemOptionGroupRepository;
-    private final MyBatisOrderItemOptionRepository orderItemOptionRepository;
+    private final OrderItemSeriesService orderItemSeriesService;
 
     public OrderRepositoryAdapter(
         MyBatisOrderMapper orderRepository,
-        MyBatisOrderLineItemRepository orderLineItemRepository,
-        MyBatisOrderItemOptionGroupRepository orderItemOptionGroupRepository,
-        MyBatisOrderItemOptionRepository orderItemOptionRepository
+        OrderItemSeriesService orderItemSeriesService
+
     ) {
         this.orderRepository = orderRepository;
-        this.orderLineItemRepository = orderLineItemRepository;
-        this.orderItemOptionGroupRepository = orderItemOptionGroupRepository;
-        this.orderItemOptionRepository = orderItemOptionRepository;
+        this.orderItemSeriesService = orderItemSeriesService;
+
     }
 
     @Override
     public Order save(Order order) {
         this.orderRepository.save(order);
+        this.orderItemSeriesService.save(order);
         return order;
-    }
-
-    @Override
-    public OrderLineItem save(OrderLineItem orderLineItem) {
-        this.orderLineItemRepository.save(orderLineItem);
-        return orderLineItem;
-    }
-
-    @Override
-    public OrderItemOptionGroup save(OrderItemOptionGroup orderItemOptionGroup) {
-        this.orderItemOptionGroupRepository.save(orderItemOptionGroup);
-        return orderItemOptionGroup;
-    }
-
-    @Override
-    public OrderItemOption save(OrderItemOption orderItemOption) {
-        this.orderItemOptionRepository.save(orderItemOption);
-        return orderItemOption;
     }
 
     @Override

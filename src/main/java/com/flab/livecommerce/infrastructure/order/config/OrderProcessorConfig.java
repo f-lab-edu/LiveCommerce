@@ -6,6 +6,9 @@ import com.flab.livecommerce.domain.item.ItemRepository;
 import com.flab.livecommerce.domain.order.OrderItemSeriesService;
 import com.flab.livecommerce.domain.order.OrderRepository;
 import com.flab.livecommerce.infrastructure.order.persistence.OrderItemSeriesServiceImpl;
+import com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderItemOptionGroupMapper;
+import com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderItemOptionMapper;
+import com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderLineItemMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,12 +17,10 @@ public class OrderProcessorConfig {
 
     @Bean
     public RegisterOrderProcessor registerOrderProcessor(
-        OrderRepository orderRepository,
-        OrderItemSeriesService orderItemSeriesService
+        OrderRepository orderRepository
     ) {
         return new RegisterOrderProcessor(
-            orderRepository,
-            orderItemSeriesService
+            orderRepository
         );
     }
 
@@ -33,11 +34,16 @@ public class OrderProcessorConfig {
     @Bean
     public OrderItemSeriesService orderItemSeriesService(
         ItemRepository itemRepository,
-        OrderRepository orderRepository
+        MyBatisOrderLineItemMapper orderLineItemMapper,
+        MyBatisOrderItemOptionGroupMapper orderItemOptionGroupMapper,
+        MyBatisOrderItemOptionMapper orderItemOptionMapper
+
     ) {
         return new OrderItemSeriesServiceImpl(
             itemRepository,
-            orderRepository
+            orderLineItemMapper,
+            orderItemOptionGroupMapper,
+            orderItemOptionMapper
         );
     }
 }
