@@ -77,5 +77,5 @@ Content-Type: application/json
 
 
 ### 주문 찾기
-GET http://localhost:8080/api/v1/order/26
+GET http://localhost:8080/api/v1/order/3
 Content-Type: application/json

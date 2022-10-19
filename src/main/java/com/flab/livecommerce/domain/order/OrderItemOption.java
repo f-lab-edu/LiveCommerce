@@ -23,9 +23,6 @@ public class OrderItemOption {
         String name,
         Long price
     ) {
-        if (orderItemOptionGroupId == null) {
-            throw new InvalidParameterException("orderItemOption.orderItemOptionGroupId");
-        }
         if (ordering == null) {
             throw new InvalidParameterException("orderItemOption.ordering");
         }
@@ -45,5 +42,9 @@ public class OrderItemOption {
     public OrderItemOption setId(Long id) {
         this.id = id;
         return this;
+    }
+
+    public void setOrderItemOptionGroupId(Long orderItemOptionGroupId) {
+        this.orderItemOptionGroupId = orderItemOptionGroupId;
     }
 }

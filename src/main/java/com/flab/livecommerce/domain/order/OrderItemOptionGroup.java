@@ -25,9 +25,6 @@ public class OrderItemOptionGroup {
         String name,
         List<OrderItemOption> orderItemOptions
     ) {
-        if (orderLineItemId == null) {
-            throw new InvalidParameterException("OrderItemOptionGroup.orderLineItemId");
-        }
         if (ordering == null) {
             throw new InvalidParameterException("OrderItemOptionGroup.ordering");
         }
@@ -39,6 +36,10 @@ public class OrderItemOptionGroup {
         this.ordering = ordering;
         this.name = name;
         this.orderItemOptions = orderItemOptions;
+    }
+
+    public void setOrderLineItemId(Long orderLineItemId) {
+        this.orderLineItemId = orderLineItemId;
     }
 
     public OrderItemOptionGroup setId(Long id) {

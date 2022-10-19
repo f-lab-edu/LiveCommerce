@@ -53,27 +53,24 @@ public class Order {
         String receiverMessage,
         List<OrderLineItem> orderLineItems
     ) {
-//        if (userId == null) {
-//            throw new InvalidParameterException("Order.userId");
-//        }
-//        if (receiverName == null && receiverName.length() == 0) {
-//            throw new InvalidParameterException("Order.receiverName");
-//        }
-//        if (receiverPhoneNumber == null && receiverPhoneNumber.length() == 0) {
-//            throw new InvalidParameterException("Order.payMethod");
-//        }
-//        if (receiverZipcode == null && receiverZipcode.length() == 0) {
-//            throw new InvalidParameterException("Order.payMethod");
-//        }
-//        if (receiverAddress == null && receiverAddress.length() == 0) {
-//            throw new InvalidParameterException("Order.payMethod");
-//        }
-//        if (receiverDetailAddress == null && receiverDetailAddress.length() == 0) {
-//            throw new InvalidParameterException("Order.payMethod");
-//        }
-//        if (receiverMessage == null && receiverMessage.length() == 0) {
-//            throw new InvalidParameterException("Order.payMethod");
-//        }
+        if (receiverName == null && receiverName.length() == 0) {
+            throw new InvalidParameterException("Order.receiverName");
+        }
+        if (receiverPhoneNumber == null && receiverPhoneNumber.length() == 0) {
+            throw new InvalidParameterException("Order.payMethod");
+        }
+        if (receiverZipcode == null && receiverZipcode.length() == 0) {
+            throw new InvalidParameterException("Order.payMethod");
+        }
+        if (receiverAddress == null && receiverAddress.length() == 0) {
+            throw new InvalidParameterException("Order.payMethod");
+        }
+        if (receiverDetailAddress == null && receiverDetailAddress.length() == 0) {
+            throw new InvalidParameterException("Order.payMethod");
+        }
+        if (receiverMessage == null && receiverMessage.length() == 0) {
+            throw new InvalidParameterException("Order.payMethod");
+        }
 
         this.userId = userId;
         this.payMethod = payMethod;
