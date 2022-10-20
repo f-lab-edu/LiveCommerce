@@ -1,8 +1,16 @@
 package com.flab.livecommerce.domain.user.exception;
 
-public class PasswordNotMatchedException extends RuntimeException {
+import com.flab.livecommerce.common.exception.BaseException;
+import com.flab.livecommerce.common.response.ErrorCode;
 
-    public PasswordNotMatchedException(String message) {
-        super(message);
+public class PasswordNotMatchedException extends BaseException {
+
+
+    public PasswordNotMatchedException() {
+        super(ErrorCode.PASSWORD_NOT_MATCHED);
+    }
+
+    public PasswordNotMatchedException(String message, ErrorCode errorCode) {
+        super(message, errorCode);
     }
 }

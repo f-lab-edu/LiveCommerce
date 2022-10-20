@@ -3,14 +3,14 @@ package com.flab.livecommerce.domain.user.exception;
 import com.flab.livecommerce.common.exception.BaseException;
 import com.flab.livecommerce.common.response.ErrorCode;
 
-public class InvalidUserException extends BaseException {
+public class InvalidTokenException extends BaseException {
 
 
-    public InvalidUserException() {
-        super(ErrorCode.INVALID_USER);
+    public InvalidTokenException() {
+        super(ErrorCode.INVALID_TOKEN);
     }
 
-    public InvalidUserException(String message, ErrorCode errorCode) {
+    public InvalidTokenException(String message, ErrorCode errorCode) {
         super(message, errorCode);
     }
 }
