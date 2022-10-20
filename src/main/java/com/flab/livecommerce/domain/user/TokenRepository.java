@@ -2,9 +2,9 @@ package com.flab.livecommerce.domain.user;
 
 public interface TokenRepository {
 
-    void save(String token, User user);
+    void save(String token, String userId);
 
-    User findByToken(String token);
+    String findByToken(String token);
 
     void remove(String token);
 }

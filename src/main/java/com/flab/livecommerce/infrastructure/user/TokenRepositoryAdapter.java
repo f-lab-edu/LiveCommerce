@@ -1,8 +1,6 @@
 package com.flab.livecommerce.infrastructure.user;
 
 import com.flab.livecommerce.domain.user.TokenRepository;
-import com.flab.livecommerce.domain.user.User;
-import com.flab.livecommerce.infrastructure.user.persistence.inmemory.InMemoryTokenRepository;
 import com.flab.livecommerce.infrastructure.user.persistence.redis.RedisTokenRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,12 +14,12 @@ public class TokenRepositoryAdapter implements TokenRepository {
     }
 
     @Override
-    public void save(String token, User user) {
-        tokenRepository.save(token, user);
+    public void save(String token, String userId) {
+        tokenRepository.save(token, userId);
     }
 
     @Override
-    public User findByToken(String token) {
+    public String findByToken(String token) {
         return tokenRepository.findByToken(token);
     }
 
