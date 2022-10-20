@@ -1,7 +1,7 @@
 package com.flab.livecommerce.infrastructure.user.interceptor;
 
-import com.flab.livecommerce.application.user.facade.UserTokenManager;
-import com.flab.livecommerce.domain.user.exception.UnauthorizedUserException;
+import com.flab.livecommerce.domain.user.TokenRepository;
+import com.flab.livecommerce.domain.user.exception.InvalidTokenException;
 import com.flab.livecommerce.infrastructure.user.annotation.LoginCheck;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,10 +12,10 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 public class LoginInterceptor implements HandlerInterceptor {
 
-    private final UserTokenManager userTokenManager;
+    private final TokenRepository tokenRepository;
 
-    public LoginInterceptor(UserTokenManager userTokenManager) {
-        this.userTokenManager = userTokenManager;
+    public LoginInterceptor(TokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
     }
 
     @Override
@@ -26,25 +26,24 @@ public class LoginInterceptor implements HandlerInterceptor {
     ) throws Exception {
 
         if (handler instanceof HandlerMethod) {
-            HandlerMethod method = (HandlerMethod) handler;
-            LoginCheck loginCheck = method.getMethodAnnotation(LoginCheck.class);
+            HandlerMethod handlerMethod = (HandlerMethod) handler;
 
-            if (null == loginCheck) {
+            if (handlerMethod.getMethodAnnotation(LoginCheck.class) == null) {
                 return true;
             }
 
-            String tokenHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+            var token = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-            if (hasNoLoginInfo(tokenHeader)) {
-                throw new UnauthorizedUserException("유효하지 않은 토큰입니다.");
+            if (hasNoLoginInfo(token)) {
+                throw new InvalidTokenException();
             }
         }
 
         return true;
     }
 
-    private boolean hasNoLoginInfo(String tokenHeader) {
-        return null == userTokenManager.getLoginUserInfo(tokenHeader.replace("Bearer ", ""));
+    private boolean hasNoLoginInfo(String token) {
+        return tokenRepository.findByToken(token.replace("Bearer ", "")) == null;
     }
 
 }

@@ -21,7 +21,6 @@ public class User {
         this.nickname = nickname;
     }
 
-    //todo 수정해야할 부분 (set)
     public void setId(Long id) {
         this.id = id;
     }

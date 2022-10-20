@@ -1,6 +1,5 @@
 package com.flab.livecommerce.infrastructure.user.config;
 
-import com.flab.livecommerce.application.user.facade.UserTokenManager;
 import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.infrastructure.user.filter.LoginCheckFilter;
 import com.flab.livecommerce.infrastructure.user.interceptor.LoginInterceptor;
@@ -16,15 +15,15 @@ public class WebConfig implements WebMvcConfigurer {
     /*
      * 로그인 인가 - 스프링 인터셉터 사용
      */
-    private final UserTokenManager userTokenManager;
+    private final TokenRepository tokenRepository;
 
-    public WebConfig(UserTokenManager userTokenManager) {
-        this.userTokenManager = userTokenManager;
+    public WebConfig(TokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor(userTokenManager))
+        registry.addInterceptor(new LoginInterceptor(tokenRepository))
             .order(1)
             .excludePathPatterns("/error");
     }
