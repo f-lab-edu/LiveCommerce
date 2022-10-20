@@ -1,4 +1,4 @@
-package com.flab.livecommerce.infrastructure.user.persistence.mysql;
+package com.flab.livecommerce.infrastructure.user.persistence.jdbctemplate;
 
 import com.flab.livecommerce.domain.user.User;
 import java.util.List;
@@ -12,12 +12,12 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MysqlUserRepository {
+public class JdbcTemplateUserRepository {
 
     private JdbcTemplate template;
     private final SimpleJdbcInsert jdbcInsert;
 
-    public MysqlUserRepository(DataSource dataSource) {
+    public JdbcTemplateUserRepository(DataSource dataSource) {
         this.template = new JdbcTemplate(dataSource);
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
             .withTableName("user") // user 테이블에 삽입
