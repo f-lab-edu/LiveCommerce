@@ -43,7 +43,7 @@
         oio.ordering                   AS oio_ordering,
         oio.name                       AS oio_name,
         oio.price                      AS oio_price
-    from orders o
+    from orders o경
            left join order_line_item oli on o.id = oli.order_id
            left join order_item_option_group oiog on oli.id = oiog.order_line_item_id
            left join order_item_option oio on oiog.id = oio.order_item_option_group_id
@@ -52,7 +52,7 @@
   </select>
 
   <resultMap id="orderResultMap" type="Order">
-    <result property="id" column="o_id"/>
+    <id property="id" column="o_id"/>
     <result property="userId" column="o_userId"/>
     <result property="payMethod" column="o_payMethod"/>
     <result property="receiverName" column="o_receiverName"/>
@@ -64,7 +64,7 @@
     <result property="orderedAt" column="o_orderedAt"/>
     <result property="orderStatus" column="o_orderStatus"/>
     <collection property="orderLineItems" column="id" ofType="OrderLineItem">
-      <result property="id" column="oli_id"/>
+      <id property="id" column="oli_id"/>
       <result property="orderId" column="oli_orderId"/>
       <result property="orderCount" column="oli_orderCount"/>
       <result property="shopId" column="oli_shopId"/>
@@ -72,12 +72,12 @@
       <result property="name" column="oli_name"/>
       <result property="price" column="oli_price"/>
       <collection property="orderItemOptionGroups" column="id" ofType="OrderItemOptionGroup">
-        <result property="id" column="oiog_id"/>
+        <id property="id" column="oiog_id"/>
         <result property="orderLineItemId" column="oiog_orderLineItemId"/>
         <result property="ordering" column="oiog_ordering"/>
         <result property="name" column="oiog_name"/>
         <collection property="orderItemOptions" column="id" ofType="OrderItemOption">
-          <result property="id" column="oio_id"/>
+          <id property="id" column="oio_id"/>
           <result property="orderItemOptionGroupId" column="oio_orderItemOptionGroupId"/>
           <result property="ordering" column="oio_ordering"/>
           <result property="name" column="oio_name"/>
