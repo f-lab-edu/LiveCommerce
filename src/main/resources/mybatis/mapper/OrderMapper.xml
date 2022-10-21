@@ -43,7 +43,7 @@
         oio.ordering                   AS oio_ordering,
         oio.name                       AS oio_name,
         oio.price                      AS oio_price
-    from orders o경
+    from orders o
            left join order_line_item oli on o.id = oli.order_id
            left join order_item_option_group oiog on oli.id = oiog.order_line_item_id
            left join order_item_option oio on oiog.id = oio.order_item_option_group_id
