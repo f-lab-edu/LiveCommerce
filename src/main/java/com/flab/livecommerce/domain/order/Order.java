@@ -16,7 +16,6 @@ public class Order {
     private Long id;
     private Long userId;
     private String payMethod;
-    private List<OrderLineItem> orderLineItems = new ArrayList<>();
 
     //배송 정보
     private String receiverName;
@@ -29,6 +28,8 @@ public class Order {
     //주문 생성시간
     private LocalDateTime orderedAt;
     private OrderStatus orderStatus;
+
+    private List<OrderLineItem> orderLineItems = new ArrayList<>();
 
     public enum OrderStatus {
         ORDER_CREATED("주문 생성"),
@@ -49,11 +50,9 @@ public class Order {
         String receiverZipcode,
         String receiverAddress,
         String receiverDetailAddress,
-        String receiverMessage
+        String receiverMessage,
+        List<OrderLineItem> orderLineItems
     ) {
-        if (userId == null) {
-            throw new InvalidParameterException("Order.userId");
-        }
         if (receiverName == null && receiverName.length() == 0) {
             throw new InvalidParameterException("Order.receiverName");
         }
@@ -83,6 +82,7 @@ public class Order {
         this.receiverMessage = receiverMessage;
         this.orderedAt = LocalDateTime.now();
         this.orderStatus = OrderStatus.ORDER_CREATED;
+        this.orderLineItems = orderLineItems;
     }
 
     public Order setId(Long id) {

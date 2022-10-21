@@ -1,7 +1,9 @@
 package com.flab.livecommerce.application.order.command;
 
 import com.flab.livecommerce.domain.order.Order;
+import com.flab.livecommerce.domain.order.OrderLineItem;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -30,6 +32,19 @@ public class RegisterOrderCommand {
             .receiverAddress(this.receiverAddress)
             .receiverDetailAddress(this.receiverDetailAddress)
             .receiverMessage(this.receiverMessage)
+            .orderLineItems(toLineItem())
             .build();
+    }
+
+    public List<OrderLineItem> toLineItem() {
+        return this.orderLineItems.stream().map(
+            lineItem -> OrderLineItem.builder()
+                .itemId(lineItem.getItemId())
+                .orderCount(lineItem.getOrderCount())
+                .name(lineItem.getName())
+                .price(lineItem.getPrice())
+                .orderItemOptionGroups(lineItem.toItemOptionGroup())
+                .build()
+        ).collect(Collectors.toList());
     }
 }

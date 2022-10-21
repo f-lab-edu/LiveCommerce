@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface OrderItemSeriesService {
 
-    List<OrderLineItem> save(RegisterOrderCommand command, Order order);
+    List<OrderLineItem> save(Order order);
 }
