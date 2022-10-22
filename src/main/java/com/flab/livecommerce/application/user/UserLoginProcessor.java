@@ -42,7 +42,7 @@ public class UserLoginProcessor {
         }
 
         var token = tokenGenerator.generate();
-        tokenRepository.save(token, String.valueOf(user.getId()));
+        tokenRepository.save(token, user);
 
         return token;
     }

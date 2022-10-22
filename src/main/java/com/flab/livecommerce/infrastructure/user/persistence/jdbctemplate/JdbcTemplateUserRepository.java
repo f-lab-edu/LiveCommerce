@@ -32,7 +32,8 @@ public class JdbcTemplateUserRepository {
         SqlParameterSource parameterSource = new MapSqlParameterSource()
             .addValue("email", user.getEmail())
             .addValue("password", user.getPassword())
-            .addValue("nickname", user.getNickname());
+            .addValue("nickname", user.getNickname())
+            .addValue("role", user.getRole());
 
         Long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
         user.setId(id);
@@ -60,11 +61,11 @@ public class JdbcTemplateUserRepository {
     private RowMapper<User> userRowMapper() {
         return (rs, rowNum) -> {
             User user = new User(
-                rs.getLong("id"),
                 rs.getString("email"),
                 rs.getString("password"),
                 rs.getString("nickname")
             );
+            user.setId(rs.getLong("id"));
             return user;
         };
     }
