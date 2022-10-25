@@ -4,7 +4,7 @@ import com.flab.livecommerce.common.AuthenticatedUser;
 
 public interface TokenRepository {
 
-    void save(String token, User user);
+    void save(String token, AuthenticatedUser authenticatedUser);
 
     AuthenticatedUser findByToken(String token);
 
