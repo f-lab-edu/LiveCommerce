@@ -1,4 +1,4 @@
-package com.flab.livecommerce.infrastructure.user.interceptor;
+package com.flab.livecommerce.common.interceptor;
 
 import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.domain.user.exception.InvalidTokenException;
