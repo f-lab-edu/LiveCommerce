@@ -9,22 +9,23 @@ import lombok.Getter;
 @AllArgsConstructor
 public class RegisterItemCommand {
 
+    private Long shopId;
     private String name;
     private Integer price;
     private Integer salesPrice;
     private String description;
     private Integer stockQuantity;
-    private int modelNumber;
+
     private List<RegisterItemOptionGroupCommand> itemOptionGroup;
 
     public Item toEntity() {
         return Item.builder()
+            .shopId(shopId)
             .name(name)
             .description(description)
             .price(price)
             .salesPrice(salesPrice)
             .stockQuantity(stockQuantity)
-            .modelNumber(modelNumber)
             .build();
     }
 }

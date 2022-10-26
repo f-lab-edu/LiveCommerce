@@ -1,11 +1,12 @@
 package com.flab.livecommerce.domain.item;
 
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-@Repository
 public interface ItemRepository {
 
     Item save(Item item);
 
     Item findById(Long id);
+
+    List<ItemOptionGroup> findItemOptionSeries(Item item);
 }

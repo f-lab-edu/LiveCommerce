@@ -16,7 +16,6 @@ public class UploadImageProcessor {
         this.itemImageRepository = itemImageRepository;
     }
 
-    // TODO 상세이미지
     public void execute(Item item, MultipartFile thumbnailImg) {
         ItemImage thumbnail = uploadThumbnailToLocal(item, thumbnailImg);
         itemImageRepository.save(thumbnail);
@@ -33,13 +32,8 @@ public class UploadImageProcessor {
             throw new RuntimeException(e);
         }
 
-        item.setThumbnailImg(ItemImage.builder()
-            .name(uploadFileName)
-            .url(uploadPath)
-            .itemId(item.getId())
-            .build());
-
-        return item.getThumbnailImg();
+        //TODO 다정님이 구현하실 파트
+        return null;
     }
 
     // TODO 경로 변경 필요
