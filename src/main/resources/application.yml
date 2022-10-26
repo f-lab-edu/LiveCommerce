@@ -19,6 +19,7 @@ mybatis:
   type-aliases-package: com.flab.livecommerce.domain
   configuration:
     map-underscore-to-camel-case: true
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
 
 
 #expire

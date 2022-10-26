@@ -4,6 +4,8 @@ import com.flab.livecommerce.application.order.facade.OrderManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
 import com.flab.livecommerce.presentation.order.request.RegisterOrderRequest;
 import javax.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +25,12 @@ public class OrderController {
     public CommonApiResponse registerOrder(@RequestBody @Valid RegisterOrderRequest request) {
         var order = orderManager.register(request.toCommand());
         return CommonApiResponse.success(order);
+    }
+
+    @GetMapping("/{orderId}")
+    public CommonApiResponse searchOrder(@PathVariable("orderId") Long id) {
+        var orderInfo = orderManager.search(id);
+
+        return CommonApiResponse.success(orderInfo);
     }
 }

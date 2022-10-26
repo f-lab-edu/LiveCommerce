@@ -28,16 +28,11 @@ public class OrderLineItem {
         Long shopId,
         Long itemId,
         String name,
-        Long price
+        Long price,
+        List<OrderItemOptionGroup> orderItemOptionGroups
     ) {
-        if (orderId == null) {
-            throw new InvalidParameterException("OrderLineItem.order");
-        }
         if (orderCount == null) {
             throw new InvalidParameterException("OrderLineItem.orderCount");
-        }
-        if (shopId == null) {
-            throw new InvalidParameterException("OrderLineItem.partnerId");
         }
         if (itemId == null) {
             throw new InvalidParameterException("OrderLineItem.itemId");
@@ -55,10 +50,19 @@ public class OrderLineItem {
         this.itemId = itemId;
         this.name = name;
         this.price = price;
+        this.orderItemOptionGroups = orderItemOptionGroups;
     }
 
     public OrderLineItem setId(Long id) {
         this.id = id;
         return this;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setShopId(Long shopId) {
+        this.shopId = shopId;
     }
 }
