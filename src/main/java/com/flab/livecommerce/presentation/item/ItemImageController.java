@@ -47,10 +47,11 @@ public class ItemImageController {
 
 
     @PutMapping("/priority")
-    public void updateImagePriority(
+    public CommonApiResponse updateImagePriority(
         @RequestBody ItemOrderRequest orderingRequest
     ) {
         itemImageManager.updatePriority(orderingRequest.toCommand());
+        return CommonApiResponse.success(null);
     }
 
 }

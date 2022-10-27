@@ -1,8 +1,7 @@
 CREATE TABLE item_image
 (
-    id      INT          NOT NULL AUTO_INCREMENT,
+    id      BIGINT       not null auto_increment primary key comment 'ID',
     name    VARCHAR(300) NOT NULL,
     url     VARCHAR(300) NOT NULL,
-    item_id INT          NOT NULL,
-    PRIMARY KEY (id)
+    item_id INT          NOT NULL
 );

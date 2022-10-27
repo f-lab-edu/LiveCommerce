@@ -4,7 +4,6 @@ import com.flab.livecommerce.domain.item.ItemImage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -22,7 +21,8 @@ public class JdbcTemplateItemImageRepository {
     public JdbcTemplateItemImageRepository(DataSource dataSource) {
         this.template = new NamedParameterJdbcTemplate(dataSource);
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
-            .withTableName("item_image");
+            .withTableName("item_image")
+            .usingGeneratedKeyColumns("id");
     }
 
     private static RowMapper<ItemImage> getItemImageRowMapper() {
@@ -34,9 +34,11 @@ public class JdbcTemplateItemImageRepository {
         );
     }
 
-    public void save(ItemImage image) {
+    public ItemImage save(ItemImage image) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(image);
-        jdbcInsert.execute(param);
+        Number key = jdbcInsert.executeAndReturnKey(param);
+        image.setId(key.longValue());
+        return image;
     }
 
     public void deleteAllById(Long id) {
@@ -54,7 +56,18 @@ public class JdbcTemplateItemImageRepository {
         template.update(sql, param);
     }
 
-    // batchupdate 방식 -> pk 문제 -> 아래 방식으로 변경
+    public void updateOrder(Long imageId, Integer order) {
+        String sql = "UPDATE item_image "
+            + "SET ordering=:ordering "
+            + "WHERE id=:imageId";
+        SqlParameterSource param = new MapSqlParameterSource()
+            .addValue("imageId", imageId)
+            .addValue("ordering", order);
+
+        template.update(sql, param);
+    }
+
+    // batchupdate 방식 -> pk duplicate 문제 -> 위의 방식으로 변경
     public void updateOrdering(Long imageId, List<Integer> orderList) {
         List<Object[]> batch = new ArrayList<>();
         for (int i = 0; i < orderList.size(); i++) {
@@ -70,15 +83,4 @@ public class JdbcTemplateItemImageRepository {
         //template.batchUpdate(sql, batch);
     }
 
-
-    public void updateOrder(Long imageId, Integer order) {
-        String sql = "UPDATE item_image "
-            + "SET ordering=:ordering "
-            + "WHERE id=:imageId";
-        SqlParameterSource param = new MapSqlParameterSource()
-            .addValue("imageId", imageId)
-            .addValue("ordering", order);
-
-        template.update(sql, param);
-    }
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 public class ItemImage {
 
+    private Long id;
     private Long itemId;
 
     // 이미지 순서 - 썸네일 이미지 ordering=1
@@ -27,5 +28,9 @@ public class ItemImage {
 
     public void setOrdering(int ordering) {
         this.ordering = ordering;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

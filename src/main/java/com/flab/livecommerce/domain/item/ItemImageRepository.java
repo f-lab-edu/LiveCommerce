@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ItemImageRepository {
 
-    void save(ItemImage itemImage);
+    ItemImage save(ItemImage itemImage);
 
     void deleteById(Long id);
 

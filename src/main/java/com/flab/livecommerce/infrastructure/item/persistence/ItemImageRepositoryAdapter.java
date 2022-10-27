@@ -16,8 +16,8 @@ public class ItemImageRepositoryAdapter implements ItemImageRepository {
     }
 
     @Override
-    public void save(ItemImage itemImage) {
-        this.itemImageRepository.save(itemImage);
+    public ItemImage save(ItemImage itemImage) {
+        return this.itemImageRepository.save(itemImage);
     }
 
     @Override
