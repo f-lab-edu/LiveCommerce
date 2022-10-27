@@ -22,6 +22,7 @@ public class UpdateItemOptionCommand {
             .itemId(itemOptionGroup.getItemId())
             .name(name)
             .ordering(ordering)
+            .price(price)
             .build();
         return itemOption.setId(id);
     }

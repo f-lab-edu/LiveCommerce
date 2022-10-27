@@ -8,25 +8,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Slf4j
 public class JdbcTemplateItemRepository {
 
-    private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate jdbcTemplate;
     private final SimpleJdbcInsert jdbcInsert;
 
     public JdbcTemplateItemRepository(DataSource dataSource) {
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
             .withTableName("item") // item 테이블에 삽입
             .usingGeneratedKeyColumns("id"); // id 컬럼의 값을 key 로 반환
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     public Item save(Item item) {
@@ -49,17 +52,18 @@ public class JdbcTemplateItemRepository {
     public Item update(Item item, Long id) {
         String sql = "UPDATE item "
             + "SET name=:name, description=:description, price=:price, sales_price=:salesPrice, stock_quantity=:stockQuantity "
-            + "WHERE id=:id";
+            + "WHERE item.id=:id";
         SqlParameterSource param = new MapSqlParameterSource()
             .addValue("id", id)
-            .addValue("shopId", item.getShopId())
             .addValue("name", item.getName())
             .addValue("description", item.getDescription())
             .addValue("price", item.getPrice())
             .addValue("salesPrice", item.getSalesPrice())
-            .addValue("stockQuantity", item.getStockQuantity());
+            .addValue("stockQuantity", item.getStockQuantity())
+            .addValue("shopId", item.getShopId());
 
         jdbcTemplate.update(sql, param);
+        log.info(String.valueOf(jdbcTemplate.update(sql, param)));
         return item.setId(id);
     }
 
@@ -69,7 +73,7 @@ public class JdbcTemplateItemRepository {
             + "JOIN item_option io ON iog.id = io.item_option_group_id "
             + "WHERE i.id = :id";
 
-        Item item = jdbcTemplate.query(sql, resultSetExtractor(), id);
+        Item item = jdbcTemplate.query(sql, resultSetExtractor());
 
         if (item == null) {
             throw new EntityNotFoundException();
@@ -98,8 +102,8 @@ public class JdbcTemplateItemRepository {
                         rs.getLong("shop_id"),
                         rs.getString("i.name"),
                         rs.getString("description"),
-                        rs.getInt("price"),
-                        rs.getInt("sales_price"),
+                        rs.getLong("price"),
+                        rs.getLong("sales_price"),
                         rs.getInt("stock_quantity"));
                     item.setId(rs.getLong("id"));
                 }

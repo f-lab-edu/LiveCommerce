@@ -16,9 +16,9 @@ public class Item {
     //상품 설명
     private String description;
     //상품 원가
-    private Integer price;
+    private Long price;
     //상품 판매가
-    private Integer salesPrice;
+    private Long salesPrice;
     //상품 재고
     private Integer stockQuantity;
 
@@ -33,8 +33,8 @@ public class Item {
         Long shopId,
         String name,
         String description,
-        Integer price,
-        Integer salesPrice,
+        Long price,
+        Long salesPrice,
         Integer stockQuantity
     ) {
         if (shopId == null) {
@@ -86,8 +86,8 @@ public class Item {
         private Long shopId;
         private String name;
         private String description;
-        private Integer price;
-        private Integer salesPrice;
+        private Long price;
+        private Long salesPrice;
         private Integer stockQuantity;
         private List<ItemOptionGroup> itemOptionGroups;
 

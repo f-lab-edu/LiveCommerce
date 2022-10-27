@@ -36,6 +36,7 @@ public class ItemManager {
     public Item search(Long id) {
         return searchItemProcessor.execute(id);
     }
+
     public void update(UpdateItemCommand command, Long id) {
         updateItemProcessor.execute(command, id);
     }

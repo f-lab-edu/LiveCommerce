@@ -67,3 +67,76 @@ Content-Type: application/json
 ### 아이템 찾기
 GET http://localhost:8080/api/v1/item/2
 Content-Type: application/json
+
+### 아이템 수정
+PUT http://localhost:8080/api/v1/item/1
+Content-Type: application/json
+
+{
+  "shopId": 1,
+  "name": "모자수정",
+  "price": 30001,
+  "salesPrice": 28000,
+  "description": "샘플 상품 입니다2",
+  "stockQuantity": 20,
+  "itemOptionGroups": [
+    {
+      "id": 1,
+      "ordering": 1,
+      "name": "size",
+      "basic": true,
+      "exclusive": false,
+      "minimumChoice": 1,
+      "maximumChoice": 1,
+      "itemOptions": [
+        {
+          "id": 1,
+          "ordering": 1,
+          "name": "소",
+          "price": 0
+        },
+        {
+          "id": 2,
+          "ordering": 2,
+          "name": "중",
+          "price": 500
+        },
+        {
+          "id": 3,
+          "ordering": 3,
+          "name": "대",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "ordering": 2,
+      "name": "color",
+      "basic": true,
+      "exclusive": false,
+      "minimumChoice": 1,
+      "maximumChoice": 1,
+      "itemOptions": [
+        {
+          "id": 4,
+          "ordering": 1,
+          "name": "빨강",
+          "price": 0
+        },
+        {
+          "id": 5,
+          "ordering": 2,
+          "name": "파랑",
+          "price": 0
+        },
+        {
+          "id": 6,
+          "ordering": 3,
+          "name": "녹색",
+          "price": 0
+        }
+      ]
+    }
+  ]
+}

@@ -11,8 +11,8 @@ public class SearchItemResponse {
     private Long shopId;
     private String name;
     private String description;
-    private Integer price;
-    private Integer salesPrice;
+    private Long price;
+    private Long salesPrice;
     private Integer stockQuantity;
     private List<ItemOptionGroup> itemOptionGroups;
 
@@ -20,8 +20,8 @@ public class SearchItemResponse {
         Long shopId,
         String name,
         String description,
-        Integer price,
-        Integer salesPrice,
+        Long price,
+        Long salesPrice,
         Integer stockQuantity,
         List<ItemOptionGroup> itemOptionGroups
     ) {

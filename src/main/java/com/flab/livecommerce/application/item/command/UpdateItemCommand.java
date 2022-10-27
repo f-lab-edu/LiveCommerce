@@ -11,8 +11,8 @@ public class UpdateItemCommand {
 
     private Long shopId;
     private String name;
-    private Integer price;
-    private Integer salesPrice;
+    private Long price;
+    private Long salesPrice;
     private String description;
     private Integer stockQuantity;
 
