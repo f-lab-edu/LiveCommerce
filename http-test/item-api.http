@@ -74,7 +74,7 @@ Content-Type: application/json
 
 {
   "shopId": 1,
-  "name": "모자수정",
+  "name": "보스헤드폰",
   "price": 30001,
   "salesPrice": 28000,
   "description": "샘플 상품 입니다2",

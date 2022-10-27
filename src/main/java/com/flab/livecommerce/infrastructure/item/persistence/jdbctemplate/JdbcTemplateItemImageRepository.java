@@ -1,8 +1,10 @@
 package com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate;
 
 import com.flab.livecommerce.domain.item.ItemImage;
+import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -52,8 +54,31 @@ public class JdbcTemplateItemImageRepository {
         template.update(sql, param);
     }
 
-    public void updateOrdering(Long itemId, List<Integer> orderList) {
-        String sql = "UPDATE item_image SET ordering= ? WHERE item_id= ?";
-        // TODO
+    // batchupdate 방식 -> pk 문제 -> 아래 방식으로 변경
+    public void updateOrdering(Long imageId, List<Integer> orderList) {
+        List<Object[]> batch = new ArrayList<>();
+        for (int i = 0; i < orderList.size(); i++) {
+            Object[] values = new Object[]{
+                orderList.get(i),
+                imageId,
+                i
+            };
+            batch.add(values);
+        }
+
+        String sql = "UPDATE item_image SET ordering=? WHERE id=? AND ordering=?";
+        //template.batchUpdate(sql, batch);
+    }
+
+
+    public void updateOrder(Long imageId, Integer order) {
+        String sql = "UPDATE item_image "
+            + "SET ordering=:ordering "
+            + "WHERE id=:imageId";
+        SqlParameterSource param = new MapSqlParameterSource()
+            .addValue("imageId", imageId)
+            .addValue("ordering", order);
+
+        template.update(sql, param);
     }
 }

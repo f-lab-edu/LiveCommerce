@@ -31,7 +31,12 @@ public class ItemImageRepositoryAdapter implements ItemImageRepository {
     }
 
     @Override
-    public void updateOrdering(Long itemId, List<Integer> orderList) {
-        this.itemImageRepository.updateOrdering(itemId, orderList);
+    public void updateOrdering(Long imageId, List<Integer> orderList) {
+        this.itemImageRepository.updateOrdering(imageId, orderList);
+    }
+
+    @Override
+    public void updateOrder(Long imageId, Integer order) {
+        this.itemImageRepository.updateOrder(imageId, order);
     }
 }

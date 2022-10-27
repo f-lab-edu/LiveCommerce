@@ -3,6 +3,7 @@ package com.flab.livecommerce.application.item.facade;
 import com.flab.livecommerce.application.item.DeleteImageProcessor;
 import com.flab.livecommerce.application.item.UpdateImagePriorityProcessor;
 import com.flab.livecommerce.application.item.UploadImageProcessor;
+import com.flab.livecommerce.application.item.command.UpdateImageOrderCommand;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class ItemImageManager {
         deleteImageProcessor.execute(itemId, orderList);
     }
 
-    public void updatePriority(Long itemId, List<Integer> orderList) {
-        updateImagePriorityProcessor.execute(itemId, orderList);
+    public void updatePriority(UpdateImageOrderCommand command) {
+        updateImagePriorityProcessor.execute(command);
     }
 }

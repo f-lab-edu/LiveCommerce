@@ -2,6 +2,7 @@ package com.flab.livecommerce.presentation.item;
 
 import com.flab.livecommerce.application.item.facade.ItemImageManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
+import com.flab.livecommerce.presentation.item.request.ItemOrderRequest;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-@RequestMapping("/api/v1/item")
+@RequestMapping("/api/v1/item/{itemId}/image")
 @RestController
 public class ItemImageController {
 
@@ -24,7 +25,7 @@ public class ItemImageController {
         this.itemImageManager = itemImageManager;
     }
 
-    @PostMapping("/{itemId}/image")
+    @PostMapping
     public CommonApiResponse uploadItemImage(
         @PathVariable("itemId") Long id,
         @RequestPart("thumbnailImg") MultipartFile thumbnailImage,
@@ -35,7 +36,7 @@ public class ItemImageController {
     }
 
 
-    @DeleteMapping("/{itemId}/image")
+    @DeleteMapping
     public CommonApiResponse deleteItemImage(
         @PathVariable("itemId") Long itemId,
         @RequestBody List<Integer> orderList
@@ -45,12 +46,11 @@ public class ItemImageController {
     }
 
 
-    @PutMapping("/{itemId}/image/priority")
+    @PutMapping("/priority")
     public void updateImagePriority(
-        @PathVariable("itemId") Long itemId,
-        @RequestBody List<Integer> ordering
+        @RequestBody ItemOrderRequest orderingRequest
     ) {
-        itemImageManager.updatePriority(itemId, ordering);
+        itemImageManager.updatePriority(orderingRequest.toCommand());
     }
 
 }
