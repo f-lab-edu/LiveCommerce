@@ -8,8 +8,6 @@ public interface ItemImageRepository {
 
     void deleteById(Long id);
 
-    void deleteAll(Long id, List<Integer> orderList);
-
     void updateOrdering(Long imageId, List<Integer> orderList);
 
     void updateOrder(Long imageId, Integer order);

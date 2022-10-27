@@ -5,7 +5,6 @@ import com.flab.livecommerce.application.item.UpdateImagePriorityProcessor;
 import com.flab.livecommerce.application.item.UploadImageProcessor;
 import com.flab.livecommerce.application.item.command.UpdateImageOrderCommand;
 import java.io.IOException;
-import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,8 +32,8 @@ public class ItemImageManager {
         uploadImageProcessor.execute(itemId, thumbnailImage, specificImages);
     }
 
-    public void delete(Long itemId, List<Integer> orderList) {
-        deleteImageProcessor.execute(itemId, orderList);
+    public void delete(Long itemId) {
+        deleteImageProcessor.execute(itemId);
     }
 
     public void updatePriority(UpdateImageOrderCommand command) {

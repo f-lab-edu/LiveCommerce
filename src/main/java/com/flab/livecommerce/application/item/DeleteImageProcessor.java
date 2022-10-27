@@ -2,7 +2,6 @@ package com.flab.livecommerce.application.item;
 
 import com.flab.livecommerce.domain.item.ImageUploader;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
-import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 public class DeleteImageProcessor {
@@ -21,7 +20,7 @@ public class DeleteImageProcessor {
 
 
     @Transactional
-    public void execute(Long itemId, List<Integer> orderList) {
-        itemImageRepository.deleteAll(itemId, orderList);
+    public void execute(Long itemId) {
+        itemImageRepository.deleteById(itemId);
     }
 }

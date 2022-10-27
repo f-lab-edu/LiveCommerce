@@ -4,7 +4,6 @@ import com.flab.livecommerce.application.item.facade.ItemImageManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
 import com.flab.livecommerce.presentation.item.request.ItemOrderRequest;
 import java.io.IOException;
-import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,16 +34,13 @@ public class ItemImageController {
         return CommonApiResponse.success(null);
     }
 
-
     @DeleteMapping
     public CommonApiResponse deleteItemImage(
-        @PathVariable("itemId") Long itemId,
-        @RequestBody List<Integer> orderList
+        @PathVariable("itemId") Long itemId
     ) {
-        itemImageManager.delete(itemId, orderList);
+        itemImageManager.delete(itemId);
         return CommonApiResponse.success(null);
     }
-
 
     @PutMapping("/priority")
     public CommonApiResponse updateImagePriority(
