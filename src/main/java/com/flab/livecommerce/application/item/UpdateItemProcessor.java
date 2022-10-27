@@ -1,6 +1,6 @@
 package com.flab.livecommerce.application.item;
 
-import com.flab.livecommerce.application.item.command.ItemFormCommand;
+import com.flab.livecommerce.application.item.command.UpdateItemCommand;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemOptionSeriesService;
 import com.flab.livecommerce.domain.item.ItemRepository;
@@ -20,10 +20,8 @@ public class UpdateItemProcessor {
     }
 
     @Transactional
-    public void execute(ItemFormCommand command, Long id) {
-        Item originalItem = itemRepository.findById(id);
-        itemRepository.update(command.toEntity(), id);
-
-        itemOptionSeriesService.update(command, originalItem);
+    public void execute(UpdateItemCommand command, Long id) {
+        Item updatedItem = itemRepository.update(command.toEntity(), id);
+        itemOptionSeriesService.update(command, updatedItem);
     }
 }

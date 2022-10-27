@@ -1,21 +1,17 @@
 package com.flab.livecommerce.presentation.item.request;
 
-import com.flab.livecommerce.application.item.command.ItemFormCommand;
-import com.flab.livecommerce.application.item.command.ItemOptionGroupFormCommand;
+import com.flab.livecommerce.application.item.command.UpdateItemCommand;
+import com.flab.livecommerce.application.item.command.UpdateItemOptionGroupCommand;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ItemFormRequest {
-
+public class UpdateItemRequest {
     private Long shopId;
 
     @NotBlank(message = "상품명을 작성하세요.")
@@ -35,10 +31,10 @@ public class ItemFormRequest {
     @Range(min = 1, message = "재고 수량은 1개 이상이어야 합니다.")
     private Integer stockQuantity;
 
-    private List<ItemOptionGroupFormCommand> itemOptionGroups;
+    private List<UpdateItemOptionGroupCommand> itemOptionGroups;
 
-    public ItemFormCommand toCommand() {
-        return new ItemFormCommand(
+    public UpdateItemCommand toCommand() {
+        return new UpdateItemCommand(
             shopId,
             name,
             price,

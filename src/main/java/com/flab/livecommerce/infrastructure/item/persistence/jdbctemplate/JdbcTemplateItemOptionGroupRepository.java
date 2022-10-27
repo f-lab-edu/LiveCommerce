@@ -48,7 +48,7 @@ public class JdbcTemplateItemOptionGroupRepository {
             .addValue("maximumChoice", itemOptionGroup.getMaximumChoice());
 
         template.update(sql, param);
-        return itemOptionGroup;
+        return itemOptionGroup.setId(id);
     }
 
 

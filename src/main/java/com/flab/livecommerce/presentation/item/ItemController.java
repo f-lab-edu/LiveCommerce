@@ -1,10 +1,10 @@
 package com.flab.livecommerce.presentation.item;
 
-import com.flab.livecommerce.application.item.facade.ItemImageManager;
 import com.flab.livecommerce.application.item.facade.ItemManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
 import com.flab.livecommerce.domain.item.Item;
-import com.flab.livecommerce.presentation.item.request.ItemFormRequest;
+import com.flab.livecommerce.presentation.item.request.RegisterItemRequest;
+import com.flab.livecommerce.presentation.item.request.UpdateItemRequest;
 import java.net.URI;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -24,16 +24,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class ItemController {
 
     private final ItemManager itemManager;
-    private final ItemImageManager itemImageManager;
 
-    public ItemController(ItemManager itemManager, ItemImageManager itemImageManager) {
+    public ItemController(ItemManager itemManager) {
         this.itemManager = itemManager;
-        this.itemImageManager = itemImageManager;
     }
 
     @PostMapping
     public CommonApiResponse registerItem(
-        @RequestBody @Valid ItemFormRequest request
+        @RequestBody @Valid RegisterItemRequest request
     ) {
         Item registeredItem = itemManager.register(request.toCommand());
 
@@ -55,8 +53,8 @@ public class ItemController {
     }
 
     @PutMapping("/{itemId}")
-    public CommonApiResponse editItem(
-        @RequestBody @Valid ItemFormRequest request,
+    public CommonApiResponse updateItem(
+        @RequestBody @Valid UpdateItemRequest request,
         @PathVariable("itemId") Long id
     ) {
         itemManager.update(request.toCommand(), id);

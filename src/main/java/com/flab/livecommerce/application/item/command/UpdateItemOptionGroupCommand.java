@@ -3,14 +3,15 @@ package com.flab.livecommerce.application.item.command;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import java.util.List;
-import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ItemOptionGroupFormCommand {
+@Builder
+public class UpdateItemOptionGroupCommand {
 
+    private Long id;
+    private Long itemId;
     private String name;
     private Integer ordering;
     //기본 옵션 여부
@@ -22,11 +23,10 @@ public class ItemOptionGroupFormCommand {
     //최대 선택 개수
     private int maximumChoice;
 
-    private List<ItemOptionFormCommand> itemOptions;
-
+    private List<UpdateItemOptionCommand> itemOptions;
 
     public ItemOptionGroup toEntity(Item item) {
-        return ItemOptionGroup.builder()
+        var itemOptionGroup = ItemOptionGroup.builder()
             .itemId(item.getId())
             .ordering(this.ordering)
             .name(this.name)
@@ -35,5 +35,6 @@ public class ItemOptionGroupFormCommand {
             .minimumChoice(this.minimumChoice)
             .maximumChoice(this.maximumChoice)
             .build();
+        return itemOptionGroup.setId(id);
     }
 }

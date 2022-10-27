@@ -52,6 +52,7 @@ public class JdbcTemplateItemRepository {
             + "WHERE id=:id";
         SqlParameterSource param = new MapSqlParameterSource()
             .addValue("id", id)
+            .addValue("shopId", item.getShopId())
             .addValue("name", item.getName())
             .addValue("description", item.getDescription())
             .addValue("price", item.getPrice())

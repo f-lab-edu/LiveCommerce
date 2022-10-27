@@ -9,11 +9,11 @@ public class ItemOption {
 
     private Long id;
     private Long itemOptionGroupId;
+    private Long itemId;
     private String name;
     private Integer ordering;
     private Long price;
 
-    private Long itemId;
 
     protected ItemOption() {
     }

@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ItemFormCommand {
+public class UpdateItemCommand {
 
     private Long shopId;
     private String name;
@@ -16,7 +16,7 @@ public class ItemFormCommand {
     private String description;
     private Integer stockQuantity;
 
-    private List<ItemOptionGroupFormCommand> itemOptionGroup;
+    private List<UpdateItemOptionGroupCommand> itemOptionGroups;
 
     public Item toEntity() {
         return Item.builder()

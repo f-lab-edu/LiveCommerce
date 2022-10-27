@@ -1,6 +1,7 @@
 package com.flab.livecommerce.infrastructure.item;
 
-import com.flab.livecommerce.application.item.command.ItemFormCommand;
+import com.flab.livecommerce.application.item.command.RegisterItemCommand;
+import com.flab.livecommerce.application.item.command.UpdateItemCommand;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import com.flab.livecommerce.domain.item.ItemOptionGroupRepository;
@@ -9,7 +10,6 @@ import com.flab.livecommerce.domain.item.ItemOptionSeriesService;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class ItemOptionSeriesServiceImpl implements ItemOptionSeriesService {
 
@@ -26,7 +26,7 @@ public class ItemOptionSeriesServiceImpl implements ItemOptionSeriesService {
 
 
     @Override
-    public List<ItemOptionGroup> save(ItemFormCommand command, Item item) {
+    public List<ItemOptionGroup> save(RegisterItemCommand command, Item item) {
         var itemOptionGroupList = command.getItemOptionGroup();
 
         if (itemOptionGroupList.isEmpty()) {
@@ -49,30 +49,22 @@ public class ItemOptionSeriesServiceImpl implements ItemOptionSeriesService {
         ).collect(Collectors.toList());
     }
 
-    // TODO 옵션 업데이트 안됨
     @Override
-    public void update(ItemFormCommand command, Item item) {
-        var requestItemOptionGroups = command.getItemOptionGroup();
-        var optionGroupIdList = item.getOptionGroupId();
+    public void update(UpdateItemCommand command, Item item) {
+        var itemOptionGroupList = command.getItemOptionGroups();
+        itemOptionGroupList.forEach(
+            requestItemOptionGroup -> {
+                var requestOptionGroup = requestItemOptionGroup.toEntity(item);
+                var updatedOptionGroup = itemOptionGroupRepository.update(requestOptionGroup,
+                    requestOptionGroup.getId());
 
-        var itemOptionGroupMap =
-            IntStream.range(0, requestItemOptionGroups.size())
-                .boxed()
-                .collect(Collectors.toMap(optionGroupIdList::get, requestItemOptionGroups::get));
-
-        itemOptionGroupMap.forEach((optionGroupId, optiongrouprequest) -> {
-            var optionGroup = optiongrouprequest.toEntity(item);
-            itemOptionGroupRepository.update(optionGroup, optionGroupId);
-
-            var requestItemOptions = optionGroup.getItemOptions();
-            var optionIdList = optionGroup.getOptionId();
-
-            var itemOptionMap = IntStream.range(0, requestItemOptions.size()).boxed()
-                .collect(Collectors.toMap(optionIdList::get, requestItemOptions::get));
-
-            itemOptionMap.forEach((optionId, optionRequest) -> {
-                itemOptionRepository.update(optionRequest, optionId);
-            });
-        });
+                requestItemOptionGroup.getItemOptions().forEach(
+                    requestItemOption -> {
+                        var itemOption = requestItemOption.toEntity(updatedOptionGroup);
+                        itemOptionRepository.update(itemOption, itemOption.getId());
+                    }
+                );
+            }
+        );
     }
 }
