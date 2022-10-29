@@ -8,13 +8,13 @@ public enum ErrorCode {
     COMMON_INVALID_PARAMETER("요청한 값이 올바르지 않습니다."),
     COMMON_ILLEGAL_STATUS("잘못된 상태값입니다."),
 
+    UN_AUTHENTICATED("인증되지 않은 접근입니다."),
     // User Error
     INVALID_USER("유효하지 않은 회원입니다."),
     DUPLICATE_EMAIL("중복된 이메일 입니다."),
     PASSWORD_NOT_MATCHED("비밀번호가 일치하지 않습니다."),
 
     INVALID_TOKEN("유효하지 않은 토큰입니다.");
-
 
 
     private final String message;

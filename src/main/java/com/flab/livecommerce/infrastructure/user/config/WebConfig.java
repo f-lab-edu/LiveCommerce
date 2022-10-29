@@ -1,11 +1,14 @@
 package com.flab.livecommerce.infrastructure.user.config;
 
+import com.flab.livecommerce.common.auth.AuthenticationArgumentResolver;
 import com.flab.livecommerce.common.interceptor.LoginInterceptor;
 import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.infrastructure.user.filter.LoginCheckFilter;
+import java.util.List;
 import javax.servlet.Filter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -19,6 +22,11 @@ public class WebConfig implements WebMvcConfigurer {
 
     public WebConfig(TokenRepository tokenRepository) {
         this.tokenRepository = tokenRepository;
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new AuthenticationArgumentResolver());
     }
 
     @Override

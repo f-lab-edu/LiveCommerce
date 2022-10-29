@@ -1,7 +1,7 @@
 package com.flab.livecommerce.infrastructure.user.persistence.redis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flab.livecommerce.common.AuthenticatedUser;
+import com.flab.livecommerce.common.auth.AuthenticatedUser;
 import java.time.Duration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,10 +26,10 @@ public class RedisTokenRepository {
         this.objectMapper = objectMapper;
     }
 
-    public void save(String token, AuthenticatedUser authenticatedUser) {
+    public void save(AuthenticatedUser authenticatedUser) {
         redisTemplate.opsForValue().set(
-            token,
-            authenticatedUser.updateExpireTime(expireTime),
+            authenticatedUser.getToken(),
+            authenticatedUser.plusExpireTime(expireTime),
             Duration.ofSeconds(expireTime)
         );
     }
@@ -45,7 +45,7 @@ public class RedisTokenRepository {
 
         redisTemplate.opsForValue().set(
             token,
-            authenticatedUser.updateExpireTime(expireTime),
+            authenticatedUser.plusExpireTime(expireTime),
             Duration.ofSeconds(expireTime)
         );
 

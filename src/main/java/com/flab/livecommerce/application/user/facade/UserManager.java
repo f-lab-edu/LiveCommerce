@@ -35,7 +35,6 @@ public class UserManager {
 
     public String login(LoginCommand command) {
         return userLoginProcessor.execute(command);
-
     }
 
     public void delete(String token) {

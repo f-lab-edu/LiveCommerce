@@ -1,6 +1,6 @@
 package com.flab.livecommerce.application.user;
 
-import com.flab.livecommerce.common.AuthenticatedUser;
+import com.flab.livecommerce.common.auth.AuthenticatedUser;
 import com.flab.livecommerce.domain.user.PasswordEncryptor;
 import com.flab.livecommerce.domain.user.TokenGenerator;
 import com.flab.livecommerce.domain.user.TokenRepository;
@@ -43,7 +43,7 @@ public class UserLoginProcessor {
         }
 
         var token = tokenGenerator.generate();
-        tokenRepository.save(token, AuthenticatedUser.create(user));
+        tokenRepository.save(AuthenticatedUser.create(user, token));
 
         return token;
     }

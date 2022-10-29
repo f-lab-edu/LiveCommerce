@@ -1,8 +1,9 @@
 package com.flab.livecommerce.common.interceptor;
 
+import com.flab.livecommerce.common.auth.AuthenticatedUser;
 import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.domain.user.exception.InvalidTokenException;
-import com.flab.livecommerce.infrastructure.user.annotation.LoginCheck;
+import com.flab.livecommerce.common.annotation.LoginCheck;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
@@ -34,16 +35,22 @@ public class LoginInterceptor implements HandlerInterceptor {
 
             var token = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-            if (hasNoLoginInfo(token)) {
+            if (token == null) {
                 throw new InvalidTokenException();
             }
+            //bearer 토큰 파싱
+            if (token.startsWith("Bearer ")) {
+                token = token.replace("Bearer ", "");
+            }
+
+            //token 정보 가져오기
+            //todo token 만료시간 갱신하기 분리 필요해 보임
+            AuthenticatedUser authenticatedUser = tokenRepository.findByToken(token);
+
+            //request 에 세션정보 담기
+            request.setAttribute("authSession", authenticatedUser);
         }
 
         return true;
     }
-
-    private boolean hasNoLoginInfo(String token) {
-        return tokenRepository.findByToken(token.replace("Bearer ", "")) == null;
-    }
-
 }

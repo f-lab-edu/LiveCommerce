@@ -1,10 +1,10 @@
 package com.flab.livecommerce.domain.user;
 
-import com.flab.livecommerce.common.AuthenticatedUser;
+import com.flab.livecommerce.common.auth.AuthenticatedUser;
 
 public interface TokenRepository {
 
-    void save(String token, AuthenticatedUser authenticatedUser);
+    void save(AuthenticatedUser authenticatedUser);
 
     AuthenticatedUser findByToken(String token);
 
