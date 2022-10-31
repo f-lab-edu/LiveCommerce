@@ -7,6 +7,7 @@ import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.domain.user.UserRepository;
 import com.flab.livecommerce.infrastructure.user.encryption.SecurityPasswordEncoder;
 import com.flab.livecommerce.infrastructure.user.generator.NonInfoTokenGenerator;
+import com.flab.livecommerce.infrastructure.user.token.TokenProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,13 +30,15 @@ public class UserProcessorConfig {
     public UserLoginProcessor userLoginProcessor(
         UserRepository userRepository,
         TokenGenerator tokenGenerator,
-        TokenRepository tokenRepository
+        TokenRepository tokenRepository,
+        TokenProperties tokenProperties
     ) {
         return new UserLoginProcessor(
             userRepository,
             tokenGenerator,
             tokenRepository,
-            new SecurityPasswordEncoder(algorithm())
+            new SecurityPasswordEncoder(algorithm()),
+            tokenProperties
         );
     }
 

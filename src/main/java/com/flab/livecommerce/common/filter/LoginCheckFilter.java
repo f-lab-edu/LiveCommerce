@@ -1,4 +1,4 @@
-package com.flab.livecommerce.infrastructure.user.filter;
+package com.flab.livecommerce.common.filter;
 
 import com.flab.livecommerce.domain.user.TokenRepository;
 import java.io.IOException;

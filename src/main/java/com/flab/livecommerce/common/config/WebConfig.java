@@ -1,9 +1,10 @@
-package com.flab.livecommerce.infrastructure.user.config;
+package com.flab.livecommerce.common.config;
 
 import com.flab.livecommerce.common.auth.AuthenticationArgumentResolver;
+import com.flab.livecommerce.common.filter.LoginCheckFilter;
 import com.flab.livecommerce.common.interceptor.LoginInterceptor;
+import com.flab.livecommerce.common.interceptor.SessionInterceptor;
 import com.flab.livecommerce.domain.user.TokenRepository;
-import com.flab.livecommerce.infrastructure.user.filter.LoginCheckFilter;
 import java.util.List;
 import javax.servlet.Filter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -31,8 +32,11 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor(tokenRepository))
+        registry.addInterceptor(new SessionInterceptor(tokenRepository))
             .order(1)
+            .excludePathPatterns("/error");
+        registry.addInterceptor(new LoginInterceptor())
+            .order(2)
             .excludePathPatterns("/error");
     }
 

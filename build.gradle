@@ -36,7 +36,6 @@ dependencies {
 	testImplementation 'org.projectlombok:lombok:1.18.22'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// mysql
 	implementation 'mysql:mysql-connector-java'
@@ -46,6 +45,9 @@ dependencies {
 	implementation 'org.flywaydb:flyway-mysql'
 	// redis
 	implementation "org.springframework.boot:spring-boot-starter-data-redis"
+	// annotation
+	annotationProcessor 'org.projectlombok:lombok'
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
 tasks.named('test') {

@@ -8,27 +8,34 @@ import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.UserRepository;
 import com.flab.livecommerce.domain.user.exception.InvalidUserException;
 import com.flab.livecommerce.domain.user.exception.PasswordNotMatchedException;
+import com.flab.livecommerce.infrastructure.user.token.TokenProperties;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 
+@Slf4j
 public class UserLoginProcessor {
 
     private final UserRepository userRepository;
     private final TokenGenerator tokenGenerator;
     private final TokenRepository tokenRepository;
     private final PasswordEncryptor passwordEncryption;
+    private final TokenProperties tokenProperties;
 
     public UserLoginProcessor(
         UserRepository userRepository,
         TokenGenerator tokenGenerator,
         TokenRepository tokenRepository,
-        PasswordEncryptor passwordEncryption
+        PasswordEncryptor passwordEncryption,
+        TokenProperties tokenProperties
     ) {
         this.userRepository = userRepository;
         this.tokenGenerator = tokenGenerator;
         this.tokenRepository = tokenRepository;
         this.passwordEncryption = passwordEncryption;
+        this.tokenProperties = tokenProperties;
     }
 
     public String execute(LoginCommand command) {
@@ -43,7 +50,13 @@ public class UserLoginProcessor {
         }
 
         var token = tokenGenerator.generate();
-        tokenRepository.save(AuthenticatedUser.create(user, token));
+        tokenRepository.save(
+            AuthenticatedUser.create(
+                user,
+                token,
+                tokenProperties.getTokenExpirationSec()
+            )
+        );
 
         return token;
     }

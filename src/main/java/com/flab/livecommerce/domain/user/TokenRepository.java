@@ -8,5 +8,8 @@ public interface TokenRepository {
 
     AuthenticatedUser findByToken(String token);
 
+    void renewExpirationSec(AuthenticatedUser authenticatedUser);
+
     void remove(String token);
+
 }

@@ -25,6 +25,11 @@ public class TokenRepositoryAdapter implements TokenRepository {
     }
 
     @Override
+    public void renewExpirationSec(AuthenticatedUser authenticatedUser) {
+        this.tokenRepository.renewExpirationSec(authenticatedUser);
+    }
+
+    @Override
     public void remove(String token) {
         this.tokenRepository.remove(token);
     }

@@ -6,9 +6,11 @@ import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Slf4j
 public class AuthenticatedUser {
 
     private String token;
@@ -17,24 +19,31 @@ public class AuthenticatedUser {
     private Role role;
     private LocalDateTime expireAt;
 
-    public AuthenticatedUser(String token, Long userId, String email, Role role) {
+    public AuthenticatedUser(
+        String token,
+        Long userId,
+        String email,
+        Role role,
+        LocalDateTime expireAt
+    ) {
         this.token = token;
         this.userId = userId;
         this.email = email;
         this.role = role;
+        this.expireAt = expireAt;
     }
 
-    public AuthenticatedUser plusExpireTime(long second) {
-        this.expireAt = LocalDateTime.now().plusSeconds(second);
-        return this;
+    public void addExpirationSec(long second) {
+        this.expireAt = expireAt.plusSeconds(second);
     }
 
-    public static AuthenticatedUser create(User user, String token) {
+    public static AuthenticatedUser create(User user, String token, long expirationSec) {
         return new AuthenticatedUser(
             token,
             user.getId(),
             user.getEmail(),
-            user.getRole()
+            user.getRole(),
+            LocalDateTime.now().plusSeconds(expirationSec)
         );
     }
 }

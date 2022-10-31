@@ -13,12 +13,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 public class LoginInterceptor implements HandlerInterceptor {
 
-    private final TokenRepository tokenRepository;
-
-    public LoginInterceptor(TokenRepository tokenRepository) {
-        this.tokenRepository = tokenRepository;
-    }
-
     @Override
     public boolean preHandle(
         HttpServletRequest request,
@@ -26,29 +20,12 @@ public class LoginInterceptor implements HandlerInterceptor {
         Object handler
     ) throws Exception {
 
-        if (handler instanceof HandlerMethod) {
+        if (handler instanceof HandlerMethod == false) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
 
             if (handlerMethod.getMethodAnnotation(LoginCheck.class) == null) {
                 return true;
             }
-
-            var token = request.getHeader(HttpHeaders.AUTHORIZATION);
-
-            if (token == null) {
-                throw new InvalidTokenException();
-            }
-            //bearer 토큰 파싱
-            if (token.startsWith("Bearer ")) {
-                token = token.replace("Bearer ", "");
-            }
-
-            //token 정보 가져오기
-            //todo token 만료시간 갱신하기 분리 필요해 보임
-            AuthenticatedUser authenticatedUser = tokenRepository.findByToken(token);
-
-            //request 에 세션정보 담기
-            request.setAttribute("authSession", authenticatedUser);
         }
 
         return true;
