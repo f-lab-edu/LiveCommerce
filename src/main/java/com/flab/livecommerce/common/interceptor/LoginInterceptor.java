@@ -1,9 +1,9 @@
 package com.flab.livecommerce.common.interceptor;
 
+import com.flab.livecommerce.common.annotation.LoginCheck;
 import com.flab.livecommerce.common.auth.AuthenticatedUser;
 import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.domain.user.exception.InvalidTokenException;
-import com.flab.livecommerce.common.annotation.LoginCheck;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
