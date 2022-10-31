@@ -8,6 +8,7 @@ import com.flab.livecommerce.application.user.UserLoginProcessor.LoginCommand;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.exception.InvalidUserException;
 import com.flab.livecommerce.domain.user.exception.PasswordNotMatchedException;
+import com.flab.livecommerce.infrastructure.user.token.TokenProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +24,8 @@ public class UserLoginProcessorTest {
             userRepository,
             new DummyTokenGenerator(),
             new DummyTokenRepository(),
-            new FakePasswordEncryptor()
+            new FakePasswordEncryptor(),
+            new TokenProperties() //todo 교체 해야함
         );
 
         LoginCommand command = new LoginCommand("aaa@gmail.com", "123456");
@@ -46,7 +48,8 @@ public class UserLoginProcessorTest {
             userRepository,
             new DummyTokenGenerator(),
             new DummyTokenRepository(),
-            new FakePasswordEncryptor()
+            new FakePasswordEncryptor(),
+            new TokenProperties() //todo 교체 해야함
         );
 
         LoginCommand command = new LoginCommand("aaa@gmail.com", "123456");

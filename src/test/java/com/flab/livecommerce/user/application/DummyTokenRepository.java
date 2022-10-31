@@ -16,6 +16,11 @@ public class DummyTokenRepository implements TokenRepository {
     }
 
     @Override
+    public void renewExpirationSec(AuthenticatedUser authenticatedUser) {
+
+    }
+
+    @Override
     public void remove(String token) {
 
     }
