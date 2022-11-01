@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/livecommerce?characterEncoding=UTF-8
+    username: test
+    password: 12345678!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  flyway:
+    enabled: false
+  redis:
+    host: localhost
+    port: 6379
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  config:
+    activate:
+      on-profile: test
