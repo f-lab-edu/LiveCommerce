@@ -9,6 +9,10 @@ public class EntityNotFoundException extends BaseException {
         super(ErrorCode.COMMON_INVALID_PARAMETER);
     }
 
+    public EntityNotFoundException(ErrorCode errorCode) {
+        super(errorCode);
+    }
+
     public EntityNotFoundException(String message) {
         super(message, ErrorCode.COMMON_INVALID_PARAMETER);
     }
