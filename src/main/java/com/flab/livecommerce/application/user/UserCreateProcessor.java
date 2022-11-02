@@ -1,11 +1,9 @@
 package com.flab.livecommerce.application.user;
 
+import com.flab.livecommerce.application.user.command.UserCreateCommand;
 import com.flab.livecommerce.domain.user.PasswordEncryptor;
-import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.UserRepository;
 import com.flab.livecommerce.domain.user.exception.DuplicatedEmailException;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 public class UserCreateProcessor {
 
@@ -22,25 +20,11 @@ public class UserCreateProcessor {
 
     public void execute(UserCreateCommand command) {
 
-        if (null != userRepository.findByEmail(command.getEmail())) {
+        if (userRepository.existsByEmail(command.getEmail())) {
             throw new DuplicatedEmailException();
         }
 
-        userRepository.save(
-            new User(
-                command.getEmail(),
-                passwordEncryption.encrypt(command.getPassword()),
-                command.getNickname()
-            )
-        );
-    }
-
-    @Getter
-    @AllArgsConstructor
-    public static class UserCreateCommand {
-
-        private String email;
-        private String password;
-        private String nickname;
+        String encryptedPassword = passwordEncryption.encrypt(command.getPassword());
+        userRepository.save(command.toEntity(encryptedPassword));
     }
 }

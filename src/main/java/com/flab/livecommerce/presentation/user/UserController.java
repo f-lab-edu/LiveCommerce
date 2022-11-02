@@ -1,9 +1,7 @@
 package com.flab.livecommerce.presentation.user;
 
 import com.flab.livecommerce.application.user.facade.UserManager;
-import com.flab.livecommerce.common.annotation.Authentication;
 import com.flab.livecommerce.common.annotation.LoginCheck;
-import com.flab.livecommerce.common.auth.AuthenticatedUser;
 import com.flab.livecommerce.common.response.CommonApiResponse;
 import com.flab.livecommerce.presentation.user.request.UserCreateRequest;
 import com.flab.livecommerce.presentation.user.request.UserEmailRequest;
@@ -50,11 +48,5 @@ public class UserController {
     public CommonApiResponse checkEmail(@RequestBody @Valid UserEmailRequest email) {
         userManager.checkEmailDuplicated(email.getEmail());
         return CommonApiResponse.success(null);
-    }
-
-    @LoginCheck
-    @PostMapping("/test")
-    public CommonApiResponse test(@Authentication AuthenticatedUser authenticatedUser) {
-        return CommonApiResponse.success(authenticatedUser);
     }
 }

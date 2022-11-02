@@ -23,4 +23,9 @@ public final class FakeUserRepository implements UserRepository {
             .findFirst()
             .orElse(null);
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return false;
+    }
 }

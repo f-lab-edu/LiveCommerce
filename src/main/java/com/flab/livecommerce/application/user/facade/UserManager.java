@@ -1,9 +1,9 @@
 package com.flab.livecommerce.application.user.facade;
 
 import com.flab.livecommerce.application.user.UserCreateProcessor;
-import com.flab.livecommerce.application.user.UserCreateProcessor.UserCreateCommand;
 import com.flab.livecommerce.application.user.UserLoginProcessor;
 import com.flab.livecommerce.application.user.UserLoginProcessor.LoginCommand;
+import com.flab.livecommerce.application.user.command.UserCreateCommand;
 import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.domain.user.UserRepository;
 import com.flab.livecommerce.domain.user.exception.DuplicatedEmailException;
@@ -42,7 +42,7 @@ public class UserManager {
     }
 
     public void checkEmailDuplicated(String email) {
-        if (null != userRepository.findByEmail(email)) {
+        if (userRepository.existsByEmail(email)) {
             throw new DuplicatedEmailException();
         }
     }

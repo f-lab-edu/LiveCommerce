@@ -1,6 +1,6 @@
 package com.flab.livecommerce.presentation.user.request;
 
-import com.flab.livecommerce.application.user.UserCreateProcessor.UserCreateCommand;
+import com.flab.livecommerce.application.user.command.UserCreateCommand;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;

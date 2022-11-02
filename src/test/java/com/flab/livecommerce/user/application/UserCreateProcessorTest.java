@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 import com.flab.livecommerce.application.user.UserCreateProcessor;
-import com.flab.livecommerce.application.user.UserCreateProcessor.UserCreateCommand;
+import com.flab.livecommerce.application.user.command.UserCreateCommand;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.exception.DuplicatedEmailException;
 import org.junit.jupiter.api.DisplayName;
