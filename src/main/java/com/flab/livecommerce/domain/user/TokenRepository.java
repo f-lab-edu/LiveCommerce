@@ -1,10 +1,15 @@
 package com.flab.livecommerce.domain.user;
 
+import com.flab.livecommerce.common.auth.AuthenticatedUser;
+
 public interface TokenRepository {
 
-    void save(String token, User user);
+    void save(AuthenticatedUser authenticatedUser);
 
-    User findByToken(String token);
+    AuthenticatedUser findByToken(String token);
+
+    void renewExpirationSec(AuthenticatedUser authenticatedUser);
 
     void remove(String token);
+
 }

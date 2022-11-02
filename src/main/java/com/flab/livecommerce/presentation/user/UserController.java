@@ -1,10 +1,10 @@
 package com.flab.livecommerce.presentation.user;
 
 import com.flab.livecommerce.application.user.facade.UserManager;
-import com.flab.livecommerce.application.user.facade.UserTokenManager;
+import com.flab.livecommerce.common.annotation.Authentication;
+import com.flab.livecommerce.common.annotation.LoginCheck;
+import com.flab.livecommerce.common.auth.AuthenticatedUser;
 import com.flab.livecommerce.common.response.CommonApiResponse;
-import com.flab.livecommerce.domain.user.User;
-import com.flab.livecommerce.infrastructure.user.annotation.LoginCheck;
 import com.flab.livecommerce.presentation.user.request.UserCreateRequest;
 import com.flab.livecommerce.presentation.user.request.UserEmailRequest;
 import com.flab.livecommerce.presentation.user.request.UserLoginRequest;
@@ -22,13 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserManager userManager;
-    private final UserTokenManager userTokenManager;
 
-    public UserController(UserManager userManager, UserTokenManager userTokenManager) {
+    public UserController(UserManager userManager) {
         this.userManager = userManager;
-        this.userTokenManager = userTokenManager;
     }
-
 
     @PostMapping
     public CommonApiResponse signUp(@RequestBody @Valid UserCreateRequest request) {
@@ -38,15 +35,14 @@ public class UserController {
 
     @PostMapping("/login")
     public CommonApiResponse login(@RequestBody @Valid UserLoginRequest request) {
-        User loginUserInfo = userManager.login(request.toCommand());
-        String token = userTokenManager.save(loginUserInfo);
+        var token = userManager.login(request.toCommand());
         return CommonApiResponse.success(token);
     }
 
     @LoginCheck
     @PostMapping("/logout")
     public CommonApiResponse logout(@RequestHeader String authorization) {
-        userTokenManager.delete(authorization.replace("Bearer ", ""));
+        userManager.delete(authorization.replace("Bearer ", ""));
         return CommonApiResponse.success(null);
     }
 
@@ -54,5 +50,11 @@ public class UserController {
     public CommonApiResponse checkEmail(@RequestBody @Valid UserEmailRequest email) {
         userManager.checkEmailDuplicated(email.getEmail());
         return CommonApiResponse.success(null);
+    }
+
+    @LoginCheck
+    @PostMapping("/test")
+    public CommonApiResponse test(@Authentication AuthenticatedUser authenticatedUser) {
+        return CommonApiResponse.success(authenticatedUser);
     }
 }

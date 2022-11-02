@@ -1,39 +1,64 @@
 package com.flab.livecommerce.application.user;
 
+import com.flab.livecommerce.common.auth.AuthenticatedUser;
 import com.flab.livecommerce.domain.user.PasswordEncryptor;
+import com.flab.livecommerce.domain.user.TokenGenerator;
+import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.domain.user.User;
 import com.flab.livecommerce.domain.user.UserRepository;
 import com.flab.livecommerce.domain.user.exception.InvalidUserException;
 import com.flab.livecommerce.domain.user.exception.PasswordNotMatchedException;
+import com.flab.livecommerce.infrastructure.user.token.TokenProperties;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 
+@Slf4j
 public class UserLoginProcessor {
 
     private final UserRepository userRepository;
+    private final TokenGenerator tokenGenerator;
+    private final TokenRepository tokenRepository;
     private final PasswordEncryptor passwordEncryption;
+    private final TokenProperties tokenProperties;
 
     public UserLoginProcessor(
         UserRepository userRepository,
-        PasswordEncryptor passwordEncryption
+        TokenGenerator tokenGenerator,
+        TokenRepository tokenRepository,
+        PasswordEncryptor passwordEncryption,
+        TokenProperties tokenProperties
     ) {
         this.userRepository = userRepository;
+        this.tokenGenerator = tokenGenerator;
+        this.tokenRepository = tokenRepository;
         this.passwordEncryption = passwordEncryption;
+        this.tokenProperties = tokenProperties;
     }
 
-    public User execute(LoginCommand command) {
+    public String execute(LoginCommand command) {
         User user = userRepository.findByEmail(command.getEmail());
 
-        if (null == user) {
-            throw new InvalidUserException("존재하지 않는 회원입니다.");
+        if (user == null) {
+            throw new InvalidUserException();
         }
 
         if (!passwordCheck(command, user)) {
-            throw new PasswordNotMatchedException("패스워드가 일치하지 않습니다.");
+            throw new PasswordNotMatchedException();
         }
 
-        return user;
+        var token = tokenGenerator.generate();
+        tokenRepository.save(
+            AuthenticatedUser.create(
+                user,
+                token,
+                tokenProperties.getTokenExpirationSec()
+            )
+        );
+
+        return token;
     }
 
     private boolean passwordCheck(LoginCommand command, User loginUserInfo) {

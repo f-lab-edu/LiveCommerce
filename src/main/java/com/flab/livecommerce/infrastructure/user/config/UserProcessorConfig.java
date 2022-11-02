@@ -3,9 +3,11 @@ package com.flab.livecommerce.infrastructure.user.config;
 import com.flab.livecommerce.application.user.UserCreateProcessor;
 import com.flab.livecommerce.application.user.UserLoginProcessor;
 import com.flab.livecommerce.domain.user.TokenGenerator;
+import com.flab.livecommerce.domain.user.TokenRepository;
 import com.flab.livecommerce.domain.user.UserRepository;
 import com.flab.livecommerce.infrastructure.user.encryption.SecurityPasswordEncoder;
 import com.flab.livecommerce.infrastructure.user.generator.NonInfoTokenGenerator;
+import com.flab.livecommerce.infrastructure.user.token.TokenProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,18 +28,25 @@ public class UserProcessorConfig {
 
     @Bean
     public UserLoginProcessor userLoginProcessor(
-        UserRepository userRepository
+        UserRepository userRepository,
+        TokenGenerator tokenGenerator,
+        TokenRepository tokenRepository,
+        TokenProperties tokenProperties
     ) {
         return new UserLoginProcessor(
             userRepository,
-            new SecurityPasswordEncoder(algorithm())
+            tokenGenerator,
+            tokenRepository,
+            new SecurityPasswordEncoder(algorithm()),
+            tokenProperties
         );
     }
 
     @Bean
-    public TokenGenerator tokenGenerator() {
-        //TODO 추후 processor 클래스 생기면 해당 bean 삭제
-        return new NonInfoTokenGenerator();
+    public TokenGenerator tokenGenerator(
+        TokenRepository tokenRepository
+    ) {
+        return new NonInfoTokenGenerator(tokenRepository);
     }
 
     @Bean

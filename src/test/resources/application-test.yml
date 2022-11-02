@@ -8,25 +8,18 @@ spring:
     password: 12345678!
     driver-class-name: com.mysql.cj.jdbc.Driver
   flyway:
-    user: test
-    password: 12345678!
-    url: jdbc:mysql://localhost:3306/livecommerce?characterEncoding=UTF-8
+    enabled: false
   redis:
     host: localhost
     port: 6379
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
         format_sql: true
 
-mybatis:
-  type-aliases-package: com.flab.livecommerce.domain
-  configuration:
-    map-underscore-to-camel-case: true
-  mapper-locations: classpath:mybatis/mapper/**/*.xml
-
-app.security.token:
-  tokenExpirationSec: 1000
+  config:
+    activate:
+      on-profile: test

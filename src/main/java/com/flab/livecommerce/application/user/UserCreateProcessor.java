@@ -23,7 +23,7 @@ public class UserCreateProcessor {
     public void execute(UserCreateCommand command) {
 
         if (null != userRepository.findByEmail(command.getEmail())) {
-            throw new DuplicatedEmailException("이미 존재하는 회원입니다.");
+            throw new DuplicatedEmailException();
         }
 
         userRepository.save(

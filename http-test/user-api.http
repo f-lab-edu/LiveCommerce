@@ -7,3 +7,12 @@ Content-Type: application/json
   "password":"aa23asda2",
   "nickname":"absss"
 }
+
+### 유저 로그인
+POST http://localhost:8080/api/v1/user/login
+Content-Type: application/json
+
+{
+  "email": "dssfs@gmail.com",
+  "password":"aa23asda2"
+}
