@@ -1,22 +1,22 @@
-package com.flab.livecommerce.domain.shop;
+package com.flab.livecommerce.domain.seller;
 
 import lombok.Getter;
 
 @Getter
-public class Shop {
+public class Seller {
 
     private Long id;
     private String name;
     private String businessNo;
     private String email;
 
-    public Shop(String name, String businessNo, String email) {
+    public Seller(String name, String businessNo, String email) {
         this.name = name;
         this.businessNo = businessNo;
         this.email = email;
     }
 
-    public Shop setId(Long id) {
+    public Seller setId(Long id) {
         this.id = id;
         return this;
     }

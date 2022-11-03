@@ -1,5 +1,5 @@
--- shop
-create table shop
+-- seller
+create table seller
 (
     id          bigint auto_increment primary key comment 'ID',
     name        varchar(255) not null comment '상점명',

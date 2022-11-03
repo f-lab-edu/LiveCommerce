@@ -69,7 +69,7 @@ public class JdbcTemplateItemRepository {
             while (rs.next()) {
                 if (item == null) {
                     item = new Item(
-                        rs.getLong("shop_id"),
+                        rs.getLong("seller_id"),
                         rs.getString("i.name"),
                         rs.getString("description"),
                         rs.getInt("price"),

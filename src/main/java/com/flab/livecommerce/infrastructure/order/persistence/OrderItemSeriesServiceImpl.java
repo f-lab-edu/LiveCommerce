@@ -42,7 +42,7 @@ public class OrderItemSeriesServiceImpl implements OrderItemSeriesService {
             orderLineItem -> {
                 var item = itemRepository.findById(orderLineItem.getItemId());
                 orderLineItem.setOrderId(order.getId());
-                orderLineItem.setShopId(item.getShopId());
+                orderLineItem.setSellerId(item.getSellerId());
                 orderLineItemMapper.save(orderLineItem);
 
                 orderLineItem.getOrderItemOptionGroups().forEach(

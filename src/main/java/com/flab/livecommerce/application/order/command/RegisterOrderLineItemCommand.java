@@ -1,7 +1,6 @@
 package com.flab.livecommerce.application.order.command;
 
 import com.flab.livecommerce.domain.item.Item;
-import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import com.flab.livecommerce.domain.order.Order;
 import com.flab.livecommerce.domain.order.OrderItemOptionGroup;
 import com.flab.livecommerce.domain.order.OrderLineItem;
@@ -24,7 +23,7 @@ public class RegisterOrderLineItemCommand {
         return OrderLineItem.builder()
             .orderId(order.getId())
             .orderCount(this.orderCount)
-            .shopId(item.getShopId())
+            .sellerId(item.getSellerId())
             .itemId(this.getItemId())
             .name(this.name)
             .price(this.price)

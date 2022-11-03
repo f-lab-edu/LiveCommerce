@@ -15,7 +15,7 @@ public class OrderLineItem {
     private Long id;
     private Long orderId;
     private Integer orderCount;
-    private Long shopId;
+    private Long sellerId;
     private Long itemId;
     private String name;
     private Long price;
@@ -25,7 +25,7 @@ public class OrderLineItem {
     public OrderLineItem(
         Long orderId,
         Integer orderCount,
-        Long shopId,
+        Long sellerId,
         Long itemId,
         String name,
         Long price,
@@ -46,7 +46,7 @@ public class OrderLineItem {
 
         this.orderId = orderId;
         this.orderCount = orderCount;
-        this.shopId = shopId;
+        this.sellerId = sellerId;
         this.itemId = itemId;
         this.name = name;
         this.price = price;
@@ -62,7 +62,7 @@ public class OrderLineItem {
         this.orderId = orderId;
     }
 
-    public void setShopId(Long shopId) {
-        this.shopId = shopId;
+    public void setSellerId(Long sellerId) {
+        this.sellerId = sellerId;
     }
 }

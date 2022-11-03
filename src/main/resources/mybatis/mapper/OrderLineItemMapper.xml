@@ -6,8 +6,8 @@
   namespace="com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderLineItemMapper">
 
   <insert id="save" useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO order_line_item (order_id, order_count, shop_id, item_id, name, price)
+    INSERT INTO order_line_item (order_id, order_count, seller_id, item_id, name, price)
 
-    VALUES (#{orderId}, #{orderCount}, #{shopId}, #{itemId}, #{name}, #{price})
+    VALUES (#{orderId}, #{orderCount}, #{sellerId}, #{itemId}, #{name}, #{price})
   </insert>
 </mapper>

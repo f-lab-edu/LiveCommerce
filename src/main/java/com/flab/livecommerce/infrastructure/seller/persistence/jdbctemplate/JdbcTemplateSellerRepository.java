@@ -1,7 +1,7 @@
-package com.flab.livecommerce.infrastructure.shop.persistence.jdbctemplate;
+package com.flab.livecommerce.infrastructure.seller.persistence.jdbctemplate;
 
 import com.flab.livecommerce.common.exception.EntityNotFoundException;
-import com.flab.livecommerce.domain.shop.Shop;
+import com.flab.livecommerce.domain.seller.Seller;
 import java.util.Collections;
 import java.util.Map;
 import javax.sql.DataSource;
@@ -13,47 +13,47 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class JdbcTemplateShopRepository {
+public class JdbcTemplateSellerRepository {
 
     private final NamedParameterJdbcTemplate template;
     private final SimpleJdbcInsert jdbcInsert;
 
-    public JdbcTemplateShopRepository(DataSource dataSource) {
+    public JdbcTemplateSellerRepository(DataSource dataSource) {
         this.template = new NamedParameterJdbcTemplate(dataSource);
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
-            .withTableName("shop")
+            .withTableName("seller")
             .usingGeneratedKeyColumns("id");
     }
 
-    public Shop save(Shop shop) {
-        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(shop);
+    public Seller save(Seller seller) {
+        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(seller);
         long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
 
-        return shop.setId(id);
+        return seller.setId(id);
     }
 
-    public Shop findById(Long id) {
-        String sql = "select * from shop where id = :id";
+    public Seller findById(Long id) {
+        String sql = "select * from seller where id = :id";
 
         Map<String, Long> parameters = Collections.singletonMap("id", id);
-        Shop shop = template.queryForObject(sql, parameters, shopRowMapper());
+        Seller seller = template.queryForObject(sql, parameters, sellerRowMapper());
 
-        if (shop == null) {
+        if (seller == null) {
             throw new EntityNotFoundException();
         }
 
-        return shop;
+        return seller;
     }
 
-    private RowMapper<Shop> shopRowMapper() {
+    private RowMapper<Seller> sellerRowMapper() {
         return (rs, rowNum) -> {
-            Shop shop = new Shop(
+            Seller seller = new Seller(
                 rs.getString("name"),
                 rs.getString("business_no"),
                 rs.getString("email")
             );
 
-            return shop.setId(rs.getLong("id"));
+            return seller.setId(rs.getLong("id"));
         };
     }
 }

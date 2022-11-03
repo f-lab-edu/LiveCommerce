@@ -15,34 +15,33 @@
   </insert>
 
   <select id="findById" resultMap="orderResultMap">
-    select
-        o.id                           AS o_id,
-        o.user_id                      AS o_userId,
-        o.pay_method                   AS o_payMethod,
-        o.receiver_name                AS o_receiverName,
-        o.receiver_phone_number        AS o_receiverPhoneNumber,
-        o.receiver_zipcode             AS o_receiverZipcode,
-        o.receiver_address             AS o_receiverAddress,
-        o.receiver_detail_address      AS o_receiverDetailAddress,
-        o.receiver_message             AS o_receiverMessage,
-        o.order_status                 AS o_orderStatus,
-        o.ordered_at                   AS o_orderedAt,
-        oli.id                         AS oli_id,
-        oli.order_id                   AS oli_orderId,
-        oli.order_count                AS oli_orderCount,
-        oli.shop_id                    AS oli_shopId,
-        oli.item_id                    AS oli_itemId,
-        oli.name                       AS oli_name,
-        oli.price                      AS oli_price,
-        oiog.id                        AS oiog_id,
-        oiog.order_line_item_id        AS oiog_orderLineItemId,
-        oiog.ordering                  AS oiog_ordering,
-        oiog.name                      AS oiog_name,
-        oio.id                         AS oio_id,
-        oio.order_item_option_group_id AS oio_orderItemOptionGroupId,
-        oio.ordering                   AS oio_ordering,
-        oio.name                       AS oio_name,
-        oio.price                      AS oio_price
+    select o.id                           AS o_id,
+           o.user_id                      AS o_userId,
+           o.pay_method                   AS o_payMethod,
+           o.receiver_name                AS o_receiverName,
+           o.receiver_phone_number        AS o_receiverPhoneNumber,
+           o.receiver_zipcode             AS o_receiverZipcode,
+           o.receiver_address             AS o_receiverAddress,
+           o.receiver_detail_address      AS o_receiverDetailAddress,
+           o.receiver_message             AS o_receiverMessage,
+           o.order_status                 AS o_orderStatus,
+           o.ordered_at                   AS o_orderedAt,
+           oli.id                         AS oli_id,
+           oli.order_id                   AS oli_orderId,
+           oli.order_count                AS oli_orderCount,
+           oli.seller_id                  AS oli_sellerId,
+           oli.item_id                    AS oli_itemId,
+           oli.name                       AS oli_name,
+           oli.price                      AS oli_price,
+           oiog.id                        AS oiog_id,
+           oiog.order_line_item_id        AS oiog_orderLineItemId,
+           oiog.ordering                  AS oiog_ordering,
+           oiog.name                      AS oiog_name,
+           oio.id                         AS oio_id,
+           oio.order_item_option_group_id AS oio_orderItemOptionGroupId,
+           oio.ordering                   AS oio_ordering,
+           oio.name                       AS oio_name,
+           oio.price                      AS oio_price
     from orders o
            left join order_line_item oli on o.id = oli.order_id
            left join order_item_option_group oiog on oli.id = oiog.order_line_item_id
@@ -67,7 +66,7 @@
       <id property="id" column="oli_id"/>
       <result property="orderId" column="oli_orderId"/>
       <result property="orderCount" column="oli_orderCount"/>
-      <result property="shopId" column="oli_shopId"/>
+      <result property="sellerId" column="oli_sellerId"/>
       <result property="itemId" column="oli_itemId"/>
       <result property="name" column="oli_name"/>
       <result property="price" column="oli_price"/>

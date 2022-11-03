@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class RegisterItemCommand {
 
-    private Long shopId;
+    private Long sellerId;
     private String name;
     private Integer price;
     private Integer salesPrice;
@@ -20,7 +20,7 @@ public class RegisterItemCommand {
 
     public Item toEntity() {
         return Item.builder()
-            .shopId(shopId)
+            .sellerId(sellerId)
             .name(name)
             .description(description)
             .price(price)

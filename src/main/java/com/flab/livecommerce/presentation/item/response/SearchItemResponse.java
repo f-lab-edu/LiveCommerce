@@ -1,6 +1,5 @@
 package com.flab.livecommerce.presentation.item.response;
 
-import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.Item.Info;
 import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import java.util.List;
@@ -9,7 +8,7 @@ import lombok.Getter;
 @Getter
 public class SearchItemResponse {
 
-    private Long shopId;
+    private Long sellerId;
     private String name;
     private String description;
     private Integer price;
@@ -18,7 +17,7 @@ public class SearchItemResponse {
     private List<ItemOptionGroup> itemOptionGroups;
 
     public SearchItemResponse(
-        Long shopId,
+        Long sellerId,
         String name,
         String description,
         Integer price,
@@ -26,7 +25,7 @@ public class SearchItemResponse {
         Integer stockQuantity,
         List<ItemOptionGroup> itemOptionGroups
     ) {
-        this.shopId = shopId;
+        this.sellerId = sellerId;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -38,7 +37,7 @@ public class SearchItemResponse {
     public static SearchItemResponse form(Info info) {
 
         return new SearchItemResponse(
-            info.getShopId(),
+            info.getSellerId(),
             info.getName(),
             info.getDescription(),
             info.getPrice(),

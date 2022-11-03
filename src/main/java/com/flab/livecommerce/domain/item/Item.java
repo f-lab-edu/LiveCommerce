@@ -11,7 +11,7 @@ import lombok.Getter;
 public class Item {
 
     private Long id;
-    private Long shopId;
+    private Long sellerId;
     private String name;
     //상품 설명
     private String description;
@@ -30,15 +30,15 @@ public class Item {
 
     @Builder
     public Item(
-        Long shopId,
+        Long sellerId,
         String name,
         String description,
         Integer price,
         Integer salesPrice,
         Integer stockQuantity
     ) {
-        if (shopId == null) {
-            throw new InvalidParameterException("Item.shopId");
+        if (sellerId == null) {
+            throw new InvalidParameterException("Item.sellerId");
         }
         if (name == null && (name.length() == 0)) {
             throw new InvalidParameterException("Item.name");
@@ -56,7 +56,7 @@ public class Item {
             throw new InvalidParameterException("Item.description");
         }
 
-        this.shopId = shopId;
+        this.sellerId = sellerId;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -77,7 +77,7 @@ public class Item {
     @Getter
     public static class Info {
 
-        private Long shopId;
+        private Long sellerId;
         private String name;
         private String description;
         private Integer price;
@@ -86,7 +86,7 @@ public class Item {
         private List<ItemOptionGroup> itemOptionGroups;
 
         public Info(Item item, List<ItemOptionGroup> itemOptionGroups) {
-            this.shopId = item.getShopId();
+            this.sellerId = item.getSellerId();
             this.name = item.getName();
             this.description = item.getDescription();
             this.price = item.getPrice();
