@@ -3,7 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
-  namespace="com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderMapper">
+  namespace="com.flab.livecommerce.order.infrastructure.persistence.mybatis.MyBatisOrderMapper">
   <insert id="save" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO orders (user_id, pay_method, receiver_name, receiver_phone_number, receiver_zipcode,
                         receiver_address, receiver_detail_address, receiver_message, ordered_at,
@@ -27,18 +27,18 @@
            o.order_status                 AS o_orderStatus,
            o.ordered_at                   AS o_orderedAt,
            oli.id                         AS oli_id,
-           oli.order_id                   AS oli_orderId,
+--            oli.order_id                   AS oli_orderId,
            oli.order_count                AS oli_orderCount,
            oli.seller_id                  AS oli_sellerId,
            oli.item_id                    AS oli_itemId,
            oli.name                       AS oli_name,
            oli.price                      AS oli_price,
            oiog.id                        AS oiog_id,
-           oiog.order_line_item_id        AS oiog_orderLineItemId,
+--            oiog.order_line_item_id        AS oiog_orderLineItemId,
            oiog.ordering                  AS oiog_ordering,
            oiog.name                      AS oiog_name,
            oio.id                         AS oio_id,
-           oio.order_item_option_group_id AS oio_orderItemOptionGroupId,
+--            oio.order_item_option_group_id AS oio_orderItemOptionGroupId,
            oio.ordering                   AS oio_ordering,
            oio.name                       AS oio_name,
            oio.price                      AS oio_price
@@ -64,7 +64,7 @@
     <result property="orderStatus" column="o_orderStatus"/>
     <collection property="orderLineItems" column="id" ofType="OrderLineItem">
       <id property="id" column="oli_id"/>
-      <result property="orderId" column="oli_orderId"/>
+<!--      <result property="orderId" column="oli_orderId"/>-->
       <result property="orderCount" column="oli_orderCount"/>
       <result property="sellerId" column="oli_sellerId"/>
       <result property="itemId" column="oli_itemId"/>
@@ -72,12 +72,12 @@
       <result property="price" column="oli_price"/>
       <collection property="orderItemOptionGroups" column="id" ofType="OrderItemOptionGroup">
         <id property="id" column="oiog_id"/>
-        <result property="orderLineItemId" column="oiog_orderLineItemId"/>
+<!--        <result property="orderLineItemId" column="oiog_orderLineItemId"/>-->
         <result property="ordering" column="oiog_ordering"/>
         <result property="name" column="oiog_name"/>
         <collection property="orderItemOptions" column="id" ofType="OrderItemOption">
           <id property="id" column="oio_id"/>
-          <result property="orderItemOptionGroupId" column="oio_orderItemOptionGroupId"/>
+<!--          <result property="orderItemOptionGroupId" column="oio_orderItemOptionGroupId"/>-->
           <result property="ordering" column="oio_ordering"/>
           <result property="name" column="oio_name"/>
           <result property="price" column="oio_price"/>

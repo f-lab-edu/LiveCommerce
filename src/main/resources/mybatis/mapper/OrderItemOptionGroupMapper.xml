@@ -3,11 +3,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
-  namespace="com.flab.livecommerce.infrastructure.order.persistence.mybatis.MyBatisOrderItemOptionGroupMapper">
+  namespace="com.flab.livecommerce.order.infrastructure.persistence.mybatis.MyBatisOrderItemOptionGroupMapper">
 
   <insert id="save" useGeneratedKeys="true" keyProperty="id">
-    INSERT INTO order_item_option_group (order_line_item_id, ordering, name)
+    INSERT INTO order_item_option_group (ordering, name)
 
-    VALUES (#{orderLineItemId}, #{ordering}, #{name})
+    VALUES (#{ordering}, #{name})
   </insert>
 </mapper>

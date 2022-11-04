@@ -23,7 +23,7 @@ spring:
         format_sql: true
 
 mybatis:
-  type-aliases-package: com.flab.livecommerce.domain
+  type-aliases-package: com.flab.livecommerce.*
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: classpath:mybatis/mapper/**/*.xml
