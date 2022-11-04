@@ -3,12 +3,11 @@ package com.flab.livecommerce.user.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
-import com.flab.livecommerce.application.user.UserLoginProcessor;
-import com.flab.livecommerce.application.user.UserLoginProcessor.LoginCommand;
-import com.flab.livecommerce.domain.user.User;
-import com.flab.livecommerce.domain.user.exception.InvalidUserException;
-import com.flab.livecommerce.domain.user.exception.PasswordNotMatchedException;
-import com.flab.livecommerce.infrastructure.user.token.TokenProperties;
+import com.flab.livecommerce.user.application.UserLoginProcessor.LoginCommand;
+import com.flab.livecommerce.user.domain.User;
+import com.flab.livecommerce.user.domain.exception.InvalidUserException;
+import com.flab.livecommerce.user.domain.exception.PasswordNotMatchedException;
+import com.flab.livecommerce.user.infrastructure.token.TokenProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
 package com.flab.livecommerce.user.application;
 
-import com.flab.livecommerce.domain.user.PasswordEncryptor;
+import com.flab.livecommerce.user.domain.PasswordEncryptor;
 
 public final class FakePasswordEncryptor implements PasswordEncryptor {
 

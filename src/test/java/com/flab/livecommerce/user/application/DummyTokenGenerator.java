@@ -1,6 +1,6 @@
 package com.flab.livecommerce.user.application;
 
-import com.flab.livecommerce.domain.user.TokenGenerator;
+import com.flab.livecommerce.user.domain.TokenGenerator;
 
 public class DummyTokenGenerator implements TokenGenerator {
 

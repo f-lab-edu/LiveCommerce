@@ -1,7 +1,7 @@
 package com.flab.livecommerce.common.auth;
 
 import com.flab.livecommerce.common.Role;
-import com.flab.livecommerce.domain.user.User;
+import com.flab.livecommerce.user.domain.User;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Getter;

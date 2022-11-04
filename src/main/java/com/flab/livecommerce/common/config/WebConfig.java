@@ -4,7 +4,7 @@ import com.flab.livecommerce.common.auth.AuthenticationArgumentResolver;
 import com.flab.livecommerce.common.filter.LoginCheckFilter;
 import com.flab.livecommerce.common.interceptor.LoginInterceptor;
 import com.flab.livecommerce.common.interceptor.SessionInterceptor;
-import com.flab.livecommerce.domain.user.TokenRepository;
+import com.flab.livecommerce.user.domain.TokenRepository;
 import java.util.List;
 import javax.servlet.Filter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

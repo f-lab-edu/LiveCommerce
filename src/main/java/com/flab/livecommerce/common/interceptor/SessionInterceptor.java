@@ -1,7 +1,7 @@
 package com.flab.livecommerce.common.interceptor;
 
 import com.flab.livecommerce.common.exception.AuthenticationException;
-import com.flab.livecommerce.domain.user.TokenRepository;
+import com.flab.livecommerce.user.domain.TokenRepository;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

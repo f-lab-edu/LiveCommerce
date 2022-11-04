@@ -1,7 +1,7 @@
 package com.flab.livecommerce.user.application;
 
-import com.flab.livecommerce.domain.user.User;
-import com.flab.livecommerce.domain.user.UserRepository;
+import com.flab.livecommerce.user.domain.User;
+import com.flab.livecommerce.user.domain.UserRepository;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;

@@ -1,6 +1,6 @@
 package com.flab.livecommerce.common.filter;
 
-import com.flab.livecommerce.domain.user.TokenRepository;
+import com.flab.livecommerce.user.domain.TokenRepository;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
