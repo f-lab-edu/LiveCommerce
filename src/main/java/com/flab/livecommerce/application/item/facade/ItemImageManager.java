@@ -27,7 +27,11 @@ public class ItemImageManager {
         this.updateImagePriorityProcessor = updateImagePriorityProcessor;
     }
 
-    public void upload(Long itemId, MultipartFile thumbnailImage, MultipartFile[] specificImages)
+    public void upload(
+        Long itemId,
+        MultipartFile thumbnailImage,
+        MultipartFile[] specificImages
+    )
         throws IOException {
         uploadImageProcessor.execute(itemId, thumbnailImage, specificImages);
     }
