@@ -1,24 +1,22 @@
 package com.flab.livecommerce.application.item;
 
-import com.flab.livecommerce.domain.item.ItemImageRepository;
+import com.flab.livecommerce.common.event.Events;
 import com.flab.livecommerce.domain.item.ItemRepository;
+import com.flab.livecommerce.domain.item.event.ItemDeletedEvent;
 import org.springframework.transaction.annotation.Transactional;
 
 public class DeleteItemProcessor {
 
     private final ItemRepository itemRepository;
-    private final ItemImageRepository itemImageRepository;
 
 
-    public DeleteItemProcessor(ItemRepository itemRepository,
-        ItemImageRepository itemImageRepository) {
+    public DeleteItemProcessor(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
-        this.itemImageRepository = itemImageRepository;
     }
 
     @Transactional
     public void execute(Long id) {
-        itemImageRepository.deleteById(id);
         itemRepository.deleteById(id);
+        Events.raise(new ItemDeletedEvent(id));
     }
 }
