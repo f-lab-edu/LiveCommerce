@@ -1,0 +1,1 @@
+alter table user ADD COLUMN role varchar(255) not null comment '권한';

@@ -1,1 +1,13 @@
 rootProject.name = 'livecommerce'
+
+include('server')
+include('common')
+include('legacy')
+include(
+        'order-api',
+        'order-api:order-domain',
+        'order-api:order-application',
+        'order-api:order-presentation',
+        'order-api:order-infrastructure'
+)
+
