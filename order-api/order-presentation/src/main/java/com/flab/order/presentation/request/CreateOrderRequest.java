@@ -1,13 +1,13 @@
 package com.flab.order.presentation.request;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import com.flab.order.application.command.CreateOrderCommand;
 import com.flab.order.application.command.CreateOrderItemOptionCommand;
 import com.flab.order.application.command.CreateOrderItemOptionGroupCommand;
 import com.flab.order.application.command.CreateOrderLineItemCommand;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 public class CreateOrderRequest {
 

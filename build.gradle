@@ -24,6 +24,14 @@ subprojects {
 	sourceCompatibility = JavaVersion.VERSION_11
 	targetCompatibility = JavaVersion.VERSION_11
 
+	checkstyle {
+		configFile = file("${project.rootDir}/config/checkstyle/checkstyle.xml")
+		configProperties = ["suppressionFile": "${project.rootDir}/config/checkstyle/checkstyle/checkstyle-suppressions.xml"]
+		ignoreFailures = false //경고가 있는 경우 빌드를 계속할 수 있는지 여부
+		toolVersion = "8.40"
+		maxErrors = 0
+		maxWarnings = 0
+	}
 }
 
 tasks.getByName('jar') {
