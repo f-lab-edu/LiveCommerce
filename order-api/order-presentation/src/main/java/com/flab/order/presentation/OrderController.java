@@ -4,9 +4,9 @@ import com.flab.common.auth.AuthenticatedUser;
 import com.flab.common.auth.annotation.Authentication;
 import com.flab.common.auth.annotation.LoginCheck;
 import com.flab.common.response.CommonApiResponse;
-import javax.validation.Valid;
 import com.flab.order.application.facade.OrderManager;
 import com.flab.order.presentation.request.CreateOrderRequest;
+import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +30,7 @@ public class OrderController {
         @Authentication AuthenticatedUser user,
         @RequestBody @Valid CreateOrderRequest request
     ) {
-        var order = orderManager.create(1L, request.toCommand());
+        var order = orderManager.create(user.getUserId(), request.toCommand());
         return CommonApiResponse.success(order);
     }
 
