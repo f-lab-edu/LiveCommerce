@@ -88,27 +88,26 @@ public class JdbcTemplateItemRepository {
 
             while (rs.next()) {
                 if (item == null) {
-                    item = new Item(
-                        rs.getLong("shop_id"),
-                        rs.getString("i.name"),
-                        rs.getString("description"),
-                        rs.getLong("price"),
-                        rs.getLong("sales_price"),
-                        rs.getInt("stock_quantity"));
+                    item = Item.builder()
+                        .shopId(rs.getLong("shop_id"))
+                        .name(rs.getString("i.name"))
+                        .description(rs.getString("description"))
+                        .price(rs.getLong("price"))
+                        .salesPrice(rs.getLong("sales_price"))
+                        .stockQuantity(rs.getInt("stock_quantity")).build();
                     item.setId(rs.getLong("id"));
                 }
 
                 long itemOptionGroupId = rs.getLong("iog.id");
                 if (!itemOptionGroupMap.containsKey(itemOptionGroupId)) {
-                    itemOptionGroup = new ItemOptionGroup(
-                        rs.getLong("item_id"),
-                        rs.getString("iog.name"),
-                        rs.getInt("ordering"),
-                        rs.getBoolean("basic"),
-                        rs.getBoolean("exclusive"),
-                        rs.getInt("minimum_choice"),
-                        rs.getInt("maximum_choice")
-                    );
+                    itemOptionGroup = ItemOptionGroup.builder()
+                        .name(rs.getString("iog.name"))
+                        .ordering(rs.getInt("ordering"))
+                        .basic(rs.getBoolean("basic"))
+                        .exclusive(rs.getBoolean("exclusive"))
+                        .minimumChoice(rs.getInt("minimum_choice"))
+                        .maximumChoice(rs.getInt("maximum_choice"))
+                        .build();
                     itemOptionGroup.setId(rs.getLong("iog.id"));
                     item.addItemOptionGroup(itemOptionGroup);
 

@@ -33,6 +33,7 @@ public class ItemOption {
     private Integer ordering;
     @Column(columnDefinition = "Integer")
     private Long price;
+
     @Builder
     public ItemOption(String name, Integer ordering, Long price) {
         if (name == null && name.length() == 0) {
@@ -44,7 +45,8 @@ public class ItemOption {
         if (price == null) {
             throw new InvalidParameterException("ItemOptionGroup.price");
         }
-
+        this.item = this.getItem();
+        this.itemOptionGroup = this.getItemOptionGroup();
         this.name = name;
         this.ordering = ordering;
         this.price = price;

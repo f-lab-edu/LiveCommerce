@@ -3,7 +3,7 @@ package com.flab.livecommerce.domain.item;
 import com.flab.livecommerce.common.exception.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,7 +40,7 @@ public class Item {
     private Integer stockQuantity;
 
     //옵션 그룹
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<ItemOptionGroup> itemOptionGroups = new ArrayList<>();
 
     @Builder
@@ -50,7 +50,8 @@ public class Item {
         String description,
         Long price,
         Long salesPrice,
-        Integer stockQuantity
+        Integer stockQuantity,
+        List<ItemOptionGroup> itemOptionGroups
     ) {
         if (shopId == null) {
             throw new InvalidParameterException("Item.shopId");
@@ -76,6 +77,18 @@ public class Item {
         this.price = price;
         this.salesPrice = salesPrice;
         this.stockQuantity = stockQuantity;
+        this.itemOptionGroups = itemOptionGroups;
+    }
+
+    public static Item create(Item item, List<ItemOptionGroup> itemOptionGroups) {
+        for (ItemOptionGroup itemOptionGroup : itemOptionGroups) {
+            item.addItemOptionGroup(itemOptionGroup);
+            var itemOptions = itemOptionGroup.getItemOptions();
+            for (ItemOption itemOption : itemOptions) {
+                itemOptionGroup.addItemOption(itemOption);
+            }
+        }
+        return item;
     }
 
     public Item setId(Long id) {
@@ -87,12 +100,6 @@ public class Item {
         this.itemOptionGroups.add(itemOptionGroup);
         itemOptionGroup.setItem(this);
         return this;
-    }
-
-    public List<Long> getOptionGroupId() {
-        return this.itemOptionGroups.stream()
-            .map(ItemOptionGroup::getId)
-            .collect(Collectors.toList());
     }
 
     @Getter
