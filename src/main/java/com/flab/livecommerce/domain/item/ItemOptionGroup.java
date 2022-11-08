@@ -3,16 +3,29 @@ package com.flab.livecommerce.domain.item;
 import com.flab.livecommerce.common.exception.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
 public class ItemOptionGroup {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long itemId;
     private String name;
+    @Column(columnDefinition = "Tinyint")
     private Integer ordering;
     //기본 옵션 여부
     private boolean basic;
@@ -22,10 +35,12 @@ public class ItemOptionGroup {
     private int minimumChoice;
     //최대 선택 개수
     private int maximumChoice;
-    private List<ItemOption> itemOptions = new ArrayList<>();
 
-    protected ItemOptionGroup() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "item_id")
+    private Item item;
+    @OneToMany(mappedBy = "itemOptionGroup")
+    private List<ItemOption> itemOptions = new ArrayList<>();
 
     @Builder
     public ItemOptionGroup(
@@ -47,7 +62,6 @@ public class ItemOptionGroup {
             throw new InvalidParameterException("ItemOptionGroup.itemId");
         }
 
-        this.itemId = itemId;
         this.name = name;
         this.ordering = ordering;
         this.basic = basic;
@@ -56,20 +70,19 @@ public class ItemOptionGroup {
         this.maximumChoice = maximumChoice;
     }
 
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
     public ItemOptionGroup addItemOption(ItemOption itemOption) {
         this.itemOptions.add(itemOption);
+        itemOption.setItemOptionGroup(this);
         return this;
     }
 
     public ItemOptionGroup setId(Long id) {
         this.id = id;
         return this;
-    }
-
-    public List<Long> getOptionId() {
-        return this.itemOptions.stream()
-            .map(ItemOption::getId)
-            .collect(Collectors.toList());
     }
 
 }

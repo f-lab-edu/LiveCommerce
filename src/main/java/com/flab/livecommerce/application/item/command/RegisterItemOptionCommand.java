@@ -17,12 +17,13 @@ public class RegisterItemOptionCommand {
     private Long price;
 
     public ItemOption toEntity(ItemOptionGroup itemOptionGroup) {
-        return ItemOption.builder()
-            .itemOptionGroupId(itemOptionGroup.getId())
+        var itemOption = ItemOption.builder()
             .ordering(ordering)
             .name(name)
             .price(price)
-            .itemId(itemOptionGroup.getItemId())
             .build();
+        itemOption.setItem(itemOptionGroup.getItem());
+        itemOption.setItemOptionGroup(itemOptionGroup);
+        return itemOption;
     }
 }

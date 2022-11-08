@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:13306/livecommerce?characterEncoding=UTF-8
+    url: jdbc:mysql://127.0.0.1:13306/livecommerce?tinyInt1isBit=false&characterEncoding=UTF-8
     username: test
     password: 12345678!
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -11,7 +11,7 @@ spring:
   flyway:
     user: test
     password: 12345678!
-    url: jdbc:mysql://127.0.0.1:13306/livecommerce?characterEncoding=UTF-8
+    url: jdbc:mysql://127.0.0.1:13306/livecommerce?tinyInt1isBit=false&characterEncoding=UTF-8
 
   servlet:
     multipart:
