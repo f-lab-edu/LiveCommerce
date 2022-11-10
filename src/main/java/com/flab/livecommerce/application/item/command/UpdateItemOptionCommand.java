@@ -18,12 +18,12 @@ public class UpdateItemOptionCommand {
 
     public ItemOption toEntity(ItemOptionGroup itemOptionGroup) {
         var itemOption = ItemOption.builder()
-            //.itemOptionGroupId(itemOptionGroup.getId())
+            .itemOptionGroupId(itemOptionGroup.getId())
+            .itemId(itemOptionGroup.getItemId())
             .name(name)
             .ordering(ordering)
             .price(price)
             .build();
-        itemOption.setItem(itemOptionGroup.getItem());
         return itemOption.setId(id);
     }
 }

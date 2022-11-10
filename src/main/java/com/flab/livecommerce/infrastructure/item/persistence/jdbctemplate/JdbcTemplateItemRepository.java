@@ -5,9 +5,11 @@ import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemOption;
 import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -79,6 +81,14 @@ public class JdbcTemplateItemRepository {
         return item;
     }
 
+
+    public List<ItemOptionGroup> findItemOptionSeries(Item item) {
+        //todo 구현 필요
+        var itemOptionGroupsList = item.getItemOptionGroups();
+
+        return null;
+    }
+
     private ResultSetExtractor<Item> resultSetExtractor() {
 
         return (rs -> {
@@ -116,9 +126,11 @@ public class JdbcTemplateItemRepository {
                 }
 
                 ItemOption itemOption = new ItemOption(
+                    rs.getLong("iog.id"),
                     rs.getString("io.name"),
                     rs.getInt("io.ordering"),
-                    rs.getLong("io.price")
+                    rs.getLong("io.price"),
+                    rs.getLong("i.id")
                 );
 
                 itemOption.setId(rs.getLong("io.id"));

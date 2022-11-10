@@ -36,7 +36,7 @@ public class JdbcTemplateItemOptionRepository {
 
         SqlParameterSource param = new MapSqlParameterSource()
             .addValue("id", optionId)
-            .addValue("itemOptionGroupId", itemOption.getItemOptionGroup().getId())
+            .addValue("itemOptionGroupId", itemOption.getItemOptionGroupId())
             .addValue("ordering", itemOption.getOrdering())
             .addValue("name", itemOption.getName())
             .addValue("price", itemOption.getPrice());
