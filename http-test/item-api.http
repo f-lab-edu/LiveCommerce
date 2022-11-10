@@ -8,8 +8,7 @@ Content-Type: application/json
   "price": 30000,
   "salesPrice": 28000,
   "description": "샘플 상품 입니다",
-  "stockQuantity": 10,
-  "modelNumber": 123,
+  "stockQuantity": 10
   "itemOptionGroups": [
     {
       "ordering": 1,

@@ -1,22 +1,14 @@
-plugins {
-	id 'java'
-}
-
 
 allprojects {
-	group = 'com.flab'
-	version = '0.0.1-SNAPSHOT'
-
 	repositories {
 		mavenCentral()
-	}
-
-	tasks.withType(Test) {
-		useJUnitPlatform()
 	}
 }
 
 subprojects {
+	group = 'com.flab'
+	version = '0.0.1-SNAPSHOT'
+
 	apply plugin: "java"
 	apply plugin: "java-library"
 	apply plugin: "checkstyle"
@@ -32,8 +24,13 @@ subprojects {
 		maxErrors = 0
 		maxWarnings = 0
 	}
-}
 
-tasks.getByName('jar') {
-	enabled = false
+	jar {
+		enabled = true
+	}
+
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
+
 }

@@ -1,6 +1,6 @@
 package com.flab.livecommerce.common.config;
 
-import com.flab.common.auth.AuthenticationArgumentResolver;
+import com.flab.livecommerce.common.auth.AuthenticationArgumentResolver;
 import com.flab.livecommerce.common.filter.LoginCheckFilter;
 import com.flab.livecommerce.common.interceptor.LoginInterceptor;
 import com.flab.livecommerce.common.interceptor.RedisSessionInterceptor;

@@ -13,6 +13,7 @@
 //import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 //import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 //import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+//import org.springframework.test.annotation.Rollback;
 //import org.springframework.test.context.ActiveProfiles;
 //import org.springframework.test.context.junit.jupiter.SpringExtension;
 //
@@ -30,6 +31,7 @@
 //    private TestEntityManager entityManager;
 //
 //    @BeforeEach
+//    @Rollback(value = false)
 //    void before() {
 //        SampleUser user = new SampleUser("정명구");
 //        userRepository.save(user);
@@ -111,6 +113,16 @@
 //        entityManager.clear();
 //        SampleUser user2 = userRepository.findById(1L).get();
 //
+//        log.info(">>>>user1 변경 전 user1={}", user1.toString());
+//        log.info(">>>>user1 변경 전 user2={}", user1.toString());
+//        user1.setName("변경 완료");
+//        log.info(">>>>user1 변경 후 user1={}", user1.toString());
+//        log.info(">>>>user1 변경 후 user2={}", user1.toString());
+//
+//        user2.setName("user2 변경 완료");
+//        entityManager.flush();
+//        log.info(">>>>user2 변경 후 user1={}", user1.toString());
+//        log.info(">>>>user2 변경 후 user2={}", user1.toString());
 //        //Assert
 //        assertThat(user1).isNotEqualTo(user2);
 //        assertThat(user1 == user2).isFalse();
@@ -118,4 +130,6 @@
 //        // 다른 객체를 반환 함
 //        // 객체의 주소값이 다름
 //    }
+//
+//
 //}

@@ -1,7 +1,7 @@
-package com.flab.common.auth;
+package com.flab.livecommerce.common.auth;
 
-import com.flab.common.auth.annotation.Authentication;
 import com.flab.common.exception.AuthenticationException;
+import com.flab.livecommerce.common.auth.annotation.Authentication;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;

@@ -1,6 +1,8 @@
-package com.flab.common.response;
+package com.flab.livecommerce;
 
 import com.flab.common.exception.BaseException;
+import com.flab.common.response.CommonApiResponse;
+import com.flab.common.response.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.http.HttpStatus;

@@ -1,14 +1,7 @@
 package com.flab.common.auth;
 
 import java.time.LocalDateTime;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Slf4j
 public class AuthenticatedUser {
 
     private String token;
@@ -16,6 +9,9 @@ public class AuthenticatedUser {
     private String email;
     private Role role;
     private LocalDateTime expireAt;
+
+    protected AuthenticatedUser() {
+    }
 
     public AuthenticatedUser(
         String token,
@@ -51,4 +47,23 @@ public class AuthenticatedUser {
         );
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public LocalDateTime getExpireAt() {
+        return expireAt;
+    }
 }

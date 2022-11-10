@@ -1,9 +1,7 @@
 package com.flab.common.exception;
 
 import com.flab.common.response.ErrorCode;
-import lombok.Getter;
 
-@Getter
 public class BaseException extends RuntimeException {
 
     private final ErrorCode errorCode;
@@ -18,4 +16,7 @@ public class BaseException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
+    public ErrorCode getErrorCode() {
+        return errorCode;
+    }
 }
