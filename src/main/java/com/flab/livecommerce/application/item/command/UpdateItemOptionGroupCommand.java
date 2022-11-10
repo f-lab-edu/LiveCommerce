@@ -27,6 +27,7 @@ public class UpdateItemOptionGroupCommand {
 
     public ItemOptionGroup toEntity(Item item) {
         var itemOptionGroup = ItemOptionGroup.builder()
+            .itemId(item.getId())
             .ordering(this.ordering)
             .name(this.name)
             .basic(this.basic)
@@ -34,7 +35,6 @@ public class UpdateItemOptionGroupCommand {
             .minimumChoice(this.minimumChoice)
             .maximumChoice(this.maximumChoice)
             .build();
-        itemOptionGroup.setItem(item);
         return itemOptionGroup.setId(id);
     }
 }

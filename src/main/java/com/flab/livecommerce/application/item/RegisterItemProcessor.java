@@ -21,8 +21,8 @@ public class RegisterItemProcessor {
 
     @Transactional
     public Item execute(RegisterItemCommand command) {
-        var item = Item.create(command.toEntity(), command.toOptionGroup());
-        itemRepository.save(item);
+        var item = itemRepository.save(command.toEntity());
+        itemOptionSeriesService.save(command, item);
 
         return item;
     }

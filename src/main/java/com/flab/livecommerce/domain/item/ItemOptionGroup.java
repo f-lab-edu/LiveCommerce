@@ -3,7 +3,6 @@ package com.flab.livecommerce.domain.item;
 import com.flab.livecommerce.common.exception.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,33 +39,35 @@ public class ItemOptionGroup {
     @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
-    @OneToMany(mappedBy = "itemOptionGroup", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "itemOptionGroup")
     private List<ItemOption> itemOptions = new ArrayList<>();
 
     @Builder
     public ItemOptionGroup(
+        Long itemId,
         String name,
         Integer ordering,
         boolean basic,
         boolean exclusive,
         int minimumChoice,
-        int maximumChoice,
-        List<ItemOption> itemOptions
+        int maximumChoice
     ) {
+        if (itemId == null) {
+            throw new InvalidParameterException("ItemOptionGroup.itemId");
+        }
         if (name == null && name.length() == 0) {
             throw new InvalidParameterException("ItemOptionGroup.name");
         }
         if (ordering == null) {
             throw new InvalidParameterException("ItemOptionGroup.itemId");
         }
-        this.item = getItem();
+
         this.name = name;
         this.ordering = ordering;
         this.basic = basic;
         this.exclusive = exclusive;
         this.minimumChoice = minimumChoice;
         this.maximumChoice = maximumChoice;
-        this.itemOptions = itemOptions;
     }
 
     public void setItem(Item item) {
