@@ -1,5 +1,6 @@
 package com.flab.livecommerce.application.item;
 
+import com.flab.livecommerce.common.response.ErrorCode;
 import com.flab.livecommerce.domain.item.ImageUploader;
 import com.flab.livecommerce.domain.item.ItemImage;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
@@ -26,7 +27,7 @@ public class UploadImageProcessor {
         throws IOException {
 
         if (thumbnailImage.isEmpty()) {
-            throw new ItemImageNotFoundException("썸네일 이미지는 필수입니다.");
+            throw new ItemImageNotFoundException("썸네일 이미지", ErrorCode.IMAGE_NOT_FOUND);
         }
 
         ItemImage storedThumbnail = imageUploader.upload(itemId, thumbnailImage);
