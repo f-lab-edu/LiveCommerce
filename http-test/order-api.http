@@ -5,12 +5,6 @@ Content-Type: application/json
 {
   "userId": "1",
   "payMethod": "NAVER_PAY",
-  "receiverName": "정명구",
-  "receiverPhoneNumber": "01011112222",
-  "receiverZipcode": "12345",
-  "receiverAddress": "수원시 영통구",
-  "receiverDetailAddress": "어디어디 몇층 몇호",
-  "receiverMessage": "감사합니다",
   "orderLineItems": [
     {
       "orderCount": 2,
