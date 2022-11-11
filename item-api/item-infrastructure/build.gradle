@@ -4,10 +4,9 @@ plugins {
 }
 
 dependencies {
-    implementation project(path: ':item-api:item-domain')
-    implementation project(path: ':item-api:item-application')
-    implementation project(path: ':item-api:item-presentation')
-    implementation project(path: ':common')
+    implementation project(path: ':item-api:item-domain', configuration: "default")
+    implementation project(path: ':item-api:item-application', configuration: "default")
+    implementation project(path: ':item-api:item-presentation', configuration: "default")
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     testImplementation "org.springframework.boot:spring-boot-starter-test"

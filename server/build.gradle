@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-//	implementation project(path: ':legacy', configuration: 'default')
 	implementation project(path: ':order-api:order-infrastructure', configuration: 'default')
 	implementation project(path: ':user-api:user-infrastructure', configuration: 'default')
 	implementation project(path: ':seller-api:seller-infrastructure', configuration: 'default')
@@ -24,9 +23,6 @@ dependencies {
 	implementation 'org.flywaydb:flyway-mysql'
 	// redis
 	implementation "org.springframework.boot:spring-boot-starter-data-redis"
-	// annotation
-	annotationProcessor 'org.projectlombok:lombok'
-	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
 tasks.getByName('bootJar') {

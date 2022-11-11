@@ -4,16 +4,15 @@ plugins {
 }
 
 dependencies {
-    implementation project(path: ':user-api:user-domain')
-    implementation project(path: ':user-api:user-application')
-    implementation project(path: ':user-api:user-presentation')
-    implementation project(path: ':common')
+    implementation project(path: ':user-api:user-domain', configuration: "default")
+    implementation project(path: ':user-api:user-application', configuration: "default")
+    implementation project(path: ':user-api:user-presentation', configuration: "default")
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation 'org.springframework.security:spring-security-crypto'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
 tasks.getByName('bootJar') {
