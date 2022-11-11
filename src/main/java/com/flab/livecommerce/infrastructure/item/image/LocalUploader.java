@@ -22,20 +22,22 @@ public class LocalUploader implements ImageUploader {
             throw new ItemImageNotFoundException();
         }
 
+        String randomFileName = UUID.randomUUID().toString();
         String originalFilename = image.getOriginalFilename();
-        String uploadFileName = createUploadFileName(originalFilename);
+        String uploadFilePath = createUploadFileName(originalFilename, randomFileName);
 
-        String fullPath = getFullPath(uploadFileName);
+        String fullPath = getFullPath(uploadFilePath);
         log.info("파일 저장 fullPath={}", fullPath);
 
         try {
-            image.transferTo(new File(getFullPath(uploadFileName)));
+            image.transferTo(new File(getFullPath(uploadFilePath)));
         } catch (IOException e) {
             throw new RuntimeException();
         }
+
         return ItemImage.builder()
-            .name(uploadFileName)
-            .url(fullPath)
+            .name(randomFileName)
+            .url(uploadFilePath)
             .build();
     }
 
@@ -43,10 +45,9 @@ public class LocalUploader implements ImageUploader {
         return localBasePath + uploadFileName;
     }
 
-    private String createUploadFileName(String originalFilename) {
+    private String createUploadFileName(String originalFilename, String randomFileName) {
         String ext = extractExt(originalFilename);
-        String uuid = UUID.randomUUID().toString();
-        return uuid + "." + ext;
+        return randomFileName + "." + ext;
     }
 
     private String extractExt(String originalFilename) {
