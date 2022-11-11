@@ -55,8 +55,8 @@ public class ItemOptionSeriesServiceImpl implements ItemOptionSeriesService {
         itemOptionGroupList.forEach(
             requestItemOptionGroup -> {
                 var requestOptionGroup = requestItemOptionGroup.toEntity(item);
-                var updatedOptionGroup = itemOptionGroupRepository.update(requestOptionGroup,
-                    requestOptionGroup.getId());
+                var updatedOptionGroup =
+                    itemOptionGroupRepository.update(requestOptionGroup, requestOptionGroup.getId());
 
                 requestItemOptionGroup.getItemOptions().forEach(
                     requestItemOption -> {

@@ -1,10 +1,10 @@
 package com.flab.livecommerce.application.item;
 
-import com.flab.livecommerce.common.response.ErrorCode;
 import com.flab.livecommerce.domain.item.ImageUploader;
+import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemImage;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
-import com.flab.livecommerce.domain.item.exception.ItemImageNotFoundException;
+import com.flab.livecommerce.domain.item.ItemRepository;
 import java.io.IOException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,13 +12,16 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadImageProcessor {
 
     private final ItemImageRepository itemImageRepository;
+    private final ItemRepository itemRepository;
     private final ImageUploader imageUploader;
 
     public UploadImageProcessor(
         ItemImageRepository itemImageRepository,
+        ItemRepository itemRepository,
         ImageUploader imageUploader
     ) {
         this.itemImageRepository = itemImageRepository;
+        this.itemRepository = itemRepository;
         this.imageUploader = imageUploader;
     }
 
@@ -26,19 +29,16 @@ public class UploadImageProcessor {
     public void execute(Long itemId, MultipartFile thumbnailImage, MultipartFile[] specificImages)
         throws IOException {
 
-        if (thumbnailImage.isEmpty()) {
-            throw new ItemImageNotFoundException("썸네일 이미지", ErrorCode.IMAGE_NOT_FOUND);
-        }
+        Item item = itemRepository.findById(itemId);
 
-        ItemImage storedThumbnail = imageUploader.upload(itemId, thumbnailImage);
+        ItemImage storedThumbnail = imageUploader.uploadImage(thumbnailImage);
+        storedThumbnail.addItem(item);
         itemImageRepository.save(storedThumbnail);
 
-        for (int i = 1; i <= specificImages.length; i++) {
-            if (!specificImages[i - 1].isEmpty()) {
-                ItemImage storedSpecific = imageUploader.upload(itemId, specificImages[i - 1]);
-                storedSpecific.setOrdering(i);
-                itemImageRepository.save(storedSpecific);
-            }
+        for (MultipartFile specificImage : specificImages) {
+            ItemImage storedSpecific = imageUploader.uploadImage(specificImage);
+            storedSpecific.addItem(item);
+            itemImageRepository.save(storedSpecific);
         }
     }
 }

@@ -3,7 +3,6 @@ package com.flab.livecommerce.domain.item;
 import com.flab.livecommerce.common.exception.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -24,6 +23,9 @@ public class Item {
 
     //옵션 그룹
     private List<ItemOptionGroup> itemOptionGroups = new ArrayList<>();
+
+    // 아이템 이미지 리스트
+    private List<ItemImage> itemImages = new ArrayList<>();
 
     protected Item() {
     }
@@ -74,10 +76,11 @@ public class Item {
         return this;
     }
 
-    public List<Long> getOptionGroupId() {
-        return this.itemOptionGroups.stream()
-            .map(ItemOptionGroup::getId)
-            .collect(Collectors.toList());
+    public void addItemImageList(ItemImage... itemImages) {
+        for (ItemImage itemImage : itemImages) {
+            itemImage.setOrdering(this.itemImages.size() + 1);
+            this.itemImages.add(itemImage);
+        }
     }
 
     @Getter

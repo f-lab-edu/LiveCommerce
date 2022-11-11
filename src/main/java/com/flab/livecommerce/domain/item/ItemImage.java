@@ -33,4 +33,13 @@ public class ItemImage {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public void setItemId(Long itemId) {
+        this.itemId = itemId;
+    }
+
+    public void addItem(Item item) {
+        this.itemId = item.getId();
+        item.addItemImageList(this);
+    }
 }

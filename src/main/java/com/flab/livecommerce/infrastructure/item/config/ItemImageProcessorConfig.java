@@ -5,12 +5,14 @@ import com.flab.livecommerce.application.item.UpdateImagePriorityProcessor;
 import com.flab.livecommerce.application.item.UploadImageProcessor;
 import com.flab.livecommerce.domain.item.ImageUploader;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
+import com.flab.livecommerce.domain.item.ItemRepository;
 import com.flab.livecommerce.infrastructure.item.image.LocalUploader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ItemImageProcessorConfig {
+
 
     @Bean
     private static ImageUploader getUploader() {
@@ -19,9 +21,10 @@ public class ItemImageProcessorConfig {
 
     @Bean
     public UploadImageProcessor uploadImageProcessor(
-        ItemImageRepository itemImageRepository
+        ItemImageRepository itemImageRepository,
+        ItemRepository itemRepository
     ) {
-        return new UploadImageProcessor(itemImageRepository, getUploader());
+        return new UploadImageProcessor(itemImageRepository, itemRepository, getUploader());
     }
 
     @Bean
