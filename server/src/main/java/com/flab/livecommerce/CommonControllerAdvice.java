@@ -3,7 +3,8 @@ package com.flab.livecommerce;
 import com.flab.common.exception.BaseException;
 import com.flab.common.response.CommonApiResponse;
 import com.flab.common.response.ErrorCode;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.NestedExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -13,9 +14,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@Slf4j
 @RestControllerAdvice
 public class CommonControllerAdvice {
+
+    private static final Logger log = LoggerFactory.getLogger(CommonControllerAdvice.class);
 
     /**
      * http status: 500 AND result: FAIL

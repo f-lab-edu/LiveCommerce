@@ -6,16 +6,13 @@ plugins {
 dependencies {
 //	implementation project(path: ':legacy', configuration: 'default')
 	implementation project(path: ':order-api:order-infrastructure', configuration: 'default')
-//	implementation project(path: ':user-api:user-infrastructure', configuration: 'default')
-//	implementation project(path: ':seller-api:seller-infrastructure', configuration: 'default')
-//	implementation project(path: ':item-api:item-infrastructure', configuration: 'default')
+	implementation project(path: ':user-api:user-infrastructure', configuration: 'default')
+	implementation project(path: ':seller-api:seller-infrastructure', configuration: 'default')
+	implementation project(path: ':item-api:item-infrastructure', configuration: 'default')
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.security:spring-security-crypto'
-	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	testImplementation 'org.projectlombok:lombok:1.18.22'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// mysql
 	implementation 'mysql:mysql-connector-java'

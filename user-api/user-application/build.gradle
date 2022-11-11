@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-    implementation project(path: ':user-api:user-domain', configuration: 'default')
-    implementation project(path: ':common', configuration: 'default')
+    implementation project(path: ':user-api:user-domain')
+    implementation project(path: ':common')
     implementation "org.springframework.boot:spring-boot-starter-web"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 }

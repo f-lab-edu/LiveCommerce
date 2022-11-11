@@ -4,8 +4,12 @@ plugins {
 }
 
 dependencies {
-    implementation project(path: ':seller-api:seller-domain', configuration: 'default')
-    implementation project(path: ':common', configuration: 'default')
+    implementation project(path: ':seller-api:seller-domain')
+    implementation project(path: ':common')
     implementation "org.springframework.boot:spring-boot-starter-web"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+tasks.getByName('bootJar') {
+    enabled = false
 }

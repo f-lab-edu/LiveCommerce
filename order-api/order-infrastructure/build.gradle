@@ -7,7 +7,7 @@ dependencies {
     implementation project(path: ':order-api:order-domain')
     implementation project(path: ':order-api:order-application')
     implementation project(path: ':order-api:order-presentation')
-    implementation project(path: ':common', configuration: 'default')
+    implementation project(path: ':common')
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
