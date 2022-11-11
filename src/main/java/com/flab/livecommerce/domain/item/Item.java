@@ -83,6 +83,10 @@ public class Item {
         }
     }
 
+    public List<String> findItemImageUris() {
+        return null;
+    }
+
     @Getter
     public static class Info {
 

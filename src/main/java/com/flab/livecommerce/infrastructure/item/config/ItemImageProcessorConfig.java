@@ -1,6 +1,7 @@
 package com.flab.livecommerce.infrastructure.item.config;
 
 import com.flab.livecommerce.application.item.DeleteImageProcessor;
+import com.flab.livecommerce.application.item.GetImageProcessor;
 import com.flab.livecommerce.application.item.UpdateImagePriorityProcessor;
 import com.flab.livecommerce.application.item.UploadImageProcessor;
 import com.flab.livecommerce.domain.item.ImageUploader;
@@ -41,5 +42,10 @@ public class ItemImageProcessorConfig {
         return new UpdateImagePriorityProcessor(itemImageRepository, getUploader());
     }
 
+    @Bean
+    public GetImageProcessor getImageProcessor(
+    ) {
+        return new GetImageProcessor(getUploader());
+    }
 
 }

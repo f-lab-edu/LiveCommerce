@@ -1,10 +1,15 @@
 package com.flab.livecommerce.application.item.facade;
 
 import com.flab.livecommerce.application.item.DeleteImageProcessor;
+import com.flab.livecommerce.application.item.GetImageProcessor;
 import com.flab.livecommerce.application.item.UpdateImagePriorityProcessor;
 import com.flab.livecommerce.application.item.UploadImageProcessor;
 import com.flab.livecommerce.application.item.command.UpdateImageOrderCommand;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.util.List;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,24 +21,28 @@ public class ItemImageManager {
 
     private final UpdateImagePriorityProcessor updateImagePriorityProcessor;
 
+    private final GetImageProcessor getImageProcessor;
+
 
     public ItemImageManager(
         UploadImageProcessor uploadImageProcessor,
         DeleteImageProcessor deleteImageProcessor,
-        UpdateImagePriorityProcessor updateImagePriorityProcessor
+        UpdateImagePriorityProcessor updateImagePriorityProcessor,
+        GetImageProcessor getImageProcessor
     ) {
         this.uploadImageProcessor = uploadImageProcessor;
         this.deleteImageProcessor = deleteImageProcessor;
         this.updateImagePriorityProcessor = updateImagePriorityProcessor;
+        this.getImageProcessor = getImageProcessor;
     }
 
-    public void upload(
+    public List<URI> upload(
         Long itemId,
         MultipartFile thumbnailImage,
         MultipartFile[] specificImages
     )
         throws IOException {
-        uploadImageProcessor.execute(itemId, thumbnailImage, specificImages);
+        return uploadImageProcessor.execute(itemId, thumbnailImage, specificImages);
     }
 
     public void delete(Long itemId) {
@@ -42,5 +51,9 @@ public class ItemImageManager {
 
     public void updatePriority(UpdateImageOrderCommand command) {
         updateImagePriorityProcessor.execute(command);
+    }
+
+    public UrlResource get(String uploadPath) throws MalformedURLException {
+        return getImageProcessor.execute(uploadPath);
     }
 }

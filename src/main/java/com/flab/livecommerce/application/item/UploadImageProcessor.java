@@ -6,6 +6,8 @@ import com.flab.livecommerce.domain.item.ItemImage;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import java.io.IOException;
+import java.net.URI;
+import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +28,7 @@ public class UploadImageProcessor {
     }
 
     @Transactional
-    public void execute(Long itemId, MultipartFile thumbnailImage, MultipartFile[] specificImages)
+    public List<URI> execute(Long itemId, MultipartFile thumbnailImage, MultipartFile[] specificImages)
         throws IOException {
 
         Item item = itemRepository.findById(itemId);
@@ -40,5 +42,6 @@ public class UploadImageProcessor {
             storedSpecific.addItem(item);
             itemImageRepository.save(storedSpecific);
         }
+        return imageUploader.loadAll(item);
     }
 }
