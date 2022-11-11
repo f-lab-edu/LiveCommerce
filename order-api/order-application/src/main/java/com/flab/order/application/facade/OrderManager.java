@@ -20,8 +20,8 @@ public class OrderManager {
         this.searchOrderProcessor = searchOrderProcessor;
     }
 
-    public void create(Long userId, CreateOrderCommand command) {
-        createOrderProcessor.execute(userId, command);
+    public Order create(Long userId, CreateOrderCommand command) {
+        return createOrderProcessor.execute(userId, command);
     }
 
     public Order search(Long id) {

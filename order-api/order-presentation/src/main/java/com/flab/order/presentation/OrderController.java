@@ -30,15 +30,14 @@ public class OrderController {
         @Authentication AuthenticatedUser user,
         @RequestBody @Valid CreateOrderRequest request
     ) {
-        //todo 응답 모델 만들기
-        orderManager.create(user.getUserId(), request.toCommand());
-        return CommonApiResponse.success("ok");
+
+        var order = orderManager.create(user.getUserId(), request.toCommand());
+        return CommonApiResponse.success(order);
     }
 
     @GetMapping("/{orderId}")
     public CommonApiResponse searchOrder(@PathVariable("orderId") Long id) {
-        //orderManager.search(id);
-
-        return CommonApiResponse.success("ok");
+        var order = orderManager.search(id);
+        return CommonApiResponse.success(order);
     }
 }
