@@ -18,8 +18,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @Slf4j
 public class LocalUploader implements ImageUploader {
 
+    private static String localBasePath;
+
     @Value("${spring.servlet.multipart.location}")
-    private String localBasePath;
+    private void setLocalBasePath(String temp) {
+        localBasePath = temp;
+    }
 
     @Override
     public ItemImage uploadImage(MultipartFile image) {
@@ -30,6 +34,7 @@ public class LocalUploader implements ImageUploader {
         String randomFileName = UUID.randomUUID().toString();
         String originalFilename = image.getOriginalFilename();
         String uploadFilePath = createUploadFileName(originalFilename, randomFileName);
+        log.info("uploadfilepath={}", uploadFilePath);
 
         String fullPath = getFullPath(uploadFilePath);
         log.info("파일 저장 fullPath={}", fullPath);
@@ -48,6 +53,7 @@ public class LocalUploader implements ImageUploader {
 
     @Override
     public String getFullPath(String uploadFileName) {
+        log.info("localbasepath={}", localBasePath);
         return localBasePath + uploadFileName;
     }
 
@@ -64,6 +70,7 @@ public class LocalUploader implements ImageUploader {
 
     private String createUploadFileName(String originalFilename, String randomFileName) {
         String ext = extractExt(originalFilename);
+        log.info("ext = {}", ext);
         return randomFileName + "." + ext;
     }
 
