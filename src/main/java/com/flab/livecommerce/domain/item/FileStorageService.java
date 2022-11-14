@@ -4,7 +4,7 @@ import java.net.URI;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface ImageUploader {
+public interface FileStorageService {
 
     ItemImage uploadImage(MultipartFile image);
 

@@ -1,22 +1,22 @@
 package com.flab.livecommerce.application.item;
 
 import com.flab.livecommerce.application.item.command.UpdateImageOrderCommand;
-import com.flab.livecommerce.domain.item.ImageUploader;
+import com.flab.livecommerce.domain.item.FileStorageService;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
 
 public class UpdateImagePriorityProcessor {
 
     private final ItemImageRepository itemImageRepository;
 
-    private final ImageUploader imageUploader;
+    private final FileStorageService fileStorageService;
 
 
     public UpdateImagePriorityProcessor(
         ItemImageRepository itemImageRepository,
-        ImageUploader imageUploader
+        FileStorageService fileStorageService
     ) {
         this.itemImageRepository = itemImageRepository;
-        this.imageUploader = imageUploader;
+        this.fileStorageService = fileStorageService;
     }
 
 

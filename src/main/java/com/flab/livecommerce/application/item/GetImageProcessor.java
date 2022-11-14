@@ -1,6 +1,6 @@
 package com.flab.livecommerce.application.item;
 
-import com.flab.livecommerce.domain.item.ImageUploader;
+import com.flab.livecommerce.domain.item.FileStorageService;
 import com.flab.livecommerce.domain.item.exception.ItemImageNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,22 +14,22 @@ import org.springframework.http.ResponseEntity;
 
 public class GetImageProcessor {
 
-    private final ImageUploader imageUploader;
+    private final FileStorageService fileStorageService;
 
 
-    public GetImageProcessor(ImageUploader imageUploader) {
-        this.imageUploader = imageUploader;
+    public GetImageProcessor(FileStorageService fileStorageService) {
+        this.fileStorageService = fileStorageService;
     }
 
 
     public ResponseEntity<Resource> execute(String uploadPath) throws IOException {
-        Resource resource = new FileSystemResource(imageUploader.getFullPath(uploadPath));
+        Resource resource = new FileSystemResource(fileStorageService.getFullPath(uploadPath));
 
         if (!resource.exists()) {
             throw new ItemImageNotFoundException();
         }
 
-        Path filePath = Paths.get(imageUploader.getFullPath(uploadPath));
+        Path filePath = Paths.get(fileStorageService.getFullPath(uploadPath));
         HttpHeaders headers = new HttpHeaders();
         headers.set("content-Type", Files.probeContentType(filePath));
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);

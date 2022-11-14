@@ -1,6 +1,6 @@
 package com.flab.livecommerce.infrastructure.item.image;
 
-import com.flab.livecommerce.domain.item.ImageUploader;
+import com.flab.livecommerce.domain.item.FileStorageService;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemImage;
 import com.flab.livecommerce.domain.item.exception.ItemImageNotFoundException;
@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Slf4j
-public class LocalUploader implements ImageUploader {
+public class LocalStorageService implements FileStorageService {
 
     private static String localBasePath;
 

@@ -1,6 +1,6 @@
 package com.flab.livecommerce.application.item;
 
-import com.flab.livecommerce.domain.item.ImageUploader;
+import com.flab.livecommerce.domain.item.FileStorageService;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemImage;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
@@ -15,16 +15,16 @@ public class UploadImageProcessor {
 
     private final ItemImageRepository itemImageRepository;
     private final ItemRepository itemRepository;
-    private final ImageUploader imageUploader;
+    private final FileStorageService fileStorageService;
 
     public UploadImageProcessor(
         ItemImageRepository itemImageRepository,
         ItemRepository itemRepository,
-        ImageUploader imageUploader
+        FileStorageService fileStorageService
     ) {
         this.itemImageRepository = itemImageRepository;
         this.itemRepository = itemRepository;
-        this.imageUploader = imageUploader;
+        this.fileStorageService = fileStorageService;
     }
 
     @Transactional
@@ -33,15 +33,15 @@ public class UploadImageProcessor {
 
         Item item = itemRepository.findById(itemId);
 
-        ItemImage storedThumbnail = imageUploader.uploadImage(thumbnailImage);
+        ItemImage storedThumbnail = fileStorageService.uploadImage(thumbnailImage);
         storedThumbnail.addItem(item);
         itemImageRepository.save(storedThumbnail);
 
         for (MultipartFile specificImage : specificImages) {
-            ItemImage storedSpecific = imageUploader.uploadImage(specificImage);
+            ItemImage storedSpecific = fileStorageService.uploadImage(specificImage);
             storedSpecific.addItem(item);
             itemImageRepository.save(storedSpecific);
         }
-        return imageUploader.loadAll(item);
+        return fileStorageService.loadAll(item);
     }
 }

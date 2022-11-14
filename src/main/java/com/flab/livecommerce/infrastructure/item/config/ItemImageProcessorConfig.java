@@ -4,10 +4,10 @@ import com.flab.livecommerce.application.item.DeleteImageProcessor;
 import com.flab.livecommerce.application.item.GetImageProcessor;
 import com.flab.livecommerce.application.item.UpdateImagePriorityProcessor;
 import com.flab.livecommerce.application.item.UploadImageProcessor;
-import com.flab.livecommerce.domain.item.ImageUploader;
+import com.flab.livecommerce.domain.item.FileStorageService;
 import com.flab.livecommerce.domain.item.ItemImageRepository;
 import com.flab.livecommerce.domain.item.ItemRepository;
-import com.flab.livecommerce.infrastructure.item.image.LocalUploader;
+import com.flab.livecommerce.infrastructure.item.image.LocalStorageService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,8 +16,8 @@ public class ItemImageProcessorConfig {
 
 
     @Bean
-    private static ImageUploader getUploader() {
-        return new LocalUploader();
+    private static FileStorageService getUploader() {
+        return new LocalStorageService();
     }
 
     @Bean
