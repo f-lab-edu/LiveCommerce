@@ -2,7 +2,7 @@ package com.flab.user.infrastructure.persistence.redis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.common.auth.AuthenticatedUser;
-import com.flab.user.infrastructure.token.TokenProperties;
+import com.flab.user.infrastructure.tokenproperties.TokenProperties;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import org.springframework.data.redis.core.RedisTemplate;
