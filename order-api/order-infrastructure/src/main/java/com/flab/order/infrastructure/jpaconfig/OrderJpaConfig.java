@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EntityScan(basePackages = "com.flab.order.domain")
 @EnableJpaRepositories(basePackages = "com.flab.order.infrastructure.persistence.jpa")
-public class JpaConfig {
+public class OrderJpaConfig {
 
 }
