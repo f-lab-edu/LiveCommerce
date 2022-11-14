@@ -6,10 +6,10 @@ import com.flab.livecommerce.application.item.UpdateImagePriorityProcessor;
 import com.flab.livecommerce.application.item.UploadImageProcessor;
 import com.flab.livecommerce.application.item.command.UpdateImageOrderCommand;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.List;
-import org.springframework.core.io.UrlResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -53,7 +53,7 @@ public class ItemImageManager {
         updateImagePriorityProcessor.execute(command);
     }
 
-    public UrlResource get(String uploadPath) throws MalformedURLException {
+    public ResponseEntity<Resource> get(String uploadPath) throws IOException {
         return getImageProcessor.execute(uploadPath);
     }
 }

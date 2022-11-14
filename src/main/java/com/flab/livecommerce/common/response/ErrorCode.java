@@ -7,7 +7,7 @@ public enum ErrorCode {
     COMMON_INVALID_PARAMETER("요청한 값이 올바르지 않습니다."),
     COMMON_ILLEGAL_STATUS("잘못된 상태값입니다."),
 
-    IMAGE_NOT_FOUND("이미지가 존재하지 않습니다."),
+    IMAGE_NOT_FOUND("이미지 리소스가 존재하지 않습니다."),
     DUPLICATE_ITEM_NAME("중복된 상품명입니다."),
     ITEM_NOT_FOUND("상품이 존재하지 않습니다.");
 

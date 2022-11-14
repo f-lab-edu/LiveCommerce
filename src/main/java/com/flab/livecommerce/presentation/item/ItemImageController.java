@@ -4,8 +4,8 @@ import com.flab.livecommerce.application.item.facade.ItemImageManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
 import com.flab.livecommerce.presentation.item.request.ItemOrderRequest;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,9 +41,9 @@ public class ItemImageController {
      * 업로드 한 이미지 확인용 endpoint
      */
     @GetMapping("/{uploadPath}")
-    public Resource getUploadItemImage(
+    public ResponseEntity<Resource> getUploadItemImage(
         @PathVariable String uploadPath
-    ) throws MalformedURLException {
+    ) throws IOException {
         return itemImageManager.get(uploadPath);
     }
 
