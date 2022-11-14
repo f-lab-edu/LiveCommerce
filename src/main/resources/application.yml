@@ -16,7 +16,9 @@ spring:
   servlet:
     multipart:
       max-file-size: 10MB
-      max-request-size: 10MB
+      max-request-size: 100MB
+      file-size-threshold: 2MB
+      location: C:\Temp\
 
   redis:
     host: localhost
@@ -26,7 +28,3 @@ mybatis:
   type-aliases-package: com.flab.livecommerce.domain
   configuration:
     map-underscore-to-camel-case: true
-
-file:
-  local:
-    location: C:/study/file/

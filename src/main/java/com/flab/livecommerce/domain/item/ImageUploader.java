@@ -10,7 +10,5 @@ public interface ImageUploader {
 
     String getFullPath(String uploadFileName);
 
-    List<String> loadAlltest(Item item);
-
     List<URI> loadAll(Item item);
 }

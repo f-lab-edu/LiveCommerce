@@ -11,14 +11,15 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Slf4j
 public class LocalUploader implements ImageUploader {
 
-    //@Value("${file.dir}")
-    private String localBasePath = "C:/study/file/";
+    @Value("${spring.servlet.multipart.location}")
+    private String localBasePath;
 
     @Override
     public ItemImage uploadImage(MultipartFile image) {
@@ -48,13 +49,6 @@ public class LocalUploader implements ImageUploader {
     @Override
     public String getFullPath(String uploadFileName) {
         return localBasePath + uploadFileName;
-    }
-
-    @Override
-    public List<String> loadAlltest(Item item) {
-        return item.getItemImages().stream().map(
-            itemImage -> getFullPath(itemImage.getUrl())
-        ).collect(Collectors.toList());
     }
 
     @Override
