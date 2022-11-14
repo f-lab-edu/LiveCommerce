@@ -1,5 +1,7 @@
 package com.flab.common.response;
 
+import com.flab.common.exception.ErrorCode;
+
 public final class CommonApiResponse<T> {
 
     private final boolean success;
