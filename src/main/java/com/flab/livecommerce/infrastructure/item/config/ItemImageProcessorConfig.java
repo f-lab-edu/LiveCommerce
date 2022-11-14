@@ -16,7 +16,7 @@ public class ItemImageProcessorConfig {
 
 
     @Bean
-    private static FileStorageService getUploader() {
+    public FileStorageService fileStorageService() {
         return new LocalStorageService();
     }
 
@@ -25,27 +25,27 @@ public class ItemImageProcessorConfig {
         ItemImageRepository itemImageRepository,
         ItemRepository itemRepository
     ) {
-        return new UploadImageProcessor(itemImageRepository, itemRepository, getUploader());
+        return new UploadImageProcessor(itemImageRepository, itemRepository, fileStorageService());
     }
 
     @Bean
     public DeleteImageProcessor deleteImageProcessor(
         ItemImageRepository itemImageRepository
     ) {
-        return new DeleteImageProcessor(itemImageRepository, getUploader());
+        return new DeleteImageProcessor(itemImageRepository, fileStorageService());
     }
 
     @Bean
     public UpdateImagePriorityProcessor updateImagePriorityProcessor(
         ItemImageRepository itemImageRepository
     ) {
-        return new UpdateImagePriorityProcessor(itemImageRepository, getUploader());
+        return new UpdateImagePriorityProcessor(itemImageRepository, fileStorageService());
     }
 
     @Bean
     public GetImageProcessor getImageProcessor(
     ) {
-        return new GetImageProcessor(getUploader());
+        return new GetImageProcessor();
     }
 
 }

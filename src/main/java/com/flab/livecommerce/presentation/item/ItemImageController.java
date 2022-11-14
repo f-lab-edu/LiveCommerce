@@ -4,7 +4,12 @@ import com.flab.livecommerce.application.item.facade.ItemImageManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
 import com.flab.livecommerce.presentation.item.request.ItemOrderRequest;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +49,15 @@ public class ItemImageController {
     public ResponseEntity<Resource> getUploadItemImage(
         @PathVariable String uploadPath
     ) throws IOException {
-        return itemImageManager.get(uploadPath);
+        String imageFullPath = itemImageManager.getImageFullPath(uploadPath);
+
+        Resource resource = itemImageManager.getImage(imageFullPath);
+
+        Path filePath = Paths.get(imageFullPath);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("content-Type", Files.probeContentType(filePath));
+
+        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
 
     @DeleteMapping

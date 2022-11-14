@@ -5,11 +5,11 @@ import com.flab.livecommerce.application.item.GetImageProcessor;
 import com.flab.livecommerce.application.item.UpdateImagePriorityProcessor;
 import com.flab.livecommerce.application.item.UploadImageProcessor;
 import com.flab.livecommerce.application.item.command.UpdateImageOrderCommand;
+import com.flab.livecommerce.domain.item.FileStorageService;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,17 +23,21 @@ public class ItemImageManager {
 
     private final GetImageProcessor getImageProcessor;
 
+    private final FileStorageService fileStorageService;
+
 
     public ItemImageManager(
         UploadImageProcessor uploadImageProcessor,
         DeleteImageProcessor deleteImageProcessor,
         UpdateImagePriorityProcessor updateImagePriorityProcessor,
-        GetImageProcessor getImageProcessor
+        GetImageProcessor getImageProcessor,
+        FileStorageService fileStorageService
     ) {
         this.uploadImageProcessor = uploadImageProcessor;
         this.deleteImageProcessor = deleteImageProcessor;
         this.updateImagePriorityProcessor = updateImagePriorityProcessor;
         this.getImageProcessor = getImageProcessor;
+        this.fileStorageService = fileStorageService;
     }
 
     public List<URI> upload(
@@ -53,7 +57,11 @@ public class ItemImageManager {
         updateImagePriorityProcessor.execute(command);
     }
 
-    public ResponseEntity<Resource> get(String uploadPath) throws IOException {
-        return getImageProcessor.execute(uploadPath);
+    public Resource getImage(String imageFullPath) throws IOException {
+        return getImageProcessor.execute(imageFullPath);
+    }
+
+    public String getImageFullPath(String uploadPath) {
+        return fileStorageService.getFullPath(uploadPath);
     }
 }
