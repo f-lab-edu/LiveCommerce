@@ -1,7 +1,7 @@
 package com.flab.seller.infrastructure.persistence;
 
 import com.flab.common.exception.EntityNotFoundException;
-import com.flab.common.response.ErrorCode;
+import com.flab.common.exception.ErrorCode;
 import com.flab.seller.domain.Seller;
 import com.flab.seller.domain.SellerRepository;
 import com.flab.seller.infrastructure.persistence.jpa.JpaSellerRepository;
