@@ -1,6 +1,6 @@
 package com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate;
 
-import com.flab.livecommerce.domain.item.ItemImage;
+import com.flab.livecommerce.domain.image.ItemImage;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;

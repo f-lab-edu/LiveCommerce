@@ -1,12 +1,12 @@
 package com.flab.livecommerce.application.item;
 
-import com.flab.livecommerce.domain.item.FileStorageService;
+import com.flab.livecommerce.domain.image.FileClient;
+import com.flab.livecommerce.domain.image.FileStorageService;
 import com.flab.livecommerce.domain.item.Item;
-import com.flab.livecommerce.domain.item.ItemImage;
-import com.flab.livecommerce.domain.item.ItemImageRepository;
+import com.flab.livecommerce.domain.image.ItemImage;
+import com.flab.livecommerce.domain.image.ItemImageRepository;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,18 +17,22 @@ public class UploadImageProcessor {
     private final ItemRepository itemRepository;
     private final FileStorageService fileStorageService;
 
+    private final FileClient fileClient;
+
     public UploadImageProcessor(
         ItemImageRepository itemImageRepository,
         ItemRepository itemRepository,
-        FileStorageService fileStorageService
+        FileStorageService fileStorageService,
+        FileClient fileClient
     ) {
         this.itemImageRepository = itemImageRepository;
         this.itemRepository = itemRepository;
         this.fileStorageService = fileStorageService;
+        this.fileClient = fileClient;
     }
 
     @Transactional
-    public List<URI> execute(Long itemId, MultipartFile thumbnailImage, MultipartFile[] specificImages)
+    public List<String> execute(Long itemId, MultipartFile thumbnailImage, MultipartFile[] specificImages)
         throws IOException {
 
         Item item = itemRepository.findById(itemId);
@@ -42,6 +46,6 @@ public class UploadImageProcessor {
             storedSpecific.addItem(item);
             itemImageRepository.save(storedSpecific);
         }
-        return fileStorageService.loadAll(item);
+        return fileClient.loadAll(item);
     }
 }

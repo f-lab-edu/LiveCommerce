@@ -1,4 +1,4 @@
-package com.flab.livecommerce.domain.item;
+package com.flab.livecommerce.domain.image;
 
 import java.util.List;
 

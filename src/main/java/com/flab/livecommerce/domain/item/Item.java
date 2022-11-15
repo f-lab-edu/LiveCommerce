@@ -1,6 +1,7 @@
 package com.flab.livecommerce.domain.item;
 
 import com.flab.livecommerce.common.exception.InvalidParameterException;
+import com.flab.livecommerce.domain.image.ItemImage;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Builder;

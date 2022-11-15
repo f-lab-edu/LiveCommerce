@@ -1,4 +1,4 @@
-package com.flab.livecommerce.domain.item.exception;
+package com.flab.livecommerce.domain.image.exception;
 
 import com.flab.livecommerce.common.exception.BaseException;
 import com.flab.livecommerce.common.response.ErrorCode;

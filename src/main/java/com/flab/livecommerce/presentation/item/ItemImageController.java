@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-@RequestMapping("/api/v1/item/{itemId}/image")
+@RequestMapping
 @RestController
 public class ItemImageController {
 
@@ -32,35 +32,36 @@ public class ItemImageController {
         this.itemImageManager = itemImageManager;
     }
 
-    @PostMapping
+    @PostMapping("/api/v1/item/{itemId}/image")
     public CommonApiResponse uploadItemImage(
         @PathVariable("itemId") Long id,
         @RequestPart("thumbnailImg") MultipartFile thumbnailImage,
         @RequestPart(value = "specificImg", required = false) MultipartFile[] specificImages
     ) throws IOException {
-        var uploadUriList = itemImageManager.upload(id, thumbnailImage, specificImages);
-        return CommonApiResponse.success(uploadUriList);
+        var uploadPaths = itemImageManager.upload(id, thumbnailImage, specificImages);
+
+        return CommonApiResponse.success(uploadPaths);
     }
 
     /*
      * 업로드 한 이미지 확인용 endpoint
      */
-    @GetMapping("/{uploadPath}")
+    @GetMapping("/image/{uploadPath}")
     public ResponseEntity<Resource> getUploadItemImage(
         @PathVariable String uploadPath
     ) throws IOException {
-        String imageFullPath = itemImageManager.getImageFullPath(uploadPath);
+        Resource resource = itemImageManager.getImage(uploadPath);
 
-        Resource resource = itemImageManager.getImage(imageFullPath);
-
-        Path filePath = Paths.get(imageFullPath);
+        // TODO
+        Path filePath = Paths.get("fullPath");
         HttpHeaders headers = new HttpHeaders();
         headers.set("content-Type", Files.probeContentType(filePath));
+
 
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/api/v1/item/{itemId}/image")
     public CommonApiResponse deleteItemImage(
         @PathVariable("itemId") Long itemId
     ) {
@@ -68,7 +69,7 @@ public class ItemImageController {
         return CommonApiResponse.success(null);
     }
 
-    @PutMapping("/priority")
+    @PutMapping("/api/v1/item/{itemId}/image/priority")
     public CommonApiResponse updateImagePriority(
         @RequestBody ItemOrderRequest orderingRequest
     ) {

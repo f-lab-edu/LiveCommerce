@@ -1,6 +1,6 @@
 package com.flab.livecommerce.application.item;
 
-import com.flab.livecommerce.domain.item.exception.ItemImageNotFoundException;
+import com.flab.livecommerce.domain.image.exception.ItemImageNotFoundException;
 import java.io.IOException;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;

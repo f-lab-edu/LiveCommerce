@@ -1,5 +1,6 @@
-package com.flab.livecommerce.domain.item;
+package com.flab.livecommerce.domain.image;
 
+import com.flab.livecommerce.domain.item.Item;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -5,9 +5,7 @@ import com.flab.livecommerce.application.item.GetImageProcessor;
 import com.flab.livecommerce.application.item.UpdateImagePriorityProcessor;
 import com.flab.livecommerce.application.item.UploadImageProcessor;
 import com.flab.livecommerce.application.item.command.UpdateImageOrderCommand;
-import com.flab.livecommerce.domain.item.FileStorageService;
 import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -23,24 +21,21 @@ public class ItemImageManager {
 
     private final GetImageProcessor getImageProcessor;
 
-    private final FileStorageService fileStorageService;
 
 
     public ItemImageManager(
         UploadImageProcessor uploadImageProcessor,
         DeleteImageProcessor deleteImageProcessor,
         UpdateImagePriorityProcessor updateImagePriorityProcessor,
-        GetImageProcessor getImageProcessor,
-        FileStorageService fileStorageService
+        GetImageProcessor getImageProcessor
     ) {
         this.uploadImageProcessor = uploadImageProcessor;
         this.deleteImageProcessor = deleteImageProcessor;
         this.updateImagePriorityProcessor = updateImagePriorityProcessor;
         this.getImageProcessor = getImageProcessor;
-        this.fileStorageService = fileStorageService;
     }
 
-    public List<URI> upload(
+    public List<String> upload(
         Long itemId,
         MultipartFile thumbnailImage,
         MultipartFile[] specificImages
@@ -59,9 +54,5 @@ public class ItemImageManager {
 
     public Resource getImage(String imageFullPath) throws IOException {
         return getImageProcessor.execute(imageFullPath);
-    }
-
-    public String getImageFullPath(String uploadPath) {
-        return fileStorageService.getFullPath(uploadPath);
     }
 }
