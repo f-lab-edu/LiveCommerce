@@ -1,7 +1,8 @@
 package com.flab.user.infrastructure.config;
 
-import com.flab.user.application.UserCreateProcessor;
-import com.flab.user.application.UserLoginProcessor;
+import com.flab.user.application.CreateUserProcessor;
+import com.flab.user.application.LoginUserProcessor;
+import com.flab.user.application.LogoutUserProcessor;
 import com.flab.user.domain.TokenGenerator;
 import com.flab.user.domain.TokenRepository;
 import com.flab.user.domain.UserRepository;
@@ -17,29 +18,34 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserConfig {
 
     @Bean
-    public UserCreateProcessor userCreateProcessor(
+    public CreateUserProcessor createUserProcessor(
         UserRepository userRepository
     ) {
-        return new UserCreateProcessor(
+        return new CreateUserProcessor(
             userRepository,
             new SecurityPasswordEncoder(algorithm())
         );
     }
 
     @Bean
-    public UserLoginProcessor userLoginProcessor(
+    public LoginUserProcessor loginUserProcessor(
         UserRepository userRepository,
         TokenGenerator tokenGenerator,
         TokenRepository tokenRepository,
         TokenProperties tokenProperties
     ) {
-        return new UserLoginProcessor(
+        return new LoginUserProcessor(
             userRepository,
             tokenGenerator,
             tokenRepository,
             new SecurityPasswordEncoder(algorithm()),
             tokenProperties.getTokenExpirationSec()
         );
+    }
+
+    @Bean
+    public LogoutUserProcessor logoutUserProcessor(TokenRepository tokenRepository) {
+        return new LogoutUserProcessor(tokenRepository);
     }
 
     @Bean

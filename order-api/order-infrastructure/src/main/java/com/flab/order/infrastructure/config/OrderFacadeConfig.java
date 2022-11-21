@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OrderFacadeConfig {
+
     @Bean
     public OrderManager orderManager(
         CreateOrderProcessor createOrderProcessor,

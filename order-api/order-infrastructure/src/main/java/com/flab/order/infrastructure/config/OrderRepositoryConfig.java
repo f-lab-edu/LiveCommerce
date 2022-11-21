@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OrderRepositoryConfig {
+
     @Bean
     public OrderRepository orderRepository(JpaOrderRepository jpaOrderRepository) {
         return new OrderRepositoryAdapter(jpaOrderRepository);
