@@ -1,11 +1,11 @@
 package com.flab.livecommerce.infrastructure.item.config;
 
-import static com.flab.livecommerce.infrastructure.image.config.ItemImageProcessorConfig.fileUriGenerator;
 
 import com.flab.livecommerce.application.item.DeleteItemProcessor;
 import com.flab.livecommerce.application.item.RegisterItemProcessor;
 import com.flab.livecommerce.application.item.SearchItemProcessor;
 import com.flab.livecommerce.application.item.UpdateItemProcessor;
+import com.flab.livecommerce.domain.image.FileUriGenerator;
 import com.flab.livecommerce.domain.item.ItemOptionGroupRepository;
 import com.flab.livecommerce.domain.item.ItemOptionRepository;
 import com.flab.livecommerce.domain.item.ItemOptionSeriesService;
@@ -48,9 +48,10 @@ public class ItemProcessorConfig {
 
     @Bean
     public SearchItemProcessor searchItemProcessor(
-        ItemRepository itemRepository
+        ItemRepository itemRepository,
+        FileUriGenerator fileUriGenerator
     ) {
-        return new SearchItemProcessor(itemRepository, fileUriGenerator());
+        return new SearchItemProcessor(itemRepository, fileUriGenerator.getUriPrefix());
     }
 
     @Bean

@@ -8,5 +8,4 @@ public class LocalUriGenerator implements FileUriGenerator {
     public String getUriPrefix() {
         return "http://localhost:8080/image/";
     }
-
 }

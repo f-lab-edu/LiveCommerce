@@ -24,6 +24,10 @@ spring:
     host: localhost
     port: 6379
 
+  image:
+    upload:
+      localPath: C:\Temp\
+
 mybatis:
   type-aliases-package: com.flab.livecommerce.domain
   configuration:

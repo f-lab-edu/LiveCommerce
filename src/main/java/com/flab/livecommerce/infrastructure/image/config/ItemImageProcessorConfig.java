@@ -8,6 +8,7 @@ import com.flab.livecommerce.domain.image.FileStorageService;
 import com.flab.livecommerce.domain.image.FileUriGenerator;
 import com.flab.livecommerce.domain.image.ItemImageRepository;
 import com.flab.livecommerce.domain.item.ItemRepository;
+import com.flab.livecommerce.infrastructure.image.ImageProperties;
 import com.flab.livecommerce.infrastructure.image.local.LocalStorageService;
 import com.flab.livecommerce.infrastructure.image.local.LocalUriGenerator;
 import org.springframework.context.annotation.Bean;
@@ -16,10 +17,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ItemImageProcessorConfig {
 
+
     @Bean
     public static FileStorageService fileStorageService(
+        ImageProperties imageProperties
     ) {
-        return new LocalStorageService();
+        return new LocalStorageService(imageProperties.getLocalPath());
     }
 
     @Bean
@@ -27,16 +30,18 @@ public class ItemImageProcessorConfig {
         return new LocalUriGenerator();
     }
 
+
     @Bean
     public UploadImageProcessor uploadImageProcessor(
         ItemImageRepository itemImageRepository,
-        ItemRepository itemRepository
+        ItemRepository itemRepository,
+        ImageProperties imageProperties
     ) {
         return new UploadImageProcessor(
             itemImageRepository,
             itemRepository,
-            fileStorageService(),
-            fileUriGenerator());
+            fileStorageService(imageProperties),
+            fileUriGenerator().getUriPrefix());
     }
 
 
@@ -56,8 +61,9 @@ public class ItemImageProcessorConfig {
 
     @Bean
     public GetImageProcessor getImageProcessor(
+        ImageProperties imageProperties
     ) {
-        return new GetImageProcessor(fileStorageService());
+        return new GetImageProcessor(imageProperties.getLocalPath());
     }
 
 }

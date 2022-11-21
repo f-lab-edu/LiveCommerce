@@ -12,8 +12,12 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 public class LocalStorageService implements FileStorageService {
 
+    private final String basePath;
 
-    private String basePath = "C:\\Temp\\";
+    public LocalStorageService(String basePath) {
+        this.basePath = basePath;
+    }
+
 
     @Override
     public ItemImage uploadImage(MultipartFile image) {

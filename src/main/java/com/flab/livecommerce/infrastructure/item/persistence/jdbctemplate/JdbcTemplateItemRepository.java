@@ -78,6 +78,7 @@ public class JdbcTemplateItemRepository {
         Item item = jdbcTemplate.query(sql, param, resultSetExtractor());
 
         if (item == null) {
+            log.info(">>>item 없음");
             throw new EntityNotFoundException();
         }
         return item;
@@ -105,6 +106,7 @@ public class JdbcTemplateItemRepository {
                 }
 
                 long itemImageId = rs.getLong("im.id");
+
                 itemImage = new ItemImage(
                     rs.getLong("item_id"),
                     rs.getInt("ordering"),
