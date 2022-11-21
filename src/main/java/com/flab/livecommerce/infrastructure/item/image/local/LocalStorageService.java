@@ -1,6 +1,5 @@
 package com.flab.livecommerce.infrastructure.item.image.local;
 
-import com.flab.livecommerce.domain.image.FileClient;
 import com.flab.livecommerce.domain.image.FileStorageService;
 import com.flab.livecommerce.domain.image.ItemImage;
 import com.flab.livecommerce.domain.image.exception.ItemImageNotFoundException;
@@ -13,12 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 public class LocalStorageService implements FileStorageService {
 
-    private final FileClient localClient;
 
-
-    public LocalStorageService(FileClient localClient) {
-        this.localClient = localClient;
-    }
+    private String basePath = "C:\\Temp\\";
 
     @Override
     public ItemImage uploadImage(MultipartFile image) {
@@ -31,11 +26,11 @@ public class LocalStorageService implements FileStorageService {
         String dbFilePath = createUploadFileName(originalFilename, randomFileName);
         log.info("uploadfilepath={}", dbFilePath);
 
-        String fullPath = localClient.getUploadPath(dbFilePath);
-        log.info("파일 저장 fullPath={}", fullPath);
+        String localUploadPath = getUploadPath(dbFilePath);
+        log.info("파일 저장 localUploadPath={}", localUploadPath);
 
         try {
-            image.transferTo(new File(fullPath));
+            image.transferTo(new File(localUploadPath));
         } catch (IOException e) {
             throw new RuntimeException();
         }
@@ -44,6 +39,11 @@ public class LocalStorageService implements FileStorageService {
             .name(randomFileName)
             .url(dbFilePath)
             .build();
+    }
+
+    @Override
+    public String getUploadPath(String imageDbPath) {
+        return basePath + imageDbPath;
     }
 
 

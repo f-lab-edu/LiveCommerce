@@ -1,13 +1,14 @@
 package com.flab.livecommerce.application.item;
 
-import com.flab.livecommerce.domain.image.FileClient;
 import com.flab.livecommerce.domain.image.FileStorageService;
-import com.flab.livecommerce.domain.item.Item;
+import com.flab.livecommerce.domain.image.FileUriGenerator;
 import com.flab.livecommerce.domain.image.ItemImage;
 import com.flab.livecommerce.domain.image.ItemImageRepository;
+import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,23 +17,24 @@ public class UploadImageProcessor {
     private final ItemImageRepository itemImageRepository;
     private final ItemRepository itemRepository;
     private final FileStorageService fileStorageService;
+    private final FileUriGenerator fileUriGenerator;
 
-    private final FileClient fileClient;
 
     public UploadImageProcessor(
         ItemImageRepository itemImageRepository,
         ItemRepository itemRepository,
         FileStorageService fileStorageService,
-        FileClient fileClient
+        FileUriGenerator fileUriGenerator
     ) {
         this.itemImageRepository = itemImageRepository;
         this.itemRepository = itemRepository;
         this.fileStorageService = fileStorageService;
-        this.fileClient = fileClient;
+        this.fileUriGenerator = fileUriGenerator;
     }
 
     @Transactional
-    public List<String> execute(Long itemId, MultipartFile thumbnailImage, MultipartFile[] specificImages)
+    public List<String> execute(Long itemId, MultipartFile thumbnailImage,
+        MultipartFile[] specificImages)
         throws IOException {
 
         Item item = itemRepository.findById(itemId);
@@ -45,7 +47,10 @@ public class UploadImageProcessor {
             ItemImage storedSpecific = fileStorageService.uploadImage(specificImage);
             storedSpecific.addItem(item);
             itemImageRepository.save(storedSpecific);
+
         }
-        return fileClient.loadAll(item);
+        return item.getItemImages().stream().map(
+            itemImage -> fileUriGenerator.getUriPrefix() + itemImage.getUrl()
+        ).collect(Collectors.toList());
     }
 }

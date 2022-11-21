@@ -4,12 +4,12 @@ import com.flab.livecommerce.application.item.DeleteImageProcessor;
 import com.flab.livecommerce.application.item.GetImageProcessor;
 import com.flab.livecommerce.application.item.UpdateImagePriorityProcessor;
 import com.flab.livecommerce.application.item.UploadImageProcessor;
-import com.flab.livecommerce.domain.image.FileClient;
 import com.flab.livecommerce.domain.image.FileStorageService;
+import com.flab.livecommerce.domain.image.FileUriGenerator;
 import com.flab.livecommerce.domain.image.ItemImageRepository;
 import com.flab.livecommerce.domain.item.ItemRepository;
-import com.flab.livecommerce.infrastructure.item.image.local.LocalClient;
 import com.flab.livecommerce.infrastructure.item.image.local.LocalStorageService;
+import com.flab.livecommerce.infrastructure.item.image.local.LocalUriGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,14 +17,14 @@ import org.springframework.context.annotation.Configuration;
 public class ItemImageProcessorConfig {
 
     @Bean
-    public FileClient fileClient() {
-        return new LocalClient();
+    public FileStorageService fileStorageService(
+    ) {
+        return new LocalStorageService();
     }
 
     @Bean
-    public FileStorageService fileStorageService(
-    ) {
-        return new LocalStorageService(fileClient());
+    public FileUriGenerator fileUriGenerator() {
+        return new LocalUriGenerator();
     }
 
     @Bean
@@ -36,8 +36,7 @@ public class ItemImageProcessorConfig {
             itemImageRepository,
             itemRepository,
             fileStorageService(),
-            fileClient()
-        );
+            fileUriGenerator());
     }
 
 
@@ -58,7 +57,7 @@ public class ItemImageProcessorConfig {
     @Bean
     public GetImageProcessor getImageProcessor(
     ) {
-        return new GetImageProcessor();
+        return new GetImageProcessor(fileStorageService());
     }
 
 }

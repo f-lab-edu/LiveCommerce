@@ -6,4 +6,6 @@ public interface FileStorageService {
 
     ItemImage uploadImage(MultipartFile image);
 
+    String getUploadPath(String imageDbPath);
+
 }

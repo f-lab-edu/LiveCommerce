@@ -52,7 +52,7 @@ public class ItemImageManager {
         updateImagePriorityProcessor.execute(command);
     }
 
-    public Resource getImage(String imageFullPath) throws IOException {
-        return getImageProcessor.execute(imageFullPath);
+    public Resource getImage(String imagePath) throws IOException {
+        return getImageProcessor.execute(imagePath);
     }
 }

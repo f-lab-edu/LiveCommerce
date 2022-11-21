@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping
 @RestController
+@Slf4j
 public class ItemImageController {
 
     private final ItemImageManager itemImageManager;
@@ -46,17 +48,14 @@ public class ItemImageController {
     /*
      * 업로드 한 이미지 확인용 endpoint
      */
-    @GetMapping("/image/{uploadPath}")
+    @GetMapping("/image/{imagePath}")
     public ResponseEntity<Resource> getUploadItemImage(
-        @PathVariable String uploadPath
+        @PathVariable String imagePath
     ) throws IOException {
-        Resource resource = itemImageManager.getImage(uploadPath);
-
-        // TODO
-        Path filePath = Paths.get("fullPath");
+        Resource resource = itemImageManager.getImage(imagePath);
+        Path filePath = Paths.get(resource.getURI());
         HttpHeaders headers = new HttpHeaders();
         headers.set("content-Type", Files.probeContentType(filePath));
-
 
         return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
