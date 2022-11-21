@@ -1,6 +1,7 @@
 package com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate;
 
 import com.flab.livecommerce.common.exception.EntityNotFoundException;
+import com.flab.livecommerce.domain.image.ItemImage;
 import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemOption;
 import com.flab.livecommerce.domain.item.ItemOptionGroup;
@@ -69,6 +70,7 @@ public class JdbcTemplateItemRepository {
         String sql = "SELECT * FROM item i "
             + "JOIN item_option_group iog ON i.id = iog.item_id "
             + "JOIN item_option io ON iog.id = io.item_option_group_id "
+            + "JOIN item_image im ON i.id = im.item_id "
             + "WHERE i.id = :id";
 
         Map<String, Object> param = Map.of("id", id);
@@ -86,6 +88,7 @@ public class JdbcTemplateItemRepository {
 
         return (rs -> {
             Item item = null;
+            ItemImage itemImage = null;
             ItemOptionGroup itemOptionGroup = null;
             Map<Long, ItemOptionGroup> itemOptionGroupMap = new HashMap<>();
 
@@ -100,6 +103,17 @@ public class JdbcTemplateItemRepository {
                         rs.getInt("stock_quantity"));
                     item.setId(rs.getLong("id"));
                 }
+
+                long itemImageId = rs.getLong("im.id");
+                itemImage = new ItemImage(
+                    rs.getLong("item_id"),
+                    rs.getInt("ordering"),
+                    rs.getString("name"),
+                    rs.getString("url")
+                );
+                itemImage.setId(itemImageId);
+                item.addItemImage(itemImage);
+
 
                 long itemOptionGroupId = rs.getLong("iog.id");
                 if (!itemOptionGroupMap.containsKey(itemOptionGroupId)) {

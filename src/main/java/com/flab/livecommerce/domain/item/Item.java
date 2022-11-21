@@ -84,6 +84,11 @@ public class Item {
         }
     }
 
+    public Item addItemImage(ItemImage itemImage) {
+        this.itemImages.add(itemImage);
+        return this;
+    }
+
     public List<String> findItemImageUris() {
         return null;
     }
