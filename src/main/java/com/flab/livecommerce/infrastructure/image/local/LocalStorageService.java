@@ -1,4 +1,4 @@
-package com.flab.livecommerce.infrastructure.item.image.local;
+package com.flab.livecommerce.infrastructure.image.local;
 
 import com.flab.livecommerce.domain.image.FileStorageService;
 import com.flab.livecommerce.domain.image.ItemImage;

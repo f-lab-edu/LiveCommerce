@@ -8,7 +8,6 @@ import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -47,10 +46,8 @@ public class UploadImageProcessor {
             ItemImage storedSpecific = fileStorageService.uploadImage(specificImage);
             storedSpecific.addItem(item);
             itemImageRepository.save(storedSpecific);
-
         }
-        return item.getItemImages().stream().map(
-            itemImage -> fileUriGenerator.getUriPrefix() + itemImage.getUrl()
-        ).collect(Collectors.toList());
+        String uriPrefix = fileUriGenerator.getUriPrefix();
+        return item.findItemImageUris(uriPrefix);
     }
 }

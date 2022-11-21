@@ -4,6 +4,7 @@ import com.flab.livecommerce.common.exception.InvalidParameterException;
 import com.flab.livecommerce.domain.image.ItemImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -89,9 +90,12 @@ public class Item {
         return this;
     }
 
-    public List<String> findItemImageUris() {
-        return null;
+    public List<String> findItemImageUris(String uriPrefix) {
+        return this.getItemImages().stream().map(
+            itemImage -> uriPrefix + itemImage.getUrl()
+        ).collect(Collectors.toList());
     }
+
 
     @Getter
     public static class Info {
@@ -103,8 +107,9 @@ public class Item {
         private Long salesPrice;
         private Integer stockQuantity;
         private List<ItemOptionGroup> itemOptionGroups;
+        private List<String> itemImageUrls;
 
-        public Info(Item item, List<ItemOptionGroup> itemOptionGroups) {
+        public Info(Item item, String uriPrefix) {
             this.shopId = item.getShopId();
             this.name = item.getName();
             this.description = item.getDescription();
@@ -112,7 +117,8 @@ public class Item {
             this.salesPrice = item.getSalesPrice();
             this.salesPrice = item.getSalesPrice();
             this.stockQuantity = item.getStockQuantity();
-            this.itemOptionGroups = itemOptionGroups;
+            this.itemOptionGroups = item.getItemOptionGroups();
+            this.itemImageUrls = item.findItemImageUris(uriPrefix);
         }
     }
 }

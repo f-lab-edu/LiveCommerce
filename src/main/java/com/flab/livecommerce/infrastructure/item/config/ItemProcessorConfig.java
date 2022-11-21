@@ -1,5 +1,7 @@
 package com.flab.livecommerce.infrastructure.item.config;
 
+import static com.flab.livecommerce.infrastructure.image.config.ItemImageProcessorConfig.fileUriGenerator;
+
 import com.flab.livecommerce.application.item.DeleteItemProcessor;
 import com.flab.livecommerce.application.item.RegisterItemProcessor;
 import com.flab.livecommerce.application.item.SearchItemProcessor;
@@ -48,7 +50,7 @@ public class ItemProcessorConfig {
     public SearchItemProcessor searchItemProcessor(
         ItemRepository itemRepository
     ) {
-        return new SearchItemProcessor(itemRepository);
+        return new SearchItemProcessor(itemRepository, fileUriGenerator());
     }
 
     @Bean

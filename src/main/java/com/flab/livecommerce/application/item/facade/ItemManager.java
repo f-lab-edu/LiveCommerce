@@ -7,6 +7,7 @@ import com.flab.livecommerce.application.item.UpdateItemProcessor;
 import com.flab.livecommerce.application.item.command.RegisterItemCommand;
 import com.flab.livecommerce.application.item.command.UpdateItemCommand;
 import com.flab.livecommerce.domain.item.Item;
+import com.flab.livecommerce.domain.item.Item.Info;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,7 +34,7 @@ public class ItemManager {
         return registerItemProcessor.execute(command);
     }
 
-    public Item search(Long id) {
+    public Info search(Long id) {
         return searchItemProcessor.execute(id);
     }
 

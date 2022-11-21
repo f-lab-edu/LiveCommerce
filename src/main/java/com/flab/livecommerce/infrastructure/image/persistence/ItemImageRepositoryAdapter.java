@@ -1,8 +1,8 @@
-package com.flab.livecommerce.infrastructure.item.persistence;
+package com.flab.livecommerce.infrastructure.image.persistence;
 
 import com.flab.livecommerce.domain.image.ItemImage;
 import com.flab.livecommerce.domain.image.ItemImageRepository;
-import com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate.JdbcTemplateItemImageRepository;
+import com.flab.livecommerce.infrastructure.image.persistence.jdbctemplate.JdbcTemplateItemImageRepository;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 

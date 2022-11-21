@@ -4,6 +4,7 @@ import com.flab.livecommerce.application.item.facade.ItemManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
 import com.flab.livecommerce.presentation.item.request.RegisterItemRequest;
 import com.flab.livecommerce.presentation.item.request.UpdateItemRequest;
+import com.flab.livecommerce.presentation.item.response.SearchItemResponse;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,7 +38,8 @@ public class ItemController {
     @GetMapping("/{itemId}")
     public CommonApiResponse searchItem(@PathVariable("itemId") Long id) {
         var itemInfo = itemManager.search(id);
-        return CommonApiResponse.success(itemInfo);
+        var searchItemResponse = SearchItemResponse.form(itemInfo);
+        return CommonApiResponse.success(searchItemResponse);
     }
 
     @PutMapping("/{itemId}")

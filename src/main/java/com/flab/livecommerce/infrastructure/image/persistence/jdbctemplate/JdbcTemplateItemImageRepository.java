@@ -1,4 +1,4 @@
-package com.flab.livecommerce.infrastructure.item.persistence.jdbctemplate;
+package com.flab.livecommerce.infrastructure.image.persistence.jdbctemplate;
 
 import com.flab.livecommerce.domain.image.ItemImage;
 import java.util.ArrayList;

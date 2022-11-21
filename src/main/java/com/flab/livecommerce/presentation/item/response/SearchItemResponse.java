@@ -15,6 +15,7 @@ public class SearchItemResponse {
     private Long salesPrice;
     private Integer stockQuantity;
     private List<ItemOptionGroup> itemOptionGroups;
+    private List<String> itemImageUrls;
 
     public SearchItemResponse(
         Long shopId,
@@ -23,7 +24,9 @@ public class SearchItemResponse {
         Long price,
         Long salesPrice,
         Integer stockQuantity,
-        List<ItemOptionGroup> itemOptionGroups
+        List<ItemOptionGroup> itemOptionGroups,
+        List<String> itemImageUrls
+
     ) {
         this.shopId = shopId;
         this.name = name;
@@ -32,6 +35,7 @@ public class SearchItemResponse {
         this.salesPrice = salesPrice;
         this.stockQuantity = stockQuantity;
         this.itemOptionGroups = itemOptionGroups;
+        this.itemImageUrls = itemImageUrls;
     }
 
     public static SearchItemResponse form(Info info) {
@@ -43,7 +47,8 @@ public class SearchItemResponse {
             info.getPrice(),
             info.getSalesPrice(),
             info.getStockQuantity(),
-            info.getItemOptionGroups()
+            info.getItemOptionGroups(),
+            info.getItemImageUrls()
         );
     }
 }

@@ -1,4 +1,4 @@
-package com.flab.livecommerce.infrastructure.item.config;
+package com.flab.livecommerce.infrastructure.image.config;
 
 import com.flab.livecommerce.application.item.DeleteImageProcessor;
 import com.flab.livecommerce.application.item.GetImageProcessor;
@@ -8,8 +8,8 @@ import com.flab.livecommerce.domain.image.FileStorageService;
 import com.flab.livecommerce.domain.image.FileUriGenerator;
 import com.flab.livecommerce.domain.image.ItemImageRepository;
 import com.flab.livecommerce.domain.item.ItemRepository;
-import com.flab.livecommerce.infrastructure.item.image.local.LocalStorageService;
-import com.flab.livecommerce.infrastructure.item.image.local.LocalUriGenerator;
+import com.flab.livecommerce.infrastructure.image.local.LocalStorageService;
+import com.flab.livecommerce.infrastructure.image.local.LocalUriGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,13 +17,13 @@ import org.springframework.context.annotation.Configuration;
 public class ItemImageProcessorConfig {
 
     @Bean
-    public FileStorageService fileStorageService(
+    public static FileStorageService fileStorageService(
     ) {
         return new LocalStorageService();
     }
 
     @Bean
-    public FileUriGenerator fileUriGenerator() {
+    public static FileUriGenerator fileUriGenerator() {
         return new LocalUriGenerator();
     }
 
