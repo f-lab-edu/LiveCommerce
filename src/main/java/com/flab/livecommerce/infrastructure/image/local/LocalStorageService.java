@@ -53,7 +53,6 @@ public class LocalStorageService implements FileStorageService {
 
     private String createUploadFileName(String originalFilename, String randomFileName) {
         String ext = extractExt(originalFilename);
-        log.info("ext = {}", ext);
         return randomFileName + "." + ext;
     }
 

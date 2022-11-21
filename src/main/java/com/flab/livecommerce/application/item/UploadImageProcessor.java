@@ -7,11 +7,9 @@ import com.flab.livecommerce.domain.item.Item;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import java.io.IOException;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-@Slf4j
 public class UploadImageProcessor {
 
     private final ItemImageRepository itemImageRepository;
@@ -38,7 +36,6 @@ public class UploadImageProcessor {
         throws IOException {
 
         Item item = itemRepository.findById(itemId);
-        log.info(">>>> item 조회 결과 ={}", item);
 
         ItemImage storedThumbnail = fileStorageService.uploadImage(thumbnailImage);
 
@@ -50,7 +47,6 @@ public class UploadImageProcessor {
             storedSpecific.addItem(item);
             itemImageRepository.save(storedSpecific);
         }
-        log.info("uriprefix={}", uriPrefix);
         return item.findItemImageUris(uriPrefix);
     }
 }

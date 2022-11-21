@@ -19,6 +19,7 @@ public class SearchItemProcessor {
 
     public Info execute(Long id) {
         Item item = itemRepository.findById(id);
+
         return new Info(item, uriPrefix);
     }
 }

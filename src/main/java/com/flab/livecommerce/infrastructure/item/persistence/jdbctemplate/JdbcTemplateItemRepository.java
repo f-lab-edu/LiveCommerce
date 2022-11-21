@@ -8,7 +8,6 @@ import com.flab.livecommerce.domain.item.ItemOptionGroup;
 import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -17,8 +16,9 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+// TODO -> itemOptionGroup, itemOption, itemImage 없는 경우 넘김 처리 (-> JPA)
+
 @Repository
-@Slf4j
 public class JdbcTemplateItemRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
@@ -62,7 +62,6 @@ public class JdbcTemplateItemRepository {
             .addValue("shopId", item.getShopId());
 
         jdbcTemplate.update(sql, param);
-        log.info(String.valueOf(jdbcTemplate.update(sql, param)));
         return item.setId(id);
     }
 
@@ -78,7 +77,6 @@ public class JdbcTemplateItemRepository {
         Item item = jdbcTemplate.query(sql, param, resultSetExtractor());
 
         if (item == null) {
-            log.info(">>>item 없음");
             throw new EntityNotFoundException();
         }
         return item;
@@ -105,22 +103,10 @@ public class JdbcTemplateItemRepository {
                     item.setId(rs.getLong("id"));
                 }
 
-                long itemImageId = rs.getLong("im.id");
-
-                itemImage = new ItemImage(
-                    rs.getLong("item_id"),
-                    rs.getInt("ordering"),
-                    rs.getString("name"),
-                    rs.getString("url")
-                );
-                itemImage.setId(itemImageId);
-                item.addItemImage(itemImage);
-
-
                 long itemOptionGroupId = rs.getLong("iog.id");
                 if (!itemOptionGroupMap.containsKey(itemOptionGroupId)) {
                     itemOptionGroup = new ItemOptionGroup(
-                        rs.getLong("item_id"),
+                        rs.getLong("iog.item_id"),
                         rs.getString("iog.name"),
                         rs.getInt("ordering"),
                         rs.getBoolean("basic"),
@@ -144,6 +130,16 @@ public class JdbcTemplateItemRepository {
 
                 itemOption.setId(rs.getLong("io.id"));
                 itemOptionGroup.addItemOption(itemOption);
+
+                long itemImageId = rs.getLong("im.id");
+                itemImage = new ItemImage(
+                    rs.getLong("item_id"),
+                    rs.getInt("ordering"),
+                    rs.getString("name"),
+                    rs.getString("url")
+                );
+                itemImage.setId(itemImageId);
+                item.addItemImage(itemImage);
             }
             return item;
         });

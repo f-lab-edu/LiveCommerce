@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RequestMapping
 @RestController
-@Slf4j
 public class ItemImageController {
 
     private final ItemImageManager itemImageManager;
