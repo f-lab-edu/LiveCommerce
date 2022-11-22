@@ -1,0 +1,15 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+    id 'org.springframework.boot' version '2.7.2'
+}
+
+dependencies {
+    implementation project(path: ':seller-api:seller-application', configuration: "default")
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+tasks.getByName('bootJar') {
+    enabled = false
+}

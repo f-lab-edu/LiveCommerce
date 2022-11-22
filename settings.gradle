@@ -1,1 +1,34 @@
-rootProject.name = 'livecommerce'
+rootProject.name = 'liveCommerce'
+
+include('server')
+include('common')
+include(
+        'user-api',
+        'user-api:user-domain',
+        'user-api:user-application',
+        'user-api:user-presentation',
+        'user-api:user-infrastructure'
+)
+include(
+        'seller-api',
+        'seller-api:seller-domain',
+        'seller-api:seller-application',
+        'seller-api:seller-presentation',
+        'seller-api:seller-infrastructure'
+)
+include(
+        'item-api',
+        'item-api:item-domain',
+        'item-api:item-application',
+        'item-api:item-presentation',
+        'item-api:item-infrastructure'
+)
+include(
+        'order-api',
+        'order-api:order-domain',
+        'order-api:order-application',
+        'order-api:order-presentation',
+        'order-api:order-infrastructure'
+)
+
+
