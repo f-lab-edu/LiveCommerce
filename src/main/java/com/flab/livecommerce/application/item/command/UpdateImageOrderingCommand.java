@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class UpdateImageOrderCommand {
+public class UpdateImageOrderingCommand {
 
     private List<Long> imageIdList;
     private List<Integer> orderingList;

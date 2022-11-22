@@ -26,8 +26,8 @@ public class JdbcTemplateItemRepository {
 
     public JdbcTemplateItemRepository(DataSource dataSource) {
         this.jdbcInsert = new SimpleJdbcInsert(dataSource)
-            .withTableName("item") // item 테이블에 삽입
-            .usingGeneratedKeyColumns("id"); // id 컬럼의 값을 key 로 반환
+            .withTableName("item")
+            .usingGeneratedKeyColumns("id");
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
@@ -39,20 +39,20 @@ public class JdbcTemplateItemRepository {
     }
 
     public void deleteById(Long id) {
-        SqlParameterSource param = new MapSqlParameterSource("id", id);
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
         String optionSql = "DELETE FROM item_option WHERE item_option.item_id = :id";
-        jdbcTemplate.update(optionSql, param);
+        jdbcTemplate.update(optionSql, parameterSource);
         String optionGroupSql = "DELETE FROM item_option_group WHERE item_option_group.item_id = :id";
-        jdbcTemplate.update(optionGroupSql, param);
+        jdbcTemplate.update(optionGroupSql, parameterSource);
         String itemSql = "DELETE FROM item WHERE item.id = :id";
-        jdbcTemplate.update(itemSql, param);
+        jdbcTemplate.update(itemSql, parameterSource);
     }
 
     public Item update(Item item, Long id) {
         String sql = "UPDATE item "
             + "SET name=:name, description=:description, price=:price, sales_price=:salesPrice, stock_quantity=:stockQuantity "
             + "WHERE item.id=:id";
-        SqlParameterSource param = new MapSqlParameterSource()
+        SqlParameterSource parameterSource = new MapSqlParameterSource()
             .addValue("id", id)
             .addValue("name", item.getName())
             .addValue("description", item.getDescription())
@@ -61,7 +61,7 @@ public class JdbcTemplateItemRepository {
             .addValue("stockQuantity", item.getStockQuantity())
             .addValue("shopId", item.getShopId());
 
-        jdbcTemplate.update(sql, param);
+        jdbcTemplate.update(sql, parameterSource);
         return item.setId(id);
     }
 
@@ -72,9 +72,9 @@ public class JdbcTemplateItemRepository {
             + "JOIN item_image im ON i.id = im.item_id "
             + "WHERE i.id = :id";
 
-        Map<String, Object> param = Map.of("id", id);
+        Map<String, Object> parameter = Map.of("id", id);
 
-        Item item = jdbcTemplate.query(sql, param, resultSetExtractor());
+        Item item = jdbcTemplate.query(sql, parameter, resultSetExtractor());
 
         if (item == null) {
             throw new EntityNotFoundException();

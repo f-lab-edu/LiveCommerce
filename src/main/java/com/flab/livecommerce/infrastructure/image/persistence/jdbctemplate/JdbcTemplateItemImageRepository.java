@@ -1,8 +1,6 @@
 package com.flab.livecommerce.infrastructure.image.persistence.jdbctemplate;
 
 import com.flab.livecommerce.domain.image.ItemImage;
-import java.util.ArrayList;
-import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -24,20 +22,20 @@ public class JdbcTemplateItemImageRepository {
             .usingGeneratedKeyColumns("id");
     }
 
-    public ItemImage save(ItemImage image) {
-        SqlParameterSource param = new BeanPropertySqlParameterSource(image);
-        Number key = jdbcInsert.executeAndReturnKey(param);
-        image.setId(key.longValue());
-        return image;
+    public ItemImage save(ItemImage itemImage) {
+        SqlParameterSource parameterSource = new BeanPropertySqlParameterSource(itemImage);
+        Long id = jdbcInsert.executeAndReturnKey(parameterSource).longValue();
+        itemImage.setId(id);
+        return itemImage;
     }
 
     public void deleteAllById(Long id) {
-        SqlParameterSource param = new MapSqlParameterSource("id", id);
+        SqlParameterSource parameterSource = new MapSqlParameterSource("id", id);
         String sql = "DELETE FROM item_image WHERE item_image.item_id = :id";
-        template.update(sql, param);
+        template.update(sql, parameterSource);
     }
 
-    public void updateOrder(Long imageId, Integer order) {
+    public void updateOrdering(Long imageId, Integer order) {
         String sql = "UPDATE item_image "
             + "SET ordering=:ordering "
             + "WHERE id=:imageId";
@@ -47,21 +45,4 @@ public class JdbcTemplateItemImageRepository {
 
         template.update(sql, param);
     }
-
-    // batchupdate 방식 -> pk duplicate 문제 -> 위의 방식으로 변경
-    public void updateOrdering(Long imageId, List<Integer> orderList) {
-        List<Object[]> batch = new ArrayList<>();
-        for (int i = 0; i < orderList.size(); i++) {
-            Object[] values = new Object[]{
-                orderList.get(i),
-                imageId,
-                i
-            };
-            batch.add(values);
-        }
-
-        String sql = "UPDATE item_image SET ordering=? WHERE id=? AND ordering=?";
-        //template.batchUpdate(sql, batch);
-    }
-
 }

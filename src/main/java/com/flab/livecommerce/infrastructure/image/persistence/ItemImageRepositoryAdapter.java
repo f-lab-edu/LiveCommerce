@@ -3,7 +3,6 @@ package com.flab.livecommerce.infrastructure.image.persistence;
 import com.flab.livecommerce.domain.image.ItemImage;
 import com.flab.livecommerce.domain.image.ItemImageRepository;
 import com.flab.livecommerce.infrastructure.image.persistence.jdbctemplate.JdbcTemplateItemImageRepository;
-import java.util.List;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -26,12 +25,7 @@ public class ItemImageRepositoryAdapter implements ItemImageRepository {
     }
 
     @Override
-    public void updateOrdering(Long imageId, List<Integer> orderList) {
-        this.itemImageRepository.updateOrdering(imageId, orderList);
-    }
-
-    @Override
-    public void updateOrder(Long imageId, Integer order) {
-        this.itemImageRepository.updateOrder(imageId, order);
+    public void updateOrdering(Long imageId, Integer order) {
+        this.itemImageRepository.updateOrdering(imageId, order);
     }
 }

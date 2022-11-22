@@ -2,7 +2,7 @@ package com.flab.livecommerce.presentation.item;
 
 import com.flab.livecommerce.application.item.facade.ItemImageManager;
 import com.flab.livecommerce.common.response.CommonApiResponse;
-import com.flab.livecommerce.presentation.item.request.ItemOrderRequest;
+import com.flab.livecommerce.presentation.item.request.UpdateImageOrderingRequest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -66,9 +66,9 @@ public class ItemImageController {
         return CommonApiResponse.success(null);
     }
 
-    @PutMapping("/api/v1/item/{itemId}/image/priority")
+    @PutMapping("/api/v1/item/image/priority")
     public CommonApiResponse updateImagePriority(
-        @RequestBody ItemOrderRequest orderingRequest
+        @RequestBody UpdateImageOrderingRequest orderingRequest
     ) {
         itemImageManager.updatePriority(orderingRequest.toCommand());
         return CommonApiResponse.success(null);

@@ -5,12 +5,12 @@ import com.flab.livecommerce.application.item.GetImageProcessor;
 import com.flab.livecommerce.application.item.UpdateImagePriorityProcessor;
 import com.flab.livecommerce.application.item.UploadImageProcessor;
 import com.flab.livecommerce.domain.image.FileStorageService;
-import com.flab.livecommerce.domain.image.FileUriGenerator;
+import com.flab.livecommerce.domain.image.FileUriPrefixGenerator;
 import com.flab.livecommerce.domain.image.ItemImageRepository;
 import com.flab.livecommerce.domain.item.ItemRepository;
 import com.flab.livecommerce.infrastructure.image.ImageProperties;
 import com.flab.livecommerce.infrastructure.image.local.LocalStorageService;
-import com.flab.livecommerce.infrastructure.image.local.LocalUriGenerator;
+import com.flab.livecommerce.infrastructure.image.local.LocalUriPrefixGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,8 +26,8 @@ public class ItemImageProcessorConfig {
     }
 
     @Bean
-    public static FileUriGenerator fileUriGenerator() {
-        return new LocalUriGenerator();
+    public static FileUriPrefixGenerator fileUriGenerator() {
+        return new LocalUriPrefixGenerator();
     }
 
 
@@ -41,7 +41,7 @@ public class ItemImageProcessorConfig {
             itemImageRepository,
             itemRepository,
             fileStorageService(imageProperties),
-            fileUriGenerator().getUriPrefix());
+            fileUriGenerator().generate());
     }
 
 

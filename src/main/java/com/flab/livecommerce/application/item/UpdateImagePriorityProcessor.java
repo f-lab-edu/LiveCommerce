@@ -1,6 +1,6 @@
 package com.flab.livecommerce.application.item;
 
-import com.flab.livecommerce.application.item.command.UpdateImageOrderCommand;
+import com.flab.livecommerce.application.item.command.UpdateImageOrderingCommand;
 import com.flab.livecommerce.domain.image.ItemImageRepository;
 
 public class UpdateImagePriorityProcessor {
@@ -16,10 +16,10 @@ public class UpdateImagePriorityProcessor {
     }
 
 
-    public void execute(UpdateImageOrderCommand command) {
+    public void execute(UpdateImageOrderingCommand command) {
         int requestOrderSize = command.getImageIdList().size();
         for (int i = 0; i < requestOrderSize; i++) {
-            itemImageRepository.updateOrder(command.getImageIdList().get(i), command.getOrderingList().get(i));
+            itemImageRepository.updateOrdering(command.getImageIdList().get(i), command.getOrderingList().get(i));
         }
     }
 }
