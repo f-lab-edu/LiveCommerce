@@ -21,7 +21,9 @@ public class RegisterItemOptionGroupCommand {
     private int minimumChoice;
     //최대 선택 개수
     private int maximumChoice;
+
     private List<RegisterItemOptionCommand> itemOptions;
+
 
     public ItemOptionGroup toEntity(Item item) {
         return ItemOptionGroup.builder()

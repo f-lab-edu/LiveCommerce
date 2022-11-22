@@ -1,6 +1,4 @@
-package com.flab.livecommerce.item.domain;
-
-import java.util.List;
+package com.flab.item.domain;
 
 public interface ItemRepository {
 
@@ -8,5 +6,8 @@ public interface ItemRepository {
 
     Item findById(Long id);
 
-    List<ItemOptionGroup> findItemOptionSeries(Item item);
+    void deleteById(Long id);
+
+    Item update(Item item, Long id);
+
 }

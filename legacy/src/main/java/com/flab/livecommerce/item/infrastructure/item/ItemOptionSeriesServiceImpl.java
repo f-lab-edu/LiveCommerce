@@ -1,5 +1,12 @@
+package com.flab.livecommerce.infrastructure.item;
+import com.flab.livecommerce.application.item.command.RegisterItemCommand;
+import com.flab.livecommerce.application.item.command.UpdateItemCommand;
+import com.flab.livecommerce.domain.item.Item;
+import com.flab.livecommerce.domain.item.ItemOptionGroup;
+import com.flab.livecommerce.domain.item.ItemOptionGroupRepository;
+import com.flab.livecommerce.domain.item.ItemOptionRepository;
+import com.flab.livecommerce.domain.item.ItemOptionSeriesService;
 package com.flab.livecommerce.item.infrastructure.item;
-
 import com.flab.livecommerce.item.application.command.RegisterItemCommand;
 import com.flab.livecommerce.item.domain.Item;
 import com.flab.livecommerce.item.domain.ItemOptionGroup;
@@ -46,5 +53,24 @@ public class ItemOptionSeriesServiceImpl implements ItemOptionSeriesService {
                 return itemOptionGroup;
             }
         ).collect(Collectors.toList());
+    }
+
+    @Override
+    public void update(UpdateItemCommand command, Item item) {
+        var itemOptionGroupList = command.getItemOptionGroups();
+        itemOptionGroupList.forEach(
+            requestItemOptionGroup -> {
+                var requestOptionGroup = requestItemOptionGroup.toEntity(item);
+                var updatedOptionGroup =
+                    itemOptionGroupRepository.update(requestOptionGroup, requestOptionGroup.getId());
+
+                requestItemOptionGroup.getItemOptions().forEach(
+                    requestItemOption -> {
+                        var itemOption = requestItemOption.toEntity(updatedOptionGroup);
+                        itemOptionRepository.update(itemOption, itemOption.getId());
+                    }
+                );
+            }
+        );
     }
 }

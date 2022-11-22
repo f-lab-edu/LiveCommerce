@@ -1,8 +1,15 @@
-package com.flab.livecommerce.item.domain.exception;
+package com.flab.livecommerce.domain.item.exception;
 
-public class DuplicatedItemNameException extends RuntimeException {
+import com.flab.livecommerce.common.exception.BaseException;
+import com.flab.livecommerce.common.response.ErrorCode;
+
+public class DuplicatedItemNameException extends BaseException {
+
+    public DuplicatedItemNameException() {
+        super(ErrorCode.DUPLICATE_ITEM_NAME);
+    }
 
     public DuplicatedItemNameException(String message) {
-        super(message);
+        super(message, ErrorCode.DUPLICATE_ITEM_NAME);
     }
 }
