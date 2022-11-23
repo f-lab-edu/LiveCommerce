@@ -8,6 +8,7 @@ dependencies {
 	implementation project(path: ':user-api:user-infrastructure', configuration: 'default')
 	implementation project(path: ':seller-api:seller-infrastructure', configuration: 'default')
 	implementation project(path: ':item-api:item-infrastructure', configuration: 'default')
+	implementation project(path: ':inventory-api:inventory-infrastructure', configuration: 'default')
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'

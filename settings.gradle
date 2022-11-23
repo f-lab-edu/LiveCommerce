@@ -30,5 +30,12 @@ include(
         'order-api:order-presentation',
         'order-api:order-infrastructure'
 )
+include(
+        'inventory-api',
+        'inventory-api:inventory-domain',
+        'inventory-api:inventory-application',
+        'inventory-api:inventory-presentation',
+        'inventory-api:inventory-infrastructure'
+)
 
 
