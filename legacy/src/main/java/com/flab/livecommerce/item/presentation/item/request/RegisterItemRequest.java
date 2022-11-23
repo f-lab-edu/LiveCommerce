@@ -22,11 +22,11 @@ public class RegisterItemRequest {
     private String name;
 
     @NotNull(message = "상품 원가를 작성하세요.")
-    private Integer price;
+    private Long price;
 
     @NotNull(message = "상품 판매가를 작성하세요.")
     @Range(min = 100, message = "상품 가격은 100원 이상이어야 합니다.")
-    private Integer salesPrice;
+    private Long salesPrice;
 
     @NotBlank(message = "상품 설명을 작성하세요.")
     private String description;

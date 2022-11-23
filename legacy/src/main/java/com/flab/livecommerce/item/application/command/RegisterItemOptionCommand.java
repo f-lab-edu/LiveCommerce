@@ -22,6 +22,7 @@ public class RegisterItemOptionCommand {
             .ordering(ordering)
             .name(name)
             .price(price)
+            .itemId(itemOptionGroup.getItemId())
             .build();
     }
 }

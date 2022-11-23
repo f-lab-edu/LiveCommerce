@@ -1,12 +1,17 @@
 package com.flab.livecommerce.item.domain;
 
+<<<<<<< HEAD:toMove/domain/item/Item.java
+import com.flab.livecommerce.common.exception.InvalidParameterException;
+import com.flab.livecommerce.domain.image.ItemImage;
+=======
 import com.flab.common.exception.InvalidParameterException;
+>>>>>>> main:legacy/src/main/java/com/flab/livecommerce/item/domain/Item.java
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 
-// TODO 타이틀이미지, 상세 이미지 리스트 추가
 @Getter
 public class Item {
 
@@ -16,14 +21,17 @@ public class Item {
     //상품 설명
     private String description;
     //상품 원가
-    private Integer price;
+    private Long price;
     //상품 판매가
-    private Integer salesPrice;
+    private Long salesPrice;
     //상품 재고
     private Integer stockQuantity;
 
     //옵션 그룹
     private List<ItemOptionGroup> itemOptionGroups = new ArrayList<>();
+
+    // 아이템 이미지 리스트
+    private List<ItemImage> itemImages = new ArrayList<>();
 
     protected Item() {
     }
@@ -33,8 +41,8 @@ public class Item {
         Long sellerId,
         String name,
         String description,
-        Integer price,
-        Integer salesPrice,
+        Long price,
+        Long salesPrice,
         Integer stockQuantity
     ) {
         if (sellerId == null) {
@@ -69,10 +77,29 @@ public class Item {
         return this;
     }
 
-    public Item addItemOptionGroup(ItemOptionGroup itemOptionGroups) {
-        this.itemOptionGroups.add(itemOptionGroups);
+    public Item addItemOptionGroup(ItemOptionGroup itemOptionGroup) {
+        this.itemOptionGroups.add(itemOptionGroup);
         return this;
     }
+
+    public void addItemImageList(ItemImage... itemImages) {
+        for (ItemImage itemImage : itemImages) {
+            itemImage.setOrdering(this.itemImages.size() + 1);
+            this.itemImages.add(itemImage);
+        }
+    }
+
+    public Item addItemImage(ItemImage itemImage) {
+        this.itemImages.add(itemImage);
+        return this;
+    }
+
+    public List<String> findItemImageUris(String uriPrefix) {
+        return this.getItemImages().stream().map(
+            itemImage -> uriPrefix + itemImage.getUrl()
+        ).collect(Collectors.toList());
+    }
+
 
     @Getter
     public static class Info {
@@ -80,21 +107,27 @@ public class Item {
         private Long sellerId;
         private String name;
         private String description;
-        private Integer price;
-        private Integer salesPrice;
+        private Long price;
+        private Long salesPrice;
         private Integer stockQuantity;
         private List<ItemOptionGroup> itemOptionGroups;
+        private List<String> itemImageUrls;
 
+<<<<<<< HEAD:toMove/domain/item/Item.java
+        public Info(Item item, String uriPrefix) {
+            this.shopId = item.getShopId();
+=======
         public Info(Item item, List<ItemOptionGroup> itemOptionGroups) {
             this.sellerId = item.getSellerId();
+>>>>>>> main:legacy/src/main/java/com/flab/livecommerce/item/domain/Item.java
             this.name = item.getName();
             this.description = item.getDescription();
             this.price = item.getPrice();
             this.salesPrice = item.getSalesPrice();
             this.salesPrice = item.getSalesPrice();
             this.stockQuantity = item.getStockQuantity();
-            this.itemOptionGroups = itemOptionGroups;
+            this.itemOptionGroups = item.getItemOptionGroups();
+            this.itemImageUrls = item.findItemImageUris(uriPrefix);
         }
     }
-
 }

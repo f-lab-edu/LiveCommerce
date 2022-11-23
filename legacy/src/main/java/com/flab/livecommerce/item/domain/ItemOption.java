@@ -9,15 +9,17 @@ public class ItemOption {
 
     private Long id;
     private Long itemOptionGroupId;
+    private Long itemId;
     private String name;
     private Integer ordering;
     private Long price;
+
 
     protected ItemOption() {
     }
 
     @Builder
-    public ItemOption(Long itemOptionGroupId, String name, Integer ordering, Long price) {
+    public ItemOption(Long itemOptionGroupId, String name, Integer ordering, Long price, Long itemId) {
         if (itemOptionGroupId == null) {
             throw new InvalidParameterException("ItemOption.itemOptionGroupId");
         }
@@ -35,6 +37,7 @@ public class ItemOption {
         this.name = name;
         this.ordering = ordering;
         this.price = price;
+        this.itemId = itemId;
     }
 
     public ItemOption setId(Long id) {
