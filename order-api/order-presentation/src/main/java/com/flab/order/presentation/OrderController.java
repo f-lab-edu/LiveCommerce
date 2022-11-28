@@ -30,7 +30,6 @@ public class OrderController {
         @Authentication AuthenticatedUser user,
         @RequestBody @Valid CreateOrderRequest request
     ) {
-
         var order = orderManager.create(user.getUserId(), request.toCommand());
         return CommonApiResponse.success(order);
     }

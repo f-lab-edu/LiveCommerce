@@ -92,7 +92,7 @@ public class Order {
         return id;
     }
 
-    public Integer getPrice() {
+    public Integer getTotalAmount() {
         return totalAmount;
     }
 
@@ -100,9 +100,14 @@ public class Order {
         return userId;
     }
 
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
     public List<OrderLineItem> getOrderLineItems() {
         return orderLineItems;
     }
+
 
     public void setId(Long id) {
         this.id = id;

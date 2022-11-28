@@ -2,7 +2,7 @@ package com.flab.user.domain.exception;
 
 
 import com.flab.common.exception.BaseException;
-import com.flab.common.response.ErrorCode;
+import com.flab.common.exception.ErrorCode;
 
 public class DuplicatedEmailException extends BaseException {
 

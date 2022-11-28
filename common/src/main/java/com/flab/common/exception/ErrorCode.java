@@ -1,4 +1,4 @@
-package com.flab.common.response;
+package com.flab.common.exception;
 
 
 public enum ErrorCode {

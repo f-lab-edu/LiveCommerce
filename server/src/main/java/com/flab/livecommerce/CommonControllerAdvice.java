@@ -1,8 +1,8 @@
 package com.flab.livecommerce;
 
 import com.flab.common.exception.BaseException;
+import com.flab.common.exception.ErrorCode;
 import com.flab.common.response.CommonApiResponse;
-import com.flab.common.response.ErrorCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.NestedExceptionUtils;

@@ -1,16 +1,16 @@
 package com.flab.user.application;
 
-import com.flab.user.application.command.UserCreateCommand;
+import com.flab.user.application.command.CreateUserCommand;
 import com.flab.user.domain.PasswordEncryptor;
 import com.flab.user.domain.UserRepository;
 import com.flab.user.domain.exception.DuplicatedEmailException;
 
-public class UserCreateProcessor {
+public class CreateUserProcessor {
 
     private final UserRepository userRepository;
     private final PasswordEncryptor passwordEncryption;
 
-    public UserCreateProcessor(
+    public CreateUserProcessor(
         UserRepository userRepository,
         PasswordEncryptor passwordEncryption
     ) {
@@ -18,7 +18,7 @@ public class UserCreateProcessor {
         this.passwordEncryption = passwordEncryption;
     }
 
-    public void execute(UserCreateCommand command) {
+    public void execute(CreateUserCommand command) {
 
         if (userRepository.existsByEmail(command.getEmail())) {
             throw new DuplicatedEmailException();

@@ -1,6 +1,6 @@
 package com.flab.user.presentation.request;
 
-import com.flab.user.application.command.UserCreateCommand;
+import com.flab.user.application.command.CreateUserCommand;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -40,7 +40,7 @@ public class UserCreateRequest {
         return nickname;
     }
 
-    public UserCreateCommand toCommand() {
-        return new UserCreateCommand(email, password, nickname);
+    public CreateUserCommand toCommand() {
+        return new CreateUserCommand(email, password, nickname);
     }
 }

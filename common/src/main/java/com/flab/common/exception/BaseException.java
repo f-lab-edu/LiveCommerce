@@ -1,7 +1,5 @@
 package com.flab.common.exception;
 
-import com.flab.common.response.ErrorCode;
-
 public class BaseException extends RuntimeException {
 
     private final ErrorCode errorCode;
