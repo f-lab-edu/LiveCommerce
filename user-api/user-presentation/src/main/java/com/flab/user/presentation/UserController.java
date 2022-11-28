@@ -38,7 +38,7 @@ public class UserController {
     @LoginCheck
     @PostMapping("/logout")
     public CommonApiResponse logout(@RequestHeader String authorization) {
-        userManager.delete(authorization.replace("Bearer ", ""));
+        userManager.logout(authorization.replace("Bearer ", ""));
         return CommonApiResponse.success(null);
     }
 

@@ -1,7 +1,7 @@
 package com.flab.user.infrastructure;
 
 import com.flab.common.exception.EntityNotFoundException;
-import com.flab.common.response.ErrorCode;
+import com.flab.common.exception.ErrorCode;
 import com.flab.user.domain.User;
 import com.flab.user.domain.UserRepository;
 import com.flab.user.infrastructure.persistence.jpa.JpaUserRepository;
@@ -12,9 +12,7 @@ public class UserRepositoryAdapter implements UserRepository {
 
     private final JpaUserRepository userRepository;
 
-    public UserRepositoryAdapter(
-        JpaUserRepository userRepository
-    ) {
+    public UserRepositoryAdapter(JpaUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

@@ -2,7 +2,7 @@ package com.flab.user.application.command;
 
 import com.flab.user.domain.User;
 
-public class UserCreateCommand {
+public class CreateUserCommand {
 
     private String email;
     private String password;
@@ -16,7 +16,7 @@ public class UserCreateCommand {
         );
     }
 
-    public UserCreateCommand(String email, String password, String nickname) {
+    public CreateUserCommand(String email, String password, String nickname) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;

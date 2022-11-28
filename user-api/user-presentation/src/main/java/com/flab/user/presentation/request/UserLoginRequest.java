@@ -1,6 +1,6 @@
 package com.flab.user.presentation.request;
 
-import com.flab.user.application.UserLoginProcessor.LoginCommand;
+import com.flab.user.application.LoginUserProcessor.LoginCommand;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;

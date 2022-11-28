@@ -10,7 +10,7 @@ import com.flab.user.domain.exception.InvalidUserException;
 import com.flab.user.domain.exception.PasswordNotMatchedException;
 
 
-public class UserLoginProcessor {
+public class LoginUserProcessor {
 
     private final UserRepository userRepository;
     private final TokenGenerator tokenGenerator;
@@ -18,7 +18,7 @@ public class UserLoginProcessor {
     private final PasswordEncryptor passwordEncryption;
     private final Long tokenExpirationSec;
 
-    public UserLoginProcessor(
+    public LoginUserProcessor(
         UserRepository userRepository,
         TokenGenerator tokenGenerator,
         TokenRepository tokenRepository,

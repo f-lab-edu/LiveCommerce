@@ -1,4 +1,4 @@
-package com.flab.livecommerce.session;
+package com.flab.livecommerce.supports;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;

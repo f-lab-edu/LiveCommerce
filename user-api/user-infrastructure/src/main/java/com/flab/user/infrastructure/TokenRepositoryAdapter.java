@@ -3,9 +3,7 @@ package com.flab.user.infrastructure;
 import com.flab.common.auth.AuthenticatedUser;
 import com.flab.user.domain.TokenRepository;
 import com.flab.user.infrastructure.persistence.redis.RedisTokenRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public class TokenRepositoryAdapter implements TokenRepository {
 
     private final RedisTokenRepository tokenRepository;
