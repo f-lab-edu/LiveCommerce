@@ -5,7 +5,7 @@ plugins {
 
 dependencies {
     implementation project(path: ':order-api:order-domain', configuration: "default")
-    implementation 'org.springframework:spring-tx:5.3.22'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 

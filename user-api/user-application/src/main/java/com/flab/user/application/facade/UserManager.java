@@ -7,7 +7,9 @@ import com.flab.user.application.LogoutUserProcessor;
 import com.flab.user.application.command.CreateUserCommand;
 import com.flab.user.domain.UserRepository;
 import com.flab.user.domain.exception.DuplicatedEmailException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserManager {
 
     private final CreateUserProcessor createUserProcessor;

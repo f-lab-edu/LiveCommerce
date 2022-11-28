@@ -4,7 +4,9 @@ import com.flab.order.application.CreateOrderProcessor;
 import com.flab.order.application.SearchOrderProcessor;
 import com.flab.order.application.command.CreateOrderCommand;
 import com.flab.order.domain.Order;
+import org.springframework.stereotype.Service;
 
+@Service
 public class OrderManager {
 
     private final CreateOrderProcessor createOrderProcessor;
