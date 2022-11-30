@@ -1,5 +1,14 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+    id 'org.springframework.boot' version '2.7.2'
+}
+
 dependencies {
     implementation project(path: ':common', configuration: "default")
     implementation 'javax.persistence:javax.persistence-api:2.2'
+}
+
+tasks.getByName('bootJar') {
+    enabled = false
 }
 

@@ -1,4 +1,4 @@
-package com.flab.user.infrastructure.encryption;
+package com.flab.seller.infrastructure.encryption;
 
 import com.flab.common.auth.PasswordEncryptor;
 import org.springframework.security.crypto.password.PasswordEncoder;

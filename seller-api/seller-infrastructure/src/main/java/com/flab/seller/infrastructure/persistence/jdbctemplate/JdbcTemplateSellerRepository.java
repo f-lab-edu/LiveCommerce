@@ -50,7 +50,8 @@ public class JdbcTemplateSellerRepository {
             Seller seller = new Seller(
                 rs.getString("name"),
                 rs.getString("business_no"),
-                rs.getString("email")
+                rs.getString("email"),
+                rs.getString("password")
             );
 
             return seller.setId(rs.getLong("id"));

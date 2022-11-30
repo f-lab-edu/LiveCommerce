@@ -1,8 +1,12 @@
 package com.flab.seller.presentation;
 
+import com.flab.common.auth.annotation.LoginCheck;
 import com.flab.common.response.CommonApiResponse;
 import com.flab.seller.application.facade.SellerManager;
-import com.flab.seller.presentation.request.RegisterSellerRequest;
+import com.flab.seller.presentation.request.LoginSellerRequest;
+import com.flab.seller.presentation.request.CreateSellerRequest;
+import com.flab.seller.presentation.request.SellerEmailRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,11 +26,33 @@ public class SellerController {
     }
 
     @PostMapping
-    public CommonApiResponse signUp(@RequestBody @Valid RegisterSellerRequest request) {
-        //todo 응답 모델 만들어야 함
-        //sellerManager.registerSeller(request.toCommand());
+    public CommonApiResponse signUp(@RequestBody @Valid CreateSellerRequest request) {
+        sellerManager.registerSeller(request.toCommand());
         return CommonApiResponse.success(null);
     }
+
+    @PostMapping("/login")
+    public CommonApiResponse login(
+        @RequestBody @Valid LoginSellerRequest request,
+        HttpSession session
+        ) {
+        sellerManager.login(request.toCommand(), session);
+        return CommonApiResponse.success(null);
+    }
+
+    @LoginCheck
+    @PostMapping("/logout")
+    public CommonApiResponse logout(HttpSession session) {
+        session.invalidate();
+        return CommonApiResponse.success(null);
+    }
+
+    @PostMapping("/email/exists")
+    public CommonApiResponse checkEmail(@RequestBody @Valid SellerEmailRequest email) {
+        sellerManager.checkEmailDuplicated(email.getEmail());
+        return CommonApiResponse.success(null);
+    }
+
 
     @GetMapping("/{sellerId}")
     public CommonApiResponse searchSeller(@PathVariable("sellerId") Long id) {

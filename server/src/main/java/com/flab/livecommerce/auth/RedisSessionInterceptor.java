@@ -1,5 +1,7 @@
 package com.flab.livecommerce.auth;
 
+import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
+
 import com.flab.common.exception.AuthenticationException;
 import com.flab.user.domain.TokenRepository;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +42,7 @@ public class RedisSessionInterceptor implements HandlerInterceptor {
             tokenRepository.renewExpirationSec(authenticatedUser);
 
             //request 에 세션정보 담기
-            request.setAttribute("authSession", authenticatedUser);
+            request.setAttribute(AUTH_SESSION_MEMBER, authenticatedUser);
         }
 
         return true;

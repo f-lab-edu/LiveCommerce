@@ -3,20 +3,22 @@ package com.flab.seller.application.command;
 
 import com.flab.seller.domain.Seller;
 
-public class RegisterSellerCommand {
+public class CreateSellerCommand {
 
     private String name;
     private String businessNo;
     private String email;
+    private String password;
 
-    public Seller toEntity() {
-        return new Seller(name, businessNo, email);
+    public Seller toEntity(String encryptedPassword) {
+        return new Seller(name, businessNo, email, encryptedPassword);
     }
 
-    public RegisterSellerCommand(String name, String businessNo, String email) {
+    public CreateSellerCommand(String name, String businessNo, String email, String password) {
         this.name = name;
         this.businessNo = businessNo;
         this.email = email;
+        this.password = password;
     }
 
     public String getName() {
@@ -29,5 +31,9 @@ public class RegisterSellerCommand {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

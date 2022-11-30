@@ -5,9 +5,8 @@ import com.flab.common.exception.ErrorCode;
 import com.flab.seller.domain.Seller;
 import com.flab.seller.domain.SellerRepository;
 import com.flab.seller.infrastructure.persistence.jpa.JpaSellerRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+
 public class SellerRepositoryAdapter implements SellerRepository {
 
     private final JpaSellerRepository sellerRepository;

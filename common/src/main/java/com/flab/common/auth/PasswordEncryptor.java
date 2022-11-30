@@ -1,5 +1,5 @@
-package com.flab.user.domain;
-
+package com.flab.common.auth;
+// TODO 추후 위치 이동 고려 (리팩토링)
 public interface PasswordEncryptor {
 
     String encrypt(String text);

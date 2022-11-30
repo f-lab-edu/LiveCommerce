@@ -6,7 +6,7 @@ import com.flab.user.application.LoginUserProcessor.LoginCommand;
 import com.flab.user.application.LogoutUserProcessor;
 import com.flab.user.application.command.CreateUserCommand;
 import com.flab.user.domain.UserRepository;
-import com.flab.user.domain.exception.DuplicatedEmailException;
+import com.flab.user.domain.exception.DuplicatedUserEmailException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -43,7 +43,7 @@ public class UserManager {
 
     public void checkEmailDuplicated(String email) {
         if (userRepository.existsByEmail(email)) {
-            throw new DuplicatedEmailException();
+            throw new DuplicatedUserEmailException();
         }
     }
 

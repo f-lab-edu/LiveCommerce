@@ -23,7 +23,7 @@ public class UserConfig {
     ) {
         return new CreateUserProcessor(
             userRepository,
-            new SecurityPasswordEncoder(algorithm())
+            new SecurityPasswordEncoder(algorithm2())
         );
     }
 
@@ -38,7 +38,7 @@ public class UserConfig {
             userRepository,
             tokenGenerator,
             tokenRepository,
-            new SecurityPasswordEncoder(algorithm()),
+            new SecurityPasswordEncoder(algorithm2()),
             tokenProperties.getTokenExpirationSec()
         );
     }
@@ -55,8 +55,9 @@ public class UserConfig {
         return new NonInfoTokenGenerator(tokenRepository);
     }
 
+    // TODO encryption 공통화 처리 (리팩토링 필요)
     @Bean
-    public PasswordEncoder algorithm() {
+    public PasswordEncoder algorithm2() {
         return new BCryptPasswordEncoder();
     }
 }

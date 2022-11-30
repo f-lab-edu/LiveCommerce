@@ -3,14 +3,14 @@ package com.flab.user.domain.exception;
 import com.flab.common.exception.BaseException;
 import com.flab.common.exception.ErrorCode;
 
-public class PasswordNotMatchedException extends BaseException {
+public class UserPasswordNotMatchedException extends BaseException {
 
 
-    public PasswordNotMatchedException() {
+    public UserPasswordNotMatchedException() {
         super(ErrorCode.PASSWORD_NOT_MATCHED);
     }
 
-    public PasswordNotMatchedException(String message, ErrorCode errorCode) {
+    public UserPasswordNotMatchedException(String message, ErrorCode errorCode) {
         super(message, errorCode);
     }
 }
