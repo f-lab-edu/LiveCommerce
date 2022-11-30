@@ -25,7 +25,7 @@ public class RedisSessionInterceptor implements HandlerInterceptor {
         Object handler
     ) throws Exception {
 
-        if (handler instanceof HandlerMethod == false) {
+        if (!(handler instanceof HandlerMethod)) {
             return true;
         }
 

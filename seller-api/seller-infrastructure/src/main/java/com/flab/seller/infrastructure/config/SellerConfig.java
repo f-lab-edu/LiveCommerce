@@ -4,7 +4,7 @@ import com.flab.seller.application.LoginSellerProcessor;
 import com.flab.seller.application.CreateSellerProcessor;
 import com.flab.seller.application.SearchSellerProcessor;
 import com.flab.seller.domain.SellerRepository;
-import com.flab.seller.infrastructure.encryption.SecurityPasswordEncoder;
+import com.flab.seller.infrastructure.encryption.SellerSecurityPasswordEncoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,7 +19,7 @@ public class SellerConfig {
     ) {
         return new CreateSellerProcessor(
             sellerRepository,
-            new SecurityPasswordEncoder(algorithm()));
+            new SellerSecurityPasswordEncoder(sellerEncodingAlgorithm()));
     }
 
     @Bean
@@ -28,7 +28,7 @@ public class SellerConfig {
     ) {
         return new LoginSellerProcessor(
             sellerRepository,
-            new SecurityPasswordEncoder(algorithm())
+            new SellerSecurityPasswordEncoder(sellerEncodingAlgorithm())
         );
     }
 
@@ -42,7 +42,7 @@ public class SellerConfig {
     }
 
     @Bean
-    public PasswordEncoder algorithm() {
+    public PasswordEncoder sellerEncodingAlgorithm() {
         return new BCryptPasswordEncoder();
     }
 }

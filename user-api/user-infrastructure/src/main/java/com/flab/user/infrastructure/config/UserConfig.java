@@ -6,7 +6,7 @@ import com.flab.user.application.LogoutUserProcessor;
 import com.flab.user.domain.TokenGenerator;
 import com.flab.user.domain.TokenRepository;
 import com.flab.user.domain.UserRepository;
-import com.flab.user.infrastructure.encryption.SecurityPasswordEncoder;
+import com.flab.user.infrastructure.encryption.UserSecurityPasswordEncoder;
 import com.flab.user.infrastructure.generator.NonInfoTokenGenerator;
 import com.flab.user.infrastructure.tokenproperties.TokenProperties;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +23,7 @@ public class UserConfig {
     ) {
         return new CreateUserProcessor(
             userRepository,
-            new SecurityPasswordEncoder(algorithm2())
+            new UserSecurityPasswordEncoder(userEncodingAlgorithm())
         );
     }
 
@@ -38,7 +38,7 @@ public class UserConfig {
             userRepository,
             tokenGenerator,
             tokenRepository,
-            new SecurityPasswordEncoder(algorithm2()),
+            new UserSecurityPasswordEncoder(userEncodingAlgorithm()),
             tokenProperties.getTokenExpirationSec()
         );
     }
@@ -55,9 +55,8 @@ public class UserConfig {
         return new NonInfoTokenGenerator(tokenRepository);
     }
 
-    // TODO encryption 공통화 처리 (리팩토링 필요)
     @Bean
-    public PasswordEncoder algorithm2() {
+    public PasswordEncoder userEncodingAlgorithm() {
         return new BCryptPasswordEncoder();
     }
 }
