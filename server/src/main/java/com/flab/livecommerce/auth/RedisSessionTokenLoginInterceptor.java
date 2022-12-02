@@ -30,10 +30,6 @@ public class RedisSessionTokenLoginInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        if (((HandlerMethod) handler).getMethodAnnotation(LoginCheck.class) == null) {
-            return true;
-        }
-
         //token 정보 가져오기
         var token = extractToken(request);
 
