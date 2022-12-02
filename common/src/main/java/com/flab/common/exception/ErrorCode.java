@@ -14,9 +14,11 @@ public enum ErrorCode {
     USER_NOT_FOUND("회원을 찾을 수 없습니다."),
     INVALID_USER("유효하지 않은 회원입니다."),
 
+
     // Seller Error
     SELLER_NOT_FOUND("판매자를 찾을 수 없습니다."),
-    INVALID_TOKEN("유효하지 않은 토큰입니다."),
+
+    INVALID_SELLER("유효하지 않은 판매자입니다."),
 
     // User, Seller 공통
     DUPLICATED_EMAIL("중복된 이메일 입니다."),

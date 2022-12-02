@@ -14,4 +14,16 @@ public class AuthenticatedSeller {
         this.email = email;
         this.role = role;
     }
+
+    public Long getSellerId() {
+        return sellerId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
 }

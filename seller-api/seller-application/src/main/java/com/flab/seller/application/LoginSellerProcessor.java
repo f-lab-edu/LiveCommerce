@@ -32,8 +32,7 @@ public class LoginSellerProcessor {
         Seller seller = sellerRepository.findByEmail(command.getEmail());
 
         if (seller == null) {
-            throw new EntityNotFoundException(
-                ErrorCode.SELLER_NOT_FOUND); // TODO 명구님한테 invalid~와 차이 질문, user error 코드와 합치기?
+            throw new EntityNotFoundException(ErrorCode.SELLER_NOT_FOUND); // TODO 명구님 invalid를 써야 하는 이유 질문
         }
 
         if (!passwordCheck(command, seller)) {

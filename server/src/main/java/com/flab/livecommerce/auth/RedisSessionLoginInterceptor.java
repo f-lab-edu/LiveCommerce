@@ -1,6 +1,5 @@
 package com.flab.livecommerce.auth;
 
-import com.flab.common.auth.AuthenticatedSeller;
 import com.flab.common.auth.SessionConst;
 import com.flab.common.auth.annotation.LoginCheck;
 import com.flab.common.exception.AuthenticationException;
@@ -32,15 +31,17 @@ public class RedisSessionLoginInterceptor implements HandlerInterceptor {
 
         String jSessionId = extractSessionId(request);
 
-        if (checkSession(session, jSessionId)) {
-            throw new AuthenticationException();
+        if (jSessionId != null || session != null) {
+            if (checkSessionInvalid(session, jSessionId)) {
+                throw new AuthenticationException();
+            }
         }
 
         return true;
     }
 
-    private static boolean checkSession(HttpSession session, String jSessionId) {
-        return session == null || session.getAttribute(SessionConst.AUTH_SESSION_MEMBER) == null & session.getAttribute(jSessionId) == null;
+    private static boolean checkSessionInvalid(HttpSession session, String jSessionId) {
+        return session.getAttribute(SessionConst.AUTH_SESSION_MEMBER) == null & session.getAttribute(jSessionId) == null;
     }
 
     private String extractSessionId(HttpServletRequest request) {
