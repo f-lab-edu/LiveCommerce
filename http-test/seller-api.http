@@ -1,11 +1,21 @@
-### 파트너 가게 등록
-POST http://localhost:8080/api/v1/seller
+### 판매자 회원가입
+POST http://localhost:8080/api/v1/seller/signup
 Content-Type: application/json
 
 {
-  "name": "테스트",
+  "name": "판매자1",
   "businessNo": "1234123456",
-  "email": "audrn@gmail.com"
+  "email": "audrn@gmail.com",
+  "password": "q1w2e3r4@"
+}
+
+### 판매자 로그인
+POST http://localhost:8080/api/v1/seller/login
+Content-Type: application/json
+
+{
+  "email": "audrn@gmail.com",
+  "password":"q1w2e3r4@"
 }
 
 ### 가게 찾기

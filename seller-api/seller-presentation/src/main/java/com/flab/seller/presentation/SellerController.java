@@ -6,6 +6,7 @@ import com.flab.seller.application.facade.SellerManager;
 import com.flab.seller.presentation.request.LoginSellerRequest;
 import com.flab.seller.presentation.request.CreateSellerRequest;
 import com.flab.seller.presentation.request.SellerEmailRequest;
+import com.flab.seller.presentation.response.LoginSellerResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,7 @@ public class SellerController {
         this.sellerManager = sellerManager;
     }
 
-    @PostMapping
+    @PostMapping("/signup")
     public CommonApiResponse signUp(@RequestBody @Valid CreateSellerRequest request) {
         sellerManager.registerSeller(request.toCommand());
         return CommonApiResponse.success(null);
@@ -36,8 +37,8 @@ public class SellerController {
         @RequestBody @Valid LoginSellerRequest request,
         HttpSession session
         ) {
-        sellerManager.login(request.toCommand(), session);
-        return CommonApiResponse.success(null);
+        String jSessionId = sellerManager.login(request.toCommand(), session);
+        return CommonApiResponse.success(new LoginSellerResponse(jSessionId));
     }
 
     @LoginCheck

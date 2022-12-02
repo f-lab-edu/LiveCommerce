@@ -28,7 +28,7 @@ public class LoginSellerProcessor {
     }
 
     @Transactional
-    public void execute(LoginSellerCommand command, HttpSession session) {
+    public String execute(LoginSellerCommand command, HttpSession session) {
         Seller seller = sellerRepository.findByEmail(command.getEmail());
 
         if (seller == null) {
@@ -43,10 +43,7 @@ public class LoginSellerProcessor {
         AuthenticatedSeller loginsellerinfo = seller.toLoginInfo();
         session.setAttribute(AUTH_SESSION_MEMBER, loginsellerinfo);
 
-        // TODO response로 넘겨주기
-        System.out.println("session.getId() = " + session.getId());
-        System.out.println("session.getAttribute(AUTH_SESSION_MEMBER) = " + session.getAttribute(
-            AUTH_SESSION_MEMBER));
+        return session.getId();
     }
 
     private boolean passwordCheck(LoginSellerCommand command, Seller loginSellerInfo) {

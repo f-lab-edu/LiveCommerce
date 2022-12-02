@@ -23,7 +23,7 @@ public class UserController {
         this.userManager = userManager;
     }
 
-    @PostMapping
+    @PostMapping("/signup")
     public CommonApiResponse signUp(@RequestBody @Valid CreateUserRequest request) {
         userManager.createUser(request.toCommand());
         return CommonApiResponse.success(null);

@@ -21,15 +21,6 @@ public class CreateSellerRequest {
     @Pattern(regexp = "^[0-9a-z].{6,10}$", message = "영문 소문자, 숫자 6~10자 이내로 입력하세요.”")
     private String password;
 
-    public CreateSellerCommand toCommand() {
-        return new CreateSellerCommand(
-            name,
-            businessNo,
-            email,
-            password
-        );
-    }
-
     protected CreateSellerRequest() {
     }
 
@@ -37,6 +28,15 @@ public class CreateSellerRequest {
         this.name = name;
         this.businessNo = businessNo;
         this.email = email;
+    }
+
+    public CreateSellerCommand toCommand() {
+        return new CreateSellerCommand(
+            name,
+            businessNo,
+            email,
+            password
+        );
     }
 
     public String getName() {
@@ -51,4 +51,7 @@ public class CreateSellerRequest {
         return email;
     }
 
+    public String getPassword() {
+        return password;
+    }
 }

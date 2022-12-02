@@ -46,10 +46,10 @@ public class SellerManager {
         }
     }
 
-    public void login(
+    public String login(
         LoginSellerCommand command,
         HttpSession session
     ) {
-        loginSellerProcessor.execute(command, session);
+        return loginSellerProcessor.execute(command, session);
     }
 }

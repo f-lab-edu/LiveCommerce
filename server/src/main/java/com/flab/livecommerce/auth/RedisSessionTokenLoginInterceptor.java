@@ -2,6 +2,7 @@ package com.flab.livecommerce.auth;
 
 import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
 
+import com.flab.common.auth.annotation.LoginCheck;
 import com.flab.common.exception.AuthenticationException;
 import com.flab.user.domain.TokenRepository;
 import javax.servlet.http.HttpServletRequest;
@@ -10,11 +11,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-public class RedisSessionInterceptor implements HandlerInterceptor {
+public class RedisSessionTokenLoginInterceptor implements HandlerInterceptor {
 
     private final TokenRepository tokenRepository;
 
-    public RedisSessionInterceptor(TokenRepository tokenRepository) {
+    public RedisSessionTokenLoginInterceptor(TokenRepository tokenRepository) {
         this.tokenRepository = tokenRepository;
     }
 
@@ -26,6 +27,10 @@ public class RedisSessionInterceptor implements HandlerInterceptor {
     ) throws Exception {
 
         if (!(handler instanceof HandlerMethod)) {
+            return true;
+        }
+
+        if (((HandlerMethod) handler).getMethodAnnotation(LoginCheck.class) == null) {
             return true;
         }
 
