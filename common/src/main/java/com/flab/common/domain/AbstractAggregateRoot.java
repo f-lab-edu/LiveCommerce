@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AbstractAggregateRoot {
+public abstract class AbstractAggregateRoot {
 
     private List<DomainEvent> events = new ArrayList<>();
 
