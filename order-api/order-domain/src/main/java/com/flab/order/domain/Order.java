@@ -1,8 +1,12 @@
 package com.flab.order.domain;
 
+import com.flab.common.domain.AbstractAggregateRoot;
+import com.flab.order.domain.event.OrderCanceledEvent;
+import com.flab.order.domain.event.OrderCreatedEvent;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,7 +20,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order extends AbstractAggregateRoot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +39,10 @@ public class Order {
     public enum OrderStatus {
         ORDER_CREATED("주문 생성"),
         ORDER_CANCELED("주문 취소"),
-        ORDER_PAID("주문 결제");
+        ORDER_PAID("주문 결제"),
+
+        ORDER_COMPLETE("주문 완료");
+
         private final String description;
 
         OrderStatus(String description) {
@@ -58,6 +65,7 @@ public class Order {
         this.orderedAt = LocalDateTime.now();
         this.orderLineItems = orderLineItems;
         this.totalAmount = calculateTotalAmount();
+        registerEvent(new OrderCreatedEvent(this));
     }
 
     public void paid() {
@@ -102,6 +110,13 @@ public class Order {
 
     public OrderStatus getOrderStatus() {
         return orderStatus;
+    }
+
+
+    public List<Long> getItemIds() {
+        return this.orderLineItems.stream()
+            .map(OrderLineItem::getItemId)
+            .collect(Collectors.toList());
     }
 
     public List<OrderLineItem> getOrderLineItems() {
