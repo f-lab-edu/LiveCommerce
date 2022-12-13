@@ -1,5 +1,6 @@
 package com.flab.user.presentation;
 
+import com.flab.common.auth.Role;
 import com.flab.common.auth.annotation.LoginCheck;
 import com.flab.common.response.CommonApiResponse;
 import com.flab.user.application.facade.UserManager;
@@ -35,7 +36,7 @@ public class UserController {
         return CommonApiResponse.success(token);
     }
 
-    @LoginCheck
+    @LoginCheck(authority = Role.USER)
     @PostMapping("/logout")
     public CommonApiResponse logout(@RequestHeader String authorization) {
         userManager.logout(authorization.replace("Bearer ", ""));

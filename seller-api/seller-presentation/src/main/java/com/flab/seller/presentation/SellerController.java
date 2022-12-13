@@ -1,5 +1,6 @@
 package com.flab.seller.presentation;
 
+import com.flab.common.auth.Role;
 import com.flab.common.auth.annotation.LoginCheck;
 import com.flab.common.response.CommonApiResponse;
 import com.flab.seller.application.facade.SellerManager;
@@ -41,7 +42,7 @@ public class SellerController {
         return CommonApiResponse.success(new LoginSellerResponse(jSessionId));
     }
 
-    @LoginCheck
+    @LoginCheck(authority = Role.SELLER)
     @PostMapping("/logout")
     public CommonApiResponse logout(HttpSession session) {
         session.invalidate();

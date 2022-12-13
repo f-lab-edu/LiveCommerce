@@ -5,11 +5,10 @@ import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
 
 import com.flab.common.auth.AuthenticatedSeller;
 import com.flab.common.auth.PasswordEncryptor;
-import com.flab.common.exception.EntityNotFoundException;
-import com.flab.common.exception.ErrorCode;
 import com.flab.seller.application.command.LoginSellerCommand;
 import com.flab.seller.domain.Seller;
 import com.flab.seller.domain.SellerRepository;
+import com.flab.seller.domain.exception.InvalidSellerException;
 import com.flab.seller.domain.exception.SellerPasswordNotMatchedException;
 import javax.servlet.http.HttpSession;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +31,7 @@ public class LoginSellerProcessor {
         Seller seller = sellerRepository.findByEmail(command.getEmail());
 
         if (seller == null) {
-            throw new EntityNotFoundException(ErrorCode.SELLER_NOT_FOUND); // TODO 명구님 invalid를 써야 하는 이유 질문
+            throw new InvalidSellerException();
         }
 
         if (!passwordCheck(command, seller)) {

@@ -2,7 +2,6 @@ package com.flab.livecommerce.supports;
 
 import com.flab.livecommerce.auth.AuthenticationArgumentResolver;
 import com.flab.livecommerce.auth.LoginCheckInterceptor;
-import com.flab.livecommerce.auth.RedisSessionLoginInterceptor;
 import com.flab.livecommerce.auth.RedisTokenLoginInterceptor;
 import com.flab.user.domain.TokenRepository;
 import java.util.List;
@@ -30,11 +29,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new RedisTokenLoginInterceptor(tokenRepository))
             .order(1)
             .excludePathPatterns("/error");
-        registry.addInterceptor(new RedisSessionLoginInterceptor())
-            .order(2)
-            .excludePathPatterns("/error");
         registry.addInterceptor(new LoginCheckInterceptor())
-            .order(3)
+            .order(2)
             .excludePathPatterns("/error");
     }
 }
