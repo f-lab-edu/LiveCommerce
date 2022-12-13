@@ -4,8 +4,8 @@ import com.flab.common.auth.Role;
 import com.flab.common.auth.annotation.LoginCheck;
 import com.flab.common.response.CommonApiResponse;
 import com.flab.seller.application.facade.SellerManager;
-import com.flab.seller.presentation.request.LoginSellerRequest;
 import com.flab.seller.presentation.request.CreateSellerRequest;
+import com.flab.seller.presentation.request.LoginSellerRequest;
 import com.flab.seller.presentation.request.SellerEmailRequest;
 import com.flab.seller.presentation.response.LoginSellerResponse;
 import javax.servlet.http.HttpSession;
@@ -37,9 +37,9 @@ public class SellerController {
     public CommonApiResponse login(
         @RequestBody @Valid LoginSellerRequest request,
         HttpSession session
-        ) {
-        String jSessionId = sellerManager.login(request.toCommand(), session);
-        return CommonApiResponse.success(new LoginSellerResponse(jSessionId));
+    ) {
+        String jsessionId = sellerManager.login(request.toCommand(), session);
+        return CommonApiResponse.success(new LoginSellerResponse(jsessionId));
     }
 
     @LoginCheck(authority = Role.SELLER)

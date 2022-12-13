@@ -2,13 +2,13 @@ package com.flab.seller.presentation.response;
 
 public class LoginSellerResponse {
 
-    private final String jSessionId;
+    private final String jsessionid;
 
-    public LoginSellerResponse(String jSessionId) {
-        this.jSessionId = jSessionId;
+    public LoginSellerResponse(String jsessionid) {
+        this.jsessionid = jsessionid;
     }
 
-    public String getjSessionId() {
-        return jSessionId;
+    public String getJsessionid() {
+        return jsessionid;
     }
 }

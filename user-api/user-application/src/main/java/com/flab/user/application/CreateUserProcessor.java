@@ -1,7 +1,7 @@
 package com.flab.user.application;
 
-import com.flab.user.application.command.CreateUserCommand;
 import com.flab.common.auth.PasswordEncryptor;
+import com.flab.user.application.command.CreateUserCommand;
 import com.flab.user.domain.UserRepository;
 import com.flab.user.domain.exception.DuplicatedUserEmailException;
 

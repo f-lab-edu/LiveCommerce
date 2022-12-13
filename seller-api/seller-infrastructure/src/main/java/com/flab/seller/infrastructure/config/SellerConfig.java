@@ -1,7 +1,7 @@
 package com.flab.seller.infrastructure.config;
 
-import com.flab.seller.application.LoginSellerProcessor;
 import com.flab.seller.application.CreateSellerProcessor;
+import com.flab.seller.application.LoginSellerProcessor;
 import com.flab.seller.application.SearchSellerProcessor;
 import com.flab.seller.domain.SellerRepository;
 import com.flab.seller.infrastructure.encryption.SellerSecurityPasswordEncoder;
@@ -24,7 +24,7 @@ public class SellerConfig {
 
     @Bean
     public LoginSellerProcessor loginSellerProcessor(
-       SellerRepository sellerRepository
+        SellerRepository sellerRepository
     ) {
         return new LoginSellerProcessor(
             sellerRepository,

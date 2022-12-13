@@ -48,6 +48,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
     }
 
+    @SuppressWarnings("checkstyle:MissingSwitchDefault")
     @Override
     public boolean preHandle(
         HttpServletRequest request,
@@ -75,6 +76,9 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             case SELLER:
                 checkSellerAuthority(request);
                 break;
+
+            default:
+                throw new AuthenticationException();
         }
 
         return true;

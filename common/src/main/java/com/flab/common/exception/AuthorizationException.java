@@ -1,6 +1,6 @@
 package com.flab.common.exception;
 
-public class AuthorizationException extends BaseException{
+public class AuthorizationException extends BaseException {
 
     public AuthorizationException(ErrorCode errorCode) {
         super(errorCode);
