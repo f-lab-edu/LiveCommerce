@@ -7,12 +7,12 @@ import java.time.LocalDateTime;
 public final class OrderCreatedEvent implements DomainEvent {
 
     private final Long orderId;
-    private final Long customerId;
+    private final Long userId;
     private final LocalDateTime occurredOn;
 
     public OrderCreatedEvent(Order order) {
         this.orderId = order.getId();
-        this.customerId = order.getUserId();
+        this.userId = order.getUserId();
         this.occurredOn = LocalDateTime.now();
     }
 
@@ -21,8 +21,8 @@ public final class OrderCreatedEvent implements DomainEvent {
         return orderId;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public Long getUserId() {
+        return userId;
     }
 
     public LocalDateTime getOccurredOn() {

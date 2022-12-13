@@ -2,19 +2,17 @@ package com.flab.order.domain.event;
 
 import com.flab.common.domain.DomainEvent;
 import com.flab.order.domain.Order;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public final class OrderCanceledEvent implements DomainEvent {
 
     private final Long orderId;
-    private final Long accountId;
+    private final Long userId;
     private final LocalDateTime occurredOn;
 
     public OrderCanceledEvent(Order order) {
         this.orderId = order.getId();
-        this.accountId = order.getUserId();
+        this.userId = order.getUserId();
         this.occurredOn = LocalDateTime.now();
     }
 
@@ -27,8 +25,8 @@ public final class OrderCanceledEvent implements DomainEvent {
         return orderId;
     }
 
-    public Long getAccountId() {
-        return accountId;
+    public Long getUserId() {
+        return userId;
     }
 
     public LocalDateTime getOccurredOn() {

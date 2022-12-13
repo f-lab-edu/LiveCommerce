@@ -1,5 +1,6 @@
 package com.flab.order;
 
+import com.flab.order.domain.event.PaymentCompletedEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ public class OrderEventHandler {
     }
 
     @EventListener
-    public void handle() {
+    public void handle(PaymentCompletedEvent event) {
 
     }
 }

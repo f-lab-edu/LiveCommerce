@@ -8,13 +8,13 @@ import java.util.List;
 public final class OrderCompletedEvent implements DomainEvent {
 
     private final Long orderId;
-    private final Long customerId;
+    private final Long userId;
     private final List<Long> items;
     private final LocalDateTime occurredOn;
 
     public OrderCompletedEvent(Order order) {
         this.orderId = order.getId();
-        this.customerId = order.getUserId();
+        this.userId = order.getUserId();
         this.items = order.getItemIds();
         this.occurredOn = LocalDateTime.now();
     }
@@ -24,8 +24,8 @@ public final class OrderCompletedEvent implements DomainEvent {
         return orderId;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public Long getUserId() {
+        return userId;
     }
 
     public LocalDateTime getOccurredOn() {
