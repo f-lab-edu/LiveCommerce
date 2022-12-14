@@ -1,6 +1,6 @@
 package com.flab.livecommerce.supports;
 
-import com.flab.PaymentCompletedEvent;
+import com.flab.payment.domain.PaymentCompletedEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
