@@ -1,4 +1,4 @@
-package com.flab;
+package com.flab.payment.domain;
 
 import com.flab.common.domain.DomainEvent;
 import java.time.LocalDateTime;
