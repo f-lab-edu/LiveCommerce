@@ -19,4 +19,16 @@ public final class PaymentCompletedEvent implements DomainEvent {
     public LocalDateTime occurredOn() {
         return occurredOn;
     }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public Integer getPayedAmount() {
+        return payedAmount;
+    }
+
+    public LocalDateTime getOccurredOn() {
+        return occurredOn;
+    }
 }
