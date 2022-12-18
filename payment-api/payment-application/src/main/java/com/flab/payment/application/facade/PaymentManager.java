@@ -2,7 +2,6 @@ package com.flab.payment.application.facade;
 
 import com.flab.payment.application.FakePaymentProcessor;
 import com.flab.payment.application.command.PaymentFakeCommand;
-import com.flab.payment.domain.Payment;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
