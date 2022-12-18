@@ -10,13 +10,11 @@ public final class OrderPayedEvent implements DomainEvent {
 
     private final Long orderId;
     private final Long userId;
-    private final List<OrderLineItem> orderLineItems;
     private final LocalDateTime occurredOn;
 
     public OrderPayedEvent(Order order) {
         this.orderId = order.getId();
         this.userId = order.getUserId();
-        this.orderLineItems = order.getOrderLineItems();
         this.occurredOn = LocalDateTime.now();
     }
 
