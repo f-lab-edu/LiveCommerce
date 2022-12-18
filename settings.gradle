@@ -30,5 +30,13 @@ include(
         'order-api:order-presentation',
         'order-api:order-infrastructure'
 )
+include(
+        'point-api',
+        'point-api:point-domain',
+        'point-api:point-application',
+        'point-api:point-presentation',
+        'point-api:point-infrastructure'
+)
+
 
 

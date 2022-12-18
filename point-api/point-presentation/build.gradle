@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-    implementation project(path: ':point-api:point-domain', configuration: "default")
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation project(path: ':point-api:point-application', configuration: "default")
+    implementation "org.springframework.boot:spring-boot-starter-web"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 
