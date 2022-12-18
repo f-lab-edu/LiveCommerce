@@ -38,4 +38,11 @@ include(
         'inventory-api:inventory-infrastructure'
 )
 
+include(
+        'payment-api',
+        'payment-api:payment-domain',
+        'payment-api:payment-application',
+        'payment-api:payment-presentation',
+        'payment-api:payment-infrastructure'
+)
 
