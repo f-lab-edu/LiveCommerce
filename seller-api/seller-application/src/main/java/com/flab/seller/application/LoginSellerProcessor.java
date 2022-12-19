@@ -1,8 +1,6 @@
 package com.flab.seller.application;
 
 
-import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
-
 import com.flab.common.auth.AuthenticatedSeller;
 import com.flab.common.auth.PasswordEncryptor;
 import com.flab.seller.application.command.LoginSellerCommand;
@@ -10,27 +8,35 @@ import com.flab.seller.domain.Seller;
 import com.flab.seller.domain.SellerRepository;
 import com.flab.seller.domain.exception.InvalidSellerException;
 import com.flab.seller.domain.exception.SellerPasswordNotMatchedException;
-import javax.servlet.http.HttpSession;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpSession;
+import java.util.Optional;
+
+import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
 
 public class LoginSellerProcessor {
 
     private final SellerRepository sellerRepository;
     private final PasswordEncryptor passwordEncryptor;
+    private final HttpSession session;
 
 
-    public LoginSellerProcessor(SellerRepository sellerRepository,
-        PasswordEncryptor passwordEncryptor
+    public LoginSellerProcessor(
+            SellerRepository sellerRepository,
+            PasswordEncryptor passwordEncryptor,
+            HttpSession session
     ) {
         this.sellerRepository = sellerRepository;
         this.passwordEncryptor = passwordEncryptor;
+        this.session = session;
     }
 
     @Transactional
-    public String execute(LoginSellerCommand command, HttpSession session) {
-        Seller seller = sellerRepository.findByEmail(command.getEmail());
+    public String execute(LoginSellerCommand command) {
+        Optional<Seller> seller = sellerRepository.findByEmail(command.getEmail());
 
-        if (seller == null) {
+        if (seller.isEmpty()) {
             throw new InvalidSellerException();
         }
 
@@ -38,13 +44,13 @@ public class LoginSellerProcessor {
             throw new SellerPasswordNotMatchedException();
         }
 
-        AuthenticatedSeller loginsellerinfo = seller.toLoginInfo();
+        AuthenticatedSeller loginsellerinfo = seller.get().toLoginInfo();
         session.setAttribute(AUTH_SESSION_MEMBER, loginsellerinfo);
 
         return session.getId();
     }
 
-    private boolean passwordCheck(LoginSellerCommand command, Seller loginSellerInfo) {
-        return passwordEncryptor.match(command.getPassword(), loginSellerInfo.getPassword());
+    private boolean passwordCheck(LoginSellerCommand command, Optional<Seller> loginSellerInfo) {
+        return passwordEncryptor.match(command.getPassword(), loginSellerInfo.get().getPassword());
     }
 }

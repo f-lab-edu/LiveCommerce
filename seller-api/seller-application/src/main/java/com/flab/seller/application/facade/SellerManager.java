@@ -8,7 +8,7 @@ import com.flab.seller.application.command.LoginSellerCommand;
 import com.flab.seller.domain.Seller;
 import com.flab.seller.domain.SellerRepository;
 import com.flab.seller.domain.exception.DuplicatedSellerEmailException;
-import javax.servlet.http.HttpSession;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,7 +36,7 @@ public class SellerManager {
         return createSellerProcessor.execute(command);
     }
 
-    public Seller searchSeller(Long id) {
+    public Optional<Seller> searchSeller(Long id) {
         return searchSellerProcessor.execute(id);
     }
 
@@ -47,9 +47,8 @@ public class SellerManager {
     }
 
     public String login(
-        LoginSellerCommand command,
-        HttpSession session
+        LoginSellerCommand command
     ) {
-        return loginSellerProcessor.execute(command, session);
+        return loginSellerProcessor.execute(command);
     }
 }

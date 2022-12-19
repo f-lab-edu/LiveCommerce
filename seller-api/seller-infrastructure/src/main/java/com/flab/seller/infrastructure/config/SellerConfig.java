@@ -9,35 +9,38 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import javax.servlet.http.HttpSession;
 
 @Configuration
 public class SellerConfig {
 
     @Bean
     public CreateSellerProcessor createSellerProcessor(
-        SellerRepository sellerRepository
+            SellerRepository sellerRepository
     ) {
         return new CreateSellerProcessor(
-            sellerRepository,
-            new SellerSecurityPasswordEncoder(sellerEncodingAlgorithm()));
+                sellerRepository,
+                new SellerSecurityPasswordEncoder(sellerEncodingAlgorithm()));
     }
 
     @Bean
     public LoginSellerProcessor loginSellerProcessor(
-        SellerRepository sellerRepository
+            SellerRepository sellerRepository,
+            HttpSession session
     ) {
         return new LoginSellerProcessor(
-            sellerRepository,
-            new SellerSecurityPasswordEncoder(sellerEncodingAlgorithm())
+                sellerRepository,
+                new SellerSecurityPasswordEncoder(sellerEncodingAlgorithm()),
+                session
         );
     }
 
     @Bean
     public SearchSellerProcessor searchSellerProcessor(
-        SellerRepository sellerRepository
+            SellerRepository sellerRepository
     ) {
         return new SearchSellerProcessor(
-            sellerRepository
+                sellerRepository
         );
     }
 

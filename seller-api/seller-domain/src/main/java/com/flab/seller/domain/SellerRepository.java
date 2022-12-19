@@ -1,13 +1,15 @@
 package com.flab.seller.domain;
 
 
+import java.util.Optional;
+
 public interface SellerRepository {
 
     Seller save(Seller seller);
 
-    Seller findById(Long id);
+    Optional<Seller> findById(Long id);
 
-    Seller findByEmail(String email);
+    Optional<Seller> findByEmail(String email);
 
     boolean existsByEmail(String email);
 

@@ -5,6 +5,7 @@ import com.flab.common.exception.ErrorCode;
 import com.flab.seller.domain.Seller;
 import com.flab.seller.domain.SellerRepository;
 import com.flab.seller.infrastructure.persistence.jpa.JpaSellerRepository;
+import java.util.Optional;
 
 
 public class SellerRepositoryAdapter implements SellerRepository {
@@ -21,15 +22,17 @@ public class SellerRepositoryAdapter implements SellerRepository {
     }
 
     @Override
-    public Seller findById(Long id) {
-        return this.sellerRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.SELLER_NOT_FOUND));
+    public Optional<Seller> findById(Long id) {
+        return Optional.ofNullable(this.sellerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.SELLER_NOT_FOUND)));
     }
 
     @Override
-    public Seller findByEmail(String email) {
-        return this.sellerRepository.findByEmail(email)
-            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.SELLER_NOT_FOUND));
+    public Optional<Seller> findByEmail(String email) {
+        return Optional.ofNullable(
+                this.sellerRepository.findByEmail(email)
+                        .orElseThrow(() -> new EntityNotFoundException(ErrorCode.SELLER_NOT_FOUND))
+        );
     }
 
     @Override

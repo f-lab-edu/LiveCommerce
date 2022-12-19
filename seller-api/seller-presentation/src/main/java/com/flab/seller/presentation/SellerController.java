@@ -35,10 +35,9 @@ public class SellerController {
 
     @PostMapping("/login")
     public CommonApiResponse login(
-        @RequestBody @Valid LoginSellerRequest request,
-        HttpSession session
+        @RequestBody @Valid LoginSellerRequest request
     ) {
-        String jsessionId = sellerManager.login(request.toCommand(), session);
+        String jsessionId = sellerManager.login(request.toCommand());
         return CommonApiResponse.success(new LoginSellerResponse(jsessionId));
     }
 

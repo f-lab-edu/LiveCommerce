@@ -2,6 +2,7 @@ package com.flab.seller.application;
 
 import com.flab.seller.domain.Seller;
 import com.flab.seller.domain.SellerRepository;
+import java.util.Optional;
 
 public class SearchSellerProcessor {
 
@@ -11,7 +12,7 @@ public class SearchSellerProcessor {
         this.sellerRepository = sellerRepository;
     }
 
-    public Seller execute(Long id) {
+    public Optional<Seller> execute(Long id) {
         return sellerRepository.findById(id);
     }
 }
