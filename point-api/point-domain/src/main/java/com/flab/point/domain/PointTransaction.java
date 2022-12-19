@@ -3,18 +3,17 @@ package com.flab.point.domain;
 import java.time.LocalDateTime;
 
 /*
- * 적립포인트 아이디(earnedPointId)를 기준으로 groupBy 해서 만료 기간 및 포인트 사용 처리
+ *  기업 부채로서 작용되는 포인트 이력을 정확하고 상세하게 관리하기 위해 -> PointTransaction에서 포인트별 사용 및 차감 상세 이력 관리
  */
 public class PointTransaction {
 
     private Long id;
     private Long userId;
     private Long pointId;
-    private Long earnedPointId;
-    private PointStatus pointStatus;
     private Long amount;
+    private PointStatus pointStatus;
     private LocalDateTime transactAt;
-    private LocalDateTime expireAt;
+    private LocalDateTime pointExpireAt;
 
     public PointTransaction() {
     }
@@ -22,29 +21,38 @@ public class PointTransaction {
     public PointTransaction(
             Long userId,
             Long pointId,
-            Long earnedPointId,
+            Long amount,
             PointStatus pointStatus,
-            Long amount
+            LocalDateTime pointExpireAt
     ) {
         this.userId = userId;
         this.pointId = pointId;
-        this.earnedPointId = earnedPointId;
-        this.pointStatus = pointStatus;
         this.amount = amount;
+        this.pointStatus = pointStatus;
         this.transactAt = LocalDateTime.now();
-        // TODO this.expireAt = ;
+        this.pointExpireAt = pointExpireAt;
     }
 
-    public static PointTransaction add(Point addedPoint) {
-        var addTransaction = new PointTransaction(addedPoint.getUserId(), addedPoint.getId(), addedPoint.getId(), addedPoint.getPointStatus(), addedPoint.getAmount());
-        addTransaction.expireAt = addedPoint.getExpireAt();
-        return addTransaction;
+    public static void add(Point addedPoint, Long amount) {
+        new PointTransaction(addedPoint.getUserId(), addedPoint.getId(), amount, PointStatus.POINT_EARN, addedPoint.getExpireAt());
     }
 
-    public static void remove(Point removedPoint) {
-        // TODO 적립된 순서대로 적립 포인트 차감 -> HOW?
-        // TODO 이후 남은 포인트 만료 기간 설정
+    public static Long remove(Point removedPoint, Long amount) {
+        new PointTransaction(removedPoint.getUserId(), removedPoint.getId(), amount, PointStatus.POINT_USED, removedPoint.getExpireAt());
+        // TODO 만료기간 이내 && 적립 순서대로 포인트 차감
+        return amount; // TODO 차감 후 남은 point 반환
     }
 
-    // TODO 만료 처리
+    // TODO 만료 처리 (spring batch)
+
+    public enum PointStatus {
+        POINT_EARN("포인트 적립"),
+        POINT_USED("포인트 사용"),
+        POINT_EXPIRED("포인트 유효기간 만료");
+        private final String description;
+
+        PointStatus(String description) {
+            this.description = description;
+        }
+    }
 }
