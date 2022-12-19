@@ -25,4 +25,10 @@ public class InventoryRepositoryAdapter implements InventoryRepository {
             .orElseThrow(() -> new EntityNotFoundException());
     }
 
+    @Override
+    public Inventory findByItemId(Long id) {
+        return inventoryRepository.findByItemId(id)
+            .orElseThrow(() -> new EntityNotFoundException());
+    }
+
 }

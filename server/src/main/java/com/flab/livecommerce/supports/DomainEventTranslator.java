@@ -1,5 +1,6 @@
 package com.flab.livecommerce.supports;
 
+import com.flab.order.domain.event.OrderPayedEvent;
 import com.flab.payment.domain.PaymentCompletedEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
@@ -20,6 +21,17 @@ public final class DomainEventTranslator {
             new com.flab.order.domain.event.PaymentCompletedEvent(
                 event.getOrderId(),
                 event.getPayedAmount(),
+                event.getOccurredOn()
+            )
+        );
+    }
+
+    @EventListener
+    public void translate(OrderPayedEvent event) {
+        publisher.publishEvent(
+            new com.flab.inventory.domain.event.OrderPayedEvent(
+                event.getOrderId(),
+                event.getUserId(),
                 event.getOccurredOn()
             )
         );
