@@ -1,6 +1,8 @@
 package com.flab.seller.application;
 
 
+import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
+
 import com.flab.common.auth.AuthenticatedSeller;
 import com.flab.common.auth.PasswordEncryptor;
 import com.flab.seller.application.command.LoginSellerCommand;
@@ -8,12 +10,9 @@ import com.flab.seller.domain.Seller;
 import com.flab.seller.domain.SellerRepository;
 import com.flab.seller.domain.exception.InvalidSellerException;
 import com.flab.seller.domain.exception.SellerPasswordNotMatchedException;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.servlet.http.HttpSession;
 import java.util.Optional;
-
-import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
+import javax.servlet.http.HttpSession;
+import org.springframework.transaction.annotation.Transactional;
 
 public class LoginSellerProcessor {
 
