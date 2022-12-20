@@ -80,7 +80,6 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             default:
                 throw new AuthenticationException();
         }
-
         return true;
     }
 }

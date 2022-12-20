@@ -2,7 +2,7 @@ server:
   port: 8080
   servlet:
     session:
-      #timeout: 30m
+      timeout: 30m
       tracking-modes: cookie
 
 spring:
@@ -32,6 +32,10 @@ spring:
       seller:
         host: localhost
         port: 16380
+
+  session:
+    store-type: "redis"
+
   jpa:
     hibernate:
       ddl-auto: none
