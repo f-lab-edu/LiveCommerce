@@ -12,21 +12,18 @@ public class OrderManager {
 
     private final CreateOrderProcessor createOrderProcessor;
     private final SearchOrderProcessor searchOrderProcessor;
-    private final ApplicationEventPublisher publisher;
 
     public OrderManager(
         CreateOrderProcessor createOrderProcessor,
-        SearchOrderProcessor searchOrderProcessor,
-        ApplicationEventPublisher publisher
+        SearchOrderProcessor searchOrderProcessor
     ) {
         this.createOrderProcessor = createOrderProcessor;
         this.searchOrderProcessor = searchOrderProcessor;
-        this.publisher = publisher;
     }
 
     public Order create(Long userId, CreateOrderCommand command) {
         var order = createOrderProcessor.execute(userId, command);
-        order.pollAllEvents().forEach(publisher::publishEvent);
+
         return order;
     }
 
