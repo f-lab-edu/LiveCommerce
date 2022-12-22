@@ -22,6 +22,8 @@ public enum ErrorCode {
 
     //Order Error
     ALREADY_CANCELED("이미 취소된 주문입니다."),
+    ALREADY_PAYED("이미 결제된 주문입니다."),
+    ALREADY_COMPLETED("이미 완료된 주문입니다."),
     NOT_MATCHED_AMOUNT("결제 금액과 주문 금액이 일치하지 않습니다.");
 
 

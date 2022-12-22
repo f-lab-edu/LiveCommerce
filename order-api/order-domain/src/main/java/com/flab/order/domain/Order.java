@@ -2,9 +2,12 @@ package com.flab.order.domain;
 
 import com.flab.common.domain.AbstractAggregateRoot;
 import com.flab.order.domain.event.OrderCanceledEvent;
+import com.flab.order.domain.event.OrderCompletedEvent;
 import com.flab.order.domain.event.OrderCreatedEvent;
 import com.flab.order.domain.event.OrderPayedEvent;
 import com.flab.order.domain.exception.AlreadyCanceledException;
+import com.flab.order.domain.exception.AlreadyCompletedException;
+import com.flab.order.domain.exception.AlreadyPayedException;
 import com.flab.order.domain.exception.AmountNotMatchedException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -73,7 +76,7 @@ public class Order extends AbstractAggregateRoot {
 
     public void payed(Integer payedAmount) {
         validPayedAmount(payedAmount);
-        validOrderNotCanceled();
+        validOrderCanPayed();
         this.orderStatus = OrderStatus.ORDER_PAYED;
         registerEvent(new OrderPayedEvent(this));
     }
@@ -84,9 +87,15 @@ public class Order extends AbstractAggregateRoot {
         }
     }
 
-    private void validOrderNotCanceled() {
+    private void validOrderCanPayed() {
+        if (this.orderStatus == OrderStatus.ORDER_PAYED) {
+            throw new AlreadyPayedException("이미 결제된 주문입니다..");
+        }
         if (this.orderStatus == OrderStatus.ORDER_CANCELED) {
             throw new AlreadyCanceledException("이미 취소된 주문입니다.");
+        }
+        if (this.orderStatus == OrderStatus.ORDER_COMPLETE) {
+            throw new AlreadyCompletedException("이미 완료된 주문입니다.");
         }
     }
 
@@ -111,6 +120,11 @@ public class Order extends AbstractAggregateRoot {
         registerEvent(new OrderCanceledEvent(this));
     }
 
+    public void complete() {
+        this.orderStatus = OrderStatus.ORDER_COMPLETE;
+        registerEvent(new OrderCompletedEvent(this));
+    }
+
     public Long getId() {
         return id;
     }
@@ -132,6 +146,18 @@ public class Order extends AbstractAggregateRoot {
         return this.orderLineItems.stream()
             .map(OrderLineItem::getItemId)
             .collect(Collectors.toList());
+    }
+
+    public List<PayedItemInfo> getPayedItemInfo() {
+        return this.orderLineItems.stream().map(
+            orderLineItem -> {
+                var payedItemInfo = new PayedItemInfo(
+                    orderLineItem.getItemId(),
+                    orderLineItem.getOrderCount()
+                );
+                return payedItemInfo;
+            }
+        ).collect(Collectors.toList());
     }
 
     public List<OrderLineItem> getOrderLineItems() {

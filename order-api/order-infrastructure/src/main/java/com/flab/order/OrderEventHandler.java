@@ -10,20 +10,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderEventHandler {
 
-    private final ApplicationEventPublisher publisher;
     private final PaymentCompletedProcessor processor;
 
     public OrderEventHandler(
-        ApplicationEventPublisher publisher,
         PaymentCompletedProcessor processor
     ) {
-        this.publisher = publisher;
         this.processor = processor;
     }
 
     @EventListener
     public void handle(PaymentCompletedEvent event) {
         var order = processor.execute(event);
-        order.pollAllEvents().forEach(publisher::publishEvent);
     }
 }

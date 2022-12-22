@@ -12,6 +12,8 @@ import com.flab.order.domain.OrderRepository;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationEventPublisher;
 
 public class CreateOrderProcessorTest {
 
@@ -19,7 +21,10 @@ public class CreateOrderProcessorTest {
     @DisplayName("주문이 정상적으로 생성된다.")
     void orderCreate_complete() {
         //Arrange
-        var processor = new CreateOrderProcessor(new DummyOrderRepository());
+        var processor = new CreateOrderProcessor(
+            new DummyOrderRepository(),
+            new ApplicationEventPublisherDummy()
+        );
 
         //Act
         var order = processor.execute(1L, createOrderCommand());
@@ -98,5 +103,18 @@ public class CreateOrderProcessorTest {
                 )
             )
         );
+    }
+
+    private static final class ApplicationEventPublisherDummy implements ApplicationEventPublisher {
+
+        @Override
+        public void publishEvent(ApplicationEvent event) {
+            ApplicationEventPublisher.super.publishEvent(event);
+        }
+
+        @Override
+        public void publishEvent(Object event) {
+
+        }
     }
 }

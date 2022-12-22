@@ -10,11 +10,15 @@ import com.flab.order.domain.OrderLineItem;
 import com.flab.order.domain.OrderRepository;
 import com.flab.order.domain.event.PaymentCompletedEvent;
 import com.flab.order.domain.exception.AlreadyCanceledException;
+import com.flab.order.domain.exception.AlreadyCompletedException;
+import com.flab.order.domain.exception.AlreadyPayedException;
 import com.flab.order.domain.exception.AmountNotMatchedException;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationEventPublisher;
 
 public class PaymentCompletedProcessorTest {
 
@@ -22,7 +26,10 @@ public class PaymentCompletedProcessorTest {
     @DisplayName("결제 금액과 주문 금액이 일치하지 않으면 예외가 발생한다")
     void payedAmount_NotMatched_OrderAmount_return_exception() {
         // Arrange
-        var processor = new PaymentCompletedProcessor(new OrderRepositoryStub());
+        var processor = new PaymentCompletedProcessor(
+            new OrderRepositoryStub(),
+            new ApplicationEventPublisherDummy()
+        );
 
         // Act
         Throwable result = catchThrowable(
@@ -34,18 +41,79 @@ public class PaymentCompletedProcessorTest {
     }
 
     @Test
-    @DisplayName("이미 취소된 주문은 결제시 예외가 발생한다.")
-    void alreadyOrderCanceled_payed_return_exception() {
+    @DisplayName("이미 결제된 주문은 결제시 예외가 발생한다.")
+    void alreadyOrderPayed_return_exception() {
         // Arrange
-        var processor = new PaymentCompletedProcessor(new OrderRepositoryStub());
+        int payedAmount = 99000;
+
+        var processor = new PaymentCompletedProcessor(
+            new OrderRepositoryStub(),
+            new ApplicationEventPublisherDummy()
+        );
+
+        Order order = processor.execute(new PaymentCompletedEvent(1L, payedAmount, LocalDateTime.now()));
 
         // Act
-        Throwable result = catchThrowable(
-            () -> processor.execute(new PaymentCompletedEvent(1L, 99000, LocalDateTime.now())));
+        Throwable result = catchThrowable(() -> order.payed(payedAmount));
+
+        // Assert
+        assertThat(result.getClass()).isEqualTo(AlreadyPayedException.class);
+    }
+
+    @Test
+    @DisplayName("이미 취소된 주문은 결제시 예외가 발생한다.")
+    void alreadyOrderCanceled_return_exception() {
+        // Arrange
+        int payedAmount = 99000;
+
+        var processor = new PaymentCompletedProcessor(
+            new OrderRepositoryStub(),
+            new ApplicationEventPublisherDummy()
+        );
+
+        Order order = processor.execute(new PaymentCompletedEvent(1L, payedAmount, LocalDateTime.now()));
+        order.cancel();
+        // Act
+        Throwable result = catchThrowable(() -> order.payed(payedAmount));
 
         // Assert
         assertThat(result.getClass()).isEqualTo(AlreadyCanceledException.class);
     }
+
+    @Test
+    @DisplayName("이미 완료된 주문은 결제시 예외가 발생한다.")
+    void alreadyOrderCompleted_return_exception() {
+        // Arrange
+        int payedAmount = 99000;
+
+        var processor = new PaymentCompletedProcessor(
+            new OrderRepositoryStub(),
+            new ApplicationEventPublisherDummy()
+        );
+
+        Order order = processor.execute(new PaymentCompletedEvent(1L, payedAmount, LocalDateTime.now()));
+        order.complete();
+        // Act
+        Throwable result = catchThrowable(() -> order.payed(payedAmount));
+
+        // Assert
+        assertThat(result.getClass()).isEqualTo(AlreadyCompletedException.class);
+    }
+
+
+    private static final class ApplicationEventPublisherDummy implements ApplicationEventPublisher {
+
+        @Override
+        public void publishEvent(ApplicationEvent event) {
+            ApplicationEventPublisher.super.publishEvent(event);
+        }
+
+        @Override
+        public void publishEvent(Object event) {
+
+        }
+    }
+
 
     private static final class OrderRepositoryStub implements OrderRepository {
 
@@ -86,7 +154,6 @@ public class PaymentCompletedProcessorTest {
                 )
             );
 
-            order.cancel();
             return order;
         }
     }
