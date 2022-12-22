@@ -9,4 +9,12 @@ public final class PayedItemInfo {
         this.itemId = itemId;
         this.count = count;
     }
+
+    public Long getItemId() {
+        return itemId;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
 }

@@ -100,11 +100,9 @@ public class Order extends AbstractAggregateRoot {
     }
 
     public Integer calculateTotalAmount() {
-        var totalAmount = orderLineItems.stream()
+        return orderLineItems.stream()
             .mapToInt(OrderLineItem::calculateTotalAmount)
             .sum();
-
-        return totalAmount;
     }
 
     public static Order create(
