@@ -11,10 +11,9 @@ public class InventoryConfig {
 
     @Bean
     OrderPayedProcessor orderPayedProcessor(
-        InventoryRepository inventoryRepository,
-        OrderReader orderReader
+        InventoryRepository inventoryRepository
     ) {
-        return new OrderPayedProcessor(inventoryRepository, orderReader);
+        return new OrderPayedProcessor(inventoryRepository);
     }
 
 }

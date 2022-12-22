@@ -1,30 +1,30 @@
 package com.flab.inventory.application;
 
-import com.flab.inventory.domain.Inventory;
 import com.flab.inventory.domain.InventoryRepository;
-import com.flab.inventory.domain.OrderReader;
 import com.flab.inventory.domain.event.OrderPayedEvent;
+import com.flab.inventory.domain.exception.NotEnoughQuantity;
 import org.springframework.transaction.annotation.Transactional;
 
 public class OrderPayedProcessor {
 
     private final InventoryRepository inventoryRepository;
-    private final OrderReader orderReader;
 
-    public OrderPayedProcessor(InventoryRepository inventoryRepository, OrderReader orderReader) {
+    public OrderPayedProcessor(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
-        this.orderReader = orderReader;
     }
 
     @Transactional
     public void execute(OrderPayedEvent event) {
-        var order = orderReader.findById(event.getOrderId());
+        event.getPayedItemInfos().forEach(
+            payedItemInfo -> {
+                var inventory = inventoryRepository.findByItemId(payedItemInfo.getItemId());
 
-        order.getOrderLineItems().forEach(
-            orderLineItem -> {
-                var inventory = inventoryRepository.findByItemId(orderLineItem.getItemId());
-                inventory.reduce(orderLineItem.getCount());
-                inventoryRepository.save(inventory);
+                try {
+                    inventory.reduce(payedItemInfo.getCount());
+                    inventoryRepository.save(inventory);
+                } catch (NotEnoughQuantity e) {
+                    inventory.failReduce();
+                }
             }
         );
     }
