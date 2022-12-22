@@ -148,6 +148,18 @@ public class Order extends AbstractAggregateRoot {
             .collect(Collectors.toList());
     }
 
+    public List<PayedItemInfo> getPayedItemInfo() {
+        return this.orderLineItems.stream().map(
+            orderLineItem -> {
+                var payedItemInfo = new PayedItemInfo(
+                    orderLineItem.getItemId(),
+                    orderLineItem.getOrderCount()
+                );
+                return payedItemInfo;
+            }
+        ).collect(Collectors.toList());
+    }
+
     public List<OrderLineItem> getOrderLineItems() {
         return orderLineItems;
     }
