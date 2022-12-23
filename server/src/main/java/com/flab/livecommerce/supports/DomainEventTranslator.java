@@ -1,6 +1,6 @@
 package com.flab.livecommerce.supports;
 
-import com.flab.inventory.domain.PayedItemInfo;
+import com.flab.inventory.domain.ItemQuantity;
 import com.flab.order.domain.event.OrderPayedEvent;
 import com.flab.payment.domain.PaymentCompletedEvent;
 import java.util.Comparator;
@@ -32,11 +32,11 @@ public final class DomainEventTranslator {
 
     @EventListener
     public void translate(OrderPayedEvent event) {
-        List<PayedItemInfo> payedItemInfos = event.getPayedItemInfos()
+        List<ItemQuantity> itemQuantities = event.getPayedItemInfos()
             .stream()
             .sorted(Comparator.comparing(com.flab.order.domain.PayedItemInfo::getItemId))
             .map(
-                payedItemInfo -> new PayedItemInfo(
+                payedItemInfo -> new ItemQuantity(
                     payedItemInfo.getItemId(),
                     payedItemInfo.getCount()
                 )
@@ -46,7 +46,7 @@ public final class DomainEventTranslator {
             new com.flab.inventory.domain.event.OrderPayedEvent(
                 event.getOrderId(),
                 event.getUserId(),
-                payedItemInfos,
+                itemQuantities,
                 event.getOccurredOn()
             )
         );

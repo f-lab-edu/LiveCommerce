@@ -2,7 +2,7 @@ package com.flab.inventory.infrastructure.config;
 
 import com.flab.inventory.application.OrderPayedProcessor;
 import com.flab.inventory.domain.InventoryRepository;
-import com.flab.inventory.domain.OrderReader;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,9 +11,10 @@ public class InventoryConfig {
 
     @Bean
     OrderPayedProcessor orderPayedProcessor(
-        InventoryRepository inventoryRepository
+        InventoryRepository inventoryRepository,
+        ApplicationEventPublisher publisher
     ) {
-        return new OrderPayedProcessor(inventoryRepository);
+        return new OrderPayedProcessor(inventoryRepository, publisher);
     }
 
 }

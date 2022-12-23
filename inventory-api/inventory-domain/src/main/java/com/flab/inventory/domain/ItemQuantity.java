@@ -1,11 +1,11 @@
 package com.flab.inventory.domain;
 
-public final class PayedItemInfo {
+public final class ItemQuantity {
 
     private final Long itemId;
     private final Integer count;
 
-    public PayedItemInfo(Long itemId, Integer count) {
+    public ItemQuantity(Long itemId, Integer count) {
         this.itemId = itemId;
         this.count = count;
     }
