@@ -1,9 +1,9 @@
 package com.flab.inventory.domain;
 
 import com.flab.common.domain.AbstractAggregateRoot;
-import com.flab.inventory.domain.event.InventoryReduceFailedEvent;
+import com.flab.inventory.domain.event.FailInventoryReducedEvent;
 import com.flab.inventory.domain.event.InventoryReducedEvent;
-import com.flab.inventory.domain.exception.NotEnoughQuantity;
+import com.flab.inventory.domain.exception.NotEnoughQuantityException;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -66,15 +66,21 @@ public class Inventory extends AbstractAggregateRoot {
 
     public void reduce(Integer count) {
         if (this.quantity >= count) {
-            quantity -= count;
-            registerEvent(new InventoryReducedEvent(this));
+            this.quantity -= count;
         } else {
-            throw new NotEnoughQuantity("재고가 충분하지 않습니다.");
+            throw new NotEnoughQuantityException("재고가 충분하지 않습니다.");
+        }
+        checkQuantity();
+    }
+
+    private void checkQuantity() {
+        if (this.quantity == 0) {
+            this.inventoryState = InventoryState.STOCK_OUT;
         }
     }
 
     public void failReduce() {
-        registerEvent(new InventoryReduceFailedEvent(this));
+        registerEvent(new FailInventoryReducedEvent(this));
     }
 
     public Long getId() {
@@ -99,5 +105,9 @@ public class Inventory extends AbstractAggregateRoot {
 
     public InventoryState getInventoryState() {
         return inventoryState;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
