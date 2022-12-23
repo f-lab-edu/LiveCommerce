@@ -25,11 +25,11 @@ public class OrderPayedProcessor {
     @Transactional
     public void execute(OrderPayedEvent event) {
         event.getPayedItemInfos().forEach(
-            ItemQuantity -> {
-                var inventory = inventoryRepository.findByItemId(ItemQuantity.getItemId());
+            itemQuantity -> {
+                var inventory = inventoryRepository.findByItemId(itemQuantity.getItemId());
 
                 try {
-                    inventory.reduce(ItemQuantity.getCount());
+                    inventory.reduce(itemQuantity.getCount());
                     inventoryRepository.save(inventory);
                 } catch (NotEnoughQuantityException e) {
                     inventory.failReduce();
