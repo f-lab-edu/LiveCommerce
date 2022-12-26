@@ -1,8 +1,18 @@
 package com.flab.inventory.application;
 
+
+
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.summingInt;
+
+import com.flab.common.exception.BaseException;
+import com.flab.inventory.domain.Inventory;
 import com.flab.inventory.domain.InventoryRepository;
+import com.flab.inventory.domain.ItemQuantity;
 import com.flab.inventory.domain.event.OrderPayedEvent;
-import com.flab.inventory.domain.exception.NotEnoughQuantityException;
+import com.flab.inventory.domain.exception.FailInventoryReducedException;
+import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
@@ -24,19 +34,28 @@ public class OrderPayedProcessor {
 
     @Transactional
     public void execute(OrderPayedEvent event) {
-        event.getPayedItemInfos().forEach(
-            itemQuantity -> {
-                var inventory = inventoryRepository.findByItemId(itemQuantity.getItemId());
+        Map<Long, Integer> itemQuantityMap = getItemQuantityMap(event.getPayedItemInfos());
+        List<Inventory> inventories = inventoryRepository.findAllByItemId(itemQuantityMap.keySet());
 
+        inventories.forEach(
+            inventory -> {
                 try {
-                    inventory.reduce(itemQuantity.getCount());
-                    inventoryRepository.save(inventory);
-                } catch (NotEnoughQuantityException e) {
+                    inventory.reduce(itemQuantityMap.get(inventory.getItemId()));
+                } catch (BaseException e) {
+                    log.error("error={}", e);
                     inventory.failReduce();
                     inventory.pollAllEvents().forEach(publisher::publishEvent);
-                    throw e;
+                    throw new FailInventoryReducedException("재고감소에 실패했습니다.");
                 }
             }
         );
+
+        inventoryRepository.saveAll(inventories);
+    }
+
+    private Map<Long, Integer> getItemQuantityMap(List<ItemQuantity> itemQuantities) {
+        return itemQuantities
+            .stream()
+            .collect(groupingBy(ItemQuantity::getItemId, summingInt(ItemQuantity::getCount)));
     }
 }

@@ -1,10 +1,16 @@
 package com.flab.inventory.domain;
 
-public interface InventoryRepository {
+import java.util.List;
 
-    Inventory save(Inventory inventory);
+public interface InventoryRepository {
 
     Inventory findById(Long id);
 
     Inventory findByItemId(Long id);
+
+    List<Inventory> findAllByItemId(Iterable<Long> itemIds);
+
+    Inventory save(Inventory inventory);
+
+    List<Inventory> saveAll(List<Inventory> inventories);
 }

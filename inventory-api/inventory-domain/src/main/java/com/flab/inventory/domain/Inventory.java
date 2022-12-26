@@ -1,9 +1,11 @@
 package com.flab.inventory.domain;
 
 import com.flab.common.domain.AbstractAggregateRoot;
+import com.flab.common.exception.InvalidParameterException;
 import com.flab.inventory.domain.event.FailInventoryReducedEvent;
-import com.flab.inventory.domain.event.InventoryReducedEvent;
 import com.flab.inventory.domain.exception.NotEnoughQuantityException;
+import com.flab.inventory.domain.exception.SalesClosedException;
+import com.flab.inventory.domain.exception.StockOutException;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -65,12 +67,30 @@ public class Inventory extends AbstractAggregateRoot {
     }
 
     public void reduce(Integer count) {
+        validReduceCount(count);
+        validInventoryState();
         if (this.quantity >= count) {
             this.quantity -= count;
         } else {
             throw new NotEnoughQuantityException("재고가 충분하지 않습니다.");
         }
         checkQuantity();
+    }
+
+    private void validReduceCount(Integer count) {
+        if (count <= 0) {
+            throw new InvalidParameterException("올바르지 않은 수량입니다.");
+        }
+    }
+
+    private void validInventoryState() {
+        if (this.inventoryState == InventoryState.STOCK_OUT) {
+            throw new StockOutException("품절 된 상품입니다.");
+        }
+
+        if (this.saleStatus == SaleStatus.CLOSE) {
+            throw new SalesClosedException("판매 중지된 상품입니다.");
+        }
     }
 
     private void checkQuantity() {
