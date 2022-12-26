@@ -27,7 +27,10 @@ public enum ErrorCode {
     NOT_MATCHED_AMOUNT("결제 금액과 주문 금액이 일치하지 않습니다."),
 
     //Inventory Error
-    NOT_ENOUGH_QUANTITY("재고 수량이 충분하지 않습니다.");
+    NOT_ENOUGH_QUANTITY("재고 수량이 충분하지 않습니다."),
+    INVENTORY_SALE_CLOSE("판매 종료된 재고입니다."),
+    INVENTORY_STOCK_OUT("품절된 재고입니다."),
+    INVENTORY_NOT_FOUND("재고를 찾을 수 없습니다.");
 
     private final String message;
 
