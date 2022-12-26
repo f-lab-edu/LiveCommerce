@@ -1,7 +1,7 @@
 package com.flab.seller.infrastructure.config;
 
-import com.flab.seller.domain.SessionIdRepository;
-import com.flab.seller.infrastructure.persistence.SessionIdRepositoryAdaptor;
+import com.flab.seller.domain.SessionRepository;
+import com.flab.seller.infrastructure.persistence.SessionRepositoryAdaptor;
 import com.flab.seller.infrastructure.persistence.redis.RedisSessionRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class SessionRepositoryConfig {
 
     @Bean
-    SessionIdRepository sessionIdRepository(RedisSessionRepository redisSessionRepository) {
-        return new SessionIdRepositoryAdaptor(redisSessionRepository);
+    SessionRepository sessionIdRepository(RedisSessionRepository redisSessionRepository) {
+        return new SessionRepositoryAdaptor(redisSessionRepository);
     }
 }

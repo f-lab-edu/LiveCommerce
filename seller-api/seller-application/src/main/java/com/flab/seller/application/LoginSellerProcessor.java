@@ -7,7 +7,7 @@ import com.flab.common.auth.PasswordEncryptor;
 import com.flab.seller.application.command.LoginSellerCommand;
 import com.flab.seller.domain.Seller;
 import com.flab.seller.domain.SellerRepository;
-import com.flab.seller.domain.SessionIdRepository;
+import com.flab.seller.domain.SessionRepository;
 import com.flab.seller.domain.exception.InvalidSellerException;
 import com.flab.seller.domain.exception.SellerPasswordNotMatchedException;
 import java.util.Optional;
@@ -20,25 +20,25 @@ public class LoginSellerProcessor {
 
     private final SellerRepository sellerRepository;
     private final PasswordEncryptor passwordEncryptor;
-    private final SessionIdRepository sessionIdRepository;
+    private final SessionRepository sessionRepository;
     private final HttpSession session;
 
 
     public LoginSellerProcessor(
             SellerRepository sellerRepository,
             PasswordEncryptor passwordEncryptor,
-            SessionIdRepository sessionIdRepository,
+            SessionRepository sessionRepository,
             HttpSession session
     ) {
         this.sellerRepository = sellerRepository;
         this.passwordEncryptor = passwordEncryptor;
-        this.sessionIdRepository = sessionIdRepository;
+        this.sessionRepository = sessionRepository;
         this.session = session;
     }
 
     @Transactional
     public String execute(LoginSellerCommand command) {
-        Optional<Seller> seller = sellerRepository.findByEmail(command.getEmail());
+        var seller = sellerRepository.findByEmail(command.getEmail());
 
         if (seller.isEmpty()) {
             throw new InvalidSellerException();
@@ -51,7 +51,7 @@ public class LoginSellerProcessor {
         var loginSellerInfo = seller.get().toLoginInfo();
         session.setAttribute(AUTH_SESSION_MEMBER, loginSellerInfo);
         String sessionId = session.getId();
-        //sessionIdRepository.save(sessionId, loginSellerInfo);
+        sessionRepository.save(sessionId, loginSellerInfo);
 
         return sessionId;
     }

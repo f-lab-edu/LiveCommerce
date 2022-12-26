@@ -26,12 +26,8 @@ spring:
 
   redis:
     session:
-      user:
-        host: localhost
-        port: 16379
-      seller:
-        host: localhost
-        port: 16380
+      host: localhost
+      port: 16379
 
   session:
     store-type: "redis"

@@ -2,7 +2,7 @@ package com.flab.seller.domain;
 
 import com.flab.common.auth.AuthenticatedSeller;
 
-public interface SessionIdRepository {
+public interface SessionRepository {
 
     void save(String sessionId, AuthenticatedSeller authenticatedSeller);
 

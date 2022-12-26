@@ -64,6 +64,6 @@ public class Seller {
     }
 
     public AuthenticatedSeller toLoginInfo() {
-        return new AuthenticatedSeller(id, email, role);
+        return new AuthenticatedSeller(id, businessNo, email, role);
     }
 }

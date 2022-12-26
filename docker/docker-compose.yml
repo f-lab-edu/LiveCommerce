@@ -13,14 +13,8 @@ services:
       MYSQL_USER: "${MYSQL_USER}"
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
 
-  redis-user:
-    container_name: livecommerce_user_redis
+  redis:
+    container_name: livecommerce_redis
     image: redis:7.0.5
     ports:
       - 16379:6379
-
-  redis-seller:
-    container_name: livecommerce_seller_redis
-    image: redis:7.0.5
-    ports:
-      - 16380:6380

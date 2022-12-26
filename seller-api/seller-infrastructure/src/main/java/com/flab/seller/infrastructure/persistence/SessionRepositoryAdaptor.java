@@ -1,14 +1,14 @@
 package com.flab.seller.infrastructure.persistence;
 
 import com.flab.common.auth.AuthenticatedSeller;
-import com.flab.seller.domain.SessionIdRepository;
+import com.flab.seller.domain.SessionRepository;
 import com.flab.seller.infrastructure.persistence.redis.RedisSessionRepository;
 
-public class SessionIdRepositoryAdaptor implements SessionIdRepository {
+public class SessionRepositoryAdaptor implements SessionRepository {
 
     private final RedisSessionRepository redisSessionRepository;
 
-    public SessionIdRepositoryAdaptor(RedisSessionRepository redisSessionRepository) {
+    public SessionRepositoryAdaptor(RedisSessionRepository redisSessionRepository) {
         this.redisSessionRepository = redisSessionRepository;
     }
 

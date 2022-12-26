@@ -5,7 +5,7 @@ import com.flab.seller.application.LoginSellerProcessor;
 import com.flab.seller.application.LogoutSellerProcessor;
 import com.flab.seller.application.SearchSellerProcessor;
 import com.flab.seller.domain.SellerRepository;
-import com.flab.seller.domain.SessionIdRepository;
+import com.flab.seller.domain.SessionRepository;
 import com.flab.seller.infrastructure.encryption.SellerSecurityPasswordEncoder;
 import javax.servlet.http.HttpSession;
 import org.springframework.context.annotation.Bean;
@@ -28,13 +28,13 @@ public class SellerConfig {
     @Bean
     public LoginSellerProcessor loginSellerProcessor(
             SellerRepository sellerRepository,
-            SessionIdRepository sessionIdRepository,
+            SessionRepository sessionRepository,
             HttpSession session
     ) {
         return new LoginSellerProcessor(
                 sellerRepository,
                 new SellerSecurityPasswordEncoder(sellerEncodingAlgorithm()),
-                sessionIdRepository,
+                sessionRepository,
                 session
         );
     }

@@ -33,8 +33,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
     private void checkSellerAuthority(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        AuthenticatedSeller authSeller = (AuthenticatedSeller) session.getAttribute(
-            AUTH_SESSION_MEMBER);
+        AuthenticatedSeller authSeller = (AuthenticatedSeller) session.getAttribute(AUTH_SESSION_MEMBER);
 
         if (authSeller == null) {
             throw new AuthenticationException();
@@ -48,12 +47,11 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
     }
 
-    @SuppressWarnings("checkstyle:MissingSwitchDefault")
     @Override
     public boolean preHandle(
-        HttpServletRequest request,
-        HttpServletResponse response,
-        Object handler
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Object handler
     ) throws Exception {
 
         if (!(handler instanceof HandlerMethod)) {
@@ -80,6 +78,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             default:
                 throw new AuthenticationException();
         }
+
         return true;
     }
 }
