@@ -5,9 +5,7 @@ import com.flab.livecommerce.auth.LoginCheckInterceptor;
 import com.flab.livecommerce.auth.RedisTokenLoginInterceptor;
 import com.flab.seller.domain.SessionRepository;
 import com.flab.user.domain.TokenRepository;
-
 import java.util.List;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

@@ -46,9 +46,13 @@ public class SellerConfig {
 
     @Bean
     public LogoutSellerProcessor logoutSellerProcessor(
-            HttpSession session
+            HttpSession session,
+            SessionRepository sessionRepository
     ) {
-        return new LogoutSellerProcessor(session);
+        return new LogoutSellerProcessor(
+                session,
+                sessionRepository
+        );
     }
 
     @Bean

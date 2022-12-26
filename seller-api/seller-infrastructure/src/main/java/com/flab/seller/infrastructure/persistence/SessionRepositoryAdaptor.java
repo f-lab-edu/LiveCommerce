@@ -29,6 +29,6 @@ public class SessionRepositoryAdaptor implements SessionRepository {
 
     @Override
     public void remove(String sessionId) {
-
+        redisSessionRepository.remove(sessionId);
     }
 }

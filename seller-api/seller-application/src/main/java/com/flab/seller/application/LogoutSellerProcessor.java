@@ -1,18 +1,23 @@
 package com.flab.seller.application;
 
-import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
-
+import com.flab.seller.domain.SessionRepository;
 import javax.servlet.http.HttpSession;
 
 public class LogoutSellerProcessor {
 
     private final HttpSession session;
+    private final SessionRepository sessionRepository;
 
-    public LogoutSellerProcessor(HttpSession session) {
+    public LogoutSellerProcessor(
+            HttpSession session,
+            SessionRepository sessionRepository
+    ) {
         this.session = session;
+        this.sessionRepository = sessionRepository;
     }
 
     public void execute() {
-        session.removeAttribute(AUTH_SESSION_MEMBER);
+        sessionRepository.remove(session.getId());
+        session.invalidate();
     }
 }

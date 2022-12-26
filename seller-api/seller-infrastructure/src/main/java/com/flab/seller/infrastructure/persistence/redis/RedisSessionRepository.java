@@ -24,5 +24,7 @@ public class RedisSessionRepository {
         redisTemplate.opsForValue().set(sessionId, authenticatedSeller);
     }
 
-
+    public void remove(String sessionId) {
+        redisTemplate.delete(sessionId);
+    }
 }
