@@ -29,9 +29,6 @@ spring:
       host: localhost
       port: 16379
 
-  session:
-    store-type: "redis"
-
   jpa:
     hibernate:
       ddl-auto: none
@@ -52,3 +49,4 @@ mybatis:
 
 app.security.token:
   tokenExpirationSec: 1000
+  sessionExpirationSec: 1000

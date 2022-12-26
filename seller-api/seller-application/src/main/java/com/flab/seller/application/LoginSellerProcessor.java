@@ -21,6 +21,8 @@ public class LoginSellerProcessor {
     private final SellerRepository sellerRepository;
     private final PasswordEncryptor passwordEncryptor;
     private final SessionRepository sessionRepository;
+
+    private final Long sessionExpirationSec;
     private final HttpSession session;
 
 
@@ -28,11 +30,12 @@ public class LoginSellerProcessor {
             SellerRepository sellerRepository,
             PasswordEncryptor passwordEncryptor,
             SessionRepository sessionRepository,
-            HttpSession session
+            Long sessionExpirationSec, HttpSession session
     ) {
         this.sellerRepository = sellerRepository;
         this.passwordEncryptor = passwordEncryptor;
         this.sessionRepository = sessionRepository;
+        this.sessionExpirationSec = sessionExpirationSec;
         this.session = session;
     }
 
@@ -50,10 +53,11 @@ public class LoginSellerProcessor {
 
         var loginSellerInfo = seller.get().toLoginInfo();
         session.setAttribute(AUTH_SESSION_MEMBER, loginSellerInfo);
-        String sessionId = session.getId();
-        sessionRepository.save(sessionId, loginSellerInfo);
+        loginSellerInfo.addSessionInfo(session.getId(), sessionExpirationSec);
+        System.out.println(sessionExpirationSec);
+        sessionRepository.save(session.getId(), loginSellerInfo);
 
-        return sessionId;
+        return session.getId();
     }
 
     private boolean passwordCheck(LoginSellerCommand command, Optional<Seller> loginSellerInfo) {

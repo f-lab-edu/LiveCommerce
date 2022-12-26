@@ -1,12 +1,17 @@
 package com.flab.common.auth;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class AuthenticatedSeller implements Serializable {
+
+    private String sessionId;
     private Long sellerId;
     private String businessNo;
     private String email;
     private Role role;
+
+    private LocalDateTime expireAt;
 
     public AuthenticatedSeller() {
     }
@@ -23,13 +28,23 @@ public class AuthenticatedSeller implements Serializable {
         this.role = role;
     }
 
+    public void addExpirationSec(long second) {
+        this.expireAt = expireAt.plusSeconds(second);
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public String getBusinessNo() {
+        return businessNo;
+    }
+
+
     public Long getSellerId() {
         return sellerId;
     }
 
-    public String getBuisinessNo() {
-        return businessNo;
-    }
 
     public String getEmail() {
         return email;
@@ -37,5 +52,14 @@ public class AuthenticatedSeller implements Serializable {
 
     public Role getRole() {
         return role;
+    }
+
+    public LocalDateTime getExpireAt() {
+        return expireAt;
+    }
+
+    public void addSessionInfo(String sessionId, Long sessionExpirationSec) {
+        this.sessionId = sessionId;
+        this.expireAt = LocalDateTime.now().plusSeconds(sessionExpirationSec);
     }
 }
