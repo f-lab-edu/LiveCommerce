@@ -1,6 +1,11 @@
 package com.flab.point.domain;
 
 import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /*
  * 사용자별 총 포인트
@@ -12,13 +17,16 @@ import java.time.LocalDateTime;
  * 1. 포인트 사용 2. 만료 기간 이후 차감
  */
 
+@Entity
+@Table(name = "points")
 public class Point {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
-    private Long amount;
+    private Long totalAmount;
     private LocalDateTime registerAt;
-    private LocalDateTime expireAt;
+    private LocalDateTime updatedAt;
 
 
     protected Point() {
@@ -29,9 +37,9 @@ public class Point {
             Long amount
     ) {
         this.userId = userId;
-        this.amount = amount;
+        this.totalAmount = amount;
         this.registerAt = LocalDateTime.now();
-        this.expireAt = setExpireDate();
+        this.updatedAt = LocalDateTime.now();
     }
 
     // 추가 (적립, 충전)
@@ -39,8 +47,9 @@ public class Point {
             Long addedAmount,
             PointCategory pointCategory
     ) {
-        this.amount += addedAmount;
-        PointTransaction.add(this, amount, pointCategory);
+        this.totalAmount += addedAmount;
+        this.updatedAt = LocalDateTime.now();
+        PointTransaction.add(this, totalAmount, pointCategory);
     }
 
     // 포인트 사용
@@ -48,16 +57,13 @@ public class Point {
             Long removedAmount
     ) {
         //Long removedAmount = PointTransaction.remove(this, amount);
-        this.amount -= removedAmount;
 
-        if (this.amount < 0) {
+        if (this.totalAmount - removedAmount < 0) {
             throw new RuntimeException("가용 포인트를 넘어선 접근입니다."); // TODO exception 처리
         }
-    }
 
-    // TODO 추후 주문 상품별, 이벤트별 만료 기간 설정. 현재는 적립시 적립 일자 + 한달로 설정
-    private LocalDateTime setExpireDate() {
-        return LocalDateTime.now().plusMonths(1);
+        this.totalAmount -= removedAmount;
+        this.updatedAt = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -69,11 +75,7 @@ public class Point {
     }
 
     public Long getAmount() {
-        return amount;
-    }
-
-    public LocalDateTime getExpireAt() {
-        return expireAt;
+        return totalAmount;
     }
 
 }
