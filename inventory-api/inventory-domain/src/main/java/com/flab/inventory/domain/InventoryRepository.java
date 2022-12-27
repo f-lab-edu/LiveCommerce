@@ -8,7 +8,7 @@ public interface InventoryRepository {
 
     Inventory findByItemId(Long id);
 
-    List<Inventory> findAllByItemId(Iterable<Long> itemIds);
+    List<Inventory> findByItemIdIn(Iterable<Long> itemIds);
 
     Inventory save(Inventory inventory);
 

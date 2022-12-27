@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EntityScan(basePackages = "com.flab.inventory.domain")
 @EnableJpaRepositories(basePackages = "com.flab.inventory.infrastructure.persistence.jpa")
-public class JpaInventoryConfig {
+public class InventoryJpaConfig {
 
 }

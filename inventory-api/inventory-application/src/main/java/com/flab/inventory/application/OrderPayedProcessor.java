@@ -35,7 +35,7 @@ public class OrderPayedProcessor {
     @Transactional
     public void execute(OrderPayedEvent event) {
         Map<Long, Integer> itemQuantityMap = getItemQuantityMap(event.getPayedItemInfos());
-        List<Inventory> inventories = inventoryRepository.findAllByItemId(itemQuantityMap.keySet());
+        List<Inventory> inventories = inventoryRepository.findByItemIdIn(itemQuantityMap.keySet());
 
         inventories.forEach(
             inventory -> {
@@ -49,8 +49,6 @@ public class OrderPayedProcessor {
                 }
             }
         );
-
-        inventoryRepository.saveAll(inventories);
     }
 
     private Map<Long, Integer> getItemQuantityMap(List<ItemQuantity> itemQuantities) {
