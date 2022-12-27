@@ -10,7 +10,6 @@ public class AuthenticatedSeller implements Serializable {
     private String businessNo;
     private String email;
     private Role role;
-
     private LocalDateTime expireAt;
 
     public AuthenticatedSeller() {
@@ -40,11 +39,9 @@ public class AuthenticatedSeller implements Serializable {
         return businessNo;
     }
 
-
     public Long getSellerId() {
         return sellerId;
     }
-
 
     public String getEmail() {
         return email;
