@@ -9,6 +9,6 @@ public interface JpaInventoryRepository extends JpaRepository<Inventory, Long> {
 
     Optional<Inventory> findByItemId(Long id);
 
-    List<Inventory> findAllByItemId(Iterable<Long> itemIds);
+    List<Inventory> findByItemIdIn(Iterable<Long> itemIds);
 
 }
