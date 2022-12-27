@@ -46,7 +46,7 @@ public class FakeInventoryRepository implements InventoryRepository {
     }
 
     @Override
-    public List<Inventory> findAllByItemId(Iterable<Long> itemIds) {
+    public List<Inventory> findByItemIdIn(Iterable<Long> itemIds) {
         List<Inventory> inventoryList = new ArrayList<>();
 
         itemIds.forEach(
