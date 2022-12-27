@@ -2,8 +2,10 @@ package com.flab.seller.application;
 
 
 import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
+import static com.flab.common.auth.SessionConst.AUTH_STATUS;
 
 import com.flab.common.auth.PasswordEncryptor;
+import com.flab.common.auth.Role;
 import com.flab.seller.application.command.LoginSellerCommand;
 import com.flab.seller.domain.Seller;
 import com.flab.seller.domain.SellerRepository;
@@ -52,9 +54,11 @@ public class LoginSellerProcessor {
         }
 
         var loginSellerInfo = seller.get().toLoginInfo();
+        // 세션 정보 생성
         session.setAttribute(AUTH_SESSION_MEMBER, loginSellerInfo);
+        session.setAttribute(AUTH_STATUS, Role.SELLER);
+        // redis session 정보 저장
         loginSellerInfo.addSessionInfo(session.getId(), sessionExpirationSec);
-        System.out.println(sessionExpirationSec);
         sessionRepository.save(session.getId(), loginSellerInfo);
 
         return session.getId();

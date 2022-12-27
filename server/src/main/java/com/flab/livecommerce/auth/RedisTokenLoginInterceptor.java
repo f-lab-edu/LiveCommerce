@@ -1,7 +1,9 @@
 package com.flab.livecommerce.auth;
 
 import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
+import static com.flab.common.auth.SessionConst.AUTH_STATUS;
 
+import com.flab.common.auth.Role;
 import com.flab.common.exception.AuthenticationException;
 import com.flab.user.domain.TokenRepository;
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +45,7 @@ public class RedisTokenLoginInterceptor implements HandlerInterceptor {
 
             //request 에 세션정보 담기
             request.setAttribute(AUTH_SESSION_MEMBER, authenticatedUser);
+            request.setAttribute(AUTH_STATUS, Role.USER);
         }
 
         return true;

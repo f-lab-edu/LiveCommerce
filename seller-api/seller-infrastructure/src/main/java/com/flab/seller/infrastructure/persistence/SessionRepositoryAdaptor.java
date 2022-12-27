@@ -19,16 +19,16 @@ public class SessionRepositoryAdaptor implements SessionRepository {
 
     @Override
     public AuthenticatedSeller findBySessionId(String sessionId) {
-        return null;
+        return this.redisSessionRepository.findBySessionId(sessionId);
     }
 
     @Override
     public void renewExpirationSec(AuthenticatedSeller authenticatedSeller) {
-
+        this.redisSessionRepository.renewExpirationSec(authenticatedSeller);
     }
 
     @Override
     public void remove(String sessionId) {
-        redisSessionRepository.remove(sessionId);
+        this.redisSessionRepository.remove(sessionId);
     }
 }

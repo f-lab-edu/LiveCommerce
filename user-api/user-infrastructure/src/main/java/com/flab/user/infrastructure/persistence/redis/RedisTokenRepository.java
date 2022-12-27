@@ -40,9 +40,7 @@ public class RedisTokenRepository {
             return null;
         }
 
-        var authenticatedUser = objectMapper.convertValue(result, AuthenticatedUser.class);
-
-        return authenticatedUser;
+        return objectMapper.convertValue(result, AuthenticatedUser.class);
     }
 
     public void renewExpirationSec(AuthenticatedUser authenticatedUser) {
@@ -63,7 +61,7 @@ public class RedisTokenRepository {
             TimeUnit.SECONDS
         );
 
-        if (propertiesExpirationSec - userExpirationSec < 0) {
+        if (propertiesExpirationSec - userExpirationSec <= 0) {
             return tokenProperties.getTokenExpirationSec();
         }
 

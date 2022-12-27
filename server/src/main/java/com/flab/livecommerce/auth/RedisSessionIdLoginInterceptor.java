@@ -1,7 +1,9 @@
 package com.flab.livecommerce.auth;
 
 import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
+import static com.flab.common.auth.SessionConst.AUTH_STATUS;
 
+import com.flab.common.auth.Role;
 import com.flab.common.exception.AuthenticationException;
 import com.flab.seller.domain.SessionRepository;
 import javax.servlet.http.HttpServletRequest;
@@ -10,10 +12,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-
-
 /*
- * 쿠키 방식이 차단 되어 있어 request header로 session id를 전달받을 경우 작동
+ * 보안 혹은 mobile app을 고려한다면 쿠키를 사용하는 경우가 많으므로 request header[Authorization]에서 session id를 받아서 인가 처리
  */
 public class RedisSessionIdLoginInterceptor implements HandlerInterceptor {
 
@@ -44,9 +44,8 @@ public class RedisSessionIdLoginInterceptor implements HandlerInterceptor {
             }
 
             sessionRepository.renewExpirationSec(authenticatedSeller);
-
-            //request에 세션정보 담기
             request.setAttribute(AUTH_SESSION_MEMBER, authenticatedSeller);
+            request.setAttribute(AUTH_STATUS, Role.SELLER);
         }
 
         return true;
