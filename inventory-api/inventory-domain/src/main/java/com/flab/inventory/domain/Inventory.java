@@ -66,6 +66,10 @@ public class Inventory extends AbstractAggregateRoot {
         }
     }
 
+    public void close() {
+        this.saleStatus = SaleStatus.CLOSE;
+    }
+
     public void reduce(Integer count) {
         validReduceCount(count);
         validInventoryState();
