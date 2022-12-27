@@ -38,8 +38,8 @@ public class InventoryRepositoryAdapter implements InventoryRepository {
     }
 
     @Override
-    public List<Inventory> findAllByItemId(Iterable<Long> itemIds) {
-        return inventoryRepository.findAllByItemId(itemIds);
+    public List<Inventory> findByItemIdIn(Iterable<Long> itemIds) {
+        return inventoryRepository.findByItemIdIn(itemIds);
     }
 
 }
