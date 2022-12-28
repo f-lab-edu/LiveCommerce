@@ -66,11 +66,32 @@ public class Inventory extends AbstractAggregateRoot {
         }
     }
 
+    public void open() {
+        if (this.quantity <= 0) {
+            throw new NotEnoughQuantityException("재고가 충분하지 않습니다.");
+        }
+
+        this.saleStatus = SaleStatus.ON_SALE;
+    }
+
     public void close() {
         this.saleStatus = SaleStatus.CLOSE;
     }
 
+    public void increase(Integer count) {
+        this.quantity += count;
+    }
+
     public void reduce(Integer count) {
+        if (this.saleStatus == SaleStatus.CLOSE) {
+            //수정해야함
+            throw new IllegalStateException();
+        }
+        validReduceCount(count);
+        this.quantity -= count;
+    }
+
+    public void orderReduce(Integer count) {
         validReduceCount(count);
         validInventoryState();
         if (this.quantity >= count) {

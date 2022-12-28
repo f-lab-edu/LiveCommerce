@@ -2,6 +2,7 @@ package com.flab.inventory.application;
 
 import com.flab.inventory.application.command.UpdateInventoryCommand;
 import com.flab.inventory.domain.InventoryRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 public class UpdateInventoryProcessor {
 
@@ -11,7 +12,8 @@ public class UpdateInventoryProcessor {
         this.inventoryRepository = inventoryRepository;
     }
 
-    public void execute(Long sellerId, UpdateInventoryCommand command) {
+    @Transactional
+    public void execute(UpdateInventoryCommand command) {
 
     }
 }

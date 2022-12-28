@@ -40,7 +40,7 @@ public class OrderPayedProcessor {
         inventories.forEach(
             inventory -> {
                 try {
-                    inventory.reduce(itemQuantityMap.get(inventory.getItemId()));
+                    inventory.orderReduce(itemQuantityMap.get(inventory.getItemId()));
                 } catch (BaseException e) {
                     log.error("error={}", e);
                     inventory.failReduce();
