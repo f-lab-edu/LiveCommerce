@@ -1,5 +1,7 @@
 package com.flab.livecommerce.auth;
 
+import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
+
 import com.flab.common.auth.AuthenticatedUser;
 import com.flab.common.auth.annotation.Authentication;
 import com.flab.common.exception.AuthenticationException;
@@ -31,7 +33,7 @@ public class AuthenticationArgumentResolver implements HandlerMethodArgumentReso
     ) throws Exception {
 
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        var authSession = (AuthenticatedUser) request.getAttribute("authSession");
+        var authSession = (AuthenticatedUser) request.getAttribute(AUTH_SESSION_MEMBER);
 
         if (authSession == null) {
             throw new AuthenticationException();

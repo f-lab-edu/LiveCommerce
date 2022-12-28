@@ -50,6 +50,7 @@ public class PointTransaction {
     }
 
     // TODO 추후 주문 상품별, 이벤트별 만료 기간 설정. 현재는 적립시 적립 일자 + 한달로 설정
+    // TODO 충전 포인트는 만료기간 무한으로 설정?
     private LocalDateTime setExpireDate() {
         return LocalDateTime.now().plusMonths(1);
     }
