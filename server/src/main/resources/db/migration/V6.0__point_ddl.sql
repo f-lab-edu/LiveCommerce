@@ -18,6 +18,6 @@ create table point_transaction
     amount         bigint       not null comment '포인트 금액',
     transact_at    datetime(6)  not null comment '포인트 거래 일시',
     expire_at      datetime(6)  not null comment '포인트 만료 일시',
-    status         tinyint(3)   not null comment '포인트 상태값',
-    INDEX 'idx_point_transact_status_expire_at' (status, expire_at)
+    status         tinyint(3)   not null comment '포인트 상태값'
 );
+CREATE INDEX idx_point_transact_status_expire_at ON point_transaction (status, expire_at)
