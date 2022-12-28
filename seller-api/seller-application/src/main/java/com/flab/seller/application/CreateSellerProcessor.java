@@ -27,7 +27,7 @@ public class CreateSellerProcessor {
         }
 
         String encryptedPassword = passwordEncryptor.encrypt(command.getPassword());
-        return this.sellerRepository.save(command.toEntity(encryptedPassword));
+        return sellerRepository.save(command.toEntity(encryptedPassword));
     }
 }
 

@@ -16,9 +16,9 @@ public class RedisTokenRepository {
     private final TokenProperties tokenProperties;
 
     public RedisTokenRepository(
-        RedisTemplate<String, Object> redisTemplate,
-        ObjectMapper objectMapper,
-        TokenProperties tokenProperties
+            RedisTemplate<String, Object> redisTemplate,
+            ObjectMapper objectMapper,
+            TokenProperties tokenProperties
     ) {
         this.redisTemplate = redisTemplate;
         this.objectMapper = objectMapper;
@@ -27,9 +27,9 @@ public class RedisTokenRepository {
 
     public void save(AuthenticatedUser authenticatedUser) {
         redisTemplate.opsForValue().set(
-            authenticatedUser.getToken(),
-            authenticatedUser,
-            Duration.ofSeconds(tokenProperties.getTokenExpirationSec())
+                authenticatedUser.getToken(),
+                authenticatedUser,
+                Duration.ofSeconds(tokenProperties.getTokenExpirationSec())
         );
     }
 
@@ -48,18 +48,22 @@ public class RedisTokenRepository {
         authenticatedUser.addExpirationSec(expirationTime);
 
         redisTemplate.opsForValue().set(
-            authenticatedUser.getToken(),
-            authenticatedUser,
-            Duration.ofSeconds(tokenProperties.getTokenExpirationSec())
+                authenticatedUser.getToken(),
+                authenticatedUser,
+                Duration.ofSeconds(tokenProperties.getTokenExpirationSec())
         );
     }
 
     private long calculateExpirationTime(AuthenticatedUser authenticatedUser) {
-        long propertiesExpirationSec = tokenProperties.getTokenExpirationSec();
-        long userExpirationSec = redisTemplate.getExpire(
-            authenticatedUser.getToken(),
-            TimeUnit.SECONDS
+        Long propertiesExpirationSec = tokenProperties.getTokenExpirationSec();
+        Long userExpirationSec = redisTemplate.getExpire(
+                authenticatedUser.getToken(),
+                TimeUnit.SECONDS
         );
+
+        if (userExpirationSec == null) {
+            throw new IllegalArgumentException();
+        }
 
         if (propertiesExpirationSec - userExpirationSec <= 0) {
             return tokenProperties.getTokenExpirationSec();

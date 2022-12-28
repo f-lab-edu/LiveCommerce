@@ -25,7 +25,8 @@ public class SellerConfig {
     ) {
         return new CreateSellerProcessor(
                 sellerRepository,
-                new SellerSecurityPasswordEncoder(sellerEncodingAlgorithm()));
+                new SellerSecurityPasswordEncoder(sellerEncodingAlgorithm())
+        );
     }
 
     @Bean
@@ -59,9 +60,7 @@ public class SellerConfig {
     public SearchSellerProcessor searchSellerProcessor(
             SellerRepository sellerRepository
     ) {
-        return new SearchSellerProcessor(
-                sellerRepository
-        );
+        return new SearchSellerProcessor(sellerRepository);
     }
 
     @Bean

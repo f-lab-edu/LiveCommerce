@@ -54,7 +54,6 @@ public class SellerController {
         return CommonApiResponse.success(null);
     }
 
-
     @GetMapping("/{sellerId}")
     public CommonApiResponse searchSeller(@PathVariable("sellerId") Long id) {
         //sellerManager.searchSeller(id);

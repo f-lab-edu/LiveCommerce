@@ -10,9 +10,7 @@ import com.flab.seller.application.command.LoginSellerCommand;
 import com.flab.seller.domain.Seller;
 import com.flab.seller.domain.SellerRepository;
 import com.flab.seller.domain.SessionRepository;
-import com.flab.seller.domain.exception.InvalidSellerException;
 import com.flab.seller.domain.exception.SellerPasswordNotMatchedException;
-import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,18 +43,16 @@ public class LoginSellerProcessor {
     public String execute(LoginSellerCommand command) {
         var seller = sellerRepository.findByEmail(command.getEmail());
 
-        if (seller.isEmpty()) {
-            throw new InvalidSellerException();
-        }
-
         if (!passwordCheck(command, seller)) {
             throw new SellerPasswordNotMatchedException();
         }
 
-        var loginSellerInfo = seller.get().toLoginInfo();
+        var loginSellerInfo = seller.toLoginInfo();
+
         // 세션 정보 생성
         session.setAttribute(AUTH_SESSION_MEMBER, loginSellerInfo);
         session.setAttribute(AUTH_STATUS, Role.SELLER);
+
         // redis session 정보 저장
         loginSellerInfo.addSessionInfo(session.getId(), sessionExpirationSec);
         sessionRepository.save(session.getId(), loginSellerInfo);
@@ -64,7 +60,7 @@ public class LoginSellerProcessor {
         return session.getId();
     }
 
-    private boolean passwordCheck(LoginSellerCommand command, Optional<Seller> loginSellerInfo) {
-        return passwordEncryptor.match(command.getPassword(), loginSellerInfo.get().getPassword());
+    private boolean passwordCheck(LoginSellerCommand command, Seller loginSellerInfo) {
+        return passwordEncryptor.match(command.getPassword(), loginSellerInfo.getPassword());
     }
 }

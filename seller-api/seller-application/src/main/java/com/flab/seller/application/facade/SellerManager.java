@@ -9,7 +9,6 @@ import com.flab.seller.application.command.LoginSellerCommand;
 import com.flab.seller.domain.Seller;
 import com.flab.seller.domain.SellerRepository;
 import com.flab.seller.domain.exception.DuplicatedSellerEmailException;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,7 +39,7 @@ public class SellerManager {
         return createSellerProcessor.execute(command);
     }
 
-    public Optional<Seller> searchSeller(Long id) {
+    public Seller searchSeller(Long id) {
         return searchSellerProcessor.execute(id);
     }
 

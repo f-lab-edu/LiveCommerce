@@ -12,7 +12,7 @@ public class AuthenticatedSeller implements Serializable {
     private Role role;
     private LocalDateTime expireAt;
 
-    public AuthenticatedSeller() {
+    protected AuthenticatedSeller() {
     }
 
     public AuthenticatedSeller(

@@ -5,7 +5,6 @@ import com.flab.common.exception.ErrorCode;
 import com.flab.seller.domain.Seller;
 import com.flab.seller.domain.SellerRepository;
 import com.flab.seller.infrastructure.persistence.jpa.JpaSellerRepository;
-import java.util.Optional;
 
 
 public class SellerRepositoryAdapter implements SellerRepository {
@@ -18,36 +17,34 @@ public class SellerRepositoryAdapter implements SellerRepository {
 
     @Override
     public Seller save(Seller seller) {
-        return this.sellerRepository.save(seller);
+        return sellerRepository.save(seller);
     }
 
     @Override
-    public Optional<Seller> findById(Long id) {
-        return Optional.ofNullable(this.sellerRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.SELLER_NOT_FOUND)));
+    public Seller findById(Long id) {
+        return sellerRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.SELLER_NOT_FOUND));
     }
 
     @Override
-    public Optional<Seller> findByEmail(String email) {
-        return Optional.ofNullable(
-                this.sellerRepository.findByEmail(email)
-                        .orElseThrow(() -> new EntityNotFoundException(ErrorCode.SELLER_NOT_FOUND))
-        );
+    public Seller findByEmail(String email) {
+        return sellerRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.SELLER_NOT_FOUND));
     }
 
     @Override
     public boolean existsByEmail(String email) {
-        return this.sellerRepository.existsByEmail(email);
+        return sellerRepository.existsByEmail(email);
     }
 
     @Override
     public boolean existsByName(String name) {
-        return this.sellerRepository.existsByName(name);
+        return sellerRepository.existsByName(name);
     }
 
     @Override
     public boolean existsByBusinessNo(String businessNo) {
-        return this.sellerRepository.existsByBusinessNo(businessNo);
+        return sellerRepository.existsByBusinessNo(businessNo);
     }
 
 }

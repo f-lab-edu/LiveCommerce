@@ -56,11 +56,15 @@ public class RedisSessionRepository {
     }
 
     private long calculateExpirationTime(AuthenticatedSeller authenticatedSeller) {
-        long sessionExpirationSec = sessionProperties.getSessionExpirationSec();
-        long sellerExpirationSec = redisTemplate.getExpire(
+        Long sessionExpirationSec = sessionProperties.getSessionExpirationSec();
+        Long sellerExpirationSec = redisTemplate.getExpire(
                 authenticatedSeller.getSessionId(),
                 TimeUnit.SECONDS
         );
+
+        if (sellerExpirationSec == null) {
+            throw new IllegalArgumentException();
+        }
 
         if (sessionExpirationSec - sellerExpirationSec <= 0) {
             return sessionExpirationSec;
