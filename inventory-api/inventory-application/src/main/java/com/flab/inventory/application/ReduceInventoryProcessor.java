@@ -1,7 +1,6 @@
 package com.flab.inventory.application;
 
 import com.flab.inventory.application.command.ReduceInventoryCommand;
-import com.flab.inventory.domain.Inventory;
 import com.flab.inventory.domain.InventoryRepository;
 import org.springframework.transaction.annotation.Transactional;
 

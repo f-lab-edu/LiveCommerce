@@ -18,6 +18,10 @@ public class ReduceInventoryRequest {
         return new ReduceInventoryCommand(itemId, count);
     }
 
+    public Long getItemId() {
+        return itemId;
+    }
+
     public Integer getCount() {
         return count;
     }

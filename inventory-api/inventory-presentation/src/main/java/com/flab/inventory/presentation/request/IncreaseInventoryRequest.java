@@ -18,6 +18,10 @@ public class IncreaseInventoryRequest {
         return new IncreaseInventoryCommand(itemId, count);
     }
 
+    public Long getItemId() {
+        return itemId;
+    }
+
     public Integer getCount() {
         return count;
     }
