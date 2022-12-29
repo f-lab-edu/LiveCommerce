@@ -3,6 +3,7 @@ package com.flab.inventory.domain;
 import com.flab.common.domain.AbstractAggregateRoot;
 import com.flab.common.exception.InvalidParameterException;
 import com.flab.inventory.domain.event.FailInventoryReducedEvent;
+import com.flab.inventory.domain.exception.FailInventoryReducedException;
 import com.flab.inventory.domain.exception.NotEnoughQuantityException;
 import com.flab.inventory.domain.exception.SalesClosedException;
 import com.flab.inventory.domain.exception.StockOutException;
@@ -83,12 +84,12 @@ public class Inventory extends AbstractAggregateRoot {
     }
 
     public void reduce(Integer count) {
-        if (this.saleStatus == SaleStatus.CLOSE) {
-            //수정해야함
-            throw new IllegalStateException();
-        }
         validReduceCount(count);
         this.quantity -= count;
+
+        if (this.quantity <= 0) {
+            throw new FailInventoryReducedException("남은 재고 수량을 확인해 주세요.");
+        }
     }
 
     public void orderReduce(Integer count) {
