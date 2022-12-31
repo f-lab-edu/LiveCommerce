@@ -35,11 +35,11 @@ spring:
     upload:
       localPath: C:\Temp\
 
-mybatis:
-  type-aliases-package: com.flab.*
-  configuration:
-    map-underscore-to-camel-case: true
-  mapper-locations: classpath:mybatis/mapper/**/*.xml
+#mybatis:
+#  type-aliases-package: com.flab.*
+#  configuration:
+#    map-underscore-to-camel-case: true
+#  mapper-locations: classpath:mybatis/mapper/**/*.xml
 
 app.security.token:
   tokenExpirationSec: 1000
