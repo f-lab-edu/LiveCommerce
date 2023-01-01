@@ -42,7 +42,7 @@ public class OrderPayedProcessor {
                 try {
                     inventory.orderReduce(itemQuantityMap.get(inventory.getItemId()));
                 } catch (BaseException e) {
-                    log.error("error={}", e);
+                    log.error("error= ", e);
                     inventory.failReduce();
                     inventory.pollAllEvents().forEach(publisher::publishEvent);
                     throw new FailInventoryReducedException("재고감소에 실패했습니다.");

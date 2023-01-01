@@ -86,7 +86,7 @@ public class OrderPayedProcessorTest {
     }
 
     @Test
-    @DisplayName("재고가 품절 상태이면 예외가 발생한다.")
+    @DisplayName("판매 종료 상태이면 예외가 발생한다.")
     void inventory_reduce_close_return_exception() {
         // Arrange
         var inventoryRepository = new FakeInventoryRepository();
