@@ -1,7 +1,6 @@
 package com.flab.seller.application;
 
 
-import com.flab.common.auth.AuthenticatedSeller;
 import com.flab.common.auth.PasswordEncryptor;
 import com.flab.seller.application.command.LoginSellerCommand;
 import com.flab.seller.domain.Seller;
@@ -26,14 +25,15 @@ public class LoginSellerProcessor {
     }
 
     @Transactional
-    public AuthenticatedSeller execute(LoginSellerCommand command) {
+    public Long execute(LoginSellerCommand command) {
         var seller = sellerRepository.findByEmail(command.getEmail());
 
         if (!passwordCheck(command, seller)) {
             throw new SellerPasswordNotMatchedException();
         }
 
-        return seller.toLoginInfo();
+        //seller.toLoginInfo();
+        return seller.getId();
     }
 
     private boolean passwordCheck(LoginSellerCommand command, Seller loginSellerInfo) {

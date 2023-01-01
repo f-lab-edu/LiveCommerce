@@ -2,12 +2,12 @@ package com.flab.seller.presentation;
 
 import com.flab.common.auth.Role;
 import com.flab.common.auth.annotation.LoginCheck;
+import com.flab.common.auth.authservice.AuthenticationService;
 import com.flab.common.response.CommonApiResponse;
 import com.flab.seller.application.facade.SellerManager;
 import com.flab.seller.presentation.request.CreateSellerRequest;
 import com.flab.seller.presentation.request.LoginSellerRequest;
 import com.flab.seller.presentation.request.SellerEmailRequest;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,11 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class SellerController {
 
     private final SellerManager sellerManager;
+    private final AuthenticationService authenticationService;
 
     public SellerController(
-            SellerManager sellerManager
+            SellerManager sellerManager,
+            AuthenticationService authenticationService
     ) {
         this.sellerManager = sellerManager;
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping("/signup")
@@ -38,23 +41,10 @@ public class SellerController {
 
     @PostMapping("/login")
     public CommonApiResponse login(
-        @RequestBody @Valid LoginSellerRequest loginSellerRequest,
-        HttpServletRequest request
+        @RequestBody @Valid LoginSellerRequest loginSellerRequest
     ) {
-        var loginSellerInfo = sellerManager.login(loginSellerRequest.toCommand());
-
-        /* TODO 인증 서비스 구현
-        // 세션 정보 생성
-        HttpSession session = request.getSession();
-        session.setAttribute(AUTH_SESSION_MEMBER, loginSellerInfo);
-        session.setAttribute(AUTH_STATUS, Role.SELLER);
-
-        // redis session 정보 저장
-        loginSellerInfo.addSessionInfo(session.getId(), sessionExpirationSec);
-        sessionRepository.save(session.getId(), loginSellerInfo);
-
-         */
-
+        Long sellerId = sellerManager.idAndPwCheck(loginSellerRequest.toCommand());
+        authenticationService.login(sellerId);
 
         return CommonApiResponse.success(null);
     }
@@ -62,7 +52,8 @@ public class SellerController {
     @LoginCheck(authority = Role.SELLER)
     @PostMapping("/logout")
     public CommonApiResponse logout() {
-        sellerManager.logout();
+        authenticationService.logout();
+        //sellerManager.logout();
         return CommonApiResponse.success(null);
     }
 
