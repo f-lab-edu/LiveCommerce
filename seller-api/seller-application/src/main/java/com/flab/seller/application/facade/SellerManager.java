@@ -1,5 +1,6 @@
 package com.flab.seller.application.facade;
 
+import com.flab.common.auth.AuthenticatedSeller;
 import com.flab.seller.application.CreateSellerProcessor;
 import com.flab.seller.application.LoginSellerProcessor;
 import com.flab.seller.application.LogoutSellerProcessor;
@@ -49,7 +50,7 @@ public class SellerManager {
         }
     }
 
-    public String login(
+    public AuthenticatedSeller login(
         LoginSellerCommand command
     ) {
         return loginSellerProcessor.execute(command);

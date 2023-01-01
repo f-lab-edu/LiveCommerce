@@ -7,7 +7,7 @@ import com.flab.seller.application.facade.SellerManager;
 import com.flab.seller.presentation.request.CreateSellerRequest;
 import com.flab.seller.presentation.request.LoginSellerRequest;
 import com.flab.seller.presentation.request.SellerEmailRequest;
-import com.flab.seller.presentation.response.LoginSellerResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,13 +17,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+
 @RestController
 @RequestMapping("/api/v1/seller")
 public class SellerController {
 
     private final SellerManager sellerManager;
 
-    public SellerController(SellerManager sellerManager) {
+    public SellerController(
+            SellerManager sellerManager
+    ) {
         this.sellerManager = sellerManager;
     }
 
@@ -35,10 +38,25 @@ public class SellerController {
 
     @PostMapping("/login")
     public CommonApiResponse login(
-        @RequestBody @Valid LoginSellerRequest request
+        @RequestBody @Valid LoginSellerRequest loginSellerRequest,
+        HttpServletRequest request
     ) {
-        String jsessionId = sellerManager.login(request.toCommand());
-        return CommonApiResponse.success(new LoginSellerResponse(jsessionId));
+        var loginSellerInfo = sellerManager.login(loginSellerRequest.toCommand());
+
+        /* TODO 인증 서비스 구현
+        // 세션 정보 생성
+        HttpSession session = request.getSession();
+        session.setAttribute(AUTH_SESSION_MEMBER, loginSellerInfo);
+        session.setAttribute(AUTH_STATUS, Role.SELLER);
+
+        // redis session 정보 저장
+        loginSellerInfo.addSessionInfo(session.getId(), sessionExpirationSec);
+        sessionRepository.save(session.getId(), loginSellerInfo);
+
+         */
+
+
+        return CommonApiResponse.success(null);
     }
 
     @LoginCheck(authority = Role.SELLER)
