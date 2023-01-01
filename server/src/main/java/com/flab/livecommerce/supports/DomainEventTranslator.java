@@ -34,9 +34,9 @@ public final class DomainEventTranslator {
 
     @EventListener
     public void translate(OrderPayedEvent event) {
-        List<ItemQuantity> itemQuantities = event.getPayedItemInfos()
+        List<ItemQuantity> itemQuantities = event.getItemQuantities()
             .stream()
-            .sorted(comparing(com.flab.order.domain.PayedItemInfo::getItemId))
+            .sorted(comparing(com.flab.order.domain.ItemQuantity::getItemId))
             .map(
                 payedItemInfo -> new ItemQuantity(
                     payedItemInfo.getItemId(),
