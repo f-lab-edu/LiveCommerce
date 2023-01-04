@@ -3,8 +3,7 @@ package com.flab.livecommerce.auth;
 import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
 import static com.flab.common.auth.SessionConst.AUTH_STATUS;
 
-import com.flab.common.auth.AuthenticatedSeller;
-import com.flab.common.auth.AuthenticatedUser;
+import com.flab.common.auth.AuthenticatedMember;
 import com.flab.common.auth.Role;
 import com.flab.common.auth.annotation.LoginCheck;
 import com.flab.common.exception.AuthenticationException;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-
 
 
 public class LoginCheckInterceptor implements HandlerInterceptor {
@@ -42,20 +40,10 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
         authority.valid(getMemberRole(request));
 
-        if (authority == Role.USER) {
-            var authUser = (AuthenticatedUser) request.getAttribute(AUTH_SESSION_MEMBER);
+        var authMember = (AuthenticatedMember) request.getAttribute(AUTH_SESSION_MEMBER);
 
-            if (authUser == null) {
-                throw new AuthenticationException();
-            }
-        }
-
-        if (authority == Role.SELLER) {
-            var authSeller = (AuthenticatedSeller) request.getAttribute(AUTH_SESSION_MEMBER);
-
-            if (authSeller == null) {
-                throw new AuthenticationException();
-            }
+        if (authMember == null) {
+            throw new AuthenticationException();
         }
 
         return true;

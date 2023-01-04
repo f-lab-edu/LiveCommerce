@@ -1,6 +1,6 @@
 package com.flab.seller.infrastructure.persistence;
 
-import com.flab.common.auth.AuthenticatedSeller;
+import com.flab.common.auth.AuthenticatedMember;
 import com.flab.seller.domain.SessionRepository;
 import com.flab.seller.infrastructure.persistence.redis.RedisSessionRepository;
 
@@ -13,18 +13,18 @@ public class SessionRepositoryAdaptor implements SessionRepository {
     }
 
     @Override
-    public void save(String sessionId, AuthenticatedSeller authenticatedSeller) {
-        this.redisSessionRepository.save(sessionId, authenticatedSeller);
+    public void save(String sessionId, AuthenticatedMember authenticatedMember) {
+        this.redisSessionRepository.save(sessionId, authenticatedMember);
     }
 
     @Override
-    public AuthenticatedSeller findBySessionId(String sessionId) {
+    public AuthenticatedMember findBySessionId(String sessionId) {
         return this.redisSessionRepository.findBySessionId(sessionId);
     }
 
     @Override
-    public void renewExpirationSec(AuthenticatedSeller authenticatedSeller) {
-        this.redisSessionRepository.renewExpirationSec(authenticatedSeller);
+    public void renewExpirationSec(AuthenticatedMember authenticatedMember) {
+        this.redisSessionRepository.renewExpirationSec(authenticatedMember);
     }
 
     @Override

@@ -43,7 +43,7 @@ public class SellerController {
     public CommonApiResponse login(
         @RequestBody @Valid LoginSellerRequest loginSellerRequest
     ) {
-        Long sellerId = sellerManager.idAndPwCheck(loginSellerRequest.toCommand());
+        Long sellerId = sellerManager.idAndPasswordCheck(loginSellerRequest.toCommand());
         authenticationService.login(sellerId);
 
         return CommonApiResponse.success(null);
@@ -53,7 +53,7 @@ public class SellerController {
     @PostMapping("/logout")
     public CommonApiResponse logout() {
         authenticationService.logout();
-        //sellerManager.logout();
+        //sellerManager.logout(); TODO 리팩토링 방향 맞으면 코드 리뷰 후 삭제
         return CommonApiResponse.success(null);
     }
 

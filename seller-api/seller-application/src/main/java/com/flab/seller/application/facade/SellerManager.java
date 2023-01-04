@@ -49,7 +49,7 @@ public class SellerManager {
         }
     }
 
-    public Long idAndPwCheck(
+    public Long idAndPasswordCheck(
         LoginSellerCommand command
     ) {
         return loginSellerProcessor.execute(command);

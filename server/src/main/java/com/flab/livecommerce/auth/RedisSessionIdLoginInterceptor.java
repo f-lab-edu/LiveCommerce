@@ -13,7 +13,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /*
- * 보안 혹은 mobile app을 고려한다면 쿠키를 사용하는 경우가 많으므로 request header[Authorization]에서 session id를 받아서 인가 처리
+ * 보안 혹은 mobile app을 고려한다면 쿠키를 사용하지 않는 경우가 많으므로 request header[Authorization]에서 session id를 받아서 인가 처리
  */
 public class RedisSessionIdLoginInterceptor implements HandlerInterceptor {
 

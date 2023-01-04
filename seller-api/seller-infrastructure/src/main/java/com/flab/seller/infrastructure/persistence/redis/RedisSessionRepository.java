@@ -1,7 +1,7 @@
 package com.flab.seller.infrastructure.persistence.redis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flab.common.auth.AuthenticatedSeller;
+import com.flab.common.auth.AuthenticatedMember;
 import com.flab.seller.infrastructure.sessionproperties.SessionProperties;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
@@ -26,39 +26,39 @@ public class RedisSessionRepository {
     }
 
 
-    public void save(String sessionId, AuthenticatedSeller authenticatedSeller) {
-        redisTemplate.opsForValue().set(sessionId, authenticatedSeller);
+    public void save(String sessionId, AuthenticatedMember authenticatedMember) {
+        redisTemplate.opsForValue().set(sessionId, authenticatedMember);
     }
 
     public void remove(String sessionId) {
         redisTemplate.delete(sessionId);
     }
 
-    public AuthenticatedSeller findBySessionId(String sessionId) {
+    public AuthenticatedMember findBySessionId(String sessionId) {
         var result = redisTemplate.opsForValue().get(sessionId);
 
         if (result == null) {
             return null;
         }
 
-        return objectMapper.convertValue(result, AuthenticatedSeller.class);
+        return objectMapper.convertValue(result, AuthenticatedMember.class);
     }
 
-    public void renewExpirationSec(AuthenticatedSeller authenticatedSeller) {
-        long expirationTime = calculateExpirationTime(authenticatedSeller);
-        authenticatedSeller.addExpirationSec(expirationTime);
+    public void renewExpirationSec(AuthenticatedMember authenticatedMember) {
+        long expirationTime = calculateExpirationTime(authenticatedMember);
+        authenticatedMember.addExpirationSec(expirationTime);
 
         redisTemplate.opsForValue().set(
-                authenticatedSeller.getSessionId(),
-                authenticatedSeller,
+                authenticatedMember.getAuthId(),
+                authenticatedMember,
                 Duration.ofSeconds(sessionProperties.getSessionExpirationSec())
         );
     }
 
-    private long calculateExpirationTime(AuthenticatedSeller authenticatedSeller) {
+    private long calculateExpirationTime(AuthenticatedMember authenticatedMember) {
         Long sessionExpirationSec = sessionProperties.getSessionExpirationSec();
         Long sellerExpirationSec = redisTemplate.getExpire(
-                authenticatedSeller.getSessionId(),
+                authenticatedMember.getAuthId(),
                 TimeUnit.SECONDS
         );
 

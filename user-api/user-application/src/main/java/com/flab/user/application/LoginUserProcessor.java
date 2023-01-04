@@ -1,6 +1,6 @@
 package com.flab.user.application;
 
-import com.flab.common.auth.AuthenticatedUser;
+import com.flab.common.auth.AuthenticatedMember;
 import com.flab.common.auth.PasswordEncryptor;
 import com.flab.user.domain.TokenGenerator;
 import com.flab.user.domain.TokenRepository;
@@ -46,7 +46,7 @@ public class LoginUserProcessor {
         var token = tokenGenerator.generate();
 
         tokenRepository.save(
-            AuthenticatedUser.create(
+            AuthenticatedMember.create(
                 token,
                 user.getId(),
                 user.getEmail(),
