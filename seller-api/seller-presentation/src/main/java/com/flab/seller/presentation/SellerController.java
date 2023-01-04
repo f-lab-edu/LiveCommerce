@@ -43,8 +43,8 @@ public class SellerController {
     public CommonApiResponse login(
         @RequestBody @Valid LoginSellerRequest loginSellerRequest
     ) {
-        Long sellerId = sellerManager.idAndPasswordCheck(loginSellerRequest.toCommand());
-        authenticationService.login(sellerId);
+        var loginSellerInfo = sellerManager.idAndPasswordCheck(loginSellerRequest.toCommand());
+        authenticationService.login(loginSellerInfo);
 
         return CommonApiResponse.success(null);
     }

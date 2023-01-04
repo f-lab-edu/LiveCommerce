@@ -1,5 +1,6 @@
 package com.flab.seller.application.facade;
 
+import com.flab.common.auth.AuthenticatedMember;
 import com.flab.seller.application.CreateSellerProcessor;
 import com.flab.seller.application.LoginSellerProcessor;
 import com.flab.seller.application.LogoutSellerProcessor;
@@ -49,7 +50,7 @@ public class SellerManager {
         }
     }
 
-    public Long idAndPasswordCheck(
+    public AuthenticatedMember idAndPasswordCheck(
         LoginSellerCommand command
     ) {
         return loginSellerProcessor.execute(command);

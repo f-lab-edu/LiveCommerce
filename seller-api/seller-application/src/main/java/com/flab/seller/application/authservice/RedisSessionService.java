@@ -25,12 +25,9 @@ public class RedisSessionService implements AuthenticationService {
         this.session = session;
         this.sessionExpirationSec = sessionExpirationSec;
     }
-    // 세션 정보 생성
 
     @Override
-    public void login(Long sellerId) {
-        AuthenticatedMember loginSellerInfo = new AuthenticatedMember(sellerId, "", Role.SELLER);
-
+    public void login(AuthenticatedMember loginSellerInfo) {
         // 세션 정보 생성
         session.setAttribute(AUTH_SESSION_MEMBER, loginSellerInfo);
         session.setAttribute(AUTH_STATUS, Role.SELLER);
@@ -38,7 +35,6 @@ public class RedisSessionService implements AuthenticationService {
         // redis session 정보 저장
         loginSellerInfo.addAuthInfo(session.getId(), sessionExpirationSec);
         sessionRepository.save(session.getId(), loginSellerInfo);
-
     }
 
     @Override

@@ -64,6 +64,9 @@ public class Seller {
     }
 
     public AuthenticatedMember toLoginInfo() {
-        return new AuthenticatedMember(id, email, role);
+        return new AuthenticatedMember.Builder(id)
+                .setEmail(email)
+                .setRole(role)
+                .build();
     }
 }

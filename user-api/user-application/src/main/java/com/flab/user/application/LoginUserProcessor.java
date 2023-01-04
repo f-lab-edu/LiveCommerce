@@ -8,6 +8,7 @@ import com.flab.user.domain.User;
 import com.flab.user.domain.UserRepository;
 import com.flab.user.domain.exception.InvalidUserException;
 import com.flab.user.domain.exception.UserPasswordNotMatchedException;
+import java.time.LocalDateTime;
 
 
 public class LoginUserProcessor {
@@ -19,11 +20,11 @@ public class LoginUserProcessor {
     private final Long tokenExpirationSec;
 
     public LoginUserProcessor(
-        UserRepository userRepository,
-        TokenGenerator tokenGenerator,
-        TokenRepository tokenRepository,
-        PasswordEncryptor passwordEncryptor,
-        Long tokenExpirationSec
+            UserRepository userRepository,
+            TokenGenerator tokenGenerator,
+            TokenRepository tokenRepository,
+            PasswordEncryptor passwordEncryptor,
+            Long tokenExpirationSec
     ) {
         this.userRepository = userRepository;
         this.tokenGenerator = tokenGenerator;
@@ -46,13 +47,12 @@ public class LoginUserProcessor {
         var token = tokenGenerator.generate();
 
         tokenRepository.save(
-            AuthenticatedMember.create(
-                token,
-                user.getId(),
-                user.getEmail(),
-                user.getRole(),
-                tokenExpirationSec
-            )
+                new AuthenticatedMember.Builder(user.getId())
+                        .setAuthId(token)
+                        .setEmail(user.getEmail())
+                        .setRole(user.getRole())
+                        .setexpireAt(LocalDateTime.now().plusSeconds(tokenExpirationSec))
+                        .build()
         );
 
         return token;
