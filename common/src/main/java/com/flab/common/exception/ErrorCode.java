@@ -25,7 +25,10 @@ public enum ErrorCode {
 
     // User, Seller 공통
     DUPLICATED_EMAIL("중복된 이메일 입니다."),
-    PASSWORD_NOT_MATCHED("비밀번호가 일치하지 않습니다.");
+    PASSWORD_NOT_MATCHED("비밀번호가 일치하지 않습니다."),
+
+
+    NOT_ENOUGH_POINT("가용 포인트를 넘어선 사용 요청입니다. 사용 포인트를 조정하거나 포인트를 충전하세요.");
 
 
     private final String message;

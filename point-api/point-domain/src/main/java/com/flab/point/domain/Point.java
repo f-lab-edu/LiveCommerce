@@ -1,5 +1,6 @@
 package com.flab.point.domain;
 
+import com.flab.point.domain.exception.ReducePointException;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,16 +54,16 @@ public class Point {
     }
 
     // 포인트 사용
-    public void remove(
-            Long removedAmount
+    public void reduce(
+            Long reducedAmount
     ) {
-        //Long removedAmount = PointTransaction.remove(this, amount);
-
-        if (this.totalAmount - removedAmount < 0) {
-            throw new RuntimeException("가용 포인트를 넘어선 접근입니다."); // TODO exception 처리
+        if (this.totalAmount - reducedAmount < 0) {
+            throw new ReducePointException();
         }
 
-        this.totalAmount -= removedAmount;
+        PointTransaction.reduce(reducedAmount);
+
+        this.totalAmount -= reducedAmount;
         this.updatedAt = LocalDateTime.now();
     }
 
