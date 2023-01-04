@@ -1,0 +1,5 @@
+dependencies {
+    implementation project(path: ':common', configuration: "default")
+    implementation 'javax.persistence:javax.persistence-api:2.2'
+}
+

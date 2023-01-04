@@ -27,7 +27,7 @@ public class CommonControllerAdvice {
     @ResponseStatus
     @ExceptionHandler(Exception.class)
     public CommonApiResponse onException(Exception e) {
-        log.error("error ={}", e);
+        log.error("error = ", e);
         return CommonApiResponse.fail(ErrorCode.COMMON_SYSTEM_ERROR);
     }
 
