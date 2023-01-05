@@ -28,6 +28,8 @@ public enum ErrorCode {
 
     //Inventory Error
     NOT_ENOUGH_QUANTITY("재고 수량이 충분하지 않습니다."),
+    INVENTORY_REDUCE_FAIL("재고 감소에 실패했습니다."),
+    QUANTITY_CHANGE_FAIL("재고 변경에 실패했습니다."),
     INVENTORY_SALE_CLOSE("판매 종료된 재고입니다."),
     INVENTORY_STOCK_OUT("품절된 재고입니다."),
     INVENTORY_NOT_FOUND("재고를 찾을 수 없습니다.");

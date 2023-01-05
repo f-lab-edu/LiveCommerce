@@ -6,6 +6,6 @@ import com.flab.common.exception.ErrorCode;
 public class FailInventoryReducedException extends BaseException {
 
     public FailInventoryReducedException(String message) {
-        super(message, ErrorCode.NOT_ENOUGH_QUANTITY);
+        super(message, ErrorCode.INVENTORY_REDUCE_FAIL);
     }
 }

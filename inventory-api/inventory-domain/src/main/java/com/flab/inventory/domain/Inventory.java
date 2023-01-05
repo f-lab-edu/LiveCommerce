@@ -3,7 +3,7 @@ package com.flab.inventory.domain;
 import com.flab.common.domain.AbstractAggregateRoot;
 import com.flab.common.exception.InvalidParameterException;
 import com.flab.inventory.domain.event.FailInventoryReducedEvent;
-import com.flab.inventory.domain.exception.FailInventoryReducedException;
+import com.flab.inventory.domain.exception.InventoryQuantityChangeException;
 import com.flab.inventory.domain.exception.NotEnoughQuantityException;
 import com.flab.inventory.domain.exception.SalesClosedException;
 import com.flab.inventory.domain.exception.StockOutException;
@@ -81,15 +81,13 @@ public class Inventory extends AbstractAggregateRoot {
 
     public void increase(Integer count) {
         this.quantity += count;
+        validQuantity();
     }
 
     public void reduce(Integer count) {
         validReduceCount(count);
         this.quantity -= count;
-
-        if (this.quantity <= 0) {
-            throw new FailInventoryReducedException("남은 재고 수량을 확인해 주세요.");
-        }
+        validQuantity();
     }
 
     public void orderReduce(Integer count) {
@@ -101,6 +99,12 @@ public class Inventory extends AbstractAggregateRoot {
             throw new NotEnoughQuantityException("재고가 충분하지 않습니다.");
         }
         checkQuantity();
+    }
+
+    private void validQuantity() {
+        if (this.quantity < 0) {
+            throw new InventoryQuantityChangeException("재고 수량은 '0 ~ 21억' 사이로 변경할 수 있습니다.");
+        }
     }
 
     private void validReduceCount(Integer count) {
