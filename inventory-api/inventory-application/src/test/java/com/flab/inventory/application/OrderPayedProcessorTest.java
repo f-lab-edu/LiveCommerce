@@ -3,11 +3,11 @@ package com.flab.inventory.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
+import com.flab.inventory.application.command.OrderPayedCommand;
 import com.flab.inventory.domain.Inventory;
 import com.flab.inventory.domain.Inventory.InventoryState;
 import com.flab.inventory.domain.Inventory.SaleStatus;
 import com.flab.inventory.domain.ItemQuantity;
-import com.flab.inventory.domain.event.OrderPayedEvent;
 import com.flab.inventory.domain.exception.FailInventoryReducedException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +24,6 @@ public class OrderPayedProcessorTest {
         // Arrange
         var inventoryRepository = new FakeInventoryRepository();
 
-
         inventoryRepository.save(
             new Inventory(1L, SaleStatus.ON_SALE, "test", 30, InventoryState.INVENTORY_SAFE)
         );
@@ -32,22 +31,18 @@ public class OrderPayedProcessorTest {
             new Inventory(2L, SaleStatus.ON_SALE, "test2", 100, InventoryState.INVENTORY_SAFE)
         );
 
-        List<ItemQuantity> itemQuantities = List.of(
-            new ItemQuantity(1L, 40),
-            new ItemQuantity(2L, 10)
+        var command = new OrderPayedCommand(
+            List.of(
+                new ItemQuantity(1L, 40),
+                new ItemQuantity(2L, 10)
+            )
         );
 
-        var orderPayedEvent = new OrderPayedEvent(
-            1L,
-            1L,
-            itemQuantities,
-            LocalDateTime.now()
-        );
-
-        var processor = new OrderPayedProcessor(inventoryRepository, new DummyApplicationEventPublisher());
+        var processor = new OrderPayedProcessor(inventoryRepository,
+            new DummyApplicationEventPublisher());
 
         // Act
-        Throwable result = catchThrowable(() -> processor.execute(orderPayedEvent));
+        Throwable result = catchThrowable(() -> processor.execute(command));
 
         // Assert
         assertThat(result.getClass()).isEqualTo(FailInventoryReducedException.class);
@@ -59,7 +54,6 @@ public class OrderPayedProcessorTest {
         // Arrange
         var inventoryRepository = new FakeInventoryRepository();
 
-
         inventoryRepository.save(
             new Inventory(1L, SaleStatus.ON_SALE, "test", 30, InventoryState.INVENTORY_SAFE)
         );
@@ -67,19 +61,15 @@ public class OrderPayedProcessorTest {
             new Inventory(2L, SaleStatus.ON_SALE, "test2", 100, InventoryState.STOCK_OUT)
         );
 
-        List<ItemQuantity> itemQuantities = List.of(new ItemQuantity(2L, 10));
+        var command = new OrderPayedCommand(List.of(new ItemQuantity(2L, 10)));
 
-        var orderPayedEvent = new OrderPayedEvent(
-            1L,
-            1L,
-            itemQuantities,
-            LocalDateTime.now()
+        var processor = new OrderPayedProcessor(
+            inventoryRepository,
+            new DummyApplicationEventPublisher()
         );
 
-        var processor = new OrderPayedProcessor(inventoryRepository, new DummyApplicationEventPublisher());
-
         // Act
-        Throwable result = catchThrowable(() -> processor.execute(orderPayedEvent));
+        Throwable result = catchThrowable(() -> processor.execute(command));
 
         // Assert
         assertThat(result.getClass()).isEqualTo(FailInventoryReducedException.class);
@@ -91,7 +81,6 @@ public class OrderPayedProcessorTest {
         // Arrange
         var inventoryRepository = new FakeInventoryRepository();
 
-
         inventoryRepository.save(
             new Inventory(1L, SaleStatus.ON_SALE, "test", 30, InventoryState.INVENTORY_SAFE)
         );
@@ -101,17 +90,24 @@ public class OrderPayedProcessorTest {
 
         List<ItemQuantity> itemQuantities = List.of(new ItemQuantity(2L, 10));
 
-        var orderPayedEvent = new OrderPayedEvent(
-            1L,
-            1L,
-            itemQuantities,
-            LocalDateTime.now()
+        var command = new OrderPayedCommand(
+            List.of(
+                new ItemQuantity(1L, 4),
+                new ItemQuantity(2L, 2),
+                new ItemQuantity(1L, 4),
+                new ItemQuantity(2L, 8),
+                new ItemQuantity(1L, 4),
+                new ItemQuantity(1L, 4)
+            )
         );
 
-        var processor = new OrderPayedProcessor(inventoryRepository, new DummyApplicationEventPublisher());
+        var processor = new OrderPayedProcessor(
+            inventoryRepository,
+            new DummyApplicationEventPublisher()
+        );
 
         // Act
-        Throwable result = catchThrowable(() -> processor.execute(orderPayedEvent));
+        Throwable result = catchThrowable(() -> processor.execute(command));
 
         // Assert
         assertThat(result.getClass()).isEqualTo(FailInventoryReducedException.class);
@@ -130,20 +126,15 @@ public class OrderPayedProcessorTest {
             new Inventory(2L, SaleStatus.ON_SALE, "test2", 100, InventoryState.INVENTORY_SAFE)
         );
 
-        List<ItemQuantity> itemQuantities = List.of(
-            new ItemQuantity(1L, 4),
-            new ItemQuantity(2L, 2),
-            new ItemQuantity(1L, 4),
-            new ItemQuantity(2L, 8),
-            new ItemQuantity(1L, 4),
-            new ItemQuantity(1L, 4)
-        );
-
-        var orderPayedEvent = new OrderPayedEvent(
-            1L,
-            1L,
-            itemQuantities,
-            LocalDateTime.now()
+        var command = new OrderPayedCommand(
+            List.of(
+                new ItemQuantity(1L, 4),
+                new ItemQuantity(2L, 2),
+                new ItemQuantity(1L, 4),
+                new ItemQuantity(2L, 8),
+                new ItemQuantity(1L, 4),
+                new ItemQuantity(1L, 4)
+            )
         );
 
         var processor = new OrderPayedProcessor(
@@ -152,7 +143,7 @@ public class OrderPayedProcessorTest {
         );
 
         // Act
-        processor.execute(orderPayedEvent);
+        processor.execute(command);
 
         // Assert
         assertThat(inventoryRepository.findByItemId(1L).getQuantity()).isEqualTo(14);
