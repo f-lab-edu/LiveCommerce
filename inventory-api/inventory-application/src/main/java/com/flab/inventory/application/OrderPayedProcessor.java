@@ -6,10 +6,10 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingInt;
 
 import com.flab.common.exception.BaseException;
+import com.flab.inventory.application.command.OrderPayedCommand;
 import com.flab.inventory.domain.Inventory;
 import com.flab.inventory.domain.InventoryRepository;
 import com.flab.inventory.domain.ItemQuantity;
-import com.flab.inventory.domain.event.OrderPayedEvent;
 import com.flab.inventory.domain.exception.FailInventoryReducedException;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +33,8 @@ public class OrderPayedProcessor {
     }
 
     @Transactional
-    public void execute(OrderPayedEvent event) {
-        Map<Long, Integer> itemQuantityMap = getItemQuantityMap(event.getPayedItemInfos());
+    public void execute(OrderPayedCommand command) {
+        Map<Long, Integer> itemQuantityMap = getItemQuantityMap(command.getItemQuantities());
         List<Inventory> inventories = inventoryRepository.findByItemIdIn(itemQuantityMap.keySet());
 
         inventories.forEach(

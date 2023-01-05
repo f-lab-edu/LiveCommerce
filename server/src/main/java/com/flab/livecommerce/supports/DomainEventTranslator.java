@@ -45,7 +45,7 @@ public final class DomainEventTranslator {
             ).collect(Collectors.toList());
 
         publisher.publishEvent(
-            new com.flab.inventory.domain.event.OrderPayedEvent(
+            new com.flab.inventory.presentation.request.OrderPayedEvent(
                 event.getOrderId(),
                 event.getUserId(),
                 itemQuantities,
