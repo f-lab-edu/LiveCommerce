@@ -12,10 +12,10 @@ public class UserCreateProcessor {
 
     public UserCreateProcessor(
         UserRepository userRepository,
-        PasswordEncryptor passwordEncryption
+        PasswordEncryptor passwordEncryptor
     ) {
         this.userRepository = userRepository;
-        this.passwordEncryption = passwordEncryption;
+        this.passwordEncryption = passwordEncryptor;
     }
 
     public void execute(UserCreateCommand command) {

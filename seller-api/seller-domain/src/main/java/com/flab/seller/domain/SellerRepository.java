@@ -1,6 +1,7 @@
 package com.flab.seller.domain;
 
 
+
 public interface SellerRepository {
 
     Seller save(Seller seller);

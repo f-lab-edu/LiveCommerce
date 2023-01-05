@@ -1,13 +1,13 @@
-package com.flab.user.infrastructure.encryption;
+package com.flab.seller.infrastructure.encryption;
 
-import com.flab.user.domain.PasswordEncryptor;
+import com.flab.common.auth.PasswordEncryptor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class SecurityPasswordEncoder implements PasswordEncryptor {
+public class SellerSecurityPasswordEncoder implements PasswordEncryptor {
 
     private final PasswordEncoder encoder;
 
-    public SecurityPasswordEncoder(PasswordEncoder passwordEncoder) {
+    public SellerSecurityPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.encoder = passwordEncoder;
     }
 

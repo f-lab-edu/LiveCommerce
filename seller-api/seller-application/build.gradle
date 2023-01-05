@@ -6,6 +6,7 @@ plugins {
 dependencies {
     implementation project(path: ':seller-api:seller-domain', configuration: "default")
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    compileOnly 'org.apache.tomcat:tomcat-servlet-api:9.0.37'
     testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
 

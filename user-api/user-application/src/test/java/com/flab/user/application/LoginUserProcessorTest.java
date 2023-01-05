@@ -6,7 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 import com.flab.user.application.LoginUserProcessor.LoginCommand;
 import com.flab.user.domain.User;
 import com.flab.user.domain.exception.InvalidUserException;
-import com.flab.user.domain.exception.PasswordNotMatchedException;
+import com.flab.user.domain.exception.UserPasswordNotMatchedException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -55,6 +55,6 @@ public class LoginUserProcessorTest {
         Throwable result = catchThrowable(() -> processor.execute(command));
 
         //Assert
-        assertThat(result.getClass()).isEqualTo(PasswordNotMatchedException.class);
+        assertThat(result.getClass()).isEqualTo(UserPasswordNotMatchedException.class);
     }
 }

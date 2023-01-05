@@ -1,5 +1,9 @@
 server:
   port: 8080
+  servlet:
+    session:
+      timeout: 30m
+      tracking-modes: cookie
 
 spring:
   datasource:
@@ -21,8 +25,10 @@ spring:
       location: C:\Temp\
 
   redis:
-    host: localhost
-    port: 6379
+    session:
+      host: localhost
+      port: 16379
+
   jpa:
     hibernate:
       ddl-auto: none
@@ -43,3 +49,4 @@ spring:
 
 app.security.token:
   tokenExpirationSec: 1000
+  sessionExpirationSec: 1000

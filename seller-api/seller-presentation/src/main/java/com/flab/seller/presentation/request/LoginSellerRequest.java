@@ -1,12 +1,11 @@
-package com.flab.user.presentation.request;
+package com.flab.seller.presentation.request;
 
-import com.flab.user.application.command.CreateUserCommand;
+import com.flab.seller.application.command.LoginSellerCommand;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-
-public class UserCreateRequest {
+public class LoginSellerRequest {
 
     @NotBlank(message = "이메일을 입력해주세요.")
     @Email(message = "이메일 형식에 맞춰 주세요.")
@@ -16,16 +15,12 @@ public class UserCreateRequest {
     @Pattern(regexp = "^[0-9a-z].{6,10}$", message = "영문 소문자, 숫자 6~10자 이내로 입력하세요.”")
     private String password;
 
-    @NotBlank(message = "아이디는 필수 입력사항입니다.")
-    private String nickname;
-
-    protected UserCreateRequest() {
+    public LoginSellerRequest() {
     }
 
-    public UserCreateRequest(String email, String password, String nickname) {
+    public LoginSellerRequest(String email, String password) {
         this.email = email;
         this.password = password;
-        this.nickname = nickname;
     }
 
     public String getEmail() {
@@ -36,11 +31,7 @@ public class UserCreateRequest {
         return password;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public CreateUserCommand toCommand() {
-        return new CreateUserCommand(email, password, nickname);
+    public LoginSellerCommand toCommand() {
+        return new LoginSellerCommand(email, password);
     }
 }

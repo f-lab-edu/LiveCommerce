@@ -17,4 +17,4 @@ services:
     container_name: livecommerce_redis
     image: redis:7.0.5
     ports:
-      - 6379:6379
+      - 16379:6379

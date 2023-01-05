@@ -27,13 +27,13 @@ public class UserLoginProcessor {
         UserRepository userRepository,
         TokenGenerator tokenGenerator,
         TokenRepository tokenRepository,
-        PasswordEncryptor passwordEncryption,
+        PasswordEncryptor passwordEncryptor,
         TokenProperties tokenProperties
     ) {
         this.userRepository = userRepository;
         this.tokenGenerator = tokenGenerator;
         this.tokenRepository = tokenRepository;
-        this.passwordEncryption = passwordEncryption;
+        this.passwordEncryption = passwordEncryptor;
         this.tokenProperties = tokenProperties;
     }
 
