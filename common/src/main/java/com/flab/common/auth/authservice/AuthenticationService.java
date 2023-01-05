@@ -4,7 +4,7 @@ import com.flab.common.auth.AuthenticatedMember;
 
 public interface AuthenticationService {
 
-    void login(AuthenticatedMember loginMemberInfo);
+    String login(AuthenticatedMember loginMemberInfo);
 
     void logout();
 

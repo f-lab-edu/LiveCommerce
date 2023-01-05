@@ -8,6 +8,7 @@ import com.flab.seller.application.facade.SellerManager;
 import com.flab.seller.presentation.request.CreateSellerRequest;
 import com.flab.seller.presentation.request.LoginSellerRequest;
 import com.flab.seller.presentation.request.SellerEmailRequest;
+import com.flab.seller.presentation.response.LoginSellerResponse;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,9 +45,9 @@ public class SellerController {
         @RequestBody @Valid LoginSellerRequest loginSellerRequest
     ) {
         var loginSellerInfo = sellerManager.idAndPasswordCheck(loginSellerRequest.toCommand());
-        authenticationService.login(loginSellerInfo);
+        String sessionId = authenticationService.login(loginSellerInfo);
 
-        return CommonApiResponse.success(null);
+        return CommonApiResponse.success(new LoginSellerResponse(sessionId));
     }
 
     @LoginCheck(authority = Role.SELLER)
