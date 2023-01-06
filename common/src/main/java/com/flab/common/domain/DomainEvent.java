@@ -1,4 +1,3 @@
-
 package com.flab.common.domain;
 
 import java.time.LocalDateTime;

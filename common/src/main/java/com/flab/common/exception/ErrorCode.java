@@ -29,8 +29,15 @@ public enum ErrorCode {
     ALREADY_CANCELED("이미 취소된 주문입니다."),
     ALREADY_PAYED("이미 결제된 주문입니다."),
     ALREADY_COMPLETED("이미 완료된 주문입니다."),
-    NOT_MATCHED_AMOUNT("결제 금액과 주문 금액이 일치하지 않습니다.");
+    NOT_MATCHED_AMOUNT("결제 금액과 주문 금액이 일치하지 않습니다."),
 
+    //Inventory Error
+    NOT_ENOUGH_QUANTITY("재고 수량이 충분하지 않습니다."),
+    INVENTORY_REDUCE_FAIL("재고 감소에 실패했습니다."),
+    QUANTITY_CHANGE_FAIL("재고 변경에 실패했습니다."),
+    INVENTORY_SALE_CLOSE("판매 종료된 재고입니다."),
+    INVENTORY_STOCK_OUT("품절된 재고입니다."),
+    INVENTORY_NOT_FOUND("재고를 찾을 수 없습니다.");
 
 
     private final String message;
