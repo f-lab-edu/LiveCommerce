@@ -1,4 +1,4 @@
-package com.flab.user.domain;
+package com.flab.common.auth;
 
 public interface PasswordEncryptor {
 

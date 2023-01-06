@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 import com.flab.user.application.command.CreateUserCommand;
 import com.flab.user.domain.User;
-import com.flab.user.domain.exception.DuplicatedEmailException;
+import com.flab.user.domain.exception.DuplicatedUserEmailException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +33,6 @@ public class CreateUserProcessorTest {
         Throwable result = catchThrowable(() -> processor.execute(command));
 
         //Assert
-        assertThat(result.getClass()).isEqualTo(DuplicatedEmailException.class);
+        assertThat(result.getClass()).isEqualTo(DuplicatedUserEmailException.class);
     }
 }

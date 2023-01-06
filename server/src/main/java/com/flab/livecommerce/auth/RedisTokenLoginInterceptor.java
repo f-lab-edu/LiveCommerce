@@ -1,5 +1,9 @@
 package com.flab.livecommerce.auth;
 
+import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
+import static com.flab.common.auth.SessionConst.AUTH_STATUS;
+
+import com.flab.common.auth.Role;
 import com.flab.common.exception.AuthenticationException;
 import com.flab.user.domain.TokenRepository;
 import javax.servlet.http.HttpServletRequest;
@@ -8,11 +12,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-public class RedisSessionInterceptor implements HandlerInterceptor {
+public class RedisTokenLoginInterceptor implements HandlerInterceptor {
 
     private final TokenRepository tokenRepository;
 
-    public RedisSessionInterceptor(TokenRepository tokenRepository) {
+    public RedisTokenLoginInterceptor(TokenRepository tokenRepository) {
         this.tokenRepository = tokenRepository;
     }
 
@@ -23,7 +27,7 @@ public class RedisSessionInterceptor implements HandlerInterceptor {
         Object handler
     ) throws Exception {
 
-        if (handler instanceof HandlerMethod == false) {
+        if (!(handler instanceof HandlerMethod)) {
             return true;
         }
 
@@ -40,7 +44,8 @@ public class RedisSessionInterceptor implements HandlerInterceptor {
             tokenRepository.renewExpirationSec(authenticatedUser);
 
             //request 에 세션정보 담기
-            request.setAttribute("authSession", authenticatedUser);
+            request.setAttribute(AUTH_SESSION_MEMBER, authenticatedUser);
+            request.setAttribute(AUTH_STATUS, Role.USER);
         }
 
         return true;

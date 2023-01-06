@@ -1,13 +1,14 @@
 package com.flab.user.application;
 
-import com.flab.common.auth.AuthenticatedUser;
-import com.flab.user.domain.PasswordEncryptor;
+import com.flab.common.auth.AuthenticatedMember;
+import com.flab.common.auth.PasswordEncryptor;
 import com.flab.user.domain.TokenGenerator;
 import com.flab.user.domain.TokenRepository;
 import com.flab.user.domain.User;
 import com.flab.user.domain.UserRepository;
 import com.flab.user.domain.exception.InvalidUserException;
-import com.flab.user.domain.exception.PasswordNotMatchedException;
+import com.flab.user.domain.exception.UserPasswordNotMatchedException;
+import java.time.LocalDateTime;
 
 
 public class LoginUserProcessor {
@@ -15,20 +16,20 @@ public class LoginUserProcessor {
     private final UserRepository userRepository;
     private final TokenGenerator tokenGenerator;
     private final TokenRepository tokenRepository;
-    private final PasswordEncryptor passwordEncryption;
+    private final PasswordEncryptor passwordEncryptor;
     private final Long tokenExpirationSec;
 
     public LoginUserProcessor(
-        UserRepository userRepository,
-        TokenGenerator tokenGenerator,
-        TokenRepository tokenRepository,
-        PasswordEncryptor passwordEncryption,
-        Long tokenExpirationSec
+            UserRepository userRepository,
+            TokenGenerator tokenGenerator,
+            TokenRepository tokenRepository,
+            PasswordEncryptor passwordEncryptor,
+            Long tokenExpirationSec
     ) {
         this.userRepository = userRepository;
         this.tokenGenerator = tokenGenerator;
         this.tokenRepository = tokenRepository;
-        this.passwordEncryption = passwordEncryption;
+        this.passwordEncryptor = passwordEncryptor;
         this.tokenExpirationSec = tokenExpirationSec;
     }
 
@@ -40,26 +41,25 @@ public class LoginUserProcessor {
         }
 
         if (!passwordCheck(command, user)) {
-            throw new PasswordNotMatchedException();
+            throw new UserPasswordNotMatchedException();
         }
 
         var token = tokenGenerator.generate();
 
         tokenRepository.save(
-            AuthenticatedUser.create(
-                token,
-                user.getId(),
-                user.getEmail(),
-                user.getRole(),
-                tokenExpirationSec
-            )
+                new AuthenticatedMember.Builder(user.getId())
+                        .setAuthId(token)
+                        .setEmail(user.getEmail())
+                        .setRole(user.getRole())
+                        .setexpireAt(LocalDateTime.now().plusSeconds(tokenExpirationSec))
+                        .build()
         );
 
         return token;
     }
 
     private boolean passwordCheck(LoginCommand command, User loginUserInfo) {
-        return passwordEncryption.match(command.getPassword(), loginUserInfo.getPassword());
+        return passwordEncryptor.match(command.getPassword(), loginUserInfo.getPassword());
     }
 
     public static class LoginCommand {

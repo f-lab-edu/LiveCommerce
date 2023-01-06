@@ -1,6 +1,7 @@
 package com.flab.order.presentation;
 
-import com.flab.common.auth.AuthenticatedUser;
+import com.flab.common.auth.AuthenticatedMember;
+import com.flab.common.auth.Role;
 import com.flab.common.auth.annotation.Authentication;
 import com.flab.common.auth.annotation.LoginCheck;
 import com.flab.common.response.CommonApiResponse;
@@ -24,13 +25,13 @@ public class OrderController {
         this.orderManager = orderManager;
     }
 
-    @LoginCheck
+    @LoginCheck(authority = Role.USER)
     @PostMapping
     public CommonApiResponse createOrder(
-        @Authentication AuthenticatedUser user,
+        @Authentication AuthenticatedMember user,
         @RequestBody @Valid CreateOrderRequest request
     ) {
-        var order = orderManager.create(user.getUserId(), request.toCommand());
+        var order = orderManager.create(user.getId(), request.toCommand());
         return CommonApiResponse.success(order);
     }
 

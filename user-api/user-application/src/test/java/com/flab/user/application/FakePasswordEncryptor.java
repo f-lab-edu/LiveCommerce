@@ -1,6 +1,6 @@
 package com.flab.user.application;
 
-import com.flab.user.domain.PasswordEncryptor;
+import com.flab.common.auth.PasswordEncryptor;
 
 public final class FakePasswordEncryptor implements PasswordEncryptor {
 
