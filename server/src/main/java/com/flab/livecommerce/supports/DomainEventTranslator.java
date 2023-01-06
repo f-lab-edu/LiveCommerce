@@ -10,10 +10,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
-public final class DomainEventTranslator {
+public class DomainEventTranslator {
 
     private final ApplicationEventPublisher publisher;
 
@@ -21,6 +25,7 @@ public final class DomainEventTranslator {
         this.publisher = publisher;
     }
 
+    @Transactional
     @EventListener
     public void translate(PaymentCompletedEvent event) {
         publisher.publishEvent(
@@ -32,7 +37,9 @@ public final class DomainEventTranslator {
         );
     }
 
-    @EventListener
+    @Async
+    @Transactional
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void translate(OrderPayedEvent event) {
         List<ItemQuantity> itemQuantities = event.getItemQuantities()
             .stream()
