@@ -1,0 +1,9 @@
+//재고 판매 종료
+POST http://localhost:8080/api/v1/order
+Content-Type: application/json
+
+{
+  "inventoryIds" : [1,2,3]
+}
+
+

@@ -54,6 +54,10 @@ public class OrderLineItem {
         return id;
     }
 
+    public Long getItemId() {
+        return itemId;
+    }
+
     public Integer getOrderCount() {
         return orderCount;
     }

@@ -1,6 +1,6 @@
 package com.flab.user.infrastructure;
 
-import com.flab.common.auth.AuthenticatedUser;
+import com.flab.common.auth.AuthenticatedMember;
 import com.flab.user.domain.TokenRepository;
 import com.flab.user.infrastructure.persistence.redis.RedisTokenRepository;
 
@@ -13,18 +13,18 @@ public class TokenRepositoryAdapter implements TokenRepository {
     }
 
     @Override
-    public void save(AuthenticatedUser authenticatedUser) {
-        this.tokenRepository.save(authenticatedUser);
+    public void save(AuthenticatedMember authenticatedMember) {
+        this.tokenRepository.save(authenticatedMember);
     }
 
     @Override
-    public AuthenticatedUser findByToken(String token) {
+    public AuthenticatedMember findByToken(String token) {
         return this.tokenRepository.findByToken(token);
     }
 
     @Override
-    public void renewExpirationSec(AuthenticatedUser authenticatedUser) {
-        this.tokenRepository.renewExpirationSec(authenticatedUser);
+    public void renewExpirationSec(AuthenticatedMember authenticatedMember) {
+        this.tokenRepository.renewExpirationSec(authenticatedMember);
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.flab.livecommerce.auth;
 
 import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
 
-import com.flab.common.auth.AuthenticatedUser;
+import com.flab.common.auth.AuthenticatedMember;
 import com.flab.common.auth.annotation.Authentication;
 import com.flab.common.exception.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ public class AuthenticationArgumentResolver implements HandlerMethodArgumentReso
     public boolean supportsParameter(MethodParameter parameter) {
 
         boolean hasAuthentication = parameter.hasParameterAnnotation(Authentication.class);
-        boolean hasAuthenticatedUser = AuthenticatedUser.class
+        boolean hasAuthenticatedUser = AuthenticatedMember.class
             .isAssignableFrom(parameter.getParameterType());
 
         return hasAuthentication && hasAuthenticatedUser;
@@ -33,7 +33,8 @@ public class AuthenticationArgumentResolver implements HandlerMethodArgumentReso
     ) throws Exception {
 
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        var authSession = (AuthenticatedUser) request.getAttribute(AUTH_SESSION_MEMBER);
+
+        var authSession = (AuthenticatedMember) request.getAttribute(AUTH_SESSION_MEMBER);
 
         if (authSession == null) {
             throw new AuthenticationException();

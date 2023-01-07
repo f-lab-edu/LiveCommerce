@@ -1,6 +1,6 @@
 package com.flab.seller.domain;
 
-import com.flab.common.auth.AuthenticatedSeller;
+import com.flab.common.auth.AuthenticatedMember;
 import com.flab.common.auth.Role;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -63,7 +63,10 @@ public class Seller {
         return role;
     }
 
-    public AuthenticatedSeller toLoginInfo() {
-        return new AuthenticatedSeller(id, email, role);
+    public AuthenticatedMember toLoginInfo() {
+        return new AuthenticatedMember.Builder(id)
+                .setEmail(email)
+                .setRole(role)
+                .build();
     }
 }

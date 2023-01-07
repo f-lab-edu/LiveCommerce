@@ -4,6 +4,7 @@ import com.flab.order.application.CreateOrderProcessor;
 import com.flab.order.application.SearchOrderProcessor;
 import com.flab.order.application.command.CreateOrderCommand;
 import com.flab.order.domain.Order;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,7 +22,9 @@ public class OrderManager {
     }
 
     public Order create(Long userId, CreateOrderCommand command) {
-        return createOrderProcessor.execute(userId, command);
+        var order = createOrderProcessor.execute(userId, command);
+
+        return order;
     }
 
     public Order search(Long id) {
