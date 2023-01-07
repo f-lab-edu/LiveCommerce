@@ -1,6 +1,6 @@
 package com.flab.point.presentation;
 
-import com.flab.common.auth.AuthenticatedUser;
+import com.flab.common.auth.AuthenticatedMember;
 import com.flab.common.auth.Role;
 import com.flab.common.auth.annotation.Authentication;
 import com.flab.common.auth.annotation.LoginCheck;
@@ -26,8 +26,8 @@ public class PointController {
 
     @LoginCheck(authority = Role.USER)
     @GetMapping
-    public CommonApiResponse getPoints(@Authentication AuthenticatedUser user) {
-        var userPoints = pointManager.getPoints(user.getUserId());
+    public CommonApiResponse getPoints(@Authentication AuthenticatedMember user) {
+        var userPoints = pointManager.getPoints(user.getId());
         return CommonApiResponse.success(userPoints);
     }
 
@@ -35,10 +35,10 @@ public class PointController {
     @LoginCheck(authority = Role.USER)
     @PostMapping("/charging")
     public CommonApiResponse chargePoint(
-            @Authentication AuthenticatedUser user,
+            @Authentication AuthenticatedMember user,
             @RequestBody ChargePointRequest request
     ) {
-        pointManager.charge(user.getUserId(), request.toCommand());
+        pointManager.charge(user.getId(), request.toCommand());
         return CommonApiResponse.success(null);
     }
 }
