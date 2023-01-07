@@ -16,7 +16,7 @@ create table order_line_item
     id          bigint auto_increment primary key comment 'ID',
     order_id    bigint null comment 'order_id',
     item_id     bigint       not null comment '상품 ID',
-    order_count tinyint      not null comment '주문갯수',
+    order_count int          not null comment '주문갯수',
     name        varchar(255) not null comment '상품명',
     price       int(11) not null comment '상품 가격'
 );
