@@ -8,11 +8,12 @@ import com.flab.order.domain.event.OrderPayedEvent;
 import com.flab.payment.domain.PaymentCompletedEvent;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
@@ -20,12 +21,12 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class DomainEventTranslator {
 
     private final ApplicationEventPublisher publisher;
+    private static final Logger log = LoggerFactory.getLogger(DomainEventTranslator.class);
 
     public DomainEventTranslator(ApplicationEventPublisher publisher) {
         this.publisher = publisher;
     }
 
-    @Transactional
     @EventListener
     public void translate(PaymentCompletedEvent event) {
         publisher.publishEvent(
@@ -38,7 +39,6 @@ public class DomainEventTranslator {
     }
 
     @Async
-    @Transactional
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void translate(OrderPayedEvent event) {
         List<ItemQuantity> itemQuantities = event.getItemQuantities()
@@ -60,5 +60,4 @@ public class DomainEventTranslator {
             )
         );
     }
-
 }

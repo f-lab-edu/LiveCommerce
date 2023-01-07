@@ -40,6 +40,7 @@ public class OrderPayedProcessor {
         inventories.forEach(
             inventory -> {
                 try {
+                    log.info("재고감소 로직 수행");
                     inventory.orderReduce(itemQuantityMap.get(inventory.getItemId()));
                 } catch (BaseException e) {
                     log.error("error= ", e);
