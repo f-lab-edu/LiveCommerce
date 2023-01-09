@@ -3,7 +3,7 @@ package com.flab.livecommerce.supports;
 
 
 import com.flab.inventory.domain.ItemQuantity;
-import com.flab.order.domain.event.OrderPayedEvent;
+import com.flab.order.domain.event.OrderCompletedEvent;
 import com.flab.payment.domain.PaymentCompletedEvent;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +26,7 @@ public class DomainEventTranslator {
     @EventListener
     public void translate(PaymentCompletedEvent event) {
         publisher.publishEvent(
-            new com.flab.order.domain.event.PaymentCompletedEvent(
+            new com.flab.order.presentation.request.PaymentCompletedEvent(
                 event.getOrderId(),
                 event.getPayedAmount(),
                 event.getOccurredOn()
@@ -35,7 +35,7 @@ public class DomainEventTranslator {
     }
 
     @EventListener
-    public void translate(OrderPayedEvent event) {
+    public void translate(OrderCompletedEvent event) {
         List<ItemQuantity> itemQuantities = event.getItemQuantities()
             .stream()
             .map(item -> new ItemQuantity(item.getItemId(), item.getCount()))

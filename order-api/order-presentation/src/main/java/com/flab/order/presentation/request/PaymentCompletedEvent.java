@@ -1,6 +1,7 @@
-package com.flab.order.domain.event;
+package com.flab.order.presentation.request;
 
 import com.flab.common.domain.DomainEvent;
+import com.flab.order.application.command.PaymentCompletedCommand;
 import java.time.LocalDateTime;
 
 public final class PaymentCompletedEvent implements DomainEvent {
@@ -13,6 +14,10 @@ public final class PaymentCompletedEvent implements DomainEvent {
         this.orderId = orderId;
         this.payedAmount = payedAmount;
         this.occurredOn = occurredOn;
+    }
+
+    public PaymentCompletedCommand toCommand() {
+        return new PaymentCompletedCommand(orderId, payedAmount);
     }
 
     @Override
