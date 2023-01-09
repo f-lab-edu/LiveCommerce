@@ -1,11 +1,14 @@
 package com.flab.inventory.presentation.request;
 
 
+import static java.util.Comparator.comparing;
+
 import com.flab.common.domain.DomainEvent;
 import com.flab.inventory.application.command.OrderPayedCommand;
 import com.flab.inventory.domain.ItemQuantity;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class OrderPayedEvent implements DomainEvent {
 
@@ -28,7 +31,13 @@ public final class OrderPayedEvent implements DomainEvent {
     }
 
     public OrderPayedCommand toCommand() {
-        return new OrderPayedCommand(itemQuantities);
+        return new OrderPayedCommand(sortedItemQuantities());
+    }
+
+    private List<ItemQuantity> sortedItemQuantities() {
+        return this.itemQuantities.stream()
+            .sorted(comparing(ItemQuantity::getItemId))
+            .collect(Collectors.toList());
     }
 
     public Long getOrderId() {
