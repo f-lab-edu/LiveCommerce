@@ -12,6 +12,8 @@ public class SearchOrderProcessor {
     }
 
     public Order execute(Long id) {
+        //todo transactional 어노테이션, 조인쿼리 작성해서 가져오도록 수정
+        //반환타입은 Order 객체 그대로 반환하지 않도록 수정
         return orderRepository.findById(id);
     }
 }

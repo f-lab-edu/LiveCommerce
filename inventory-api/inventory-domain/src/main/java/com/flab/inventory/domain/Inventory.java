@@ -25,7 +25,6 @@ public class Inventory extends AbstractAggregateRoot {
     private SaleStatus saleStatus;
     private String itemName;
     private Integer quantity;
-
     @Enumerated(EnumType.STRING)
     private InventoryState inventoryState;
 
