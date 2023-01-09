@@ -3,6 +3,7 @@ package com.flab.livecommerce.supports;
 
 
 import com.flab.inventory.domain.ItemQuantity;
+import com.flab.inventory.domain.event.FailInventoryReducedEvent;
 import com.flab.order.domain.event.OrderCompletedEvent;
 import com.flab.payment.domain.PaymentCompletedEvent;
 import java.util.List;
@@ -46,6 +47,19 @@ public class DomainEventTranslator {
                 event.getOrderId(),
                 event.getUserId(),
                 itemQuantities,
+                event.getOccurredOn()
+            )
+        );
+    }
+
+    @EventListener
+    public void translate(FailInventoryReducedEvent event) {
+        publisher.publishEvent(
+            new com.flab.order.presentation.request.FailInventoryReducedEvent(
+                event.getInventoryId(),
+                null,
+                event.getQuantity(),
+                event.getItemName(),
                 event.getOccurredOn()
             )
         );
