@@ -3,6 +3,7 @@ package com.flab.livecommerce.supports;
 import java.util.concurrent.Executor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -47,4 +48,16 @@ public class AsyncConfig implements AsyncConfigurer {
         return taskExecutor;
     }
 
+    @Override
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+        return (ex, method, params) -> {
+            log.error(
+                "Method name : {}, param Count : {}, Exception Cause : {}",
+                method.getName(), params.length, ex.getMessage()
+            );
+            for (Object param : params) {
+                log.error("Parameter value : {}", param);
+            }
+        };
+    }
 }
