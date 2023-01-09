@@ -41,12 +41,10 @@ public class Order extends AbstractAggregateRoot {
     @JoinColumn(name = "order_id")
     private List<OrderLineItem> orderLineItems = new ArrayList<>();
 
-
     public enum OrderStatus {
         ORDER_CREATED("주문 생성"),
         ORDER_CANCELED("주문 취소"),
         ORDER_PAYED("주문 결제"),
-
         ORDER_COMPLETE("주문 완료");
 
         private final String description;
@@ -105,11 +103,7 @@ public class Order extends AbstractAggregateRoot {
             .sum();
     }
 
-    public static Order create(
-        Long userId,
-        String payMethod,
-        List<OrderLineItem> orderLineItems
-    ) {
+    public static Order create(Long userId, String payMethod, List<OrderLineItem> orderLineItems) {
         return new Order(userId, payMethod, OrderStatus.ORDER_CREATED, orderLineItems);
     }
 
@@ -139,7 +133,6 @@ public class Order extends AbstractAggregateRoot {
         return orderStatus;
     }
 
-
     public List<Long> getItemIds() {
         return this.orderLineItems.stream()
             .map(OrderLineItem::getItemId)
@@ -148,20 +141,13 @@ public class Order extends AbstractAggregateRoot {
 
     public List<ItemQuantity> getItemQuantities() {
         return this.orderLineItems.stream().map(
-            orderLineItem -> {
-                var itemQuantity = new ItemQuantity(
-                    orderLineItem.getItemId(),
-                    orderLineItem.getOrderCount()
-                );
-                return itemQuantity;
-            }
+            item -> new ItemQuantity(item.getItemId(), item.getOrderCount())
         ).collect(Collectors.toList());
     }
 
     public List<OrderLineItem> getOrderLineItems() {
         return orderLineItems;
     }
-
 
     public void setId(Long id) {
         this.id = id;
