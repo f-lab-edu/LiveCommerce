@@ -21,6 +21,6 @@ public class OrderRepositoryAdapter implements OrderRepository {
     @Override
     public Order findById(Long id) {
         return orderRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException());
+            .orElseThrow(EntityNotFoundException::new);
     }
 }
