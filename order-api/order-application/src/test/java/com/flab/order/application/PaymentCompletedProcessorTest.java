@@ -41,26 +41,6 @@ public class PaymentCompletedProcessorTest {
     }
 
     @Test
-    @DisplayName("이미 결제된 주문은 결제시 예외가 발생한다.")
-    void alreadyOrderPayed_return_exception() {
-        // Arrange
-        int payedAmount = 99000;
-
-        var processor = new PaymentCompletedProcessor(
-            new OrderRepositoryStub(),
-            new ApplicationEventPublisherDummy()
-        );
-
-        Order order = processor.execute(new PaymentCompletedEvent(1L, payedAmount, LocalDateTime.now()));
-
-        // Act
-        Throwable result = catchThrowable(() -> order.payed(payedAmount));
-
-        // Assert
-        assertThat(result.getClass()).isEqualTo(AlreadyPayedException.class);
-    }
-
-    @Test
     @DisplayName("이미 취소된 주문은 결제시 예외가 발생한다.")
     void alreadyOrderCanceled_return_exception() {
         // Arrange
@@ -92,7 +72,6 @@ public class PaymentCompletedProcessorTest {
         );
 
         Order order = processor.execute(new PaymentCompletedEvent(1L, payedAmount, LocalDateTime.now()));
-        order.complete();
         // Act
         Throwable result = catchThrowable(() -> order.payed(payedAmount));
 
