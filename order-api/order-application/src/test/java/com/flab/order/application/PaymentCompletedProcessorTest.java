@@ -3,17 +3,15 @@ package com.flab.order.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
+import com.flab.order.application.command.PaymentCompletedCommand;
 import com.flab.order.domain.Order;
 import com.flab.order.domain.OrderItemOption;
 import com.flab.order.domain.OrderItemOptionGroup;
 import com.flab.order.domain.OrderLineItem;
 import com.flab.order.domain.OrderRepository;
-import com.flab.order.domain.event.PaymentCompletedEvent;
 import com.flab.order.domain.exception.AlreadyCanceledException;
 import com.flab.order.domain.exception.AlreadyCompletedException;
-import com.flab.order.domain.exception.AlreadyPayedException;
 import com.flab.order.domain.exception.AmountNotMatchedException;
-import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +31,7 @@ public class PaymentCompletedProcessorTest {
 
         // Act
         Throwable result = catchThrowable(
-            () -> processor.execute(new PaymentCompletedEvent(1L, 99001, LocalDateTime.now())));
+            () -> processor.execute(new PaymentCompletedCommand(1L, 99001)));
 
         // Assert
         assertThat(result.getClass()).isEqualTo(AmountNotMatchedException.class);
@@ -51,7 +49,7 @@ public class PaymentCompletedProcessorTest {
             new ApplicationEventPublisherDummy()
         );
 
-        Order order = processor.execute(new PaymentCompletedEvent(1L, payedAmount, LocalDateTime.now()));
+        Order order = processor.execute(new PaymentCompletedCommand(1L, payedAmount));
         order.cancel();
         // Act
         Throwable result = catchThrowable(() -> order.payed(payedAmount));
@@ -71,7 +69,8 @@ public class PaymentCompletedProcessorTest {
             new ApplicationEventPublisherDummy()
         );
 
-        Order order = processor.execute(new PaymentCompletedEvent(1L, payedAmount, LocalDateTime.now()));
+        Order order = processor.execute(new PaymentCompletedCommand(1L, payedAmount));
+
         // Act
         Throwable result = catchThrowable(() -> order.payed(payedAmount));
 
