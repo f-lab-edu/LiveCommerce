@@ -1,7 +1,6 @@
 package com.flab.livecommerce.supports;
 
 
-import static java.util.Comparator.comparing;
 
 import com.flab.inventory.domain.ItemQuantity;
 import com.flab.order.domain.event.OrderPayedEvent;
@@ -12,10 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.event.TransactionPhase;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 public class DomainEventTranslator {
@@ -38,18 +34,12 @@ public class DomainEventTranslator {
         );
     }
 
-    @Async
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @EventListener
     public void translate(OrderPayedEvent event) {
         List<ItemQuantity> itemQuantities = event.getItemQuantities()
             .stream()
-            .sorted(comparing(com.flab.order.domain.ItemQuantity::getItemId))
-            .map(
-                payedItemInfo -> new ItemQuantity(
-                    payedItemInfo.getItemId(),
-                    payedItemInfo.getCount()
-                )
-            ).collect(Collectors.toList());
+            .map(item -> new ItemQuantity(item.getItemId(), item.getCount()))
+            .collect(Collectors.toList());
 
         publisher.publishEvent(
             new com.flab.inventory.presentation.request.OrderPayedEvent(

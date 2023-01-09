@@ -2,8 +2,9 @@ package com.flab.inventory.presentation;
 
 import com.flab.inventory.application.facade.InventoryManager;
 import com.flab.inventory.presentation.request.OrderPayedEvent;
-import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 public class InventoryEventHandler {
@@ -14,7 +15,8 @@ public class InventoryEventHandler {
         this.inventoryManager = inventoryManager;
     }
 
-    @EventListener
+    @Async
+    @TransactionalEventListener
     public void handle(OrderPayedEvent event) {
         inventoryManager.orderPayed(event.toCommand());
     }
