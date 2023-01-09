@@ -4,10 +4,8 @@ import com.flab.common.domain.AbstractAggregateRoot;
 import com.flab.order.domain.event.OrderCanceledEvent;
 import com.flab.order.domain.event.OrderCompletedEvent;
 import com.flab.order.domain.event.OrderCreatedEvent;
-import com.flab.order.domain.event.OrderPayedEvent;
 import com.flab.order.domain.exception.AlreadyCanceledException;
 import com.flab.order.domain.exception.AlreadyCompletedException;
-import com.flab.order.domain.exception.AlreadyPayedException;
 import com.flab.order.domain.exception.AmountNotMatchedException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -44,7 +42,6 @@ public class Order extends AbstractAggregateRoot {
     public enum OrderStatus {
         ORDER_CREATED("주문 생성"),
         ORDER_CANCELED("주문 취소"),
-        ORDER_PAYED("주문 결제"),
         ORDER_COMPLETE("주문 완료");
 
         private final String description;
@@ -75,8 +72,8 @@ public class Order extends AbstractAggregateRoot {
     public void payed(Integer payedAmount) {
         validPayedAmount(payedAmount);
         validOrderCanPayed();
-        this.orderStatus = OrderStatus.ORDER_PAYED;
-        registerEvent(new OrderPayedEvent(this));
+        this.orderStatus = OrderStatus.ORDER_COMPLETE;
+        registerEvent(new OrderCompletedEvent(this));
     }
 
     private void validPayedAmount(Integer payedAmount) {
@@ -86,9 +83,6 @@ public class Order extends AbstractAggregateRoot {
     }
 
     private void validOrderCanPayed() {
-        if (this.orderStatus == OrderStatus.ORDER_PAYED) {
-            throw new AlreadyPayedException("이미 결제된 주문입니다..");
-        }
         if (this.orderStatus == OrderStatus.ORDER_CANCELED) {
             throw new AlreadyCanceledException("이미 취소된 주문입니다.");
         }
@@ -110,11 +104,6 @@ public class Order extends AbstractAggregateRoot {
     public void cancel() {
         this.orderStatus = OrderStatus.ORDER_CANCELED;
         registerEvent(new OrderCanceledEvent(this));
-    }
-
-    public void complete() {
-        this.orderStatus = OrderStatus.ORDER_COMPLETE;
-        registerEvent(new OrderCompletedEvent(this));
     }
 
     public Long getId() {
