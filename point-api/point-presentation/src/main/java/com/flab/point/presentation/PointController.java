@@ -8,6 +8,8 @@ import com.flab.common.response.CommonApiResponse;
 import com.flab.point.application.facade.PointManager;
 import com.flab.point.presentation.request.ChargePointRequest;
 import com.flab.point.presentation.request.ReducePointRequest;
+import com.flab.point.presentation.response.ChargePointResponse;
+import com.flab.point.presentation.response.GetPointResponse;
 import com.flab.point.presentation.response.ReducePointResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +33,7 @@ public class PointController {
     public CommonApiResponse getPoints(@Authentication AuthenticatedMember user) {
         var userPoints = pointManager.getPoints(user.getId());
 
-        return CommonApiResponse.success(userPoints);
+        return CommonApiResponse.success(new GetPointResponse(userPoints));
     }
 
     // TODO 이후 작업) 결제 모듈 연결
@@ -41,9 +43,9 @@ public class PointController {
             @Authentication AuthenticatedMember user,
             @RequestBody ChargePointRequest request
     ) {
-        pointManager.charge(user.getId(), request.toCommand());
+        Long totalPoints = pointManager.charge(user.getId(), request.toCommand());
 
-        return CommonApiResponse.success(null);
+        return CommonApiResponse.success(new ChargePointResponse(totalPoints));
     }
 
     @PostMapping("/reduce")

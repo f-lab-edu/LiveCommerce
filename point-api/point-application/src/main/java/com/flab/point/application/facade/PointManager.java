@@ -29,8 +29,8 @@ public class PointManager {
         return getUserPointProcessor.execute(userId);
     }
 
-    public void charge(Long userId, ChargePointCommand command) {
-        chargePointProcessor.execute(userId, command);
+    public Long charge(Long userId, ChargePointCommand command) {
+        return chargePointProcessor.execute(userId, command);
     }
 
     public Long reduce(Long userId, ReducePointCommand command) {

@@ -52,7 +52,7 @@ public class Point {
     }
 
     // 추가 (적립, 충전)
-    public void add(
+    public Long add(
             Long addedAmount,
             PointCategory pointCategory
     ) {
@@ -65,6 +65,8 @@ public class Point {
                         pointCategory
                 )
         );
+
+        return totalAmount;
     }
 
     // 포인트 사용
