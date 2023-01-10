@@ -2,10 +2,16 @@ package com.flab.point.domain;
 
 import com.flab.point.domain.exception.ReducePointException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /*
@@ -28,7 +34,9 @@ public class Point {
     private Long totalAmount;
     private LocalDateTime registerAt;
     private LocalDateTime updatedAt;
-
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "point_id")
+    private final List<PointTransaction> pointTransactions = new ArrayList<>();
 
     protected Point() {
     }
@@ -50,21 +58,42 @@ public class Point {
     ) {
         this.totalAmount += addedAmount;
         this.updatedAt = LocalDateTime.now();
-        PointTransaction.add(this, totalAmount, pointCategory);
+        this.pointTransactions.add(
+                PointTransaction.add(
+                        this,
+                        addedAmount,
+                        pointCategory
+                )
+        );
     }
 
     // 포인트 사용
-    public void reduce(
+    public Long reduce(
             Long reducedAmount
     ) {
         if (this.totalAmount - reducedAmount < 0) {
             throw new ReducePointException();
         }
 
-        PointTransaction.reduce(reducedAmount);
+        var pointTransactionList = getValidPointTransactions();
+
+        Long remainAmount = reducedAmount;
+        while (remainAmount > 0) {
+            for (PointTransaction ptx : pointTransactionList) {
+                remainAmount = ptx.reduce(remainAmount);
+            }
+        }
+
+        this.updatedAt = LocalDateTime.now();
 
         this.totalAmount -= reducedAmount;
-        this.updatedAt = LocalDateTime.now();
+        return this.totalAmount;
+    }
+
+    private List<PointTransaction> getValidPointTransactions() {
+        return this.pointTransactions.stream()
+                    .filter(ptx -> ptx.isStatus() && ptx.getExpireAt().isAfter(LocalDateTime.now()))
+                    .collect(Collectors.toList());
     }
 
     public Long getId() {

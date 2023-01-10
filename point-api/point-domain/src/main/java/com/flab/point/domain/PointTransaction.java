@@ -19,7 +19,6 @@ public class PointTransaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
-    private Long pointId;
     @Enumerated(EnumType.STRING)
     private PointCategory pointCategory;
     private Long amount;
@@ -32,12 +31,10 @@ public class PointTransaction {
 
     public PointTransaction(
             Long userId,
-            Long pointId,
             PointCategory pointCategory,
             Long amount
     ) {
         this.userId = userId;
-        this.pointId = pointId;
         this.pointCategory = pointCategory;
         this.amount = amount;
         this.transactAt = LocalDateTime.now();
@@ -45,12 +42,20 @@ public class PointTransaction {
         this.status = true;
     }
 
-    public static void add(Point point, Long amount, PointCategory pointCategory) {
-        new PointTransaction(point.getUserId(), point.getId(), pointCategory, amount);
+    public static PointTransaction add(Point point, Long amount, PointCategory pointCategory) {
+        return new PointTransaction(point.getUserId(), pointCategory, amount);
     }
 
-    public static void reduce(Long reducedAmount) {
-
+    public Long reduce(Long reducedAmount) {
+        if (this.amount <= reducedAmount) {
+            this.amount = 0L;
+            this.status = false;
+            reducedAmount -= this.amount;
+        } else {
+            this.amount -= reducedAmount;
+            reducedAmount = 0L;
+        }
+        return reducedAmount;
     }
 
     // TODO 추후 주문 상품별, 이벤트별 만료 기간 설정. 현재는 적립시 적립 일자 + 한달로 설정
@@ -59,5 +64,19 @@ public class PointTransaction {
         return LocalDateTime.now().plusMonths(1);
     }
 
+    public PointCategory getPointCategory() {
+        return pointCategory;
+    }
 
+    public Long getAmount() {
+        return amount;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public LocalDateTime getExpireAt() {
+        return expireAt;
+    }
 }
