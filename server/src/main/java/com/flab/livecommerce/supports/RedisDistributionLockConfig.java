@@ -27,6 +27,8 @@ public class RedisDistributionLockConfig {
     @Value("${spring.redis.lock.port}")
     private int redissonPort;
 
+    private static final String REDISSON_HOST_PREFIX = "redis://";
+
     @Bean
     public RedissonConnectionFactory redissonConnectionFactory(RedissonClient redisson) {
         return new RedissonConnectionFactory(redisson);
@@ -36,7 +38,7 @@ public class RedisDistributionLockConfig {
     public RedissonClient redisson() {
         Config config = new Config();
         config.useSingleServer()
-                .setAddress(redissonHost + ":" + redissonPort);
+                .setAddress(REDISSON_HOST_PREFIX + redissonHost + ":" + redissonPort);
         return Redisson.create(config);
     }
 }
