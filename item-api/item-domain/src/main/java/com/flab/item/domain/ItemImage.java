@@ -4,12 +4,9 @@ package com.flab.item.domain;
 public class ItemImage {
 
     private Long id;
-
     private String name;
-
     private String url;
-
-    private Long  itemId;
+    private Long itemId;
 
     protected ItemImage() {
     }
