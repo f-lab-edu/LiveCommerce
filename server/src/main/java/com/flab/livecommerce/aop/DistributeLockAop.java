@@ -28,6 +28,7 @@ public class DistributeLockAop {
     public Object lock(final ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
+
         DistributedLock distributedLock = method.getAnnotation(DistributedLock.class);
 
         // TODO
@@ -36,7 +37,7 @@ public class DistributeLockAop {
         RLock lock = redissonClient.getLock(key);
 
         try {
-            boolean available = lock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(), distributedLock.timeUnit());    // (4)
+            boolean available = lock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(), distributedLock.timeUnit());
             if (!available) {
                 return false;
             }
