@@ -15,7 +15,7 @@ public class ItemRepositoryAdapter implements ItemRepository {
 
     @Override
     public Item save(Item item) {
-        return null;
+        return itemRepository.save(item);
     }
 
     @Override
