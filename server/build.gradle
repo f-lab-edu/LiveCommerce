@@ -8,9 +8,9 @@ dependencies {
 	implementation project(path: ':user-api:user-infrastructure', configuration: 'default')
 	implementation project(path: ':seller-api:seller-infrastructure', configuration: 'default')
 	implementation project(path: ':item-api:item-infrastructure', configuration: 'default')
+	implementation project(path: ':point-api:point-infrastructure', configuration: 'default')
 	implementation project(path: ':inventory-api:inventory-infrastructure', configuration: 'default')
 	implementation project(path: ':payment-api:payment-infrastructure', configuration: 'default')
-
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -25,6 +25,7 @@ dependencies {
 	implementation 'org.flywaydb:flyway-mysql'
 	// redis
 	implementation "org.springframework.boot:spring-boot-starter-data-redis"
+	implementation 'org.redisson:redisson-spring-boot-starter:3.17.4'
 }
 
 tasks.getByName('bootJar') {

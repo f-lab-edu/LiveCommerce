@@ -31,13 +31,19 @@ include(
         'order-api:order-infrastructure'
 )
 include(
+        'point-api',
+        'point-api:point-domain',
+        'point-api:point-application',
+        'point-api:point-presentation',
+        'point-api:point-infrastructure'
+)
+include(
         'inventory-api',
         'inventory-api:inventory-domain',
         'inventory-api:inventory-application',
         'inventory-api:inventory-presentation',
         'inventory-api:inventory-infrastructure'
 )
-
 include(
         'payment-api',
         'payment-api:payment-domain',

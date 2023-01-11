@@ -25,9 +25,11 @@ spring:
       location: C:\Temp\
 
   redis:
-    session:
       host: localhost
-      port: 16379
+      session:
+        port: 16379
+      lock:
+        port: 26379
 
   jpa:
     hibernate:

@@ -33,6 +33,7 @@ public class AuthenticationArgumentResolver implements HandlerMethodArgumentReso
     ) throws Exception {
 
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
+
         var authSession = (AuthenticatedMember) request.getAttribute(AUTH_SESSION_MEMBER);
 
         if (authSession == null) {
