@@ -5,16 +5,14 @@ import com.flab.common.exception.ErrorCode;
 import java.util.Arrays;
 
 public enum Role {
-    UNAUTH, USER, SELLER;
+    UNAUTH,
+    USER,
+    SELLER;
 
-    public void valid(Role memberRole) { // request
-        Role inputRole = Arrays.stream(Role.values())
-                .filter(role -> role.equals(memberRole))
-                .findFirst()
-                .orElse(null);
-
-        if (this != inputRole) {
-            throw new AuthorizationException(ErrorCode.UNAUTHORIZED_ROLE);
-        }
+    public static Role valid(String role) {
+        return Arrays.stream(Role.values())
+            .filter(r -> r.name().equals(role))
+            .findFirst()
+            .orElseThrow(() -> new AuthorizationException(ErrorCode.UNAUTHORIZED_ROLE));
     }
 }

@@ -15,10 +15,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 public class LoginCheckInterceptor implements HandlerInterceptor {
 
-    private static Role getMemberRole(HttpServletRequest request) {
-        return (Role) request.getAttribute(AUTH_STATUS);
-    }
-
     @Override
     public boolean preHandle(
             HttpServletRequest request,
@@ -36,15 +32,13 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        Role authority = loginCheck.authority();
-
-        authority.valid(getMemberRole(request));
-
         var authMember = (AuthenticatedMember) request.getAttribute(AUTH_SESSION_MEMBER);
 
         if (authMember == null) {
             throw new AuthenticationException();
         }
+
+        Role.valid(authMember.getRole().name());
 
         return true;
     }
