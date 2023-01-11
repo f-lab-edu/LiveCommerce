@@ -42,10 +42,7 @@ public class RedisTokenLoginInterceptor implements HandlerInterceptor {
             }
 
             tokenRepository.renewExpirationSec(authenticatedUser);
-
-            //request 에 세션정보 담기
             request.setAttribute(AUTH_SESSION_MEMBER, authenticatedUser);
-            request.setAttribute(AUTH_STATUS, Role.USER);
         }
 
         return true;
