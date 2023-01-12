@@ -1,8 +1,8 @@
 package com.flab.order.application;
 
+import com.flab.order.application.command.PaymentCompletedCommand;
 import com.flab.order.domain.Order;
 import com.flab.order.domain.OrderRepository;
-import com.flab.order.domain.event.PaymentCompletedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
@@ -23,7 +23,7 @@ public class PaymentCompletedProcessor {
     }
 
     @Transactional
-    public Order execute(PaymentCompletedEvent event) {
+    public Order execute(PaymentCompletedCommand event) {
         var order = orderRepository.findById(event.getOrderId());
         order.payed(event.getPayedAmount());
         order.pollAllEvents().forEach(publisher::publishEvent);

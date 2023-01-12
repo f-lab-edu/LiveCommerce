@@ -70,7 +70,7 @@ class SearchOrderProcessorTest {
             return data.values().stream()
                 .filter(order -> order.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException());
+                .orElseThrow(EntityNotFoundException::new);
         }
     }
 

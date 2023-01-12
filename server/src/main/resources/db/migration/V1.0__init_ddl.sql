@@ -23,7 +23,7 @@ create table item
 create table item_option_group
 (
     id             bigint auto_increment primary key comment 'ID',
-    item_id        bigint      not null comment '상품 ID',
+    item_id        bigint null comment '상품 ID',
     ordering       tinyint(3) not null comment '정렬순서',
     name           varchar(30) not null comment '옵션그룹명',
     basic          bit         not null comment '기본 옵션',
@@ -36,7 +36,7 @@ create table item_option_group
 create table item_option
 (
     id                   bigint auto_increment primary key comment 'ID',
-    item_option_group_id bigint      not null comment '상품 옵션 그룹 ID',
+    item_option_group_id bigint null comment '상품 옵션 그룹 ID',
     ordering             tinyint(3) not null comment '정렬순서',
     name                 varchar(30) not null comment '옵션명',
     price                int(11) not null comment '상품 옵션 가격'

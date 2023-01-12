@@ -3,7 +3,8 @@ package com.flab.livecommerce.supports;
 
 
 import com.flab.inventory.domain.ItemQuantity;
-import com.flab.order.domain.event.OrderPayedEvent;
+import com.flab.inventory.domain.event.FailInventoryReducedEvent;
+import com.flab.order.domain.event.OrderCompletedEvent;
 import com.flab.payment.domain.PaymentCompletedEvent;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public class DomainEventTranslator {
     @EventListener
     public void translate(PaymentCompletedEvent event) {
         publisher.publishEvent(
-            new com.flab.order.domain.event.PaymentCompletedEvent(
+            new com.flab.order.presentation.request.PaymentCompletedEvent(
                 event.getOrderId(),
                 event.getPayedAmount(),
                 event.getOccurredOn()
@@ -35,7 +36,7 @@ public class DomainEventTranslator {
     }
 
     @EventListener
-    public void translate(OrderPayedEvent event) {
+    public void translate(OrderCompletedEvent event) {
         List<ItemQuantity> itemQuantities = event.getItemQuantities()
             .stream()
             .map(item -> new ItemQuantity(item.getItemId(), item.getCount()))
@@ -46,6 +47,19 @@ public class DomainEventTranslator {
                 event.getOrderId(),
                 event.getUserId(),
                 itemQuantities,
+                event.getOccurredOn()
+            )
+        );
+    }
+
+    @EventListener
+    public void translate(FailInventoryReducedEvent event) {
+        publisher.publishEvent(
+            new com.flab.order.presentation.request.FailInventoryReducedEvent(
+                event.getInventoryId(),
+                null,
+                event.getQuantity(),
+                event.getItemName(),
                 event.getOccurredOn()
             )
         );

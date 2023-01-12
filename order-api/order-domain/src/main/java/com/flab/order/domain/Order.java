@@ -4,10 +4,8 @@ import com.flab.common.domain.AbstractAggregateRoot;
 import com.flab.order.domain.event.OrderCanceledEvent;
 import com.flab.order.domain.event.OrderCompletedEvent;
 import com.flab.order.domain.event.OrderCreatedEvent;
-import com.flab.order.domain.event.OrderPayedEvent;
 import com.flab.order.domain.exception.AlreadyCanceledException;
 import com.flab.order.domain.exception.AlreadyCompletedException;
-import com.flab.order.domain.exception.AlreadyPayedException;
 import com.flab.order.domain.exception.AmountNotMatchedException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -41,12 +39,9 @@ public class Order extends AbstractAggregateRoot {
     @JoinColumn(name = "order_id")
     private List<OrderLineItem> orderLineItems = new ArrayList<>();
 
-
     public enum OrderStatus {
         ORDER_CREATED("주문 생성"),
         ORDER_CANCELED("주문 취소"),
-        ORDER_PAYED("주문 결제"),
-
         ORDER_COMPLETE("주문 완료");
 
         private final String description;
@@ -77,8 +72,8 @@ public class Order extends AbstractAggregateRoot {
     public void payed(Integer payedAmount) {
         validPayedAmount(payedAmount);
         validOrderCanPayed();
-        this.orderStatus = OrderStatus.ORDER_PAYED;
-        registerEvent(new OrderPayedEvent(this));
+        this.orderStatus = OrderStatus.ORDER_COMPLETE;
+        registerEvent(new OrderCompletedEvent(this));
     }
 
     private void validPayedAmount(Integer payedAmount) {
@@ -88,9 +83,6 @@ public class Order extends AbstractAggregateRoot {
     }
 
     private void validOrderCanPayed() {
-        if (this.orderStatus == OrderStatus.ORDER_PAYED) {
-            throw new AlreadyPayedException("이미 결제된 주문입니다..");
-        }
         if (this.orderStatus == OrderStatus.ORDER_CANCELED) {
             throw new AlreadyCanceledException("이미 취소된 주문입니다.");
         }
@@ -105,22 +97,13 @@ public class Order extends AbstractAggregateRoot {
             .sum();
     }
 
-    public static Order create(
-        Long userId,
-        String payMethod,
-        List<OrderLineItem> orderLineItems
-    ) {
+    public static Order create(Long userId, String payMethod, List<OrderLineItem> orderLineItems) {
         return new Order(userId, payMethod, OrderStatus.ORDER_CREATED, orderLineItems);
     }
 
     public void cancel() {
         this.orderStatus = OrderStatus.ORDER_CANCELED;
         registerEvent(new OrderCanceledEvent(this));
-    }
-
-    public void complete() {
-        this.orderStatus = OrderStatus.ORDER_COMPLETE;
-        registerEvent(new OrderCompletedEvent(this));
     }
 
     public Long getId() {
@@ -139,7 +122,6 @@ public class Order extends AbstractAggregateRoot {
         return orderStatus;
     }
 
-
     public List<Long> getItemIds() {
         return this.orderLineItems.stream()
             .map(OrderLineItem::getItemId)
@@ -148,20 +130,13 @@ public class Order extends AbstractAggregateRoot {
 
     public List<ItemQuantity> getItemQuantities() {
         return this.orderLineItems.stream().map(
-            orderLineItem -> {
-                var itemQuantity = new ItemQuantity(
-                    orderLineItem.getItemId(),
-                    orderLineItem.getOrderCount()
-                );
-                return itemQuantity;
-            }
+            item -> new ItemQuantity(item.getItemId(), item.getOrderCount())
         ).collect(Collectors.toList());
     }
 
     public List<OrderLineItem> getOrderLineItems() {
         return orderLineItems;
     }
-
 
     public void setId(Long id) {
         this.id = id;

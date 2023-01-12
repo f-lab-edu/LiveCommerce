@@ -1,18 +1,24 @@
 package com.flab.item.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class ItemOption {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long itemOptionGroupId;
     private String name;
     private Integer ordering;
-    private Long price;
+    private Integer price;
 
     protected ItemOption() {
     }
 
-    public ItemOption(Long itemOptionGroupId, String name, Integer ordering, Long price) {
-        this.itemOptionGroupId = itemOptionGroupId;
+    public ItemOption(String name, Integer ordering, Integer price) {
         this.name = name;
         this.ordering = ordering;
         this.price = price;
@@ -26,10 +32,6 @@ public class ItemOption {
         return id;
     }
 
-    public Long getItemOptionGroupId() {
-        return itemOptionGroupId;
-    }
-
     public String getName() {
         return name;
     }
@@ -38,7 +40,7 @@ public class ItemOption {
         return ordering;
     }
 
-    public Long getPrice() {
+    public Integer getPrice() {
         return price;
     }
 }

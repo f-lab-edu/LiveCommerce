@@ -21,7 +21,6 @@ public class CreateOrderProcessor {
 
     @Transactional
     public Order execute(Long userId, CreateOrderCommand command) {
-
         var order = Order.create(userId, command.getPayMethod(), command.toLineItems());
         //todo 주문 검증 (상품 정보 변화)
         //validator(order)
