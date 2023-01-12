@@ -23,9 +23,9 @@ public class PaymentCompletedProcessor {
     }
 
     @Transactional
-    public Order execute(PaymentCompletedCommand event) {
-        var order = orderRepository.findById(event.getOrderId());
-        order.payed(event.getPayedAmount());
+    public Order execute(PaymentCompletedCommand command) {
+        var order = orderRepository.findById(command.getOrderId());
+        order.payed(command.getPayedAmount());
         order.pollAllEvents().forEach(publisher::publishEvent);
         //todo Entity 직접 반환하지 않고 변환해서 반환하도록 만들기
         return order;
