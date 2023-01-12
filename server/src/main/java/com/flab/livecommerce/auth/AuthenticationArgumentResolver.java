@@ -18,10 +18,10 @@ public class AuthenticationArgumentResolver implements HandlerMethodArgumentReso
     public boolean supportsParameter(MethodParameter parameter) {
 
         boolean hasAuthentication = parameter.hasParameterAnnotation(Authentication.class);
-        boolean hasAuthenticatedUser = AuthenticatedMember.class
+        boolean hasAuthenticatedMember = AuthenticatedMember.class
             .isAssignableFrom(parameter.getParameterType());
 
-        return hasAuthentication && hasAuthenticatedUser;
+        return hasAuthentication && hasAuthenticatedMember;
     }
 
     @Override

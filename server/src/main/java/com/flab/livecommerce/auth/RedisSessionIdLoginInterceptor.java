@@ -45,7 +45,6 @@ public class RedisSessionIdLoginInterceptor implements HandlerInterceptor {
 
             sessionRepository.renewExpirationSec(authenticatedSeller);
             request.setAttribute(AUTH_SESSION_MEMBER, authenticatedSeller);
-            request.setAttribute(AUTH_STATUS, Role.SELLER);
         }
 
         return true;
