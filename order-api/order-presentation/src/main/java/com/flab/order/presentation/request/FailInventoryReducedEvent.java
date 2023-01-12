@@ -12,9 +12,13 @@ public final class FailInventoryReducedEvent implements DomainEvent {
     private final String itemName;
     private final LocalDateTime occurredOn;
 
-    public FailInventoryReducedEvent(Long inventoryId, Long orderId, Integer quantity,
+    public FailInventoryReducedEvent(
+        Long inventoryId,
+        Long orderId,
+        Integer quantity,
         String itemName,
-        LocalDateTime occurredOn) {
+        LocalDateTime occurredOn
+    ) {
         this.inventoryId = inventoryId;
         this.orderId = orderId;
         this.quantity = quantity;

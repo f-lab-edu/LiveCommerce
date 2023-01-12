@@ -1,7 +1,5 @@
 package com.flab.livecommerce.supports;
 
-
-
 import com.flab.inventory.domain.ItemQuantity;
 import com.flab.inventory.domain.event.FailInventoryReducedEvent;
 import com.flab.order.domain.event.OrderCompletedEvent;
