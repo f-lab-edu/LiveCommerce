@@ -28,7 +28,7 @@ public class RegisterItemRequest {
     @Valid
     private List<RegisterItemOptionGroupRequest> itemOptionGroups;
 
-    protected RegisterItemRequest() {
+    private RegisterItemRequest() {
     }
 
     public RegisterItemCommand toCommand() {

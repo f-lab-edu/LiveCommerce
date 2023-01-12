@@ -15,8 +15,6 @@ public class ItemManager {
     }
 
     public Item register(Long sellerId, RegisterItemCommand command) {
-        registerItemProcessor.execute(sellerId, command);
-
-        return null;
+        return registerItemProcessor.execute(sellerId, command);
     }
 }

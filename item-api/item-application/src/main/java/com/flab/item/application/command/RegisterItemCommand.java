@@ -27,6 +27,9 @@ public class RegisterItemCommand {
         this.itemOptionGroup = itemOptionGroup;
     }
 
+    private RegisterItemCommand() {
+    }
+
     public List<ItemOptionGroup> toOptionGroups() {
         return this.itemOptionGroup.stream().map(
             optionGroupCommand -> new ItemOptionGroup(

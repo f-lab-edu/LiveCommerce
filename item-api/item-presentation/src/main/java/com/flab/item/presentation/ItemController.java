@@ -30,7 +30,7 @@ public class ItemController {
         @RequestBody @Valid RegisterItemRequest request
     ) {
         itemManager.register(seller.getId(), request.toCommand());
-        return CommonApiResponse.success(null);
+        return CommonApiResponse.success("OK");
     }
 
 }

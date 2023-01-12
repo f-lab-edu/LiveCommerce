@@ -18,7 +18,7 @@ public class RegisterItemOptionGroupCommand {
         this.itemOptions = itemOptions;
     }
 
-    protected RegisterItemOptionGroupCommand() {
+    private RegisterItemOptionGroupCommand() {
     }
 
     public Integer getOrdering() {

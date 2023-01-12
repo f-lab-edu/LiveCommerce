@@ -22,7 +22,7 @@ public class RegisterItemOptionRequest {
         this.price = price;
     }
 
-    protected RegisterItemOptionRequest() {
+    private RegisterItemOptionRequest() {
     }
 
     public Integer getOrdering() {

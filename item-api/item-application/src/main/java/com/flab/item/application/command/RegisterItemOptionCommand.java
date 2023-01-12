@@ -12,6 +12,9 @@ public class RegisterItemOptionCommand {
         this.price = price;
     }
 
+    private RegisterItemOptionCommand() {
+    }
+
     public String getName() {
         return name;
     }

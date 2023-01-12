@@ -26,7 +26,7 @@ public class RegisterItemOptionGroupRequest {
         this.itemOptions = itemOptions;
     }
 
-    protected RegisterItemOptionGroupRequest() {
+    private RegisterItemOptionGroupRequest() {
     }
 
     public Integer getOrdering() {

@@ -27,6 +27,6 @@ public class RegisterItemProcessor {
         );
         itemRepository.save(item);
 
-        return null;
+        return item;
     }
 }
