@@ -11,7 +11,6 @@ public final class OrderCompletedEvent implements DomainEvent {
     private final Long orderId;
     private final Long userId;
     private final Integer totalAmount;
-    private final List<Long> items;
     private final List<ItemQuantity> itemQuantities;
     private final LocalDateTime occurredOn;
 
@@ -19,7 +18,6 @@ public final class OrderCompletedEvent implements DomainEvent {
         this.orderId = order.getId();
         this.userId = order.getUserId();
         this.totalAmount = order.getTotalAmount();
-        this.items = order.getItemIds();
         this.itemQuantities = order.getItemQuantities();
         this.occurredOn = LocalDateTime.now();
     }
@@ -38,10 +36,6 @@ public final class OrderCompletedEvent implements DomainEvent {
 
     public Integer getTotalAmount() {
         return totalAmount;
-    }
-
-    public List<Long> getItems() {
-        return items;
     }
 
     public List<ItemQuantity> getItemQuantities() {

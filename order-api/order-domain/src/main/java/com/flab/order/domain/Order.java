@@ -72,6 +72,10 @@ public class Order extends AbstractAggregateRoot {
         registerEvent(new OrderCreatedEvent(this));
     }
 
+    public static Order create(Long userId, String payMethod, List<OrderLineItem> orderLineItems) {
+        return new Order(userId, payMethod, OrderStatus.ORDER_CREATED, orderLineItems);
+    }
+
     public void payed(Integer payedAmount) {
         validPayedAmount(payedAmount);
         validOrderCanPayed();
@@ -116,10 +120,6 @@ public class Order extends AbstractAggregateRoot {
         return orderLineItems.stream()
             .mapToInt(OrderLineItem::calculateTotalAmount)
             .sum();
-    }
-
-    public static Order create(Long userId, String payMethod, List<OrderLineItem> orderLineItems) {
-        return new Order(userId, payMethod, OrderStatus.ORDER_CREATED, orderLineItems);
     }
 
     public void cancel() {

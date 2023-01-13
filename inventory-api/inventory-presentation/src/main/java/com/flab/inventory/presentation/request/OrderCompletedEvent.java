@@ -4,34 +4,27 @@ package com.flab.inventory.presentation.request;
 import static java.util.Comparator.comparing;
 
 import com.flab.common.domain.DomainEvent;
-import com.flab.inventory.application.command.OrderPayedCommand;
+import com.flab.inventory.application.command.OrderCompletedCommand;
 import com.flab.inventory.domain.ItemQuantity;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class OrderPayedEvent implements DomainEvent {
+public final class OrderCompletedEvent implements DomainEvent {
 
-    private final Long orderId;
-    private final Long userId;
-    //todo 도메인 의존하는데 어떻게 처리해야할지 고민해봐야 함
     private final List<ItemQuantity> itemQuantities;
     private final LocalDateTime occurredOn;
 
-    public OrderPayedEvent(
-        Long orderId,
-        Long userId,
+    public OrderCompletedEvent(
         List<ItemQuantity> itemQuantities,
         LocalDateTime occurredOn
     ) {
-        this.orderId = orderId;
-        this.userId = userId;
         this.itemQuantities = itemQuantities;
         this.occurredOn = occurredOn;
     }
 
-    public OrderPayedCommand toCommand() {
-        return new OrderPayedCommand(sortedItemQuantities());
+    public OrderCompletedCommand toCommand() {
+        return new OrderCompletedCommand(sortedItemQuantities());
     }
 
     private List<ItemQuantity> sortedItemQuantities() {
@@ -40,15 +33,7 @@ public final class OrderPayedEvent implements DomainEvent {
             .collect(Collectors.toList());
     }
 
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public List<ItemQuantity> getPayedItemInfos() {
+    public List<ItemQuantity> getItemQuantities() {
         return itemQuantities;
     }
 

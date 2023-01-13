@@ -8,7 +8,7 @@ import com.flab.inventory.application.ReduceInventoryProcessor;
 import com.flab.inventory.application.command.CloseInventoryCommand;
 import com.flab.inventory.application.command.IncreaseInventoryCommand;
 import com.flab.inventory.application.command.OpenInventoryCommand;
-import com.flab.inventory.application.command.OrderPayedCommand;
+import com.flab.inventory.application.command.OrderCompletedCommand;
 import com.flab.inventory.application.command.ReduceInventoryCommand;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class InventoryManager {
     private final CloseInventoryProcessor closeInventoryProcessor;
     private final IncreaseInventoryProcessor increaseInventoryProcessor;
     private final ReduceInventoryProcessor reduceInventoryProcessor;
-    private final OrderPayedProcessor orderPayedProcessor;
+    private final OrderPayedProcessor orderCompletedProcessor;
 
 
     public InventoryManager(
@@ -27,12 +27,13 @@ public class InventoryManager {
         CloseInventoryProcessor closeInventoryProcessor,
         IncreaseInventoryProcessor increaseInventoryProcessor,
         ReduceInventoryProcessor reduceInventoryProcessor,
-        OrderPayedProcessor orderPayedProcessor) {
+        OrderPayedProcessor orderCompletedProcessor
+    ) {
         this.openInventoryProcessor = openInventoryProcessor;
         this.closeInventoryProcessor = closeInventoryProcessor;
         this.increaseInventoryProcessor = increaseInventoryProcessor;
         this.reduceInventoryProcessor = reduceInventoryProcessor;
-        this.orderPayedProcessor = orderPayedProcessor;
+        this.orderCompletedProcessor = orderCompletedProcessor;
     }
 
     public void open(OpenInventoryCommand command) {
@@ -51,7 +52,7 @@ public class InventoryManager {
         reduceInventoryProcessor.execute(command);
     }
 
-    public void orderPayed(OrderPayedCommand command) {
-        orderPayedProcessor.execute(command);
+    public void orderCompleted(OrderCompletedCommand command) {
+        orderCompletedProcessor.execute(command);
     }
 }

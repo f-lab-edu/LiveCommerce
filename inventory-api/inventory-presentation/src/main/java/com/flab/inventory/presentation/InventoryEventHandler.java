@@ -1,7 +1,7 @@
 package com.flab.inventory.presentation;
 
 import com.flab.inventory.application.facade.InventoryManager;
-import com.flab.inventory.presentation.request.OrderPayedEvent;
+import com.flab.inventory.presentation.request.OrderCompletedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +15,7 @@ public class InventoryEventHandler {
     }
 
     @EventListener
-    public void handle(OrderPayedEvent event) {
-        inventoryManager.orderPayed(event.toCommand());
+    public void handle(OrderCompletedEvent event) {
+        inventoryManager.orderCompleted(event.toCommand());
     }
-
 }

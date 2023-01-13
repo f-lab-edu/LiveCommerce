@@ -1,6 +1,6 @@
 package com.flab.order.application.facade;
 
-import com.flab.order.application.CompletedPayedProcessor;
+import com.flab.order.application.CompletePayedProcessor;
 import com.flab.order.application.CreateOrderProcessor;
 import com.flab.order.application.FailInventoryReducedProcessor;
 import com.flab.order.application.PaymentCompletedProcessor;
@@ -9,7 +9,6 @@ import com.flab.order.application.command.CreateOrderCommand;
 import com.flab.order.application.command.FailInventoryReducedCommand;
 import com.flab.order.application.command.PaymentCompletedCommand;
 import com.flab.order.domain.Order;
-import com.flab.order.domain.event.OrderPayedEvent;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,20 +18,20 @@ public class OrderManager {
     private final SearchOrderProcessor searchOrderProcessor;
     private final PaymentCompletedProcessor paymentCompletedProcessor;
     private final FailInventoryReducedProcessor failInventoryReducedProcessor;
-    private final CompletedPayedProcessor completedPayedProcessor;
+    private final CompletePayedProcessor completePayedProcessor;
 
     public OrderManager(
         CreateOrderProcessor createOrderProcessor,
         SearchOrderProcessor searchOrderProcessor,
         PaymentCompletedProcessor paymentCompletedProcessor,
         FailInventoryReducedProcessor failInventoryReducedProcessor,
-        CompletedPayedProcessor completedPayedProcessor
+        CompletePayedProcessor completePayedProcessor
     ) {
         this.createOrderProcessor = createOrderProcessor;
         this.searchOrderProcessor = searchOrderProcessor;
         this.paymentCompletedProcessor = paymentCompletedProcessor;
         this.failInventoryReducedProcessor = failInventoryReducedProcessor;
-        this.completedPayedProcessor = completedPayedProcessor;
+        this.completePayedProcessor = completePayedProcessor;
     }
 
     public Order create(Long userId, CreateOrderCommand command) {
@@ -53,7 +52,7 @@ public class OrderManager {
         failInventoryReducedProcessor.execute(command);
     }
 
-    public void completedPayed(OrderPayedEvent event) {
-        completedPayedProcessor.execute(event);
+    public void completePayed(Long orderId) {
+        completePayedProcessor.execute(orderId);
     }
 }
