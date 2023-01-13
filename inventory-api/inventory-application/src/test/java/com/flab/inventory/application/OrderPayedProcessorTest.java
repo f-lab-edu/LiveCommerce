@@ -3,13 +3,14 @@ package com.flab.inventory.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-import com.flab.inventory.application.command.OrderPayedCommand;
+import com.flab.inventory.application.command.OrderCompletedCommand;
 import com.flab.inventory.domain.Inventory;
 import com.flab.inventory.domain.Inventory.InventoryState;
 import com.flab.inventory.domain.Inventory.SaleStatus;
 import com.flab.inventory.domain.ItemQuantity;
-import com.flab.inventory.domain.exception.FailInventoryReducedException;
-import java.time.LocalDateTime;
+import com.flab.inventory.domain.exception.NotEnoughQuantityException;
+import com.flab.inventory.domain.exception.SalesClosedException;
+import com.flab.inventory.domain.exception.StockOutException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ public class OrderPayedProcessorTest {
             new Inventory(2L, SaleStatus.ON_SALE, "test2", 100, InventoryState.INVENTORY_SAFE)
         );
 
-        var command = new OrderPayedCommand(
+        var command = new OrderCompletedCommand(
             List.of(
                 new ItemQuantity(1L, 40),
                 new ItemQuantity(2L, 10)
@@ -45,7 +46,7 @@ public class OrderPayedProcessorTest {
         Throwable result = catchThrowable(() -> processor.execute(command));
 
         // Assert
-        assertThat(result.getClass()).isEqualTo(FailInventoryReducedException.class);
+        assertThat(result.getClass()).isEqualTo(NotEnoughQuantityException.class);
     }
 
     @Test
@@ -61,7 +62,7 @@ public class OrderPayedProcessorTest {
             new Inventory(2L, SaleStatus.ON_SALE, "test2", 100, InventoryState.STOCK_OUT)
         );
 
-        var command = new OrderPayedCommand(List.of(new ItemQuantity(2L, 10)));
+        var command = new OrderCompletedCommand(List.of(new ItemQuantity(2L, 10)));
 
         var processor = new OrderPayedProcessor(
             inventoryRepository,
@@ -72,7 +73,7 @@ public class OrderPayedProcessorTest {
         Throwable result = catchThrowable(() -> processor.execute(command));
 
         // Assert
-        assertThat(result.getClass()).isEqualTo(FailInventoryReducedException.class);
+        assertThat(result.getClass()).isEqualTo(StockOutException.class);
     }
 
     @Test
@@ -90,7 +91,7 @@ public class OrderPayedProcessorTest {
 
         List<ItemQuantity> itemQuantities = List.of(new ItemQuantity(2L, 10));
 
-        var command = new OrderPayedCommand(
+        var command = new OrderCompletedCommand(
             List.of(
                 new ItemQuantity(1L, 4),
                 new ItemQuantity(2L, 2),
@@ -110,7 +111,7 @@ public class OrderPayedProcessorTest {
         Throwable result = catchThrowable(() -> processor.execute(command));
 
         // Assert
-        assertThat(result.getClass()).isEqualTo(FailInventoryReducedException.class);
+        assertThat(result.getClass()).isEqualTo(SalesClosedException.class);
     }
 
     @Test
@@ -126,7 +127,7 @@ public class OrderPayedProcessorTest {
             new Inventory(2L, SaleStatus.ON_SALE, "test2", 100, InventoryState.INVENTORY_SAFE)
         );
 
-        var command = new OrderPayedCommand(
+        var command = new OrderCompletedCommand(
             List.of(
                 new ItemQuantity(1L, 4),
                 new ItemQuantity(2L, 2),
