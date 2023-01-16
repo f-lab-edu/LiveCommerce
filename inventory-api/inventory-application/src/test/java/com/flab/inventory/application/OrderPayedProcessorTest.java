@@ -3,7 +3,7 @@ package com.flab.inventory.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-import com.flab.inventory.application.command.OrderCompletedCommand;
+import com.flab.inventory.application.command.DecreaseInventoryCommand;
 import com.flab.inventory.domain.Inventory;
 import com.flab.inventory.domain.Inventory.InventoryState;
 import com.flab.inventory.domain.Inventory.SaleStatus;
@@ -24,6 +24,10 @@ public class OrderPayedProcessorTest {
     void inventory_reduce_notEnoughQuantity_return_exception() {
         // Arrange
         var inventoryRepository = new FakeInventoryRepository();
+        var processor = new FakeDecreaseInventoryProcessor(
+            inventoryRepository,
+            new DummyApplicationEventPublisher()
+        );
 
         inventoryRepository.save(
             new Inventory(1L, SaleStatus.ON_SALE, "test", 30, InventoryState.INVENTORY_SAFE)
@@ -32,15 +36,12 @@ public class OrderPayedProcessorTest {
             new Inventory(2L, SaleStatus.ON_SALE, "test2", 100, InventoryState.INVENTORY_SAFE)
         );
 
-        var command = new OrderCompletedCommand(
+        var command = new DecreaseInventoryCommand(
             List.of(
                 new ItemQuantity(1L, 40),
                 new ItemQuantity(2L, 10)
             )
         );
-
-        var processor = new OrderPayedProcessor(inventoryRepository,
-            new DummyApplicationEventPublisher());
 
         // Act
         Throwable result = catchThrowable(() -> processor.execute(command));
@@ -54,6 +55,10 @@ public class OrderPayedProcessorTest {
     void inventory_reduce_stock_out_return_exception() {
         // Arrange
         var inventoryRepository = new FakeInventoryRepository();
+        var processor = new FakeDecreaseInventoryProcessor(
+            inventoryRepository,
+            new DummyApplicationEventPublisher()
+        );
 
         inventoryRepository.save(
             new Inventory(1L, SaleStatus.ON_SALE, "test", 30, InventoryState.INVENTORY_SAFE)
@@ -62,12 +67,7 @@ public class OrderPayedProcessorTest {
             new Inventory(2L, SaleStatus.ON_SALE, "test2", 100, InventoryState.STOCK_OUT)
         );
 
-        var command = new OrderCompletedCommand(List.of(new ItemQuantity(2L, 10)));
-
-        var processor = new OrderPayedProcessor(
-            inventoryRepository,
-            new DummyApplicationEventPublisher()
-        );
+        var command = new DecreaseInventoryCommand(List.of(new ItemQuantity(2L, 10)));
 
         // Act
         Throwable result = catchThrowable(() -> processor.execute(command));
@@ -81,6 +81,10 @@ public class OrderPayedProcessorTest {
     void inventory_reduce_close_return_exception() {
         // Arrange
         var inventoryRepository = new FakeInventoryRepository();
+        var processor = new FakeDecreaseInventoryProcessor(
+            inventoryRepository,
+            new DummyApplicationEventPublisher()
+        );
 
         inventoryRepository.save(
             new Inventory(1L, SaleStatus.ON_SALE, "test", 30, InventoryState.INVENTORY_SAFE)
@@ -91,7 +95,7 @@ public class OrderPayedProcessorTest {
 
         List<ItemQuantity> itemQuantities = List.of(new ItemQuantity(2L, 10));
 
-        var command = new OrderCompletedCommand(
+        var command = new DecreaseInventoryCommand(
             List.of(
                 new ItemQuantity(1L, 4),
                 new ItemQuantity(2L, 2),
@@ -100,11 +104,6 @@ public class OrderPayedProcessorTest {
                 new ItemQuantity(1L, 4),
                 new ItemQuantity(1L, 4)
             )
-        );
-
-        var processor = new OrderPayedProcessor(
-            inventoryRepository,
-            new DummyApplicationEventPublisher()
         );
 
         // Act
@@ -119,6 +118,10 @@ public class OrderPayedProcessorTest {
     void inventory_reduce_EnoughQuantity() {
         // Arrange
         var inventoryRepository = new FakeInventoryRepository();
+        var processor = new FakeDecreaseInventoryProcessor(
+            inventoryRepository,
+            new DummyApplicationEventPublisher()
+        );
 
         inventoryRepository.save(
             new Inventory(1L, SaleStatus.ON_SALE, "test", 30, InventoryState.INVENTORY_SAFE)
@@ -127,7 +130,7 @@ public class OrderPayedProcessorTest {
             new Inventory(2L, SaleStatus.ON_SALE, "test2", 100, InventoryState.INVENTORY_SAFE)
         );
 
-        var command = new OrderCompletedCommand(
+        var command = new DecreaseInventoryCommand(
             List.of(
                 new ItemQuantity(1L, 4),
                 new ItemQuantity(2L, 2),
@@ -136,11 +139,6 @@ public class OrderPayedProcessorTest {
                 new ItemQuantity(1L, 4),
                 new ItemQuantity(1L, 4)
             )
-        );
-
-        var processor = new OrderPayedProcessor(
-            inventoryRepository,
-            new DummyApplicationEventPublisher()
         );
 
         // Act

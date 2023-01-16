@@ -4,7 +4,7 @@ package com.flab.inventory.presentation.request;
 import static java.util.Comparator.comparing;
 
 import com.flab.common.domain.DomainEvent;
-import com.flab.inventory.application.command.OrderCompletedCommand;
+import com.flab.inventory.application.command.DecreaseInventoryCommand;
 import com.flab.inventory.domain.ItemQuantity;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,8 +23,8 @@ public final class OrderCompletedEvent implements DomainEvent {
         this.occurredOn = occurredOn;
     }
 
-    public OrderCompletedCommand toCommand() {
-        return new OrderCompletedCommand(sortedItemQuantities());
+    public DecreaseInventoryCommand toCommand() {
+        return new DecreaseInventoryCommand(sortedItemQuantities());
     }
 
     private List<ItemQuantity> sortedItemQuantities() {

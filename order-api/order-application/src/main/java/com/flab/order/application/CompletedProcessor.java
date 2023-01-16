@@ -7,13 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 
-public class CompletePayedProcessor {
+public class CompletedProcessor {
 
     private final ApplicationEventPublisher publisher;
     private final OrderRepository orderRepository;
-    private static final Logger log = LoggerFactory.getLogger(CompletePayedProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(CompletedProcessor.class);
 
-    public CompletePayedProcessor(
+    public CompletedProcessor(
         OrderRepository orderRepository,
         ApplicationEventPublisher publisher
     ) {

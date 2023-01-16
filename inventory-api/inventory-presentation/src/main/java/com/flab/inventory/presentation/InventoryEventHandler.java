@@ -16,6 +16,6 @@ public class InventoryEventHandler {
 
     @EventListener
     public void handle(OrderCompletedEvent event) {
-        inventoryManager.orderCompleted(event.toCommand());
+        inventoryManager.decrease(event.toCommand());
     }
 }

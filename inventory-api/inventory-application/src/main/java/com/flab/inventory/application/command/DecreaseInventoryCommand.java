@@ -3,11 +3,11 @@ package com.flab.inventory.application.command;
 import com.flab.inventory.domain.ItemQuantity;
 import java.util.List;
 
-public class OrderCompletedCommand {
+public class DecreaseInventoryCommand {
 
     private final List<ItemQuantity> itemQuantities;
 
-    public OrderCompletedCommand(List<ItemQuantity> itemQuantities) {
+    public DecreaseInventoryCommand(List<ItemQuantity> itemQuantities) {
         this.itemQuantities = itemQuantities;
     }
 
