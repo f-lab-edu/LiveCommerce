@@ -1,13 +1,13 @@
 package com.flab.point.application.command;
 
 public class ReducePointCommand {
-    private Long reducedAmount;
+    private Integer reducedAmount;
 
-    public Long getReducedAmount() {
+    public Integer getReducedAmount() {
         return reducedAmount;
     }
 
-    public ReducePointCommand(Long reducedAmount) {
+    public ReducePointCommand(Integer reducedAmount) {
         this.reducedAmount = reducedAmount;
     }
 }

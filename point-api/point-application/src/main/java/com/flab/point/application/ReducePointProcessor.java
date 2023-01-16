@@ -11,7 +11,7 @@ public class ReducePointProcessor {
         this.pointRepository = pointRepository;
     }
 
-    public Long execute(Long userId, ReducePointCommand command) {
+    public Integer execute(Long userId, ReducePointCommand command) {
         var point = pointRepository.findByUserId(userId);
 
         return point.reduce(command.getReducedAmount());

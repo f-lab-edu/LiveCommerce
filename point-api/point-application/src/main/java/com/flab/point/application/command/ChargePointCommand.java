@@ -3,13 +3,13 @@ package com.flab.point.application.command;
 public class ChargePointCommand {
 
     private String payMethod;
-    private Long chargeAmount;
+    private Integer chargeAmount;
 
-    public Long getChargeAmount() {
+    public Integer getChargeAmount() {
         return chargeAmount;
     }
 
-    public ChargePointCommand(String payMethod, Long chargeAmount) {
+    public ChargePointCommand(String payMethod, Integer chargeAmount) {
         this.payMethod = payMethod;
         this.chargeAmount = chargeAmount;
     }

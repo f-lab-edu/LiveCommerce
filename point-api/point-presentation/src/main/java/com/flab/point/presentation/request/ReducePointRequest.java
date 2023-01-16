@@ -6,12 +6,12 @@ import javax.validation.constraints.NotNull;
 public class ReducePointRequest {
 
     @NotNull(message = "사용할 포인트 금액을 입력하세요.")
-    private Long reducedAmount;
+    private Integer reducedAmount;
 
     public ReducePointRequest() {
     }
 
-    public Long getReducedAmount() {
+    public Integer getReducedAmount() {
         return reducedAmount;
     }
 

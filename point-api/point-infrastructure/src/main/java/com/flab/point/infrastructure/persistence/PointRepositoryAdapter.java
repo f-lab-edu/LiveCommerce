@@ -17,6 +17,6 @@ public class PointRepositoryAdapter implements PointRepository {
     @Override
     public Point findByUserId(Long userId) {
         return pointRepository.findByUserId(userId)
-                .orElse(new Point(userId, 0L));
+                .orElse(new Point(userId, 0));
     }
 }

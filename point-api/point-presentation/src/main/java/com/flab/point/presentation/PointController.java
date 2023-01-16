@@ -43,7 +43,7 @@ public class PointController {
             @Authentication AuthenticatedMember user,
             @RequestBody ChargePointRequest request
     ) {
-        Long totalPoints = pointManager.charge(user.getId(), request.toCommand());
+        Integer totalPoints = pointManager.charge(user.getId(), request.toCommand());
 
         return CommonApiResponse.success(new ChargePointResponse(totalPoints));
     }
@@ -53,7 +53,7 @@ public class PointController {
             @Authentication AuthenticatedMember user,
             @RequestBody ReducePointRequest request
     ) {
-        Long remainPoints = pointManager.reduce(user.getId(), request.toCommand());
+        Integer remainPoints = pointManager.reduce(user.getId(), request.toCommand());
 
         return CommonApiResponse.success(new ReducePointResponse(remainPoints));
     }

@@ -25,15 +25,15 @@ public class PointManager {
     }
 
 
-    public Long getPoints(Long userId) {
+    public Integer getPoints(Long userId) {
         return getUserPointProcessor.execute(userId);
     }
 
-    public Long charge(Long userId, ChargePointCommand command) {
+    public Integer charge(Long userId, ChargePointCommand command) {
         return chargePointProcessor.execute(userId, command);
     }
 
-    public Long reduce(Long userId, ReducePointCommand command) {
+    public Integer reduce(Long userId, ReducePointCommand command) {
         return reducePointProcessor.execute(userId, command);
     }
 }

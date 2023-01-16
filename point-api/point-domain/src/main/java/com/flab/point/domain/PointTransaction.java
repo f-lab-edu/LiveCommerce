@@ -21,7 +21,7 @@ public class PointTransaction {
     private Long userId;
     @Enumerated(EnumType.STRING)
     private PointCategory pointCategory;
-    private Long amount;
+    private Integer amount;
     private LocalDateTime transactAt;
     private LocalDateTime expireAt;
     private boolean status; // 포인트가 현재 사용 가능한지 여부 - 상태값 필드
@@ -32,7 +32,7 @@ public class PointTransaction {
     public PointTransaction(
             Long userId,
             PointCategory pointCategory,
-            Long amount
+            Integer amount
     ) {
         this.userId = userId;
         this.pointCategory = pointCategory;
@@ -42,18 +42,18 @@ public class PointTransaction {
         this.status = true;
     }
 
-    public static PointTransaction add(Point point, Long amount, PointCategory pointCategory) {
+    public static PointTransaction add(Point point, Integer amount, PointCategory pointCategory) {
         return new PointTransaction(point.getUserId(), pointCategory, amount);
     }
 
-    public Long reduce(Long reducedAmount) {
+    public Integer reduce(Integer reducedAmount) {
         if (this.amount <= reducedAmount) {
-            this.amount = 0L;
+            this.amount = 0;
             this.status = false;
             reducedAmount -= this.amount;
         } else {
             this.amount -= reducedAmount;
-            reducedAmount = 0L;
+            reducedAmount = 0;
         }
         return reducedAmount;
     }
@@ -67,7 +67,7 @@ public class PointTransaction {
         return pointCategory;
     }
 
-    public Long getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 

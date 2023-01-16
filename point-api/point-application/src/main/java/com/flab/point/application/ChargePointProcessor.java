@@ -12,7 +12,7 @@ public class ChargePointProcessor {
         this.pointRepository = pointRepository;
     }
 
-    public Long execute(Long userId, ChargePointCommand command) {
+    public Integer execute(Long userId, ChargePointCommand command) {
         var point = pointRepository.findByUserId(userId);
         return point.add(command.getChargeAmount(), PointCategory.CHARGE);
     }

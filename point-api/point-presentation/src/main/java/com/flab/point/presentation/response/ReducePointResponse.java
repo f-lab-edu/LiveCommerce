@@ -2,14 +2,14 @@ package com.flab.point.presentation.response;
 
 public class ReducePointResponse {
 
-    private final Long remainPoints;
+    private final Integer remainPoints;
 
 
-    public ReducePointResponse(Long remainPoints) {
+    public ReducePointResponse(Integer remainPoints) {
         this.remainPoints = remainPoints;
     }
 
-    public Long getRemainPoints() {
+    public Integer getRemainPoints() {
         return remainPoints;
     }
 }

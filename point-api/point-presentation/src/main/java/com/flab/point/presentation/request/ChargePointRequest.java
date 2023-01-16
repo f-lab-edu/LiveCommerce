@@ -12,7 +12,7 @@ public class ChargePointRequest {
 
     @NotNull(message = "포인트 충전 금액을 작성하세요.")
     @Range(min = 1000, message = "포인트 충전 최소 금액은 1,000원입니다.")
-    private Long chargeAmount;
+    private Integer chargeAmount;
 
     public ChargePointRequest() {
     }
@@ -21,7 +21,7 @@ public class ChargePointRequest {
         return payMethod;
     }
 
-    public Long getChargeAmount() {
+    public Integer getChargeAmount() {
         return chargeAmount;
     }
 

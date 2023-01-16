@@ -2,13 +2,13 @@ package com.flab.point.presentation.response;
 
 public class GetPointResponse {
 
-    private final Long userPoints;
+    private final Integer userPoints;
 
-    public GetPointResponse(Long userPoints) {
+    public GetPointResponse(Integer userPoints) {
         this.userPoints = userPoints;
     }
 
-    public Long getUserPoints() {
+    public Integer getUserPoints() {
         return userPoints;
     }
 }

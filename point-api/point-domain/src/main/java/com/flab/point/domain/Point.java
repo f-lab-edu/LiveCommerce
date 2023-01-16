@@ -1,17 +1,12 @@
 package com.flab.point.domain;
 
-import com.flab.point.domain.exception.ReducePointException;
+import com.flab.point.domain.exception.NotEnoughPointsException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /*
@@ -31,55 +26,48 @@ public class Point {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long userId;
-    private Long totalAmount;
-    private LocalDateTime registerAt;
+    private Integer totalAmount;
     private LocalDateTime updatedAt;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "point_id")
-    private final List<PointTransaction> pointTransactions = new ArrayList<>();
 
     protected Point() {
     }
 
     public Point(
             Long userId,
-            Long amount
+            Integer amount
     ) {
         this.userId = userId;
         this.totalAmount = amount;
-        this.registerAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
     // 추가 (적립, 충전)
-    public Long add(
-            Long addedAmount,
+    public Integer add(
+            Integer addedAmount,
             PointCategory pointCategory
     ) {
         this.totalAmount += addedAmount;
         this.updatedAt = LocalDateTime.now();
-        this.pointTransactions.add(
-                PointTransaction.add(
-                        this,
-                        addedAmount,
-                        pointCategory
-                )
+        PointTransaction.add(
+                this,
+                addedAmount,
+                pointCategory
         );
 
         return totalAmount;
     }
 
     // 포인트 사용
-    public Long reduce(
-            Long reducedAmount
+    public Integer reduce(
+            Integer reducedAmount
     ) {
         if (this.totalAmount - reducedAmount < 0) {
-            throw new ReducePointException();
+            throw new NotEnoughPointsException();
         }
 
         var pointTransactionList = getValidPointTransactions();
 
-        Long remainAmount = reducedAmount;
+        Integer remainAmount = reducedAmount;
         while (remainAmount > 0) {
             for (PointTransaction ptx : pointTransactionList) {
                 remainAmount = ptx.reduce(remainAmount);
@@ -93,9 +81,13 @@ public class Point {
     }
 
     private List<PointTransaction> getValidPointTransactions() {
-        return this.pointTransactions.stream()
-                    .filter(ptx -> ptx.isStatus() && ptx.getExpireAt().isAfter(LocalDateTime.now()))
-                    .collect(Collectors.toList());
+        /*
+        return PointTransaction.stream()
+                .filter(ptx -> ptx.isStatus() && ptx.getExpireAt().isAfter(LocalDateTime.now()))
+                .collect(Collectors.toList());
+
+         */
+        return null;
     }
 
     public Long getId() {
@@ -106,7 +98,7 @@ public class Point {
         return userId;
     }
 
-    public Long getAmount() {
+    public Integer getAmount() {
         return totalAmount;
     }
 

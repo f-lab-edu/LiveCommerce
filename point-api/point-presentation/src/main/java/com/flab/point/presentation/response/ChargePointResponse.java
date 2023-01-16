@@ -2,14 +2,14 @@ package com.flab.point.presentation.response;
 
 public class ChargePointResponse {
 
-    private final Long totalPoints;
+    private final Integer totalPoints;
 
 
-    public ChargePointResponse(Long totalPoints) {
+    public ChargePointResponse(Integer totalPoints) {
         this.totalPoints = totalPoints;
     }
 
-    public Long getTotalPoints() {
+    public Integer getTotalPoints() {
         return totalPoints;
     }
 }

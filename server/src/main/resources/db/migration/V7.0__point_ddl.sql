@@ -4,7 +4,6 @@ create table points
     id           bigint auto_increment primary key comment 'ID',
     user_id      bigint      not null comment '유저 ID',
     total_amount bigint      not null comment '포인트 합계 금액',
-    register_at  datetime(6) not null comment '포인트 등록 일시',
     updated_at   datetime(6) not null comment '포인트 업데이트 일시'
 );
 

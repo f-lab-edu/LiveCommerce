@@ -11,7 +11,7 @@ public class GetUserPointProcessor {
         this.pointRepository = pointRepository;
     }
 
-    public Long execute(Long userId) {
+    public Integer execute(Long userId) {
         var point = pointRepository.findByUserId(userId);
         return point.getAmount();
     }
