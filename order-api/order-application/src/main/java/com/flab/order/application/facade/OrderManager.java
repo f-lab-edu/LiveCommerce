@@ -1,6 +1,6 @@
 package com.flab.order.application.facade;
 
-import com.flab.order.application.CompletePayedProcessor;
+import com.flab.order.application.CompletedProcessor;
 import com.flab.order.application.CreateOrderProcessor;
 import com.flab.order.application.FailInventoryReducedProcessor;
 import com.flab.order.application.PaymentCompletedProcessor;
@@ -18,20 +18,20 @@ public class OrderManager {
     private final SearchOrderProcessor searchOrderProcessor;
     private final PaymentCompletedProcessor paymentCompletedProcessor;
     private final FailInventoryReducedProcessor failInventoryReducedProcessor;
-    private final CompletePayedProcessor completePayedProcessor;
+    private final CompletedProcessor completedProcessor;
 
     public OrderManager(
         CreateOrderProcessor createOrderProcessor,
         SearchOrderProcessor searchOrderProcessor,
         PaymentCompletedProcessor paymentCompletedProcessor,
         FailInventoryReducedProcessor failInventoryReducedProcessor,
-        CompletePayedProcessor completePayedProcessor
+        CompletedProcessor completedProcessor
     ) {
         this.createOrderProcessor = createOrderProcessor;
         this.searchOrderProcessor = searchOrderProcessor;
         this.paymentCompletedProcessor = paymentCompletedProcessor;
         this.failInventoryReducedProcessor = failInventoryReducedProcessor;
-        this.completePayedProcessor = completePayedProcessor;
+        this.completedProcessor = completedProcessor;
     }
 
     public Order create(Long userId, CreateOrderCommand command) {
@@ -52,7 +52,7 @@ public class OrderManager {
         failInventoryReducedProcessor.execute(command);
     }
 
-    public void completePayed(Long orderId) {
-        completePayedProcessor.execute(orderId);
+    public void completed(Long orderId) {
+        completedProcessor.execute(orderId);
     }
 }

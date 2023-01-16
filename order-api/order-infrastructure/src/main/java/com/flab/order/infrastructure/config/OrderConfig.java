@@ -1,6 +1,6 @@
 package com.flab.order.infrastructure.config;
 
-import com.flab.order.application.CompletePayedProcessor;
+import com.flab.order.application.CompletedProcessor;
 import com.flab.order.application.CreateOrderProcessor;
 import com.flab.order.application.FailInventoryReducedProcessor;
 import com.flab.order.application.PaymentCompletedProcessor;
@@ -44,10 +44,10 @@ public class OrderConfig {
     }
 
     @Bean
-    public CompletePayedProcessor completedPayedProcessor(
+    public CompletedProcessor completedProcessor(
         OrderRepository orderRepository,
         ApplicationEventPublisher publisher
     ) {
-        return new CompletePayedProcessor(orderRepository, publisher);
+        return new CompletedProcessor(orderRepository, publisher);
     }
 }
