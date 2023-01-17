@@ -89,7 +89,7 @@ public class Inventory extends AbstractAggregateRoot {
         validQuantity();
     }
 
-    public void orderReduce(Integer count) {
+    public void decrease(Integer count) {
         validReduceCount(count);
         validInventoryState();
         if (this.quantity >= count) {

@@ -9,6 +9,7 @@ import com.flab.order.application.command.CreateOrderCommand;
 import com.flab.order.application.command.FailInventoryReducedCommand;
 import com.flab.order.application.command.PaymentCompletedCommand;
 import com.flab.order.domain.Order;
+import com.flab.order.domain.event.OrderPayedEvent;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -52,7 +53,7 @@ public class OrderManager {
         failInventoryReducedProcessor.execute(command);
     }
 
-    public void completed(Long orderId) {
-        completedProcessor.execute(orderId);
+    public void completed(OrderPayedEvent event) {
+        completedProcessor.execute(event);
     }
 }

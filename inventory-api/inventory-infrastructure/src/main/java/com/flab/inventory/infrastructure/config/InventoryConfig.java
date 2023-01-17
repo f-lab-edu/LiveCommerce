@@ -6,7 +6,6 @@ import com.flab.inventory.application.IncreaseInventoryProcessor;
 import com.flab.inventory.application.OpenInventoryProcessor;
 import com.flab.inventory.application.ReduceInventoryProcessor;
 import com.flab.inventory.domain.InventoryRepository;
-import com.flab.inventory.infrastructure.DecreaseInventoryProcessorV1;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,6 +46,6 @@ public class InventoryConfig {
         InventoryRepository inventoryRepository,
         ApplicationEventPublisher publisher
     ) {
-        return new DecreaseInventoryProcessorV1(inventoryRepository, publisher);
+        return new DecreaseInventoryProcessor(inventoryRepository, publisher);
     }
 }

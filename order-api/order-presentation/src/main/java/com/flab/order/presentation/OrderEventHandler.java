@@ -29,6 +29,6 @@ public class OrderEventHandler {
     @TransactionalEventListener
     public void orchestrate(OrderPayedEvent event) {
         log.info(">>>>> 비동기 작업 수행");
-        orderManager.completed(event.getOrderId());
+        orderManager.completed(event);
     }
 }

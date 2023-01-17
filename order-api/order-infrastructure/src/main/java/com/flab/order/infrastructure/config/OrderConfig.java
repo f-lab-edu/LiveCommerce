@@ -5,6 +5,7 @@ import com.flab.order.application.CreateOrderProcessor;
 import com.flab.order.application.FailInventoryReducedProcessor;
 import com.flab.order.application.PaymentCompletedProcessor;
 import com.flab.order.application.SearchOrderProcessor;
+import com.flab.order.domain.DecreaseInventoryProcessor;
 import com.flab.order.domain.OrderRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -46,8 +47,9 @@ public class OrderConfig {
     @Bean
     public CompletedProcessor completedProcessor(
         OrderRepository orderRepository,
+        DecreaseInventoryProcessor decreaseInventoryProcessor,
         ApplicationEventPublisher publisher
     ) {
-        return new CompletedProcessor(orderRepository, publisher);
+        return new CompletedProcessor(orderRepository, decreaseInventoryProcessor, publisher);
     }
 }

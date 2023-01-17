@@ -3,7 +3,6 @@ package com.flab.livecommerce.supports;
 import com.flab.inventory.domain.ItemQuantity;
 import com.flab.order.domain.event.OrderCompletedEvent;
 import com.flab.payment.domain.PaymentCompletedEvent;
-import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

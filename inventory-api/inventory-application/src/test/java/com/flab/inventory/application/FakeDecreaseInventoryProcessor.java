@@ -30,7 +30,7 @@ public class FakeDecreaseInventoryProcessor {
 
         inventories.forEach(
             inventory -> {
-                inventory.orderReduce(itemQuantityMap.get(inventory.getItemId()));
+                inventory.decrease(itemQuantityMap.get(inventory.getItemId()));
             }
         );
         return null;
