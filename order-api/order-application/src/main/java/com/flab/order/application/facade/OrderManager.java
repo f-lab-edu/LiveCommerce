@@ -1,8 +1,8 @@
 package com.flab.order.application.facade;
 
-import com.flab.order.application.CompletedProcessor;
 import com.flab.order.application.CreateOrderProcessor;
 import com.flab.order.application.FailInventoryReducedProcessor;
+import com.flab.order.application.OrderPayedProcessor;
 import com.flab.order.application.PaymentCompletedProcessor;
 import com.flab.order.application.SearchOrderProcessor;
 import com.flab.order.application.command.CreateOrderCommand;
@@ -19,20 +19,20 @@ public class OrderManager {
     private final SearchOrderProcessor searchOrderProcessor;
     private final PaymentCompletedProcessor paymentCompletedProcessor;
     private final FailInventoryReducedProcessor failInventoryReducedProcessor;
-    private final CompletedProcessor completedProcessor;
+    private final OrderPayedProcessor orderPayedProcessor;
 
     public OrderManager(
         CreateOrderProcessor createOrderProcessor,
         SearchOrderProcessor searchOrderProcessor,
         PaymentCompletedProcessor paymentCompletedProcessor,
         FailInventoryReducedProcessor failInventoryReducedProcessor,
-        CompletedProcessor completedProcessor
+        OrderPayedProcessor orderPayedProcessor
     ) {
         this.createOrderProcessor = createOrderProcessor;
         this.searchOrderProcessor = searchOrderProcessor;
         this.paymentCompletedProcessor = paymentCompletedProcessor;
         this.failInventoryReducedProcessor = failInventoryReducedProcessor;
-        this.completedProcessor = completedProcessor;
+        this.orderPayedProcessor = orderPayedProcessor;
     }
 
     public Order create(Long userId, CreateOrderCommand command) {
@@ -45,7 +45,7 @@ public class OrderManager {
         return searchOrderProcessor.execute(id);
     }
 
-    public void payed(PaymentCompletedCommand command) {
+    public void paymentCompleted(PaymentCompletedCommand command) {
         paymentCompletedProcessor.execute(command);
     }
 
@@ -53,7 +53,7 @@ public class OrderManager {
         failInventoryReducedProcessor.execute(command);
     }
 
-    public void completed(OrderPayedEvent event) {
-        completedProcessor.execute(event);
+    public void orderPayed(OrderPayedEvent event) {
+        orderPayedProcessor.execute(event);
     }
 }

@@ -22,13 +22,13 @@ public class OrderEventHandler {
 
     @EventListener
     public void handle(PaymentCompletedEvent event) {
-        orderManager.payed(event.toCommand());
+        orderManager.paymentCompleted(event.toCommand());
     }
 
     @Async
     @TransactionalEventListener
     public void orchestrate(OrderPayedEvent event) {
         log.info(">>>>> 비동기 작업 수행");
-        orderManager.completed(event);
+        orderManager.orderPayed(event);
     }
 }

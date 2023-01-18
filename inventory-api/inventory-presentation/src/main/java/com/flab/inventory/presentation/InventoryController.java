@@ -3,6 +3,7 @@ package com.flab.inventory.presentation;
 import com.flab.common.response.CommonApiResponse;
 import com.flab.inventory.application.facade.InventoryManager;
 import com.flab.inventory.presentation.request.CloseInventoryRequest;
+import com.flab.inventory.presentation.request.DecreaseInventoryRequest;
 import com.flab.inventory.presentation.request.IncreaseInventoryRequest;
 import com.flab.inventory.presentation.request.OpenInventoryRequest;
 import com.flab.inventory.presentation.request.ReduceInventoryRequest;
@@ -68,4 +69,11 @@ public class InventoryController {
         return CommonApiResponse.success("Ok");
     }
 
+    @PostMapping("/decrease")
+    public CommonApiResponse decreaseInventoryRequest(
+        @RequestBody @Valid DecreaseInventoryRequest request
+    ) {
+        inventoryManager.decrease(request.toCommand());
+        return CommonApiResponse.success("Ok");
+    }
 }

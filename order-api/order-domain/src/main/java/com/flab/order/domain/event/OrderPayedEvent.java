@@ -12,7 +12,6 @@ public final class OrderPayedEvent implements DomainEvent {
     private final Long userId;
     private final Integer totalAmount;
     private final List<ItemQuantity> itemQuantities;
-
     private final LocalDateTime occurredOn;
 
     public OrderPayedEvent(Order order) {
