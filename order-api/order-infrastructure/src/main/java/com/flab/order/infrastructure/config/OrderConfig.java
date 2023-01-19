@@ -48,7 +48,7 @@ public class OrderConfig {
     public OrderPayedProcessor orderPayedProcessor(
         DecreaseInventoryService decreaseInventoryService,
         OrderRepository orderRepository
-    ){
+    ) {
         return new OrderPayedProcessor(decreaseInventoryService, orderRepository);
     }
 }
