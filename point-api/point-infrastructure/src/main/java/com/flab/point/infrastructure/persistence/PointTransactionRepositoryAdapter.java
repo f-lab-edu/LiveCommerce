@@ -14,9 +14,8 @@ public class PointTransactionRepositoryAdapter implements PointTransactionReposi
         this.jpaPointTransactionRepository = jpaPointTransactionRepository;
     }
 
-
     @Override
-    public List<PointTransaction> findByUserId(Long userId) {
+    public List<PointTransaction> findAllByUserId(Long userId) {
         return jpaPointTransactionRepository.findAllByUserId(userId);
     }
 }

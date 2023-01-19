@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface PointTransactionRepository {
 
-    List<PointTransaction> findByUserId(Long userId);
+    List<PointTransaction> findAllByUserId(Long userId);
 }

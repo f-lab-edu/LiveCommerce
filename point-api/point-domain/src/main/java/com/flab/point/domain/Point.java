@@ -82,7 +82,8 @@ public class Point {
         return totalAmount;
     }
 
-    public void reduceTransactions(PointTransactionService pointTransactionService, List<PointTransaction> pointTransactionList, Integer reducedAmount) {
+    public Integer reducePoints(PointTransactionService pointTransactionService, List<PointTransaction> pointTransactionList, Integer reducedAmount) {
         pointTransactionService.reducePoints(this, pointTransactionList, reducedAmount);
+        return this.totalAmount;
     }
 }

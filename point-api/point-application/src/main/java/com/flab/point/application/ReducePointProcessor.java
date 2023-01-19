@@ -21,10 +21,10 @@ public class ReducePointProcessor {
         this.pointTransactionService = pointTransactionService;
     }
 
-    public void execute(Long userId, ReducePointCommand command) {
+    public Integer execute(Long userId, ReducePointCommand command) {
         var point = pointRepository.findByUserId(userId);
-        var pointTransaction = pointTransactionRepository.findByUserId(userId);
+        var pointTransaction = pointTransactionRepository.findAllByUserId(userId);
 
-        point.reduceTransactions(this.pointTransactionService, pointTransaction, command.getReducedAmount());
+        return point.reducePoints(this.pointTransactionService, pointTransaction, command.getReducedAmount());
     }
 }
