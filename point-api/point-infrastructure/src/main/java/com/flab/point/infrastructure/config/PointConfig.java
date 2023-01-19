@@ -4,6 +4,9 @@ import com.flab.point.application.ChargePointProcessor;
 import com.flab.point.application.GetUserPointProcessor;
 import com.flab.point.application.ReducePointProcessor;
 import com.flab.point.domain.PointRepository;
+import com.flab.point.domain.PointTransactionRepository;
+import com.flab.point.domain.PointTransactionService;
+import com.flab.point.infrastructure.PointTransactionServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,8 +29,17 @@ public class PointConfig {
 
     @Bean
     public ReducePointProcessor reducePointProcessor(
-            PointRepository pointRepository
+            PointRepository pointRepository,
+            PointTransactionRepository pointTransactionRepository,
+            PointTransactionService pointTransactionService
     ) {
-        return new ReducePointProcessor(pointRepository);
+        return new ReducePointProcessor(pointRepository, pointTransactionRepository, pointTransactionService);
     }
+
+    @Bean
+    public PointTransactionService pointTransactionService() {
+        return new PointTransactionServiceImpl();
+    }
+
+
 }

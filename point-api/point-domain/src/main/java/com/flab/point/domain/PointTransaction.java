@@ -46,9 +46,9 @@ public class PointTransaction {
         return new PointTransaction(point.getUserId(), pointCategory, amount);
     }
 
+    // 하나의 포인트 트랜잭션에서 point 차감. return 감소시켜야 할 남은 포인트
     public Integer reduce(Integer reducedAmount) {
         if (this.amount <= reducedAmount) {
-            this.amount = 0;
             this.status = false;
             reducedAmount -= this.amount;
         } else {

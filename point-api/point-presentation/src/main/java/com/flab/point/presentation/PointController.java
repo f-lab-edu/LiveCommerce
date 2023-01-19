@@ -10,7 +10,6 @@ import com.flab.point.presentation.request.ChargePointRequest;
 import com.flab.point.presentation.request.ReducePointRequest;
 import com.flab.point.presentation.response.ChargePointResponse;
 import com.flab.point.presentation.response.GetPointResponse;
-import com.flab.point.presentation.response.ReducePointResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,8 +52,8 @@ public class PointController {
             @Authentication AuthenticatedMember user,
             @RequestBody ReducePointRequest request
     ) {
-        Integer remainPoints = pointManager.reduce(user.getId(), request.toCommand());
+        pointManager.reduce(user.getId(), request.toCommand());
 
-        return CommonApiResponse.success(new ReducePointResponse(remainPoints));
+        return CommonApiResponse.success(null);
     }
 }

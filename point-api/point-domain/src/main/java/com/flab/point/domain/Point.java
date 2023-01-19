@@ -65,29 +65,9 @@ public class Point {
             throw new NotEnoughPointsException();
         }
 
-        var pointTransactionList = getValidPointTransactions();
-
-        Integer remainAmount = reducedAmount;
-        while (remainAmount > 0) {
-            for (PointTransaction ptx : pointTransactionList) {
-                remainAmount = ptx.reduce(remainAmount);
-            }
-        }
-
         this.updatedAt = LocalDateTime.now();
-
         this.totalAmount -= reducedAmount;
         return this.totalAmount;
-    }
-
-    private List<PointTransaction> getValidPointTransactions() {
-        /*
-        return PointTransaction.stream()
-                .filter(ptx -> ptx.isStatus() && ptx.getExpireAt().isAfter(LocalDateTime.now()))
-                .collect(Collectors.toList());
-
-         */
-        return null;
     }
 
     public Long getId() {
@@ -102,4 +82,7 @@ public class Point {
         return totalAmount;
     }
 
+    public void reduceTransactions(PointTransactionService pointTransactionService, List<PointTransaction> pointTransactionList, Integer reducedAmount) {
+        pointTransactionService.reducePoints(this, pointTransactionList, reducedAmount);
+    }
 }

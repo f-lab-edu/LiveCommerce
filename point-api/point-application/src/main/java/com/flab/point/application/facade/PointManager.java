@@ -33,7 +33,7 @@ public class PointManager {
         return chargePointProcessor.execute(userId, command);
     }
 
-    public Integer reduce(Long userId, ReducePointCommand command) {
-        return reducePointProcessor.execute(userId, command);
+    public void reduce(Long userId, ReducePointCommand command) {
+        reducePointProcessor.execute(userId, command);
     }
 }
