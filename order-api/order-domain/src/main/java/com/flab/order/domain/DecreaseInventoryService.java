@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface DecreaseInventoryService {
 
-    List<ItemQuantity> service(OrderPayedEvent event);
+    void service(OrderPayedEvent event);
 }

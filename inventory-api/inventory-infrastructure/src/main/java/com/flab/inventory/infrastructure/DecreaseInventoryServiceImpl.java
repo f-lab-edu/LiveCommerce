@@ -9,12 +9,15 @@ import com.flab.inventory.domain.InventoryRepository;
 import com.flab.inventory.domain.ItemQuantity;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DecreaseInventoryServiceImpl implements DecreaseInventoryService {
 
     private final InventoryRepository inventoryRepository;
+    private final Logger log = LoggerFactory.getLogger(DecreaseInventoryServiceImpl.class);
 
     public DecreaseInventoryServiceImpl(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;
@@ -25,6 +28,7 @@ public class DecreaseInventoryServiceImpl implements DecreaseInventoryService {
         Map<Long, Integer> itemQuantityMap = getItemQuantityMap(itemQuantities);
         List<Inventory> inventories = inventoryRepository.findByItemIdIn(itemQuantityMap.keySet());
 
+        log.info(">>>>Inventory service 수행");
         inventories.forEach(
             inventory -> {
                 inventory.decrease(itemQuantityMap.get(inventory.getItemId()));

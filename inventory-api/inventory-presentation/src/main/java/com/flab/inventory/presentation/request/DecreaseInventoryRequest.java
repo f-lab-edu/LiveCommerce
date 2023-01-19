@@ -14,7 +14,7 @@ public class DecreaseInventoryRequest {
         this.itemQuantities = itemQuantities;
     }
 
-    protected DecreaseInventoryRequest() {
+    private DecreaseInventoryRequest() {
     }
 
     public DecreaseInventoryCommand toCommand() {

@@ -26,9 +26,9 @@ public class OrderPayedProcessor {
     @Transactional
     public void execute(OrderPayedEvent event) {
         log.info(">>>>재고 감소 Service 호출");
-        List<ItemQuantity> result = decreaseInventoryService.service(event);
-
+        decreaseInventoryService.service(event);
         log.info(">>>>재고 감소 api 호출 완료");
+
         var order = orderRepository.findById(event.getOrderId());
 
         order.completed();

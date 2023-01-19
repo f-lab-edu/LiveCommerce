@@ -1,13 +1,16 @@
 package com.flab.inventory.domain;
 
-public final class ItemQuantity {
+public class ItemQuantity {
 
-    private final Long itemId;
-    private final Integer count;
+    private Long itemId;
+    private Integer count;
 
     public ItemQuantity(Long itemId, Integer count) {
         this.itemId = itemId;
         this.count = count;
+    }
+
+    private ItemQuantity() {
     }
 
     public Long getItemId() {
