@@ -1,4 +1,4 @@
-package com.flab.order.domain;
+package com.flab.order.domain.data;
 
 public final class ItemQuantity {
 

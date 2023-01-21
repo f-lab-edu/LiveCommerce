@@ -1,6 +1,6 @@
-package com.flab.inventory.domain;
+package com.flab.inventory.domain.data;
 
-public class ItemQuantity {
+public final class ItemQuantity {
 
     private Long itemId;
     private Integer count;

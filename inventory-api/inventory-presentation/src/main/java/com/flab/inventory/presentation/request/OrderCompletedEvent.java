@@ -5,7 +5,7 @@ import static java.util.Comparator.comparing;
 
 import com.flab.common.domain.DomainEvent;
 import com.flab.inventory.application.command.DecreaseInventoryCommand;
-import com.flab.inventory.domain.ItemQuantity;
+import com.flab.inventory.domain.data.ItemQuantity;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

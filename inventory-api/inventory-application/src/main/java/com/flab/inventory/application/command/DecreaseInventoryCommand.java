@@ -1,6 +1,6 @@
 package com.flab.inventory.application.command;
 
-import com.flab.inventory.domain.ItemQuantity;
+import com.flab.inventory.domain.data.ItemQuantity;
 import java.util.List;
 
 public class DecreaseInventoryCommand {

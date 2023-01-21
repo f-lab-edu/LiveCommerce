@@ -6,7 +6,7 @@ import static java.util.stream.Collectors.summingInt;
 import com.flab.inventory.application.command.DecreaseInventoryCommand;
 import com.flab.inventory.domain.Inventory;
 import com.flab.inventory.domain.InventoryRepository;
-import com.flab.inventory.domain.ItemQuantity;
+import com.flab.inventory.domain.data.ItemQuantity;
 import java.util.List;
 import java.util.Map;
 import org.springframework.context.ApplicationEventPublisher;

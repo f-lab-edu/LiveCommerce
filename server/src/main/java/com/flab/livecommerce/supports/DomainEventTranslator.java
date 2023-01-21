@@ -1,6 +1,6 @@
 package com.flab.livecommerce.supports;
 
-import com.flab.inventory.domain.ItemQuantity;
+import com.flab.inventory.domain.data.ItemQuantity;
 import com.flab.order.domain.event.OrderCompletedEvent;
 import com.flab.payment.domain.PaymentCompletedEvent;
 import java.util.stream.Collectors;

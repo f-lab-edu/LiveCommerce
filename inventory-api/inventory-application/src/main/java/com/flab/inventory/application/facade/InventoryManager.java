@@ -10,6 +10,7 @@ import com.flab.inventory.application.command.DecreaseInventoryCommand;
 import com.flab.inventory.application.command.IncreaseInventoryCommand;
 import com.flab.inventory.application.command.OpenInventoryCommand;
 import com.flab.inventory.application.command.ReduceInventoryCommand;
+import com.flab.inventory.application.result.InventoryResult;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -51,7 +52,7 @@ public class InventoryManager {
         reduceInventoryProcessor.execute(command);
     }
 
-    public void decrease(DecreaseInventoryCommand command) {
-        decreaseInventoryProcessor.execute(command);
+    public InventoryResult decrease(DecreaseInventoryCommand command) {
+        return decreaseInventoryProcessor.execute(command);
     }
 }

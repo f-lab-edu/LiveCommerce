@@ -13,6 +13,7 @@ import com.flab.order.domain.exception.AlreadyCanceledException;
 import com.flab.order.domain.exception.AlreadyCompletedException;
 import com.flab.order.domain.exception.AlreadyPayedException;
 import com.flab.order.domain.exception.AmountNotMatchedException;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

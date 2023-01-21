@@ -1,12 +1,10 @@
 package com.flab.order.application.facade;
 
 import com.flab.order.application.CreateOrderProcessor;
-import com.flab.order.application.FailInventoryReducedProcessor;
 import com.flab.order.application.OrderPayedProcessor;
 import com.flab.order.application.PaymentCompletedProcessor;
 import com.flab.order.application.SearchOrderProcessor;
 import com.flab.order.application.command.CreateOrderCommand;
-import com.flab.order.application.command.FailInventoryReducedCommand;
 import com.flab.order.application.command.PaymentCompletedCommand;
 import com.flab.order.domain.Order;
 import com.flab.order.domain.event.OrderPayedEvent;
@@ -18,20 +16,17 @@ public class OrderManager {
     private final CreateOrderProcessor createOrderProcessor;
     private final SearchOrderProcessor searchOrderProcessor;
     private final PaymentCompletedProcessor paymentCompletedProcessor;
-    private final FailInventoryReducedProcessor failInventoryReducedProcessor;
     private final OrderPayedProcessor orderPayedProcessor;
 
     public OrderManager(
         CreateOrderProcessor createOrderProcessor,
         SearchOrderProcessor searchOrderProcessor,
         PaymentCompletedProcessor paymentCompletedProcessor,
-        FailInventoryReducedProcessor failInventoryReducedProcessor,
         OrderPayedProcessor orderPayedProcessor
     ) {
         this.createOrderProcessor = createOrderProcessor;
         this.searchOrderProcessor = searchOrderProcessor;
         this.paymentCompletedProcessor = paymentCompletedProcessor;
-        this.failInventoryReducedProcessor = failInventoryReducedProcessor;
         this.orderPayedProcessor = orderPayedProcessor;
     }
 
@@ -47,10 +42,6 @@ public class OrderManager {
 
     public void paymentCompleted(PaymentCompletedCommand command) {
         paymentCompletedProcessor.execute(command);
-    }
-
-    public void fail(FailInventoryReducedCommand command) {
-        failInventoryReducedProcessor.execute(command);
     }
 
     public void orderPayed(OrderPayedEvent event) {

@@ -1,10 +1,9 @@
 package com.flab.order.application;
 
 import com.flab.order.domain.DecreaseInventoryService;
-import com.flab.order.domain.ItemQuantity;
 import com.flab.order.domain.OrderRepository;
+import com.flab.order.domain.data.DecreaseInventoryData;
 import com.flab.order.domain.event.OrderPayedEvent;
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,13 +23,18 @@ public class OrderPayedProcessor {
     }
 
     @Transactional
-    public void execute(OrderPayedEvent event) {
-        log.info(">>>>재고 감소 Service 호출");
-        decreaseInventoryService.service(event);
-        log.info(">>>>재고 감소 api 호출 완료");
-
+    public Object execute(OrderPayedEvent event) {
         var order = orderRepository.findById(event.getOrderId());
 
+        DecreaseInventoryData data = decreaseInventoryService.service(event);
+
+        //todo null 말고 적절하게 반환할 수 있도록 수정하기
+        if (!data.isSuccess()) {
+            order.cancel();
+            return null;
+        }
+
         order.completed();
+        return null;
     }
 }

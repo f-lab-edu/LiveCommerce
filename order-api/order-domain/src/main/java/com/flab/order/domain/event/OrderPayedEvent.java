@@ -1,8 +1,8 @@
 package com.flab.order.domain.event;
 
 import com.flab.common.domain.DomainEvent;
-import com.flab.order.domain.ItemQuantity;
 import com.flab.order.domain.Order;
+import com.flab.order.domain.data.ItemQuantity;
 import java.time.LocalDateTime;
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package com.flab.order.infrastructure.config;
 
 import com.flab.order.application.CreateOrderProcessor;
-import com.flab.order.application.FailInventoryReducedProcessor;
 import com.flab.order.application.OrderPayedProcessor;
 import com.flab.order.application.PaymentCompletedProcessor;
 import com.flab.order.application.SearchOrderProcessor;
@@ -35,13 +34,6 @@ public class OrderConfig {
         ApplicationEventPublisher publisher
     ) {
         return new PaymentCompletedProcessor(orderRepository, publisher);
-    }
-
-    @Bean
-    public FailInventoryReducedProcessor failInventoryReducedProcessor(
-        OrderRepository orderRepository
-    ) {
-        return new FailInventoryReducedProcessor(orderRepository);
     }
 
     @Bean

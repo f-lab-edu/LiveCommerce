@@ -3,7 +3,7 @@ package com.flab.inventory.presentation.request;
 import static java.util.Comparator.comparing;
 
 import com.flab.inventory.application.command.DecreaseInventoryCommand;
-import com.flab.inventory.domain.ItemQuantity;
+import com.flab.inventory.domain.data.ItemQuantity;
 import java.util.List;
 import java.util.stream.Collectors;
 

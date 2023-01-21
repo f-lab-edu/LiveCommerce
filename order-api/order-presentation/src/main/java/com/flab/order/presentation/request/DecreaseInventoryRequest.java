@@ -1,6 +1,6 @@
 package com.flab.order.presentation.request;
 
-import com.flab.order.domain.ItemQuantity;
+import com.flab.order.domain.data.ItemQuantity;
 import java.util.List;
 
 public class DecreaseInventoryRequest {

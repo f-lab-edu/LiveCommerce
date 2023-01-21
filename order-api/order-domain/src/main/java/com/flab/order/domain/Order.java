@@ -1,6 +1,7 @@
 package com.flab.order.domain;
 
 import com.flab.common.domain.AbstractAggregateRoot;
+import com.flab.order.domain.data.ItemQuantity;
 import com.flab.order.domain.event.OrderCanceledEvent;
 import com.flab.order.domain.event.OrderCompletedEvent;
 import com.flab.order.domain.event.OrderCreatedEvent;
