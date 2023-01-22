@@ -53,27 +53,6 @@ class SearchOrderProcessorTest {
         assertThat(result).isEqualTo(order);
     }
 
-
-    private final class FakeOrderRepository implements OrderRepository {
-
-        private final Map<Long, Order> data = new ConcurrentHashMap<>();
-
-        private final AtomicLong idGenerator = new AtomicLong();
-
-        @Override
-        public Order save(Order order) {
-            return data.put(idGenerator.incrementAndGet(), order);
-        }
-
-        @Override
-        public Order findById(Long id) {
-            return data.values().stream()
-                .filter(order -> order.getId().equals(id))
-                .findFirst()
-                .orElseThrow(EntityNotFoundException::new);
-        }
-    }
-
     private CreateOrderCommand command() {
         return new CreateOrderCommand(
             "NAVER_PAY",
