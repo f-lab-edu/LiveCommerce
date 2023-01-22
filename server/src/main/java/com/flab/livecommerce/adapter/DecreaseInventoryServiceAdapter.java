@@ -7,7 +7,8 @@ import com.flab.inventory.application.result.InventoryResult;
 import com.flab.inventory.domain.data.ItemQuantity;
 import com.flab.order.domain.DecreaseInventoryService;
 import com.flab.order.domain.data.DecreaseInventoryData;
-import com.flab.order.domain.event.OrderPayedEvent;
+import com.flab.order.domain.data.ItemQuantityData;
+import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +25,10 @@ public class DecreaseInventoryServiceAdapter implements DecreaseInventoryService
     }
 
     @Override
-    public DecreaseInventoryData service(OrderPayedEvent event) {
+    public DecreaseInventoryData service(List<ItemQuantityData> itemQuantityDataList) {
         try {
             InventoryResult result = decreaseInventoryProcessor.execute(
-                new DecreaseInventoryCommand(event.getItemQuantities().stream()
+                new DecreaseInventoryCommand(itemQuantityDataList.stream()
                     .map(item -> new ItemQuantity(item.getItemId(), item.getCount()))
                     .collect(Collectors.toList())));
 

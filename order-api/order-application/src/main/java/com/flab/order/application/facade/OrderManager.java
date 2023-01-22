@@ -5,9 +5,9 @@ import com.flab.order.application.OrderPayedProcessor;
 import com.flab.order.application.PaymentCompletedProcessor;
 import com.flab.order.application.SearchOrderProcessor;
 import com.flab.order.application.command.CreateOrderCommand;
+import com.flab.order.application.command.OrderPayedCommand;
 import com.flab.order.application.command.PaymentCompletedCommand;
 import com.flab.order.domain.Order;
-import com.flab.order.domain.event.OrderPayedEvent;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,7 +44,7 @@ public class OrderManager {
         paymentCompletedProcessor.execute(command);
     }
 
-    public void orderPayed(OrderPayedEvent event) {
-        orderPayedProcessor.execute(event);
+    public void orderPayed(OrderPayedCommand command) {
+        orderPayedProcessor.execute(command);
     }
 }

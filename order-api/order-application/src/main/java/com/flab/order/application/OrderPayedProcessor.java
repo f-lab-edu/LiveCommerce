@@ -1,5 +1,6 @@
 package com.flab.order.application;
 
+import com.flab.order.application.command.OrderPayedCommand;
 import com.flab.order.application.result.OrderPayedResult;
 import com.flab.order.domain.DecreaseInventoryService;
 import com.flab.order.domain.OrderRepository;
@@ -27,9 +28,9 @@ public class OrderPayedProcessor {
     }
 
     @Transactional
-    public OrderPayedResult execute(OrderPayedEvent event) {
-        var order = orderRepository.findById(event.getOrderId());
-        var data = decreaseInventoryService.service(event);
+    public OrderPayedResult execute(OrderPayedCommand command) {
+        var order = orderRepository.findById(command.getOrderId());
+        var data = decreaseInventoryService.service(command.getItemQuantityData());
 
         if (!data.isSuccess()) {
             order.cancel();

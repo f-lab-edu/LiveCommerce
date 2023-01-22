@@ -1,5 +1,6 @@
 package com.flab.order.presentation;
 
+import com.flab.order.application.command.OrderPayedCommand;
 import com.flab.order.application.facade.OrderManager;
 import com.flab.order.domain.event.OrderPayedEvent;
 import com.flab.order.presentation.request.PaymentCompletedEvent;
@@ -29,6 +30,6 @@ public class OrderEventHandler {
     @TransactionalEventListener
     public void orchestrate(OrderPayedEvent event) {
         log.info(">>>>> 비동기 작업 수행");
-        orderManager.orderPayed(event);
+        orderManager.orderPayed(new OrderPayedCommand(event));
     }
 }
