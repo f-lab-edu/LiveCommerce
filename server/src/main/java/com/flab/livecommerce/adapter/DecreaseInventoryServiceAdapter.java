@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class DecreaseInventoryServiceAdapter implements DecreaseInventoryService {
 
     private final DecreaseInventoryProcessor decreaseInventoryProcessor;
-    private final Logger log = LoggerFactory.getLogger(DecreaseInventoryServiceAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(DecreaseInventoryServiceAdapter.class);
 
     public DecreaseInventoryServiceAdapter(DecreaseInventoryProcessor decreaseInventoryProcessor) {
         this.decreaseInventoryProcessor = decreaseInventoryProcessor;

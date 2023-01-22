@@ -2,7 +2,7 @@ package com.flab.order.domain.event;
 
 import com.flab.common.domain.DomainEvent;
 import com.flab.order.domain.Order;
-import com.flab.order.domain.data.ItemQuantity;
+import com.flab.order.domain.data.ItemQuantityData;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,7 +11,7 @@ public final class OrderPayedEvent implements DomainEvent {
     private final Long orderId;
     private final Long userId;
     private final Integer totalAmount;
-    private final List<ItemQuantity> itemQuantities;
+    private final List<ItemQuantityData> itemQuantities;
     private final LocalDateTime occurredOn;
 
     public OrderPayedEvent(Order order) {
@@ -34,7 +34,7 @@ public final class OrderPayedEvent implements DomainEvent {
         return totalAmount;
     }
 
-    public List<ItemQuantity> getItemQuantities() {
+    public List<ItemQuantityData> getItemQuantities() {
         return itemQuantities;
     }
 

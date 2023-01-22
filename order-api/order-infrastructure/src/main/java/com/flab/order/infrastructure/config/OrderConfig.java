@@ -39,8 +39,9 @@ public class OrderConfig {
     @Bean
     public OrderPayedProcessor orderPayedProcessor(
         DecreaseInventoryService decreaseInventoryService,
-        OrderRepository orderRepository
+        OrderRepository orderRepository,
+        ApplicationEventPublisher publisher
     ) {
-        return new OrderPayedProcessor(decreaseInventoryService, orderRepository);
+        return new OrderPayedProcessor(decreaseInventoryService, orderRepository, publisher);
     }
 }

@@ -1,7 +1,7 @@
 package com.flab.order.domain;
 
 import com.flab.common.domain.AbstractAggregateRoot;
-import com.flab.order.domain.data.ItemQuantity;
+import com.flab.order.domain.data.ItemQuantityData;
 import com.flab.order.domain.event.OrderCanceledEvent;
 import com.flab.order.domain.event.OrderCompletedEvent;
 import com.flab.order.domain.event.OrderCreatedEvent;
@@ -150,10 +150,10 @@ public class Order extends AbstractAggregateRoot {
             .collect(Collectors.toList());
     }
 
-    public List<ItemQuantity> getItemQuantities() {
-        return this.orderLineItems.stream().map(
-            item -> new ItemQuantity(item.getItemId(), item.getOrderCount())
-        ).collect(Collectors.toList());
+    public List<ItemQuantityData> getItemQuantities() {
+        return this.orderLineItems.stream()
+            .map(item -> new ItemQuantityData(item.getItemId(), item.getOrderCount()))
+            .collect(Collectors.toList());
     }
 
     public List<OrderLineItem> getOrderLineItems() {

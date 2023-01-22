@@ -1,19 +1,19 @@
 package com.flab.order.presentation.request;
 
-import com.flab.order.domain.data.ItemQuantity;
+import com.flab.order.domain.data.ItemQuantityData;
 import java.util.List;
 
 public class DecreaseInventoryRequest {
-    private List<ItemQuantity> itemQuantities;
+    private List<ItemQuantityData> itemQuantities;
 
-    public DecreaseInventoryRequest(List<ItemQuantity> itemQuantities) {
+    public DecreaseInventoryRequest(List<ItemQuantityData> itemQuantities) {
         this.itemQuantities = itemQuantities;
     }
 
     private DecreaseInventoryRequest() {
     }
 
-    public List<ItemQuantity> getItemQuantities() {
+    public List<ItemQuantityData> getItemQuantities() {
         return itemQuantities;
     }
 }

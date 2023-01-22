@@ -1,11 +1,11 @@
 package com.flab.order.domain.data;
 
-public final class ItemQuantity {
+public final class ItemQuantityData {
 
     private final Long itemId;
     private final Integer count;
 
-    public ItemQuantity(Long itemId, Integer count) {
+    public ItemQuantityData(Long itemId, Integer count) {
         this.itemId = itemId;
         this.count = count;
     }

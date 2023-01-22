@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DecreaseInventoryProcessor {
 
     private final InventoryRepository inventoryRepository;
-    private final Logger log = LoggerFactory.getLogger(DecreaseInventoryProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(DecreaseInventoryProcessor.class);
 
     public DecreaseInventoryProcessor(InventoryRepository inventoryRepository) {
         this.inventoryRepository = inventoryRepository;

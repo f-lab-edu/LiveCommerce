@@ -2,10 +2,10 @@ package com.flab.order.domain.data;
 
 import java.util.List;
 
-public class DecreaseInventoryData {
+public final class DecreaseInventoryData {
 
-    private List<InventoryData> inventoryData;
-    private boolean success;
+    private final List<InventoryData> inventoryData;
+    private final boolean success;
 
     public DecreaseInventoryData(List<InventoryData> inventoryData, boolean success) {
         this.inventoryData = inventoryData;
