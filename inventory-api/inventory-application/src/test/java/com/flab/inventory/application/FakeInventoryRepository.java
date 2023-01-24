@@ -27,9 +27,9 @@ public class FakeInventoryRepository implements InventoryRepository {
 
     @Override
     public List<Inventory> saveAll(List<Inventory> inventories) {
-        return inventories.stream().map(
-            inventory -> save(inventory)
-        ).collect(Collectors.toList());
+        return inventories.stream()
+            .map(this::save)
+            .collect(Collectors.toList());
     }
 
     @Override
