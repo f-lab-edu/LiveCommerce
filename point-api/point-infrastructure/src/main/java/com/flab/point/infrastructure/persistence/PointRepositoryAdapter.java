@@ -19,4 +19,9 @@ public class PointRepositoryAdapter implements PointRepository {
         return pointRepository.findByUserId(userId)
                 .orElse(new Point(userId, 0));
     }
+
+    @Override
+    public Point save(Point reducedPoint) {
+        return pointRepository.save(reducedPoint);
+    }
 }

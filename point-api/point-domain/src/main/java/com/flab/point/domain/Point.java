@@ -58,7 +58,7 @@ public class Point {
     }
 
     // 포인트 사용
-    public Integer reduce(
+    public Point reduce(
             Integer reducedAmount
     ) {
         if (this.totalAmount - reducedAmount < 0) {
@@ -67,7 +67,7 @@ public class Point {
 
         this.updatedAt = LocalDateTime.now();
         this.totalAmount -= reducedAmount;
-        return this.totalAmount;
+        return this;
     }
 
     public Long getId() {

@@ -35,7 +35,6 @@ public class PointController {
         return CommonApiResponse.success(new GetPointResponse(userPoints));
     }
 
-    // TODO 이후 작업) 결제 모듈 연결
     @LoginCheck(authority = Role.USER)
     @PostMapping("/charging")
     public CommonApiResponse chargePoint(

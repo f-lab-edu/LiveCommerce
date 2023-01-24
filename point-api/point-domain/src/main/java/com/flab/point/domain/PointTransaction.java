@@ -46,16 +46,14 @@ public class PointTransaction {
         return new PointTransaction(point.getUserId(), pointCategory, amount);
     }
 
-    // 하나의 포인트 트랜잭션에서 point 차감. return 감소시켜야 할 남은 포인트
-    public Integer reduce(Integer reducedAmount) {
+    public PointTransaction reduce(Integer reducedAmount) {
         if (this.amount <= reducedAmount) {
             this.status = false;
-            reducedAmount -= this.amount;
+            this.amount = 0;
         } else {
             this.amount -= reducedAmount;
-            reducedAmount = 0;
         }
-        return reducedAmount;
+        return this;
     }
 
     // TODO 선착순 이벤트 쿠폰 추가 후 각 카테고리 별 만료기간 설정을 유연성있게 할 예정. 현재는 적립시 적립 일자 + 한달로 설정
