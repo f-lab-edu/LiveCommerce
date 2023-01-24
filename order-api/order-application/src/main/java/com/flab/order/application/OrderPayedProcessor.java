@@ -4,7 +4,6 @@ import com.flab.order.application.command.OrderPayedCommand;
 import com.flab.order.application.result.OrderPayedResult;
 import com.flab.order.domain.DecreaseInventoryService;
 import com.flab.order.domain.OrderRepository;
-import com.flab.order.domain.event.OrderPayedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;

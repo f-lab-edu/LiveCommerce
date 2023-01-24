@@ -1,7 +1,7 @@
 package com.flab.order.application.command;
 
 
-public class CreateOrderItemOptionCommand {
+public final class CreateOrderItemOptionCommand {
 
     private Integer ordering;
     private String name;
@@ -11,6 +11,9 @@ public class CreateOrderItemOptionCommand {
         this.ordering = ordering;
         this.name = name;
         this.price = price;
+    }
+
+    private CreateOrderItemOptionCommand() {
     }
 
     public Integer getOrdering() {

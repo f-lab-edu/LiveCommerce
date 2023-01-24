@@ -1,6 +1,6 @@
 package com.flab.order.application.command;
 
-public class PaymentCompletedCommand {
+public final class PaymentCompletedCommand {
 
     private Long orderId;
     private Integer payedAmount;

@@ -2,7 +2,7 @@ package com.flab.order.application.command;
 
 import java.util.List;
 
-public class CreateOrderItemOptionGroupCommand {
+public final class CreateOrderItemOptionGroupCommand {
 
     private Integer ordering;
     private String name;
@@ -16,6 +16,9 @@ public class CreateOrderItemOptionGroupCommand {
         this.ordering = ordering;
         this.name = name;
         this.orderItemOptions = orderItemOptions;
+    }
+
+    private CreateOrderItemOptionGroupCommand() {
     }
 
     public Integer getOrdering() {
