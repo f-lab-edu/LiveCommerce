@@ -1,5 +1,6 @@
 package com.flab.point.domain;
 
+import com.flab.point.domain.data.TransactionDto;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -46,14 +47,16 @@ public class PointTransaction {
         return new PointTransaction(point.getUserId(), pointCategory, amount);
     }
 
-    public PointTransaction reduce(Integer reducedAmount) {
+    public TransactionDto reduce(Integer reducedAmount) {
         if (this.amount <= reducedAmount) {
             this.status = false;
+            reducedAmount -= this.amount;
             this.amount = 0;
         } else {
             this.amount -= reducedAmount;
+            reducedAmount = 0;
         }
-        return this;
+        return new TransactionDto(this, reducedAmount);
     }
 
     // TODO 선착순 이벤트 쿠폰 추가 후 각 카테고리 별 만료기간 설정을 유연성있게 할 예정. 현재는 적립시 적립 일자 + 한달로 설정

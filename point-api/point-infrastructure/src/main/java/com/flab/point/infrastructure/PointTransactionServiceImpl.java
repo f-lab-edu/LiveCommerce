@@ -38,15 +38,15 @@ public class PointTransactionServiceImpl implements PointTransactionService {
 
         var ptxList = getValidPointTransactions(pointTransactionList);
 
-        for (PointTransaction ptx : ptxList) { // TODO 남은돈?
-            var reducedPtx = ptx.reduce(reducedAmount);
-            pointTransactionRepository.save(reducedPtx);
-            if (reducedPtx.getAmount() == 0) {
+        int toReduceAmount = reducedAmount;
+        for (PointTransaction ptx : ptxList) {
+            if (toReduceAmount == 0) {
                 break;
             }
+            var reducedPtxDto = ptx.reduce(toReduceAmount);
+            toReduceAmount = reducedPtxDto.getRemainPoints();
+            pointTransactionRepository.save(reducedPtxDto.getPointTransaction());
         }
-
-
     }
 
     private List<PointTransaction> getValidPointTransactions(List<PointTransaction> pointTransactionList) {
