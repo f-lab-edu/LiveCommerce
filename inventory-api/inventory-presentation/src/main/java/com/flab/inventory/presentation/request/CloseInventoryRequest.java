@@ -4,12 +4,12 @@ import com.flab.inventory.application.command.CloseInventoryCommand;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 
-public class CloseInventoryRequest {
+public final class CloseInventoryRequest {
 
     @NotNull
     private List<Long> inventoryIds;
 
-    protected CloseInventoryRequest() {
+    private CloseInventoryRequest() {
     }
 
     public CloseInventoryCommand toCommand() {

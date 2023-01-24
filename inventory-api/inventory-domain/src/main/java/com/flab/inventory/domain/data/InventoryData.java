@@ -1,6 +1,6 @@
 package com.flab.inventory.domain.data;
 
-public class InventoryData {
+public final class InventoryData {
 
     private Long inventoryId;
     private Integer quantity;
@@ -8,6 +8,9 @@ public class InventoryData {
     public InventoryData(Long inventoryId, Integer quantity) {
         this.inventoryId = inventoryId;
         this.quantity = quantity;
+    }
+
+    private InventoryData() {
     }
 
     public Long getInventoryId() {

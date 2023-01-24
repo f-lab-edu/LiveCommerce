@@ -1,11 +1,11 @@
 package com.flab.inventory.application.command;
 
-public class IncreaseInventoryCommand {
+public final class IncreaseInventoryCommand {
 
     private Long itemId;
     private Integer count;
 
-    protected IncreaseInventoryCommand() {
+    private IncreaseInventoryCommand() {
     }
 
     public IncreaseInventoryCommand(Long itemId, Integer count) {

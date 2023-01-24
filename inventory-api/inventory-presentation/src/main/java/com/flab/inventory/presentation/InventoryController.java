@@ -7,6 +7,7 @@ import com.flab.inventory.presentation.request.DecreaseInventoryRequest;
 import com.flab.inventory.presentation.request.IncreaseInventoryRequest;
 import com.flab.inventory.presentation.request.OpenInventoryRequest;
 import com.flab.inventory.presentation.request.ReduceInventoryRequest;
+import com.flab.inventory.presentation.response.InventoryResponse;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class InventoryController {
     public CommonApiResponse<Object> searchInventory(
         @PathVariable("inventoryId") Long id
     ) {
+        //todo 작업 예정
         //inventoryManager.search(id);
         return null;
     }
@@ -70,10 +72,10 @@ public class InventoryController {
     }
 
     @PostMapping("/decrease")
-    public CommonApiResponse decreaseInventoryRequest(
+    public CommonApiResponse<InventoryResponse> decreaseInventoryRequest(
         @RequestBody @Valid DecreaseInventoryRequest request
     ) {
-        inventoryManager.decrease(request.toCommand());
-        return CommonApiResponse.success("Ok");
+        var result = inventoryManager.decrease(request.toCommand());
+        return CommonApiResponse.success(new InventoryResponse(result.getInventoryData()));
     }
 }

@@ -3,9 +3,12 @@ package com.flab.inventory.application.command;
 import com.flab.inventory.domain.data.ItemQuantity;
 import java.util.List;
 
-public class DecreaseInventoryCommand {
+public final class DecreaseInventoryCommand {
 
-    private final List<ItemQuantity> itemQuantities;
+    private List<ItemQuantity> itemQuantities;
+
+    private DecreaseInventoryCommand() {
+    }
 
     public DecreaseInventoryCommand(List<ItemQuantity> itemQuantities) {
         this.itemQuantities = itemQuantities;

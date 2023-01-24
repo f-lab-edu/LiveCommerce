@@ -7,7 +7,8 @@ import com.flab.inventory.domain.data.ItemQuantity;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DecreaseInventoryRequest {
+public final class DecreaseInventoryRequest {
+
     private List<ItemQuantity> itemQuantities;
 
     public DecreaseInventoryRequest(List<ItemQuantity> itemQuantities) {

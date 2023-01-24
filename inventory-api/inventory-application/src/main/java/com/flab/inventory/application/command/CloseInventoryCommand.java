@@ -2,11 +2,11 @@ package com.flab.inventory.application.command;
 
 import java.util.List;
 
-public class CloseInventoryCommand {
+public final class CloseInventoryCommand {
 
     private List<Long> inventoryIds;
 
-    protected CloseInventoryCommand() {
+    private CloseInventoryCommand() {
     }
 
     public CloseInventoryCommand(List<Long> inventoryIds) {

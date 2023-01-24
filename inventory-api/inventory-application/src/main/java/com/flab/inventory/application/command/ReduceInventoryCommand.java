@@ -1,11 +1,11 @@
 package com.flab.inventory.application.command;
 
-public class ReduceInventoryCommand {
+public final class ReduceInventoryCommand {
 
     private Long itemId;
     private Integer count;
 
-    protected ReduceInventoryCommand() {
+    private ReduceInventoryCommand() {
     }
 
     public ReduceInventoryCommand(Long itemId, Integer count) {
