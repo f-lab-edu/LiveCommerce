@@ -16,10 +16,9 @@ public class PointConfig {
     @Bean
     public ChargePointProcessor chargePointProcessor(
             PointRepository pointRepository,
-            PointTransactionRepository pointTransactionRepository,
             PointTransactionService pointTransactionService
     ) {
-        return new ChargePointProcessor(pointRepository, pointTransactionRepository, pointTransactionService);
+        return new ChargePointProcessor(pointRepository, pointTransactionService);
     }
 
     @Bean

@@ -4,6 +4,7 @@ import com.flab.point.application.command.ReducePointCommand;
 import com.flab.point.domain.PointRepository;
 import com.flab.point.domain.PointTransactionRepository;
 import com.flab.point.domain.PointTransactionService;
+import org.springframework.transaction.annotation.Transactional;
 
 public class ReducePointProcessor {
 
@@ -21,6 +22,7 @@ public class ReducePointProcessor {
         this.pointTransactionService = pointTransactionService;
     }
 
+    @Transactional
     public Integer execute(Long userId, ReducePointCommand command) {
         var point = pointRepository.findByUserId(userId);
         var pointTransactionList = pointTransactionRepository.findByUserIdAndStatus(userId, true);
