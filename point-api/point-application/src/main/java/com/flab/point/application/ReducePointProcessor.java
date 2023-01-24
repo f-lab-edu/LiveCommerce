@@ -23,7 +23,7 @@ public class ReducePointProcessor {
 
     public Integer execute(Long userId, ReducePointCommand command) {
         var point = pointRepository.findByUserId(userId);
-        var pointTransactionList = pointTransactionRepository.findAllByUserId(userId);
+        var pointTransactionList = pointTransactionRepository.findByUserIdAndStatus(userId, true);
 
         return point.reducePoints(this.pointTransactionService, pointTransactionList, command.getReducedAmount());
     }

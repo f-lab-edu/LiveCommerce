@@ -8,12 +8,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 /*
  *  포인트 '차감' 시 PointTransaction에서 포인트를 적립 순서와 만료기간을 고려하여 차감할 수 있도록 함 -> '적립'된 포인트를 따로 관리하고 차감
  */
 
 @Entity
+@Table(indexes = {@Index(name = "idx_point_transact_status_expire_at", columnList = "user_id, status")})
 public class PointTransaction {
 
     @Id
@@ -25,7 +28,7 @@ public class PointTransaction {
     private Integer amount;
     private LocalDateTime transactAt;
     private LocalDateTime expireAt;
-    private boolean status; // 포인트가 현재 사용 가능한지 여부 - 상태값 필드
+    private boolean status;
 
     protected PointTransaction() {
     }

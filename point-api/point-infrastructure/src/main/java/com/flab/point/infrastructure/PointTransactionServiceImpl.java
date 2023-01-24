@@ -50,8 +50,9 @@ public class PointTransactionServiceImpl implements PointTransactionService {
     }
 
     private List<PointTransaction> getValidPointTransactions(List<PointTransaction> pointTransactionList) {
+
         return pointTransactionList.stream()
-                .filter(ptx -> ptx.isStatus() && ptx.getExpireAt().isAfter(LocalDateTime.now()))
+                .filter(ptx -> ptx.getExpireAt().isAfter(LocalDateTime.now()))
                 .collect(Collectors.toList());
     }
 

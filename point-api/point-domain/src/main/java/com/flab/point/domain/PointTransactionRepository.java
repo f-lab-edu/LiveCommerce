@@ -4,7 +4,9 @@ import java.util.List;
 
 public interface PointTransactionRepository {
 
-    List<PointTransaction> findAllByUserId(Long userId);
+    List<PointTransaction> findByUserId(Long userId);
 
     void save(PointTransaction reducedPtx);
+
+    List<PointTransaction> findByUserIdAndStatus(Long userId, boolean status);
 }

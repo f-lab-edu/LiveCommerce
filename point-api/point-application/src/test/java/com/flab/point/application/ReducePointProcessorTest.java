@@ -40,7 +40,7 @@ class ReducePointProcessorTest {
         Mockito.when(pointRepository.findByUserId(1L))
                 .thenReturn(new Point(1L, 5000));
 
-        Mockito.when(pointTransactionRepository.findAllByUserId(1L))
+        Mockito.when(pointTransactionRepository.findByUserIdAndStatus(1L, true))
                 .thenReturn(
                         List.of(
                                 new PointTransaction(1L, PointCategory.CHARGE, 1500),

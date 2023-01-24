@@ -6,5 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JpaPointTransactionRepository extends JpaRepository<PointTransaction, Long> {
 
-    List<PointTransaction> findAllByUserId(Long userId);
+    List<PointTransaction> findByUserId(Long userId);
+
+    List<PointTransaction> findByUserIdAndStatus(Long userId, boolean status);
 }
