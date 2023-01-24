@@ -13,5 +13,4 @@ public interface JpaInventoryRepository extends JpaRepository<Inventory, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     List<Inventory> findByItemIdIn(Iterable<Long> itemIds);
-
 }

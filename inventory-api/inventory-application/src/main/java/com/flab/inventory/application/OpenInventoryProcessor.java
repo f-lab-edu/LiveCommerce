@@ -17,7 +17,7 @@ public class OpenInventoryProcessor {
     @Transactional
     public void execute(OpenInventoryCommand command) {
         List<Inventory> inventories = inventoryRepository
-            .findByItemIdIn(command.getInventoryIds());
+            .findAllById(command.getInventoryIds());
 
         inventories.forEach(Inventory::open);
     }
