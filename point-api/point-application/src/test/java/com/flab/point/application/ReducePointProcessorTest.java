@@ -10,6 +10,7 @@ import com.flab.point.domain.PointTransactionService;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
@@ -31,7 +32,7 @@ class ReducePointProcessorTest {
     @InjectMocks
     ReducePointProcessor reducePointProcessor;
 
-    //@Test
+    @Test
     @DisplayName("포인트 감소 성공 테스트")
     void reducePoint_complete() {
 
