@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RedisDistributionLockConfig {
 
-    @Value("${spring.redis.host}")
+    @Value("${spring.redis.lock.host}")
     private String redissonHost;
 
     @Value("${spring.redis.lock.port}")
@@ -29,7 +29,7 @@ public class RedisDistributionLockConfig {
 
     private static final String REDISSON_HOST_PREFIX = "redis://";
 
-    @Bean
+    @Bean("redissonLockConnectionFactory")
     public RedissonConnectionFactory redissonConnectionFactory(RedissonClient redisson) {
         return new RedissonConnectionFactory(redisson);
     }

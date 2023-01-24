@@ -25,10 +25,11 @@ spring:
       location: C:\Temp\
 
   redis:
-      host: localhost
       session:
+        host: 127.0.0.1
         port: 16379
       lock:
+        host: 127.0.0.1 # 프로덕션 배포 할 경우, host 주소 분리
         port: 26379
 
   jpa:
