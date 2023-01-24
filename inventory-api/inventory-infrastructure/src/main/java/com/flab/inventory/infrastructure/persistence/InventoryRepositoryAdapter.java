@@ -14,7 +14,6 @@ public class InventoryRepositoryAdapter implements InventoryRepository {
         this.inventoryRepository = inventoryRepository;
     }
 
-
     @Override
     public Inventory save(Inventory inventory) {
         return inventoryRepository.save(inventory);
@@ -32,6 +31,11 @@ public class InventoryRepositoryAdapter implements InventoryRepository {
     }
 
     @Override
+    public List<Inventory> findAllById(Iterable<Long> id) {
+        return inventoryRepository.findAllById(id);
+    }
+
+    @Override
     public Inventory findByItemId(Long id) {
         return inventoryRepository.findByItemId(id)
             .orElseThrow(EntityNotFoundException::new);
@@ -41,5 +45,4 @@ public class InventoryRepositoryAdapter implements InventoryRepository {
     public List<Inventory> findByItemIdIn(Iterable<Long> itemIds) {
         return inventoryRepository.findByItemIdIn(itemIds);
     }
-
 }
