@@ -20,8 +20,8 @@ public class PointTransactionRepositoryAdapter implements PointTransactionReposi
     }
 
     @Override
-    public void save(PointTransaction reducedPtx) {
-
+    public void save(PointTransaction pointTransaction) {
+        jpaPointTransactionRepository.save(pointTransaction);
     }
 
     @Override

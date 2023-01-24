@@ -1,6 +1,7 @@
 package com.flab.point.infrastructure;
 
 import com.flab.point.domain.Point;
+import com.flab.point.domain.PointCategory;
 import com.flab.point.domain.PointRepository;
 import com.flab.point.domain.PointTransaction;
 import com.flab.point.domain.PointTransactionRepository;
@@ -23,12 +24,26 @@ public class PointTransactionServiceImpl implements PointTransactionService {
     }
 
     @Override
-    public void chargePoints() {
+    public Integer addPoints(
+            Point point,
+            Integer chargedAmount,
+            PointCategory pointCategory
+    ) {
+        Point addedPoint = point.add(chargedAmount);
+        pointRepository.save(addedPoint);
+        pointTransactionRepository.save(
+                new PointTransaction(
+                        point.getUserId(),
+                        pointCategory,
+                        chargedAmount
+                )
+        );
 
+        return chargedAmount;
     }
 
     @Override
-    public void reducePoints(
+    public Integer reducePoints(
             Point point,
             List<PointTransaction> pointTransactionList,
             Integer reducedAmount
@@ -47,6 +62,8 @@ public class PointTransactionServiceImpl implements PointTransactionService {
             toReduceAmount = reducedPtxDto.getRemainPoints();
             pointTransactionRepository.save(reducedPtxDto.getPointTransaction());
         }
+
+        return reducedPoint.getAmount();
     }
 
     private List<PointTransaction> getValidPointTransactions(List<PointTransaction> pointTransactionList) {

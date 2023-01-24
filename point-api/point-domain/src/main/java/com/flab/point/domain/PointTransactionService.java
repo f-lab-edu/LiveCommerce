@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface PointTransactionService {
 
-    void chargePoints();
+    Integer addPoints(Point point, Integer chargedAmount, PointCategory pointCategory);
 
-    void reducePoints(Point point, List<PointTransaction> pointTransactionList, Integer reducedAmount);
+    Integer reducePoints(Point point, List<PointTransaction> pointTransactionList, Integer reducedAmount);
 
 }

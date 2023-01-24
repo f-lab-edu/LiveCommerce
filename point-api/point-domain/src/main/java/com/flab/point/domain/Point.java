@@ -42,19 +42,13 @@ public class Point {
     }
 
     // 추가 (적립, 충전)
-    public Integer add(
-            Integer addedAmount,
-            PointCategory pointCategory
+    public Point add(
+            Integer addedAmount
     ) {
         this.totalAmount += addedAmount;
         this.updatedAt = LocalDateTime.now();
-        PointTransaction.add(
-                this,
-                addedAmount,
-                pointCategory
-        );
 
-        return totalAmount;
+        return this;
     }
 
     // 포인트 사용
@@ -82,8 +76,19 @@ public class Point {
         return totalAmount;
     }
 
-    public Integer reducePoints(PointTransactionService pointTransactionService, List<PointTransaction> pointTransactionList, Integer reducedAmount) {
-        pointTransactionService.reducePoints(this, pointTransactionList, reducedAmount);
-        return this.totalAmount;
+    public Integer reducePoints(
+            PointTransactionService pointTransactionService,
+            List<PointTransaction> pointTransactionList,
+            Integer reducedAmount
+    ) {
+        return pointTransactionService.reducePoints(this, pointTransactionList, reducedAmount);
+    }
+
+    public Integer addPoints(
+            PointTransactionService pointTransactionService,
+            Integer chargeAmount,
+            PointCategory pointCategory
+    ) {
+        return pointTransactionService.addPoints(this, chargeAmount, pointCategory);
     }
 }

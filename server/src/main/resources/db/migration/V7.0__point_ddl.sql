@@ -12,7 +12,6 @@ create table point_transaction
 (
     id             bigint auto_increment primary key comment 'ID',
     user_id        bigint       not null comment '유저 ID',
-    point_id       bigint       not null comment '포인트 ID',
     point_category varchar(255) not null comment '포인트 생성 카테고리',
     amount         bigint       not null comment '포인트 금액',
     transact_at    datetime(6)  not null comment '포인트 거래 일시',

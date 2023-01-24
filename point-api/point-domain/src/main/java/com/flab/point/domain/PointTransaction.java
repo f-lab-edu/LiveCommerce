@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(indexes = {@Index(name = "idx_point_transact_status_expire_at", columnList = "user_id, status")})
+@Table(indexes = {@Index(name = "idx_point_transact_status_expire_at", columnList = "userId, status")})
 public class PointTransaction {
 
     @Id
@@ -51,13 +51,13 @@ public class PointTransaction {
     }
 
     public TransactionDto reduce(Integer reducedAmount) {
-        if (this.amount <= reducedAmount) {
-            this.status = false;
-            reducedAmount -= this.amount;
-            this.amount = 0;
-        } else {
+        if (this.amount > reducedAmount) {
             this.amount -= reducedAmount;
             reducedAmount = 0;
+        } else {
+            reducedAmount -= this.amount;
+            this.status = false;
+            this.amount = 0;
         }
         return new TransactionDto(this, reducedAmount);
     }
