@@ -51,6 +51,7 @@ public class PointTransaction {
     }
 
     public TransactionDto reduce(Integer reducedAmount) {
+        checkValidExpiration();
         if (this.amount > reducedAmount) {
             this.amount -= reducedAmount;
             reducedAmount = 0;
@@ -60,6 +61,13 @@ public class PointTransaction {
             this.amount = 0;
         }
         return new TransactionDto(this, reducedAmount);
+    }
+
+
+    public void checkValidExpiration() {
+        if (this.getExpireAt().isAfter(LocalDateTime.now())) {
+            throw new RuntimeException(); // TODO Exception
+        }
     }
 
     // TODO 선착순 이벤트 쿠폰 추가 후 각 카테고리 별 만료기간 설정을 유연성있게 할 예정. 현재는 적립시 적립 일자 + 한달로 설정

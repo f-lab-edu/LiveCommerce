@@ -1,7 +1,9 @@
 package com.flab.point.application;
 
 import com.flab.point.application.command.ReducePointCommand;
+import com.flab.point.domain.Point;
 import com.flab.point.domain.PointRepository;
+import com.flab.point.domain.PointTransaction;
 import com.flab.point.domain.PointTransactionRepository;
 import com.flab.point.domain.PointTransactionService;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,10 +25,21 @@ public class ReducePointProcessor {
     }
 
     @Transactional
-    public Integer execute(Long userId, ReducePointCommand command) {
+    public void execute(Long userId, ReducePointCommand command) {
         var point = pointRepository.findByUserId(userId);
         var pointTransactionList = pointTransactionRepository.findByUserIdAndStatus(userId, true);
 
-        return point.reducePoints(this.pointTransactionService, pointTransactionList, command.getReducedAmount());
+        int toReduceAmount = command.getReducedAmount();
+        for (PointTransaction ptx : pointTransactionList) {
+            if (toReduceAmount == 0) {
+                break;
+            }
+            var reducedPtxDto = ptx.reduce(toReduceAmount);
+            toReduceAmount = reducedPtxDto.getRemainPoints();
+            pointTransactionRepository.save(reducedPtxDto.getPointTransaction());
+        }
+
+        Point reducedPoints = point.reduce(command.getReducedAmount());
+        pointRepository.save(reducedPoints);
     }
 }

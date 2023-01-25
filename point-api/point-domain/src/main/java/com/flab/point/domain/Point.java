@@ -2,7 +2,6 @@ package com.flab.point.domain;
 
 import com.flab.point.domain.exception.NotEnoughPointsException;
 import java.time.LocalDateTime;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -76,13 +75,6 @@ public class Point {
         return totalAmount;
     }
 
-    public Integer reducePoints(
-            PointTransactionService pointTransactionService,
-            List<PointTransaction> pointTransactionList,
-            Integer reducedAmount
-    ) {
-        return pointTransactionService.reducePoints(this, pointTransactionList, reducedAmount);
-    }
 
     public Integer addPoints(
             PointTransactionService pointTransactionService,
