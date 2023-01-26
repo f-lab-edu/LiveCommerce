@@ -6,8 +6,8 @@ import java.util.List;
 
 public final class OrderPayedCommand {
 
-    private final Long orderId;
-    private final List<ItemQuantityData> itemQuantityData;
+    private Long orderId;
+    private List<ItemQuantityData> itemQuantityData;
 
     public OrderPayedCommand(Long orderId, List<ItemQuantityData> itemQuantityData) {
         this.orderId = orderId;
@@ -17,6 +17,9 @@ public final class OrderPayedCommand {
     public OrderPayedCommand(OrderPayedEvent event) {
         this.orderId = event.getOrderId();
         this.itemQuantityData = event.getItemQuantities();
+    }
+
+    private OrderPayedCommand() {
     }
 
     public Long getOrderId() {

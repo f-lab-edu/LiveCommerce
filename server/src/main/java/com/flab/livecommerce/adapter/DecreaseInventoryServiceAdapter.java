@@ -8,6 +8,7 @@ import com.flab.inventory.domain.data.ItemQuantity;
 import com.flab.order.domain.DecreaseInventoryService;
 import com.flab.order.domain.data.DecreaseInventoryData;
 import com.flab.order.domain.data.ItemQuantityData;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public class DecreaseInventoryServiceAdapter implements DecreaseInventoryService
                 .collect(Collectors.toList()));
         } catch (BaseException e) {
             log.error("error =", e);
-            return DecreaseInventoryData.fail(null);
+            return DecreaseInventoryData.fail(Collections.emptyList());
         }
     }
 }

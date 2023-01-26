@@ -31,14 +31,14 @@ public class OrderPayedProcessor {
         var order = orderRepository.findById(command.getOrderId());
         var data = decreaseInventoryService.decreaseInventory(command.getItemQuantityData());
 
-        if (!data.isSuccess()) {
+        if (data.getInventoryData().isEmpty()) {
             order.cancel();
             order.pollAllEvents().forEach(publisher::publishEvent);
-            return new OrderPayedResult(order.getId(), data.getInventoryData(), false);
+            return new OrderPayedResult(order.getId(), data.getInventoryData());
         }
 
         order.completed();
         order.pollAllEvents().forEach(publisher::publishEvent);
-        return new OrderPayedResult(order.getId(), data.getInventoryData(), true);
+        return new OrderPayedResult(order.getId(), data.getInventoryData());
     }
 }

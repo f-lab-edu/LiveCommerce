@@ -5,16 +5,22 @@ import java.util.List;
 
 public final class OrderPayedResult {
 
-    private Long id;
+    private Long orderId;
     private List<InventoryData> inventoryData;
-    private boolean success;
 
     private OrderPayedResult() {
     }
 
-    public OrderPayedResult(Long id, List<InventoryData> inventoryData, boolean success) {
-        this.id = id;
+    public OrderPayedResult(Long orderId, List<InventoryData> inventoryData) {
+        this.orderId = orderId;
         this.inventoryData = inventoryData;
-        this.success = success;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public List<InventoryData> getInventoryData() {
+        return inventoryData;
     }
 }

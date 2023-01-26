@@ -10,7 +10,9 @@ import com.flab.order.domain.OrderItemOption;
 import com.flab.order.domain.OrderItemOptionGroup;
 import com.flab.order.domain.OrderLineItem;
 import com.flab.order.domain.data.DecreaseInventoryData;
+import com.flab.order.domain.data.InventoryData;
 import com.flab.order.domain.data.ItemQuantityData;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +28,7 @@ public class OrderPayedProcessorTest {
         var order = orderCreate();
         var orderRepository = new FakeOrderRepository();
         orderRepository.save(order);
+        var dummyData = new ItemQuantityData(null, null);
 
         var processor = new OrderPayedProcessor(
             new FailDecreaseInventoryServiceStub(),
@@ -34,7 +37,7 @@ public class OrderPayedProcessorTest {
         );
 
         // Act
-        processor.execute(new OrderPayedCommand(1L, null));
+        processor.execute(new OrderPayedCommand(1L, List.of(dummyData)));
 
         // Assert
         assertThat(order.getOrderStatus()).isEqualTo(OrderStatus.ORDER_CANCELED);
@@ -47,7 +50,7 @@ public class OrderPayedProcessorTest {
         var order = orderCreate();
         var orderRepository = new FakeOrderRepository();
         orderRepository.save(order);
-
+        var dummyData = new ItemQuantityData(null, null);
         var processor = new OrderPayedProcessor(
             new SuccessDecreaseInventoryServiceStub(),
             orderRepository,
@@ -55,7 +58,7 @@ public class OrderPayedProcessorTest {
         );
 
         // Act
-        processor.execute(new OrderPayedCommand(1L, null));
+        processor.execute(new OrderPayedCommand(1L, List.of(dummyData)));
 
         // Assert
         assertThat(order.getOrderStatus()).isEqualTo(OrderStatus.ORDER_COMPLETED);
@@ -81,7 +84,7 @@ public class OrderPayedProcessorTest {
 
         @Override
         public DecreaseInventoryData decreaseInventory(List<ItemQuantityData> itemQuantityDataList) {
-            return DecreaseInventoryData.fail(null);
+            return DecreaseInventoryData.fail(Collections.emptyList());
         }
     }
 
@@ -90,7 +93,7 @@ public class OrderPayedProcessorTest {
 
         @Override
         public DecreaseInventoryData decreaseInventory(List<ItemQuantityData> itemQuantityDataList) {
-            return DecreaseInventoryData.success(null);
+            return DecreaseInventoryData.success(List.of(new InventoryData(1L, 10)));
         }
     }
 

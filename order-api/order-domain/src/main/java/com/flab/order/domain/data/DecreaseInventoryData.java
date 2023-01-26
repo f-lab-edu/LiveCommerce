@@ -4,27 +4,24 @@ import java.util.List;
 
 public final class DecreaseInventoryData {
 
-    private final List<InventoryData> inventoryData;
-    private final boolean success;
+    private List<InventoryData> inventoryData;
 
-    public DecreaseInventoryData(List<InventoryData> inventoryData, boolean success) {
+    public DecreaseInventoryData(List<InventoryData> inventoryData) {
         this.inventoryData = inventoryData;
-        this.success = success;
+    }
+
+    private DecreaseInventoryData() {
     }
 
     public static DecreaseInventoryData success(List<InventoryData> inventoryData) {
-        return new DecreaseInventoryData(inventoryData, true);
+        return new DecreaseInventoryData(inventoryData);
     }
 
     public static DecreaseInventoryData fail(List<InventoryData> inventoryData) {
-        return new DecreaseInventoryData(inventoryData, false);
+        return new DecreaseInventoryData(inventoryData);
     }
 
     public List<InventoryData> getInventoryData() {
         return inventoryData;
-    }
-
-    public boolean isSuccess() {
-        return success;
     }
 }
