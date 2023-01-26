@@ -10,7 +10,7 @@ import com.flab.order.domain.OrderItemOptionGroup;
 import com.flab.order.domain.OrderLineItem;
 import com.flab.order.domain.OrderRepository;
 import com.flab.order.domain.exception.AlreadyCanceledException;
-import com.flab.order.domain.exception.AlreadyCompletedException;
+import com.flab.order.domain.exception.AlreadyPayedException;
 import com.flab.order.domain.exception.AmountNotMatchedException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -59,7 +59,7 @@ public class PaymentCompletedProcessorTest {
     }
 
     @Test
-    @DisplayName("이미 완료된 주문은 결제시 예외가 발생한다.")
+    @DisplayName("이미 결제된 주문은 결제시 예외가 발생한다.")
     void alreadyOrderCompleted_return_exception() {
         // Arrange
         int payedAmount = 99000;
@@ -75,7 +75,7 @@ public class PaymentCompletedProcessorTest {
         Throwable result = catchThrowable(() -> order.payed(payedAmount));
 
         // Assert
-        assertThat(result.getClass()).isEqualTo(AlreadyCompletedException.class);
+        assertThat(result.getClass()).isEqualTo(AlreadyPayedException.class);
     }
 
 
@@ -83,7 +83,7 @@ public class PaymentCompletedProcessorTest {
 
         @Override
         public void publishEvent(ApplicationEvent event) {
-            ApplicationEventPublisher.super.publishEvent(event);
+
         }
 
         @Override

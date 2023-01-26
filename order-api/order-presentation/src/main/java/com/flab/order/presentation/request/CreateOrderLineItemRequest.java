@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 
-public class CreateOrderLineItemRequest {
+public final class CreateOrderLineItemRequest {
 
     @NotNull(message = "orderCount 를 작성하세요.")
     private Integer orderCount;
@@ -23,7 +23,7 @@ public class CreateOrderLineItemRequest {
     @Valid
     private List<CreateOrderItemOptionGroupRequest> orderItemOptionGroups;
 
-    protected CreateOrderLineItemRequest() {
+    private CreateOrderLineItemRequest() {
     }
 
     public Integer getOrderCount() {

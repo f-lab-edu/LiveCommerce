@@ -6,7 +6,7 @@ import com.flab.order.domain.OrderLineItem;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CreateOrderCommand {
+public final class CreateOrderCommand {
 
     private String payMethod;
     private List<CreateOrderLineItemCommand> orderLineItems;
@@ -17,6 +17,9 @@ public class CreateOrderCommand {
     ) {
         this.payMethod = payMethod;
         this.orderLineItems = orderLineItems;
+    }
+
+    private CreateOrderCommand() {
     }
 
     public List<OrderLineItem> toLineItems() {

@@ -2,11 +2,11 @@ package com.flab.inventory.application.command;
 
 import java.util.List;
 
-public class OpenInventoryCommand {
+public final class OpenInventoryCommand {
 
     private List<Long> inventoryIds;
 
-    protected OpenInventoryCommand() {
+    private OpenInventoryCommand() {
     }
 
     public OpenInventoryCommand(List<Long> inventoryIds) {

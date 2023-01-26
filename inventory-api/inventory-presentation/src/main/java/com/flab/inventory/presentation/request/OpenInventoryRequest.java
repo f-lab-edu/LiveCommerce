@@ -4,12 +4,12 @@ import com.flab.inventory.application.command.OpenInventoryCommand;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 
-public class OpenInventoryRequest {
+public final class OpenInventoryRequest {
 
     @NotNull
     private List<Long> inventoryIds;
 
-    protected OpenInventoryRequest() {
+    private OpenInventoryRequest() {
     }
 
     public OpenInventoryCommand toCommand() {

@@ -36,6 +36,7 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+    open-in-view: false
 
   image:
     upload:
@@ -50,3 +51,4 @@ spring:
 app.security.token:
   tokenExpirationSec: 1000
   sessionExpirationSec: 1000
+

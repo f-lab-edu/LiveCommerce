@@ -17,7 +17,7 @@ public class CloseInventoryProcessor {
     @Transactional
     public void execute(CloseInventoryCommand command) {
         List<Inventory> inventories = inventoryRepository
-            .findByItemIdIn(command.getInventoryIds());
+            .findAllById(command.getInventoryIds());
 
         inventories.forEach(Inventory::close);
     }

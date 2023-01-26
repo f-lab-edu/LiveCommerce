@@ -3,7 +3,7 @@ package com.flab.order.presentation.request;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class CreateOrderItemOptionRequest {
+public final class CreateOrderItemOptionRequest {
 
     @NotNull(message = "ordering 을 작성하세요.")
     private Integer ordering;
@@ -14,7 +14,7 @@ public class CreateOrderItemOptionRequest {
     @NotNull(message = "price 를 작성하세요.")
     private Integer price;
 
-    protected CreateOrderItemOptionRequest() {
+    private CreateOrderItemOptionRequest() {
     }
 
     public Integer getOrdering() {

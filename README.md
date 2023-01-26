@@ -31,14 +31,14 @@ docker-compose -f apm-docker-compose.yml up
 
 **apm-agent options**   
 ```
--javaagent:./agent/elastic-apm-agent-1.34.0.jar   
--Delastic.apm.service_name=livecommerce   
--Delastic.apm.server_url=http://localhost:8200   
--Delastic.apm.application_packages=com.flab.livecommerce
+-javaagent:./agent/elastic-apm-agent-1.34.0.jar
+-Delastic.apm.service_name=Livecommerce
+-Delastic.apm.server_url=http://localhost:8200
+-Delastic.apm.application_packages=com.flab.*
 -Delastic.apm.transaction_sample_rate=1
 -Delastic.apm.enable_log_correlation=true
 -Delastic.apm.span_frames_min_duration=1ms
 -Delastic.apm.span_min_duration=0ms
 -Delastic.apm.trace_methods_duration_threshold=1ms
--Delastic.apm.trace_methods=com.flab.livecommerce.*
+-Delastic.apm.trace_methods=com.flab.*
 ```

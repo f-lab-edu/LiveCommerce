@@ -27,14 +27,28 @@ public class FakeInventoryRepository implements InventoryRepository {
 
     @Override
     public List<Inventory> saveAll(List<Inventory> inventories) {
-        return inventories.stream().map(
-            inventory -> save(inventory)
-        ).collect(Collectors.toList());
+        return inventories.stream()
+            .map(this::save)
+            .collect(Collectors.toList());
     }
 
     @Override
     public Inventory findById(Long id) {
-        return null;
+        return data.values().stream()
+            .filter(inventory -> inventory.getId().equals(id))
+            .findFirst()
+            .orElse(null);
+    }
+
+    @Override
+    public List<Inventory> findAllById(Iterable<Long> id) {
+        List<Inventory> inventoryList = new ArrayList<>();
+
+        id.forEach(
+            inventoryId -> inventoryList.add(findById(inventoryId))
+        );
+
+        return inventoryList;
     }
 
     @Override

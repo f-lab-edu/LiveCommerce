@@ -5,7 +5,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class CreateOrderItemOptionGroupRequest {
+public final class CreateOrderItemOptionGroupRequest {
 
     @NotNull(message = "ordering 을 작성하세요.")
     private Integer ordering;
@@ -16,7 +16,7 @@ public class CreateOrderItemOptionGroupRequest {
     @Valid
     private List<CreateOrderItemOptionRequest> orderItemOptions;
 
-    protected CreateOrderItemOptionGroupRequest() {
+    private CreateOrderItemOptionGroupRequest() {
     }
 
     public Integer getOrdering() {

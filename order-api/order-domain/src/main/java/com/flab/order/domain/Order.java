@@ -1,11 +1,14 @@
 package com.flab.order.domain;
 
 import com.flab.common.domain.AbstractAggregateRoot;
+import com.flab.order.domain.data.ItemQuantityData;
 import com.flab.order.domain.event.OrderCanceledEvent;
 import com.flab.order.domain.event.OrderCompletedEvent;
 import com.flab.order.domain.event.OrderCreatedEvent;
+import com.flab.order.domain.event.OrderPayedEvent;
 import com.flab.order.domain.exception.AlreadyCanceledException;
 import com.flab.order.domain.exception.AlreadyCompletedException;
+import com.flab.order.domain.exception.AlreadyPayedException;
 import com.flab.order.domain.exception.AmountNotMatchedException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -42,7 +45,8 @@ public class Order extends AbstractAggregateRoot {
     public enum OrderStatus {
         ORDER_CREATED("주문 생성"),
         ORDER_CANCELED("주문 취소"),
-        ORDER_COMPLETE("주문 완료");
+        ORDER_PAYED("주문 결제"),
+        ORDER_COMPLETED("주문 완료");
 
         private final String description;
 
@@ -69,10 +73,20 @@ public class Order extends AbstractAggregateRoot {
         registerEvent(new OrderCreatedEvent(this));
     }
 
+    public static Order create(Long userId, String payMethod, List<OrderLineItem> orderLineItems) {
+        return new Order(userId, payMethod, OrderStatus.ORDER_CREATED, orderLineItems);
+    }
+
     public void payed(Integer payedAmount) {
         validPayedAmount(payedAmount);
         validOrderCanPayed();
-        this.orderStatus = OrderStatus.ORDER_COMPLETE;
+        this.orderStatus = OrderStatus.ORDER_PAYED;
+        registerEvent(new OrderPayedEvent(this));
+    }
+
+    public void completed() {
+        validOrderCanCompleted();
+        this.orderStatus = OrderStatus.ORDER_COMPLETED;
         registerEvent(new OrderCompletedEvent(this));
     }
 
@@ -82,11 +96,23 @@ public class Order extends AbstractAggregateRoot {
         }
     }
 
+    private void validOrderCanCompleted() {
+        if (this.orderStatus == OrderStatus.ORDER_CANCELED) {
+            throw new AlreadyCanceledException("이미 취소된 주문입니다.");
+        }
+        if (this.orderStatus == OrderStatus.ORDER_COMPLETED) {
+            throw new AlreadyCompletedException("이미 완료된 주문입니다.");
+        }
+    }
+
     private void validOrderCanPayed() {
         if (this.orderStatus == OrderStatus.ORDER_CANCELED) {
             throw new AlreadyCanceledException("이미 취소된 주문입니다.");
         }
-        if (this.orderStatus == OrderStatus.ORDER_COMPLETE) {
+        if (this.orderStatus == OrderStatus.ORDER_PAYED) {
+            throw new AlreadyPayedException("이미 결제된 주문입니다.");
+        }
+        if (this.orderStatus == OrderStatus.ORDER_COMPLETED) {
             throw new AlreadyCompletedException("이미 완료된 주문입니다.");
         }
     }
@@ -95,10 +121,6 @@ public class Order extends AbstractAggregateRoot {
         return orderLineItems.stream()
             .mapToInt(OrderLineItem::calculateTotalAmount)
             .sum();
-    }
-
-    public static Order create(Long userId, String payMethod, List<OrderLineItem> orderLineItems) {
-        return new Order(userId, payMethod, OrderStatus.ORDER_CREATED, orderLineItems);
     }
 
     public void cancel() {
@@ -128,10 +150,10 @@ public class Order extends AbstractAggregateRoot {
             .collect(Collectors.toList());
     }
 
-    public List<ItemQuantity> getItemQuantities() {
-        return this.orderLineItems.stream().map(
-            item -> new ItemQuantity(item.getItemId(), item.getOrderCount())
-        ).collect(Collectors.toList());
+    public List<ItemQuantityData> getItemQuantities() {
+        return this.orderLineItems.stream()
+            .map(item -> new ItemQuantityData(item.getItemId(), item.getOrderCount()))
+            .collect(Collectors.toList());
     }
 
     public List<OrderLineItem> getOrderLineItems() {

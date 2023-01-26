@@ -1,19 +1,13 @@
-package com.flab.inventory.domain;
+package com.flab.order.domain.data;
 
-public final class OrderLineItem {
+public final class ItemQuantityData {
 
-    private final Long id;
     private final Long itemId;
     private final Integer count;
 
-    public OrderLineItem(Long id, Long itemId, Integer count) {
-        this.id = id;
+    public ItemQuantityData(Long itemId, Integer count) {
         this.itemId = itemId;
         this.count = count;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Long getItemId() {

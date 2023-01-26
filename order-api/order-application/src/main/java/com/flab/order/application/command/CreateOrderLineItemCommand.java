@@ -2,7 +2,7 @@ package com.flab.order.application.command;
 
 import java.util.List;
 
-public class CreateOrderLineItemCommand {
+public final class CreateOrderLineItemCommand {
 
     private Integer orderCount;
     private Long itemId;
@@ -22,6 +22,9 @@ public class CreateOrderLineItemCommand {
         this.name = name;
         this.price = price;
         this.orderItemOptionGroups = orderItemOptionGroups;
+    }
+
+    private CreateOrderLineItemCommand() {
     }
 
     public Integer getOrderCount() {

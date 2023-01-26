@@ -3,7 +3,7 @@ package com.flab.inventory.presentation.request;
 import com.flab.inventory.application.command.IncreaseInventoryCommand;
 import javax.validation.constraints.NotNull;
 
-public class IncreaseInventoryRequest {
+public final class IncreaseInventoryRequest {
 
     @NotNull(message = "itemId 를 작성하세요")
     private Long itemId;
@@ -11,7 +11,7 @@ public class IncreaseInventoryRequest {
     @NotNull(message = "count 를 작성하세요.")
     private Integer count;
 
-    protected IncreaseInventoryRequest() {
+    private IncreaseInventoryRequest() {
     }
 
     public IncreaseInventoryCommand toCommand() {

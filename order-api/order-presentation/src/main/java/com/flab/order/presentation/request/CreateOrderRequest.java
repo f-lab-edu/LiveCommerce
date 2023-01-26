@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
-public class CreateOrderRequest {
+public final class CreateOrderRequest {
 
     @NotBlank(message = "payMethod 를 작성하세요.")
     private String payMethod;
@@ -17,7 +17,7 @@ public class CreateOrderRequest {
     @Valid
     private List<CreateOrderLineItemRequest> orderLineItems;
 
-    protected CreateOrderRequest() {
+    private CreateOrderRequest() {
     }
 
     public CreateOrderCommand toCommand() {

@@ -89,7 +89,7 @@ public class Inventory extends AbstractAggregateRoot {
         validQuantity();
     }
 
-    public void orderReduce(Integer count) {
+    public Integer decrease(Integer count) {
         validReduceCount(count);
         validInventoryState();
         if (this.quantity >= count) {
@@ -98,6 +98,8 @@ public class Inventory extends AbstractAggregateRoot {
             throw new NotEnoughQuantityException("재고가 충분하지 않습니다.");
         }
         checkQuantity();
+
+        return this.quantity;
     }
 
     private void validQuantity() {
