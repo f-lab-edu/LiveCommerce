@@ -29,7 +29,7 @@ public class OrderPayedProcessor {
     @Transactional
     public OrderPayedResult execute(OrderPayedCommand command) {
         var order = orderRepository.findById(command.getOrderId());
-        var data = decreaseInventoryService.service(command.getItemQuantityData());
+        var data = decreaseInventoryService.decreaseInventory(command.getItemQuantityData());
 
         if (!data.isSuccess()) {
             order.cancel();

@@ -80,7 +80,7 @@ public class OrderPayedProcessorTest {
         DecreaseInventoryService {
 
         @Override
-        public DecreaseInventoryData service(List<ItemQuantityData> itemQuantityDataList) {
+        public DecreaseInventoryData decreaseInventory(List<ItemQuantityData> itemQuantityDataList) {
             return DecreaseInventoryData.fail(null);
         }
     }
@@ -89,7 +89,7 @@ public class OrderPayedProcessorTest {
         DecreaseInventoryService {
 
         @Override
-        public DecreaseInventoryData service(List<ItemQuantityData> itemQuantityDataList) {
+        public DecreaseInventoryData decreaseInventory(List<ItemQuantityData> itemQuantityDataList) {
             return DecreaseInventoryData.success(null);
         }
     }

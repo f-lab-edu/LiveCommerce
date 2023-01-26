@@ -25,7 +25,7 @@ public class DecreaseInventoryServiceAdapter implements DecreaseInventoryService
     }
 
     @Override
-    public DecreaseInventoryData service(List<ItemQuantityData> itemQuantityDataList) {
+    public DecreaseInventoryData decreaseInventory(List<ItemQuantityData> itemQuantityDataList) {
         try {
             InventoryResult result = decreaseInventoryProcessor.execute(
                 new DecreaseInventoryCommand(itemQuantityDataList.stream()

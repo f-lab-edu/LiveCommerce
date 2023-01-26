@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface DecreaseInventoryService {
 
-    DecreaseInventoryData service(List<ItemQuantityData> itemQuantityDataList);
+    DecreaseInventoryData decreaseInventory(List<ItemQuantityData> itemQuantityDataList);
 }
