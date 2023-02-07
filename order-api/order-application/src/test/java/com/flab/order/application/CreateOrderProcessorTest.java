@@ -8,7 +8,6 @@ import com.flab.order.application.command.CreateOrderItemOptionGroupCommand;
 import com.flab.order.application.command.CreateOrderLineItemCommand;
 import com.flab.order.application.result.OrderResult;
 import com.flab.order.domain.Order;
-import com.flab.order.domain.Order.OrderStatus;
 import com.flab.order.domain.OrderRepository;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
