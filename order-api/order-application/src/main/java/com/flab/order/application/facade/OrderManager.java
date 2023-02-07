@@ -7,7 +7,7 @@ import com.flab.order.application.SearchOrderProcessor;
 import com.flab.order.application.command.CreateOrderCommand;
 import com.flab.order.application.command.OrderPayedCommand;
 import com.flab.order.application.command.PaymentCompletedCommand;
-import com.flab.order.domain.Order;
+import com.flab.order.application.result.OrderResult;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,13 +30,11 @@ public class OrderManager {
         this.orderPayedProcessor = orderPayedProcessor;
     }
 
-    public Order create(Long userId, CreateOrderCommand command) {
-        var order = createOrderProcessor.execute(userId, command);
-
-        return order;
+    public OrderResult create(Long userId, CreateOrderCommand command) {
+        return createOrderProcessor.execute(userId, command);
     }
 
-    public Order search(Long id) {
+    public OrderResult search(Long id) {
         return searchOrderProcessor.execute(id);
     }
 

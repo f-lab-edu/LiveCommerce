@@ -7,6 +7,7 @@ import com.flab.common.auth.annotation.LoginCheck;
 import com.flab.common.response.CommonApiResponse;
 import com.flab.order.application.facade.OrderManager;
 import com.flab.order.presentation.request.CreateOrderRequest;
+import com.flab.order.presentation.response.OrderResponse;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,17 +28,17 @@ public class OrderController {
 
     @LoginCheck(authority = Role.USER)
     @PostMapping
-    public CommonApiResponse createOrder(
+    public CommonApiResponse<OrderResponse> createOrder(
         @Authentication AuthenticatedMember user,
         @RequestBody @Valid CreateOrderRequest request
     ) {
-        var order = orderManager.create(user.getId(), request.toCommand());
-        return CommonApiResponse.success(order);
+        var orderResult = orderManager.create(user.getId(), request.toCommand());
+        return CommonApiResponse.success(OrderResponse.form(orderResult));
     }
 
     @GetMapping("/{orderId}")
-    public CommonApiResponse searchOrder(@PathVariable("orderId") Long id) {
-        var order = orderManager.search(id);
-        return CommonApiResponse.success(order);
+    public CommonApiResponse<OrderResponse> searchOrder(@PathVariable("orderId") Long id) {
+        var orderResult = orderManager.search(id);
+        return CommonApiResponse.success(OrderResponse.form(orderResult));
     }
 }
