@@ -3,7 +3,7 @@ POST http://localhost:8080/api/v1/user/signup
 Content-Type: application/json
 
 {
-  "email": "dssfs@gmail.com",
+  "email": "dss1fs@gmail.com",
   "password":"aa23asda2",
   "nickname":"absss"
 }
@@ -13,6 +13,6 @@ POST http://localhost:8080/api/v1/user/login
 Content-Type: application/json
 
 {
-  "email": "dssfs@gmail.com",
+  "email": "dss1fs@gmail.com",
   "password":"aa23asda2"
 }
