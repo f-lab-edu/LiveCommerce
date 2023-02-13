@@ -6,8 +6,8 @@ import com.flab.order.application.command.CreateOrderCommand;
 import com.flab.order.application.command.CreateOrderItemOptionCommand;
 import com.flab.order.application.command.CreateOrderItemOptionGroupCommand;
 import com.flab.order.application.command.CreateOrderLineItemCommand;
+import com.flab.order.application.result.OrderResult;
 import com.flab.order.domain.Order;
-import com.flab.order.domain.Order.OrderStatus;
 import com.flab.order.domain.OrderRepository;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -27,11 +27,11 @@ public class CreateOrderProcessorTest {
         );
 
         //Act
-        var order = processor.execute(1L, createOrderCommand());
+        OrderResult result = processor.execute(3L, createOrderCommand());
 
         //Assert
-        assertThat(order.getTotalAmount()).isEqualTo(103000);
-        assertThat(order.getOrderStatus()).isEqualTo(OrderStatus.ORDER_CREATED);
+        assertThat(result.getUserId()).isEqualTo(3L);
+        assertThat(result.getTotalAmount()).isEqualTo(103000);
     }
 
     private static final class DummyOrderRepository implements OrderRepository {

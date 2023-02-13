@@ -26,37 +26,24 @@ public class InventoryController {
         this.inventoryManager = inventoryManager;
     }
 
-    //재고 검색
-    @GetMapping("/{inventoryId}")
-    public CommonApiResponse<Object> searchInventory(
-        @PathVariable("inventoryId") Long id
-    ) {
-        //todo 작업 예정
-        //inventoryManager.search(id);
-        return null;
-    }
-
-    //판매 재개
     @PostMapping("/open")
-    public CommonApiResponse openInventory(
+    public CommonApiResponse<String> openInventory(
         @RequestBody @Valid OpenInventoryRequest request
     ) {
         inventoryManager.open(request.toCommand());
         return CommonApiResponse.success("Ok");
     }
 
-    //판매 중지
     @PostMapping("/close")
-    public CommonApiResponse closeInventory(
+    public CommonApiResponse<String> closeInventory(
         @RequestBody @Valid CloseInventoryRequest request
     ) {
         inventoryManager.close(request.toCommand());
         return CommonApiResponse.success("Ok");
     }
 
-    //재고 변경
     @PostMapping("/increase")
-    public CommonApiResponse increaseInventoryRequest(
+    public CommonApiResponse<String> increaseInventoryRequest(
         @RequestBody @Valid IncreaseInventoryRequest request
     ) {
         inventoryManager.increase(request.toCommand());
@@ -64,7 +51,7 @@ public class InventoryController {
     }
 
     @PostMapping("/reduce")
-    public CommonApiResponse reduceInventoryRequest(
+    public CommonApiResponse<String> reduceInventoryRequest(
         @RequestBody @Valid ReduceInventoryRequest request
     ) {
         inventoryManager.reduce(request.toCommand());

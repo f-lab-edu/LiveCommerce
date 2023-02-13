@@ -9,12 +9,9 @@ import com.flab.order.application.command.CreateOrderCommand;
 import com.flab.order.application.command.CreateOrderItemOptionCommand;
 import com.flab.order.application.command.CreateOrderItemOptionGroupCommand;
 import com.flab.order.application.command.CreateOrderLineItemCommand;
+import com.flab.order.application.result.OrderResult;
 import com.flab.order.domain.Order;
-import com.flab.order.domain.OrderRepository;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -47,10 +44,12 @@ class SearchOrderProcessorTest {
         var processor = new SearchOrderProcessor(orderRepository);
 
         //Act
-        Order result = processor.execute(1L);
+        OrderResult result = processor.execute(1L);
 
         //Assert
-        assertThat(result).isEqualTo(order);
+        assertThat(result.getOrderId()).isEqualTo(order.getId());
+        assertThat(result.getUserId()).isEqualTo(order.getUserId());
+        assertThat(result.getTotalAmount()).isEqualTo(order.getTotalAmount());
     }
 
     private CreateOrderCommand command() {

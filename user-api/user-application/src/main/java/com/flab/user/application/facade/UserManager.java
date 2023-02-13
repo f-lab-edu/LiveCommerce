@@ -5,6 +5,7 @@ import com.flab.user.application.LoginUserProcessor;
 import com.flab.user.application.LoginUserProcessor.LoginCommand;
 import com.flab.user.application.LogoutUserProcessor;
 import com.flab.user.application.command.CreateUserCommand;
+import com.flab.user.application.result.UserResult;
 import com.flab.user.domain.UserRepository;
 import com.flab.user.domain.exception.DuplicatedUserEmailException;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,8 @@ public class UserManager {
         this.userRepository = userRepository;
     }
 
-    public void createUser(CreateUserCommand command) {
-        createUserProcessor.execute(command);
+    public UserResult createUser(CreateUserCommand command) {
+        return createUserProcessor.execute(command);
     }
 
     public String login(LoginCommand command) {
