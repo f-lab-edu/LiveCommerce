@@ -9,7 +9,7 @@ LiveCommerce 프로젝트는 오늘의집, 쿠팡과 같은 Modular Monolithic �
 - JAVA 11
 - SpringBoot 2.7.2
 - JPA
-- MyBats 2.2.2
+- MyBatis 2.2.2
 - MySQL 8.0.28
 - Redis 7.0.5
 - Flyway 8.5.13
