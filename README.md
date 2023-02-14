@@ -1,11 +1,12 @@
 ### 서비스 설명
 
----
+
 LiveCommerce 프로젝트는 오늘의집, 쿠팡과 같은 Modular Monolithic 기반의 E-Commerce 애플리케이션입니다.
 
+---
 ### 사용 기술 스택
 
----
+
 - JAVA 11
 - SpringBoot 2.7.2
 - JPA
@@ -15,9 +16,9 @@ LiveCommerce 프로젝트는 오늘의집, 쿠팡과 같은 Modular Monolithic �
 - Flyway 8.5.13
 - Docker
 
+---
 ### 트러블 슈팅 & 기술 선택 과정
 
----
 [블로그 링크 첨부 예정]
 
 - 동시성 이슈로 발생할 수 있는 재고의 수량 불일치 문제 해결
@@ -31,18 +32,14 @@ LiveCommerce 프로젝트는 오늘의집, 쿠팡과 같은 Modular Monolithic �
 - 의존성을 고려하지 않고 편의에 의한 개발을 막기 위한 Multi-Modular 구성
 
 
+---
 ### Testing
 
----
-Unit Test Command   
+Unit Test Command
 - Application layer 의 비즈니스 로직을 테스트 할 수 있습니다.     
-`$ ./gradlew test`
-
-### 아키텍처
+  `$ ./gradlew test`
 
 ---
-<img src="https://user-images.githubusercontent.com/21376853/218402641-33a6e95e-fa9e-4dc6-a340-d72c7234ea09.png" width="1200" height="800"/>
-
 Modular Monolithic 아키텍처이므로, 다음과 같은 모듈들로 구성되어 있습니다.
 
 | Modules       | Description                                  |
@@ -67,16 +64,16 @@ Modular Monolithic 아키텍처이므로, 다음과 같은 모듈들로 구성�
 |Order-Domain| 실질적인 주문의 정보를 가지며, 주문의 상태를 직접적으로 제어하는 모듈입니다.                      |
 |Order-Infrastructure| DIP를 통한 상위 계층을 지원하는 일반화된 기술적 기능을 제공하는 계층 모듈입니다.                  |
 
+---
 ### Elastic APM Setting
 
---- 
 **apm-server**
 
 ```dockerfile
 docker-compose -f apm-docker-compose.yml up
 ```
 
-**apm-agent options**   
+**apm-agent options**
 ```
 -javaagent:./agent/elastic-apm-agent-1.34.0.jar
 -Delastic.apm.service_name=Livecommerce
