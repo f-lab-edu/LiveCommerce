@@ -7,12 +7,15 @@ public final class UserResponse {
     private Long id;
     private String email;
 
+    private UserResponse() {
+    }
+
     public UserResponse(Long id, String email) {
         this.id = id;
         this.email = email;
     }
 
-    public static UserResponse form(UserResult userResult) {
+    public static UserResponse from(UserResult userResult) {
         return new UserResponse(userResult.getId(), userResult.getEmail());
     }
 

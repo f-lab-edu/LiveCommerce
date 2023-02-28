@@ -1,7 +1,7 @@
 package com.flab.livecommerce;
 
-import com.flab.common.exception.BaseException;
 import com.flab.common.exception.ErrorCode;
+import com.flab.common.exception.SystemException;
 import com.flab.common.response.CommonApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class CommonControllerAdvice {
      */
     @ResponseStatus
     @ExceptionHandler(Exception.class)
-    public CommonApiResponse onException(Exception e) {
+    public CommonApiResponse<?> onException(Exception e) {
         log.error("error = ", e);
         return CommonApiResponse.fail(ErrorCode.COMMON_SYSTEM_ERROR);
     }
@@ -37,8 +37,8 @@ public class CommonControllerAdvice {
      * 확장한 예상 된 예외 발생
      */
     @ResponseStatus(HttpStatus.OK)
-    @ExceptionHandler(BaseException.class)
-    public CommonApiResponse onBaseException(BaseException e) {
+    @ExceptionHandler(SystemException.class)
+    public CommonApiResponse<?> onBaseException(SystemException e) {
         log.warn(
             "cause ={}, errorMsg = {}",
             NestedExceptionUtils.getMostSpecificCause(e),
@@ -54,7 +54,7 @@ public class CommonControllerAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public CommonApiResponse methodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public CommonApiResponse<?> methodArgumentNotValidException(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
         FieldError fieldError = bindingResult.getFieldError();
 
@@ -62,7 +62,6 @@ public class CommonControllerAdvice {
             + " " + fieldError.getField()
             + " =" + fieldError.getRejectedValue()
             + " (" + fieldError.getDefaultMessage() + ")";
-
 
         return CommonApiResponse.fail(ErrorCode.COMMON_INVALID_PARAMETER.name(), message);
     }

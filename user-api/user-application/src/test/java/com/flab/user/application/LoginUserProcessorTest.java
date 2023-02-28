@@ -3,7 +3,7 @@ package com.flab.user.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
-import com.flab.user.application.LoginUserProcessor.LoginCommand;
+import com.flab.user.application.command.LoginUserCommand;
 import com.flab.user.domain.User;
 import com.flab.user.domain.exception.InvalidUserException;
 import com.flab.user.domain.exception.UserPasswordNotMatchedException;
@@ -25,7 +25,7 @@ public class LoginUserProcessorTest {
             1000L
         );
 
-        LoginCommand command = new LoginCommand("aaa@gmail.com", "123456");
+        LoginUserCommand command = new LoginUserCommand("aaa@gmail.com", "123456");
 
         //Act
         Throwable result = catchThrowable(() -> processor.execute(command));
@@ -49,7 +49,7 @@ public class LoginUserProcessorTest {
             1000L
         );
 
-        LoginCommand command = new LoginCommand("aaa@gmail.com", "123456");
+        LoginUserCommand command = new LoginUserCommand("aaa@gmail.com", "123456");
 
         //Act
         Throwable result = catchThrowable(() -> processor.execute(command));

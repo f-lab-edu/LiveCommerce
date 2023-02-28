@@ -2,6 +2,7 @@ package com.flab.user.application;
 
 import com.flab.user.domain.User;
 import com.flab.user.domain.UserRepository;
+import com.flab.user.domain.exception.InvalidUserException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -21,7 +22,7 @@ public final class FakeUserRepository implements UserRepository {
         return data.values().stream()
             .filter(user -> user.getEmail().equals(email))
             .findFirst()
-            .orElse(null);
+            .orElseThrow(InvalidUserException::new);
     }
 
     @Override

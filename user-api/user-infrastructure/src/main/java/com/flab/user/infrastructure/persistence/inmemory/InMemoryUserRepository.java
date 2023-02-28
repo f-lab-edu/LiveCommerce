@@ -1,12 +1,10 @@
 package com.flab.user.infrastructure.persistence.inmemory;
 
-
 import com.flab.user.domain.User;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.stereotype.Repository;
-
 
 @Repository
 public class InMemoryUserRepository {
