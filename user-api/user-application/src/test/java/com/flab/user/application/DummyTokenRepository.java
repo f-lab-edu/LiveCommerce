@@ -1,22 +1,22 @@
 package com.flab.user.application;
 
-import com.flab.common.auth.AuthenticatedMember;
+import com.flab.common.auth.AuthenticatedUser;
 import com.flab.user.domain.TokenRepository;
 
 public class DummyTokenRepository implements TokenRepository {
 
     @Override
-    public void save(AuthenticatedMember authenticatedMember) {
+    public void save(AuthenticatedUser authenticatedUser) {
 
     }
 
     @Override
-    public AuthenticatedMember findByToken(String token) {
+    public AuthenticatedUser findByToken(String token) {
         return null;
     }
 
     @Override
-    public void renewExpirationSec(AuthenticatedMember authenticatedMember) {
+    public void renewExpirationSec(AuthenticatedUser authenticatedUser) {
 
     }
 

@@ -1,6 +1,6 @@
 package com.flab.livecommerce.adapter;
 
-import com.flab.common.exception.BaseException;
+import com.flab.common.exception.SystemException;
 import com.flab.inventory.application.DecreaseInventoryProcessor;
 import com.flab.inventory.application.command.DecreaseInventoryCommand;
 import com.flab.inventory.application.result.InventoryResult;
@@ -37,7 +37,7 @@ public class DecreaseInventoryServiceAdapter implements DecreaseInventoryService
                 .map(inventory -> new com.flab.order.domain.data.InventoryData(
                     inventory.getInventoryId(), inventory.getQuantity()))
                 .collect(Collectors.toList()));
-        } catch (BaseException e) {
+        } catch (SystemException e) {
             log.error("error =", e);
             return DecreaseInventoryData.fail(Collections.emptyList());
         }

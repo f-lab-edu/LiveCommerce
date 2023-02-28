@@ -1,10 +1,9 @@
 package com.flab.user.domain.exception;
 
-import com.flab.common.exception.BaseException;
 import com.flab.common.exception.ErrorCode;
+import com.flab.common.exception.SystemException;
 
-public class InvalidTokenException extends BaseException {
-
+public class InvalidTokenException extends SystemException {
 
     public InvalidTokenException() {
         super(ErrorCode.INVALID_TOKEN);

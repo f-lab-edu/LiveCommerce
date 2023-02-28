@@ -1,6 +1,6 @@
 package com.flab.common.exception;
 
-public class EntityNotFoundException extends BaseException {
+public class EntityNotFoundException extends SystemException {
 
 
     public EntityNotFoundException() {

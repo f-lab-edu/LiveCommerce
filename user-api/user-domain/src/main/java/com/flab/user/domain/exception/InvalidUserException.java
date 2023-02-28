@@ -1,10 +1,9 @@
 package com.flab.user.domain.exception;
 
-import com.flab.common.exception.BaseException;
 import com.flab.common.exception.ErrorCode;
+import com.flab.common.exception.SystemException;
 
-public class InvalidUserException extends BaseException {
-
+public class InvalidUserException extends SystemException {
 
     public InvalidUserException() {
         super(ErrorCode.INVALID_USER);
