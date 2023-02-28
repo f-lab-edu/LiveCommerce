@@ -1,8 +1,9 @@
-package com.flab.user.application;
+package com.flab.user.application.testdouble;
 
+import com.flab.common.exception.EntityNotFoundException;
+import com.flab.common.exception.ErrorCode;
 import com.flab.user.domain.User;
 import com.flab.user.domain.UserRepository;
-import com.flab.user.domain.exception.InvalidUserException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -22,7 +23,7 @@ public final class FakeUserRepository implements UserRepository {
         return data.values().stream()
             .filter(user -> user.getEmail().equals(email))
             .findFirst()
-            .orElseThrow(InvalidUserException::new);
+            .orElseThrow(() -> new EntityNotFoundException(ErrorCode.USER_NOT_FOUND));
     }
 
     @Override

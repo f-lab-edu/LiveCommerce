@@ -3,13 +3,13 @@ package com.flab.user.domain.exception;
 import com.flab.common.exception.ErrorCode;
 import com.flab.common.exception.SystemException;
 
-public class DuplicatedUserEmailException extends SystemException {
+public class UserDuplicatedEmailException extends SystemException {
 
-    public DuplicatedUserEmailException() {
+    public UserDuplicatedEmailException() {
         super(ErrorCode.DUPLICATED_EMAIL);
     }
 
-    public DuplicatedUserEmailException(String message, ErrorCode errorCode) {
+    public UserDuplicatedEmailException(String message, ErrorCode errorCode) {
         super(message, ErrorCode.DUPLICATED_EMAIL);
     }
 }

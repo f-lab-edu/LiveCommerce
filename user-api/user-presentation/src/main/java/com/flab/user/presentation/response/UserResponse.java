@@ -6,17 +6,19 @@ public final class UserResponse {
 
     private Long id;
     private String email;
+    private String nickname;
 
     private UserResponse() {
     }
 
-    public UserResponse(Long id, String email) {
+    public UserResponse(Long id, String email, String nickname) {
         this.id = id;
         this.email = email;
+        this.nickname = nickname;
     }
 
     public static UserResponse from(UserResult userResult) {
-        return new UserResponse(userResult.getId(), userResult.getEmail());
+        return new UserResponse(userResult.getId(), userResult.getEmail(), userResult.getNickname());
     }
 
     public Long getId() {
@@ -25,5 +27,9 @@ public final class UserResponse {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 }

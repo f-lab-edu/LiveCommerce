@@ -1,4 +1,4 @@
-package com.flab.user.application;
+package com.flab.user.application.testdouble;
 
 import com.flab.user.domain.PasswordEncryptor;
 

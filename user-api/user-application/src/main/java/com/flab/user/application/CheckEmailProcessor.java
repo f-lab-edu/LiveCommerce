@@ -1,7 +1,7 @@
 package com.flab.user.application;
 
 import com.flab.user.domain.UserRepository;
-import com.flab.user.domain.exception.DuplicatedUserEmailException;
+import com.flab.user.domain.exception.UserDuplicatedEmailException;
 
 public class CheckEmailProcessor {
 
@@ -13,7 +13,7 @@ public class CheckEmailProcessor {
 
     public void execute(String email) {
         if (userRepository.existsByEmail(email)) {
-            throw new DuplicatedUserEmailException();
+            throw new UserDuplicatedEmailException();
         }
     }
 }
