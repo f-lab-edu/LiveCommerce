@@ -1,7 +1,6 @@
 package com.flab.seller.infrastructure.persistence.redis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flab.common.auth.AuthenticatedMember;
 import com.flab.seller.infrastructure.sessionproperties.SessionProperties;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
