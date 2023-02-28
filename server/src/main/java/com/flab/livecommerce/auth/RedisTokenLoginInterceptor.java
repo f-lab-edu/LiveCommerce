@@ -1,9 +1,7 @@
 package com.flab.livecommerce.auth;
 
-import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
-import static com.flab.common.auth.SessionConst.AUTH_STATUS;
+import static com.flab.common.auth.SessionConst.AUTH_SESSION_USER;
 
-import com.flab.common.auth.Role;
 import com.flab.common.exception.AuthenticationException;
 import com.flab.user.domain.TokenRepository;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +40,7 @@ public class RedisTokenLoginInterceptor implements HandlerInterceptor {
             }
 
             tokenRepository.renewExpirationSec(authenticatedUser);
-            request.setAttribute(AUTH_SESSION_MEMBER, authenticatedUser);
+            request.setAttribute(AUTH_SESSION_USER, authenticatedUser);
         }
 
         return true;

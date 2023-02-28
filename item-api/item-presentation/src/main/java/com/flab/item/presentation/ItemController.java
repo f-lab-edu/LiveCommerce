@@ -1,6 +1,6 @@
 package com.flab.item.presentation;
 
-import com.flab.common.auth.AuthenticatedMember;
+import com.flab.common.auth.AuthenticatedUser;
 import com.flab.common.auth.Role;
 import com.flab.common.auth.annotation.Authentication;
 import com.flab.common.auth.annotation.LoginCheck;
@@ -26,10 +26,10 @@ public class ItemController {
     @LoginCheck(authority = Role.SELLER)
     @PostMapping
     public CommonApiResponse registerItem(
-        @Authentication AuthenticatedMember seller,
+        @Authentication AuthenticatedUser user,
         @RequestBody @Valid RegisterItemRequest request
     ) {
-        itemManager.register(seller.getId(), request.toCommand());
+        itemManager.register(user.getUserId(), request.toCommand());
         return CommonApiResponse.success("OK");
     }
 

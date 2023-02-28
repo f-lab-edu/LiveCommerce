@@ -1,14 +1,14 @@
 package com.flab.user.domain;
 
-import com.flab.common.auth.AuthenticatedMember;
+import com.flab.common.auth.AuthenticatedUser;
 
 public interface TokenRepository {
 
-    void save(AuthenticatedMember authenticatedMember);
+    void save(AuthenticatedUser authenticatedUser);
 
-    AuthenticatedMember findByToken(String token);
+    AuthenticatedUser findByToken(String token);
 
-    void renewExpirationSec(AuthenticatedMember authenticatedMember);
+    void renewExpirationSec(AuthenticatedUser authenticatedUser);
 
     void remove(String token);
 
