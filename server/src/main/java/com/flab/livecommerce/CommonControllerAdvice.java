@@ -63,6 +63,7 @@ public class CommonControllerAdvice {
             + " =" + fieldError.getRejectedValue()
             + " (" + fieldError.getDefaultMessage() + ")";
 
+
         return CommonApiResponse.fail(ErrorCode.COMMON_INVALID_PARAMETER.name(), message);
     }
 }
