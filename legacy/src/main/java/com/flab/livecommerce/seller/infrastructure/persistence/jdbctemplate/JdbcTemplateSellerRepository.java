@@ -1,7 +1,7 @@
-package com.flab.livecommerce.seller.infrastructure.persistence.jdbctemplate;
+package com.flab.seller.infrastructure.persistence.jdbctemplate;
 
 import com.flab.common.exception.EntityNotFoundException;
-import com.flab.livecommerce.seller.domain.Seller;
+import com.flab.seller.domain.Seller;
 import java.util.Collections;
 import java.util.Map;
 import javax.sql.DataSource;
@@ -50,7 +50,8 @@ public class JdbcTemplateSellerRepository {
             Seller seller = new Seller(
                 rs.getString("name"),
                 rs.getString("business_no"),
-                rs.getString("email")
+                rs.getString("email"),
+                rs.getString("password")
             );
 
             return seller.setId(rs.getLong("id"));

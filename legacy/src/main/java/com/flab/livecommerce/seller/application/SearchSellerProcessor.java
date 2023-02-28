@@ -1,7 +1,7 @@
-package com.flab.livecommerce.seller.application;
+package com.flab.seller.application;
 
-import com.flab.livecommerce.seller.domain.Seller;
-import com.flab.livecommerce.seller.domain.SellerRepository;
+import com.flab.seller.domain.Seller;
+import com.flab.seller.domain.SellerRepository;
 
 public class SearchSellerProcessor {
 

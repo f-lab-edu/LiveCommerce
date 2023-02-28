@@ -1,9 +1,9 @@
 package com.flab.seller.domain.exception;
 
-import com.flab.common.exception.BaseException;
+import com.flab.common.exception.SystemException;
 import com.flab.common.exception.ErrorCode;
 
-public class SellerPasswordNotMatchedException extends BaseException {
+public class SellerPasswordNotMatchedException extends SystemException {
 
     public SellerPasswordNotMatchedException() {
         super(ErrorCode.PASSWORD_NOT_MATCHED);

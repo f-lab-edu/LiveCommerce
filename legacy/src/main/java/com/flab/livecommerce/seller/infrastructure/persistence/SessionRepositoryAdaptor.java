@@ -1,6 +1,5 @@
 package com.flab.seller.infrastructure.persistence;
 
-import com.flab.common.auth.AuthenticatedMember;
 import com.flab.seller.domain.SessionRepository;
 import com.flab.seller.infrastructure.persistence.redis.RedisSessionRepository;
 
