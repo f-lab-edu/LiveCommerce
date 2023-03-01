@@ -1,6 +1,6 @@
 package com.flab.common.exception;
 
-public class InvalidParameterException extends BaseException {
+public class InvalidParameterException extends SystemException {
 
     public InvalidParameterException() {
         super(ErrorCode.COMMON_INVALID_PARAMETER);

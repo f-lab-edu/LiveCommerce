@@ -1,6 +1,6 @@
-package com.flab.livecommerce.seller.infrastructure.persistence.jpa;
+package com.flab.seller.infrastructure.persistence.jpa;
 
-import com.flab.livecommerce.seller.domain.Seller;
+import com.flab.seller.domain.Seller;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

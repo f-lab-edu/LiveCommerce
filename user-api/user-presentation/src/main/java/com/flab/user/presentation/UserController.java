@@ -25,10 +25,10 @@ public class UserController {
         this.userManager = userManager;
     }
 
-    @PostMapping("/signup")
+    @PostMapping
     public CommonApiResponse<UserResponse> signUp(@RequestBody @Valid CreateUserRequest request) {
         var user = userManager.createUser(request.toCommand());
-        return CommonApiResponse.success(UserResponse.form(user));
+        return CommonApiResponse.success(UserResponse.from(user));
     }
 
     @PostMapping("/login")
@@ -44,9 +44,9 @@ public class UserController {
         return CommonApiResponse.success("Ok");
     }
 
-    @PostMapping("/email/exists")
-    public CommonApiResponse<String> checkEmail(@RequestBody @Valid UserEmailRequest email) {
-        userManager.checkEmailDuplicated(email.getEmail());
+    @PostMapping("/email/check")
+    public CommonApiResponse<String> checkEmail(@RequestBody @Valid UserEmailRequest request) {
+        userManager.checkEmail(request.getEmail());
         return CommonApiResponse.success("Ok");
     }
 }

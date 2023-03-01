@@ -1,23 +1,23 @@
 package com.flab.user.infrastructure.encryption;
 
-import com.flab.common.auth.PasswordEncryptor;
+import com.flab.user.domain.PasswordEncryptor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UserSecurityPasswordEncoder implements PasswordEncryptor {
 
-    private final PasswordEncoder encoder;
+    private final PasswordEncoder passwordEncoder;
 
     public UserSecurityPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.encoder = passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public String encrypt(String password) {
-        return encoder.encode(password);
+        return passwordEncoder.encode(password);
     }
 
     @Override
     public boolean match(String rawPassword, String encryptedPassword) {
-        return encoder.matches(rawPassword, encryptedPassword);
+        return passwordEncoder.matches(rawPassword, encryptedPassword);
     }
 }

@@ -1,7 +1,7 @@
 package com.flab.user.infrastructure.persistence.redis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flab.common.auth.AuthenticatedMember;
+import com.flab.common.auth.AuthenticatedUser;
 import com.flab.user.infrastructure.tokenproperties.TokenProperties;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
@@ -16,49 +16,49 @@ public class RedisTokenRepository {
     private final TokenProperties tokenProperties;
 
     public RedisTokenRepository(
-            RedisTemplate<String, Object> redisTemplate,
-            ObjectMapper objectMapper,
-            TokenProperties tokenProperties
+        RedisTemplate<String, Object> redisTemplate,
+        ObjectMapper objectMapper,
+        TokenProperties tokenProperties
     ) {
         this.redisTemplate = redisTemplate;
         this.objectMapper = objectMapper;
         this.tokenProperties = tokenProperties;
     }
 
-    public void save(AuthenticatedMember authenticatedMember) {
+    public void save(AuthenticatedUser authenticatedUser) {
         redisTemplate.opsForValue().set(
-                authenticatedMember.getAuthId(),
-                authenticatedMember,
-                Duration.ofSeconds(tokenProperties.getTokenExpirationSec())
+            authenticatedUser.getToken(),
+            authenticatedUser,
+            Duration.ofSeconds(tokenProperties.getTokenExpirationSec())
         );
     }
 
-    public AuthenticatedMember findByToken(String token) {
+    public AuthenticatedUser findByToken(String token) {
         var result = redisTemplate.opsForValue().get(token);
 
         if (result == null) {
             return null;
         }
 
-        return objectMapper.convertValue(result, AuthenticatedMember.class);
+        return objectMapper.convertValue(result, AuthenticatedUser.class);
     }
 
-    public void renewExpirationSec(AuthenticatedMember authenticatedMember) {
-        long expirationTime = calculateExpirationTime(authenticatedMember);
-        authenticatedMember.addExpirationSec(expirationTime);
+    public void renewExpirationSec(AuthenticatedUser authenticatedUser) {
+        long expirationTime = calculateExpirationTime(authenticatedUser);
+        authenticatedUser.plusSecondExpiration(expirationTime);
 
         redisTemplate.opsForValue().set(
-                authenticatedMember.getAuthId(),
-                authenticatedMember,
-                Duration.ofSeconds(tokenProperties.getTokenExpirationSec())
+            authenticatedUser.getToken(),
+            authenticatedUser,
+            Duration.ofSeconds(tokenProperties.getTokenExpirationSec())
         );
     }
 
-    private long calculateExpirationTime(AuthenticatedMember authenticatedMember) {
+    private long calculateExpirationTime(AuthenticatedUser authenticatedUser) {
         Long propertiesExpirationSec = tokenProperties.getTokenExpirationSec();
         Long userExpirationSec = redisTemplate.getExpire(
-                authenticatedMember.getAuthId(),
-                TimeUnit.SECONDS
+            authenticatedUser.getToken(),
+            TimeUnit.SECONDS
         );
 
         if (userExpirationSec == null) {

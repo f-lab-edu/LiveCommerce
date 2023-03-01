@@ -1,4 +1,5 @@
-package com.flab.livecommerce.seller.domain;
+package com.flab.seller.domain;
+
 
 
 public interface SellerRepository {

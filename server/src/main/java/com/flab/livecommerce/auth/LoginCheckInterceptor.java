@@ -1,9 +1,8 @@
 package com.flab.livecommerce.auth;
 
-import static com.flab.common.auth.SessionConst.AUTH_SESSION_MEMBER;
-import static com.flab.common.auth.SessionConst.AUTH_STATUS;
+import static com.flab.common.auth.SessionConst.AUTH_SESSION_USER;
 
-import com.flab.common.auth.AuthenticatedMember;
+import com.flab.common.auth.AuthenticatedUser;
 import com.flab.common.auth.Role;
 import com.flab.common.auth.annotation.LoginCheck;
 import com.flab.common.exception.AuthenticationException;
@@ -32,13 +31,13 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        var authMember = (AuthenticatedMember) request.getAttribute(AUTH_SESSION_MEMBER);
+        var authenticatedUser = (AuthenticatedUser) request.getAttribute(AUTH_SESSION_USER);
 
-        if (authMember == null) {
+        if (authenticatedUser == null) {
             throw new AuthenticationException();
         }
 
-        Role.valid(authMember.getRole().name());
+        Role.valid(authenticatedUser.getRole().name());
 
         return true;
     }

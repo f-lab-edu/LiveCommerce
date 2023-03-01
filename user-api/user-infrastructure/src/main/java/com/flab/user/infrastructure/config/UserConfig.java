@@ -1,8 +1,10 @@
 package com.flab.user.infrastructure.config;
 
+import com.flab.user.application.CheckEmailProcessor;
 import com.flab.user.application.CreateUserProcessor;
 import com.flab.user.application.LoginUserProcessor;
 import com.flab.user.application.LogoutUserProcessor;
+import com.flab.user.domain.PasswordEncryptor;
 import com.flab.user.domain.TokenGenerator;
 import com.flab.user.domain.TokenRepository;
 import com.flab.user.domain.UserRepository;
@@ -19,11 +21,12 @@ public class UserConfig {
 
     @Bean
     public CreateUserProcessor createUserProcessor(
-        UserRepository userRepository
+        UserRepository userRepository,
+        PasswordEncryptor passwordEncryptor
     ) {
         return new CreateUserProcessor(
             userRepository,
-            new UserSecurityPasswordEncoder(userEncodingAlgorithm())
+            passwordEncryptor
         );
     }
 
@@ -32,15 +35,23 @@ public class UserConfig {
         UserRepository userRepository,
         TokenGenerator tokenGenerator,
         TokenRepository tokenRepository,
+        PasswordEncryptor passwordEncryptor,
         TokenProperties tokenProperties
     ) {
         return new LoginUserProcessor(
             userRepository,
             tokenGenerator,
             tokenRepository,
-            new UserSecurityPasswordEncoder(userEncodingAlgorithm()),
+            passwordEncryptor,
             tokenProperties.getTokenExpirationSec()
         );
+    }
+
+    @Bean
+    public CheckEmailProcessor emailProcessor(
+        UserRepository userRepository
+    ) {
+        return new CheckEmailProcessor(userRepository);
     }
 
     @Bean
@@ -49,14 +60,19 @@ public class UserConfig {
     }
 
     @Bean
-    public TokenGenerator tokenGenerator(
-        TokenRepository tokenRepository
-    ) {
-        return new NonInfoTokenGenerator(tokenRepository);
+    public TokenGenerator tokenGenerator() {
+        return new NonInfoTokenGenerator();
     }
 
     @Bean
-    public PasswordEncoder userEncodingAlgorithm() {
+    public UserSecurityPasswordEncoder passwordEncryptor(
+        PasswordEncoder passwordEncoder
+    ) {
+        return new UserSecurityPasswordEncoder(passwordEncoder);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

@@ -1,6 +1,6 @@
 package com.flab.common.exception;
 
-public class AuthenticationException extends BaseException {
+public class AuthenticationException extends SystemException {
 
     public AuthenticationException() {
         super(ErrorCode.UN_AUTHENTICATED);
