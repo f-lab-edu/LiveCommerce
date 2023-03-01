@@ -65,6 +65,26 @@ Modular Monolithic 아키텍처이므로, 다음과 같은 모듈들로 구성�
 |Order-Domain| 실질적인 주문의 정보를 가지며, 주문의 상태를 직접적으로 제어하는 모듈입니다.                      |
 |Order-Infrastructure| DIP를 통한 상위 계층을 지원하는 일반화된 기술적 기능을 제공하는 계층 모듈입니다.                  |
 
+--- 
+### 데이터베이스 스키마
+![데이터베이스스키마](https://user-images.githubusercontent.com/21376853/222174173-7e1aa320-649b-4829-90ff-8ecab7e573a5.png)
+<details><summary> 스키마 아이콘의 설명   </summary>
+
+![스크린샷 2023-02-25 오전 12 01 18](https://user-images.githubusercontent.com/21376853/221215776-6939a78e-5b08-4660-a653-3ad438d55a20.png)
+</details>
+
+
+---
+
+### 공통 응답 객체
+
+| 필드                   | 타입      | 필수여부 | 설명                                                            | 
+|----------------------|---------|------|---------------------------------------------------------------|
+| success              | Boolean | 필수   | API 호출 실행 결과입니다.<br/>[true]:성공 <br/>[false]: 실패               | 
+| data                 | Object  | 필수   | API 호출에 따른 결과값입니다.                                            | 
+| error{errorCode}     | String  | 필수   | API 호출 오류 상황을 구분하는 코드입니다.<br/>(API 호출 실패시 제공합니다. 호출 성공시 null) | 
+| error{errorMessage}  | String  | 필수   | 미니그리팅 공고 상세 설명입니다.<br/>(API 호출 실패시 제공합니다. 호출 성공시 null)        |
+
 ---
 ### Elastic APM Setting
 
