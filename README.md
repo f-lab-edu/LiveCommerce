@@ -1,7 +1,9 @@
 ### 서비스 설명
 
 
-LiveCommerce 프로젝트는 오늘의집, 쿠팡과 같은 Modular Monolithic 기반의 E-Commerce 애플리케이션입니다.   
+LiveCommerce 프로젝트는 오늘의집, 쿠팡과 같은 Modular Monolithic 기반의 E-Commerce 애플리케이션입니다.
+사용자가 상품에 대해 주문을 하고 결제가 이루어지면 재고가 차감되는 일반적인 쇼핑몰의 기능을 구현을 했습니다.
+
 팀 프로젝트 기간이 끝나 포크를 하여 따로 개선할 점을 찾아 작업 중 입니다.
 
 ---
