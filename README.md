@@ -22,7 +22,7 @@ LiveCommerce 프로젝트는 오늘의집, 쿠팡과 같은 Modular Monolithic �
 ---
 ### 트러블 슈팅 & 기술 선택 과정
 
-[블로그 링크 첨부 예정]
+[위키에 있는 내용은 더 디테일 하게 작업하여 차근차근 블로그로 링크 첨부 예정]
 
 - [동시성 이슈로 발생할 수 있는 재고의 수량 불일치 문제 해결](https://github.com/dding94/LiveCommerce/wiki/%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85-&-%EA%B8%B0%EC%88%A0-%EC%84%A0%ED%83%9D-%EA%B3%BC%EC%A0%95#%EB%8F%99%EC%8B%9C%EC%84%B1-%EC%9D%B4%EC%8A%88%EB%A1%9C-%EB%B0%9C%EC%83%9D%ED%95%A0-%EC%88%98-%EC%9E%88%EB%8A%94-%EC%9E%AC%EA%B3%A0%EC%9D%98-%EC%88%98%EB%9F%89-%EB%B6%88%EC%9D%BC%EC%B9%98-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0)
 - [서로의 잠금을 획득하는 순환구조로 인하여 데드락을 발생시키는 문제 해결](https://github.com/dding94/LiveCommerce/wiki/%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85-&-%EA%B8%B0%EC%88%A0-%EC%84%A0%ED%83%9D-%EA%B3%BC%EC%A0%95#%EC%84%9C%EB%A1%9C%EC%9D%98-%EC%9E%A0%EA%B8%88%EC%9D%84-%ED%9A%8D%EB%93%9D%ED%95%98%EB%8A%94-%EC%88%9C%ED%99%98%EA%B5%AC%EC%A1%B0%EB%A1%9C-%EC%9D%B8%ED%95%98%EC%97%AC-%EB%8D%B0%EB%93%9C%EB%9D%BD%EC%9D%84-%EB%B0%9C%EC%83%9D%EC%8B%9C%ED%82%A4%EB%8A%94-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0)
