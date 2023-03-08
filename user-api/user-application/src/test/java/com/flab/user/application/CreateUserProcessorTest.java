@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 public class CreateUserProcessorTest {
 
     @Test
-    @DisplayName("이메일이 중복된 경우에 예외가 발생한다.")
+    @DisplayName("유저 생성시 이메일이 중복된 경우에 예외가 발생한다.")
     void test1() {
         //Arrange
         String email = "aaa@gamil.com";
