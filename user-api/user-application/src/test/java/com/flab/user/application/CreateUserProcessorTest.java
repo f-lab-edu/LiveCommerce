@@ -14,27 +14,28 @@ import org.junit.jupiter.api.Test;
 public class CreateUserProcessorTest {
 
     @Test
-    @DisplayName("유저 생성시 이메일이 중복된 경우에 예외가 발생한다.")
-    void userCreate_DuplicatedEmailException() {
+    @DisplayName("이메일이 중복된 경우에 예외가 발생한다.")
+    void test1() {
         //Arrange
-        var userRepository = new FakeUserRepository();
-        userRepository.save(new User("aaa@gmail.com", "123456", "test"));
+        String email = "aaa@gamil.com";
+        String password = "123456";
+        String nickname = "test";
 
-        CreateUserProcessor processor = new CreateUserProcessor(
-            userRepository,
-            new FakePasswordEncryptor()
-        );
+        FakeUserRepository userRepository = new FakeUserRepository();
+        User user = User.create(email, password, nickname);
+        userRepository.save(user);
+        CreateUserCommand command = createUserCommand(email, password, nickname);
 
-        CreateUserCommand command = new CreateUserCommand(
-            "aaa@gmail.com",
-            "123456",
-            "test"
-        );
+        var sut = new CreateUserProcessor(userRepository, new FakePasswordEncryptor());
 
         //Act
-        Throwable result = catchThrowable(() -> processor.execute(command));
+        Throwable result = catchThrowable(() -> sut.execute(command));
 
         //Assert
         assertThat(result.getClass()).isEqualTo(UserDuplicatedEmailException.class);
+    }
+
+    private CreateUserCommand createUserCommand(String email, String password, String nickname) {
+        return new CreateUserCommand(email, password, nickname);
     }
 }

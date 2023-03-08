@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 
 import com.flab.common.exception.EntityNotFoundException;
+import com.flab.user.application.command.CreateUserCommand;
 import com.flab.user.application.command.LoginUserCommand;
 import com.flab.user.application.testdouble.DummyTokenGenerator;
 import com.flab.user.application.testdouble.DummyTokenRepository;
@@ -18,21 +19,21 @@ public class LoginUserProcessorTest {
 
     @Test
     @DisplayName("로그인 요청시 저장소에 회원이 없을 경우 예외가 발생한다.")
-    void userLogin_InvalidUserTest() {
+    void test1() {
         //Arrange
         var userRepository = new FakeUserRepository();
-        var processor = new LoginUserProcessor(
+        var sut = new LoginUserProcessor(
             userRepository,
             new DummyTokenGenerator(),
             new DummyTokenRepository(),
             new FakePasswordEncryptor(),
-            1000L
+            null
         );
 
-        LoginUserCommand command = new LoginUserCommand("aaa@gmail.com", "123456");
+        LoginUserCommand command = createLoginUserCommand("aaa@gmail.com", "123456");
 
         //Act
-        Throwable result = catchThrowable(() -> processor.execute(command));
+        Throwable result = catchThrowable(() -> sut.execute(command));
 
         //Assert
         assertThat(result.getClass()).isEqualTo(EntityNotFoundException.class);
@@ -40,25 +41,31 @@ public class LoginUserProcessorTest {
 
     @Test
     @DisplayName("로그인 요청시 비밀번호가 틀릴 경우 예외가 발생한다.")
-    void userLogin_PasswordNotMatchedTest() {
+    void test2() {
         //Arrange
+        String email = "aaa@gmail.com";
         var userRepository = new FakeUserRepository();
-        userRepository.save(new User("aaa@gmail.com", "12345", "test"));
+        User user = User.create(email, "12345", "test");
+        userRepository.save(user);
 
-        var processor = new LoginUserProcessor(
+        var sut = new LoginUserProcessor(
             userRepository,
             new DummyTokenGenerator(),
             new DummyTokenRepository(),
             new FakePasswordEncryptor(),
-            1000L
+            null
         );
 
-        LoginUserCommand command = new LoginUserCommand("aaa@gmail.com", "123456");
+        var command = createLoginUserCommand(email, "123456");
 
         //Act
-        Throwable result = catchThrowable(() -> processor.execute(command));
+        Throwable result = catchThrowable(() -> sut.execute(command));
 
         //Assert
         assertThat(result.getClass()).isEqualTo(UserPasswordNotMatchedException.class);
+    }
+
+    private LoginUserCommand createLoginUserCommand(String email, String password) {
+        return new LoginUserCommand(email, password);
     }
 }
