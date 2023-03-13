@@ -86,7 +86,7 @@ Modular Monolithic 아키텍처이므로, 다음과 같은 모듈들로 구성�
 | success              | Boolean | 필수   | API 호출 실행 결과입니다.<br/>[true]:성공 <br/>[false]: 실패               | 
 | data                 | Object  | 필수   | API 호출에 따른 결과값입니다.                                            | 
 | error{errorCode}     | String  | 필수   | API 호출 오류 상황을 구분하는 코드입니다.<br/>(API 호출 실패시 제공합니다. 호출 성공시 null) | 
-| error{errorMessage}  | String  | 필수   | 미니그리팅 공고 상세 설명입니다.<br/>(API 호출 실패시 제공합니다. 호출 성공시 null)        |
+| error{errorMessage}  | String  | 필수   | API 호출 오류 상세 설명입니다.<br/>(API 호출 실패시 제공합니다. 호출 성공시 null)        |
 
 ---
 ### Elastic APM Setting
