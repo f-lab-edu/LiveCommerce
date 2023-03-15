@@ -5,9 +5,7 @@ import com.flab.common.exception.ErrorCode;
 import com.flab.user.domain.User;
 import com.flab.user.domain.UserRepository;
 import com.flab.user.infrastructure.persistence.jpa.JpaUserRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public class UserRepositoryAdapter implements UserRepository {
 
     private final JpaUserRepository userRepository;
@@ -31,5 +29,4 @@ public class UserRepositoryAdapter implements UserRepository {
     public boolean existsByEmail(String email) {
         return this.userRepository.existsByEmail(email);
     }
-
 }

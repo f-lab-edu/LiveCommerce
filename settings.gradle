@@ -10,13 +10,6 @@ include(
         'user-api:user-infrastructure'
 )
 include(
-        'seller-api',
-        'seller-api:seller-domain',
-        'seller-api:seller-application',
-        'seller-api:seller-presentation',
-        'seller-api:seller-infrastructure'
-)
-include(
         'item-api',
         'item-api:item-domain',
         'item-api:item-application',

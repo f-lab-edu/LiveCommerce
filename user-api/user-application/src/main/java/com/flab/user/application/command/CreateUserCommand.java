@@ -2,11 +2,14 @@ package com.flab.user.application.command;
 
 import com.flab.user.domain.User;
 
-public class CreateUserCommand {
+public final class CreateUserCommand {
 
     private String email;
     private String password;
     private String nickname;
+
+    private CreateUserCommand() {
+    }
 
     public User toEntity(String encryptedPassword) {
         return new User(

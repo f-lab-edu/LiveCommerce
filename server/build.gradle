@@ -6,7 +6,6 @@ plugins {
 dependencies {
 	implementation project(path: ':order-api:order-infrastructure', configuration: 'default')
 	implementation project(path: ':user-api:user-infrastructure', configuration: 'default')
-	implementation project(path: ':seller-api:seller-infrastructure', configuration: 'default')
 	implementation project(path: ':item-api:item-infrastructure', configuration: 'default')
 	implementation project(path: ':inventory-api:inventory-infrastructure', configuration: 'default')
 	implementation project(path: ':payment-api:payment-infrastructure', configuration: 'default')

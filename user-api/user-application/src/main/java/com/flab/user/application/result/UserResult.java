@@ -3,16 +3,23 @@ package com.flab.user.application.result;
 import com.flab.user.domain.User;
 
 public final class UserResult {
+
     private Long id;
     private String email;
 
-    public UserResult(Long id, String email) {
-        this.id = id;
-        this.email = email;
+    private String nickname;
+
+    private UserResult() {
     }
 
-    public static UserResult form(User user) {
-        return new UserResult(user.getId(), user.getEmail());
+    public UserResult(Long id, String email, String nickname) {
+        this.id = id;
+        this.email = email;
+        this.nickname = nickname;
+    }
+
+    public static UserResult from(User user) {
+        return new UserResult(user.getId(), user.getEmail(), user.getNickname());
     }
 
     public Long getId() {
@@ -21,5 +28,9 @@ public final class UserResult {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getNickname() {
+        return nickname;
     }
 }

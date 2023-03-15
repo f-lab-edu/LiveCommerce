@@ -5,8 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-
-public class CreateUserRequest {
+public final class CreateUserRequest {
 
     @NotBlank(message = "이메일을 입력해주세요.")
     @Email(message = "이메일 형식에 맞춰 주세요.")
@@ -19,7 +18,7 @@ public class CreateUserRequest {
     @NotBlank(message = "아이디는 필수 입력사항입니다.")
     private String nickname;
 
-    protected CreateUserRequest() {
+    private CreateUserRequest() {
     }
 
     public CreateUserRequest(String email, String password, String nickname) {
