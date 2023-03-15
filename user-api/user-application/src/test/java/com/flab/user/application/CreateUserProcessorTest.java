@@ -7,11 +7,14 @@ import com.flab.user.application.command.CreateUserCommand;
 import com.flab.user.application.testdouble.FakePasswordEncryptor;
 import com.flab.user.application.testdouble.FakeUserRepository;
 import com.flab.user.domain.User;
+import com.flab.user.domain.UserRepository;
 import com.flab.user.domain.exception.UserDuplicatedEmailException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class CreateUserProcessorTest {
+
+    private final UserRepository userRepository = new FakeUserRepository();
 
     @Test
     @DisplayName("유저 생성시 이메일이 중복된 경우에 예외가 발생한다.")
@@ -21,7 +24,6 @@ public class CreateUserProcessorTest {
         String password = "123456";
         String nickname = "test";
 
-        FakeUserRepository userRepository = new FakeUserRepository();
         User user = User.create(email, password, nickname);
         userRepository.save(user);
         CreateUserCommand command = createUserCommand(email, password, nickname);
