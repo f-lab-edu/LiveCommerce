@@ -29,7 +29,7 @@ public class OrderPayedProcessorTest {
     @DisplayName("재고감소 서비스 실패시 주문이 취소 된다.")
     void test1() {
         // Arrange
-        Order order = orderCreate();
+        Order order = createOrder();
         orderRepository.save(order);
         var dummyItemData = createItemData(null, null);
 
@@ -51,7 +51,7 @@ public class OrderPayedProcessorTest {
     @DisplayName("재고감소 서비스 성공시 주문이 완료 된다.")
     void test2() {
         // Arrange
-        Order order = orderCreate();
+        Order order = createOrder();
         orderRepository.save(order);
         var dummyItemData = createItemData(null, null);
         var sut = new OrderPayedProcessor(
@@ -106,7 +106,7 @@ public class OrderPayedProcessorTest {
         }
     }
 
-    private Order orderCreate() {
+    private Order createOrder() {
         return Order.create(1L, "NAVER_PAY",
             List.of(new OrderLineItem(
                     3,
