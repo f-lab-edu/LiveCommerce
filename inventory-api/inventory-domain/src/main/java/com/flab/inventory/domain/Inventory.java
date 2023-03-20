@@ -45,6 +45,10 @@ public class Inventory extends AbstractAggregateRoot {
         this.inventoryState = inventoryState;
     }
 
+    public static Inventory create(long itemId, SaleStatus saleStatus, String itemName, Integer quantity, InventoryState inventoryState) {
+        return new Inventory(itemId, saleStatus, itemName, quantity, inventoryState);
+    }
+
     public enum InventoryState {
         INVENTORY_SAFE("재고 양호"),
         STOCK_OUT("품절");
