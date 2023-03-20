@@ -9,6 +9,7 @@ import com.flab.order.domain.Order.OrderStatus;
 import com.flab.order.domain.OrderItemOption;
 import com.flab.order.domain.OrderItemOptionGroup;
 import com.flab.order.domain.OrderLineItem;
+import com.flab.order.domain.OrderRepository;
 import com.flab.order.domain.data.DecreaseInventoryData;
 import com.flab.order.domain.data.InventoryData;
 import com.flab.order.domain.data.ItemQuantityData;
@@ -21,23 +22,26 @@ import org.springframework.context.ApplicationEventPublisher;
 
 public class OrderPayedProcessorTest {
 
+    private final OrderRepository orderRepository = new FakeOrderRepository();
+    private final ApplicationEventPublisher publisher = new DummyApplicationEventPublisher();
+
     @Test
     @DisplayName("재고감소 서비스 실패시 주문이 취소 된다.")
-    void decreaseInventoryService_fail_order_will_be_cancel() {
+    void test1() {
         // Arrange
-        var order = orderCreate();
-        var orderRepository = new FakeOrderRepository();
+        Order order = createOrder();
         orderRepository.save(order);
-        var dummyData = new ItemQuantityData(null, null);
+        var dummyItemData = createItemData(null, null);
 
-        var processor = new OrderPayedProcessor(
-            new FailDecreaseInventoryServiceStub(),
+        var sut = new OrderPayedProcessor(
+            new StubFailDecreaseInventoryService(),
             orderRepository,
-            new ApplicationEventPublisherDummy()
+            publisher
         );
+        OrderPayedCommand command = createOrderPayedCommand(1L, List.of(dummyItemData));
 
         // Act
-        processor.execute(new OrderPayedCommand(1L, List.of(dummyData)));
+        sut.execute(command);
 
         // Assert
         assertThat(order.getOrderStatus()).isEqualTo(OrderStatus.ORDER_CANCELED);
@@ -45,28 +49,27 @@ public class OrderPayedProcessorTest {
 
     @Test
     @DisplayName("재고감소 서비스 성공시 주문이 완료 된다.")
-    void decreaseInventoryService_success_order_will_be_complete() {
+    void test2() {
         // Arrange
-        var order = orderCreate();
-        var orderRepository = new FakeOrderRepository();
+        Order order = createOrder();
         orderRepository.save(order);
-        var dummyData = new ItemQuantityData(null, null);
-        var processor = new OrderPayedProcessor(
-            new SuccessDecreaseInventoryServiceStub(),
+        var dummyItemData = createItemData(null, null);
+        var sut = new OrderPayedProcessor(
+            new StubSuccessDecreaseInventoryService(),
             orderRepository,
-            new ApplicationEventPublisherDummy()
+            publisher
         );
+        OrderPayedCommand command = createOrderPayedCommand(1L, List.of(dummyItemData));
 
         // Act
-        processor.execute(new OrderPayedCommand(1L, List.of(dummyData)));
+        sut.execute(command);
 
         // Assert
         assertThat(order.getOrderStatus()).isEqualTo(OrderStatus.ORDER_COMPLETED);
     }
 
 
-    private static final class ApplicationEventPublisherDummy implements
-        ApplicationEventPublisher {
+    private static final class DummyApplicationEventPublisher implements ApplicationEventPublisher {
 
         @Override
         public void publishEvent(ApplicationEvent event) {
@@ -79,8 +82,15 @@ public class OrderPayedProcessorTest {
         }
     }
 
-    private static final class FailDecreaseInventoryServiceStub implements
-        DecreaseInventoryService {
+    private OrderPayedCommand createOrderPayedCommand(Long orderId, List<ItemQuantityData> itemQuantityData) {
+        return new OrderPayedCommand(orderId, itemQuantityData);
+    }
+
+    private ItemQuantityData createItemData(Long itemId, Integer count) {
+        return new ItemQuantityData(itemId, count);
+    }
+
+    private static final class StubFailDecreaseInventoryService implements DecreaseInventoryService {
 
         @Override
         public DecreaseInventoryData decreaseInventory(List<ItemQuantityData> itemQuantityDataList) {
@@ -88,8 +98,7 @@ public class OrderPayedProcessorTest {
         }
     }
 
-    private static final class SuccessDecreaseInventoryServiceStub implements
-        DecreaseInventoryService {
+    private static final class StubSuccessDecreaseInventoryService implements DecreaseInventoryService {
 
         @Override
         public DecreaseInventoryData decreaseInventory(List<ItemQuantityData> itemQuantityDataList) {
@@ -97,7 +106,7 @@ public class OrderPayedProcessorTest {
         }
     }
 
-    private Order orderCreate() {
+    private Order createOrder() {
         return Order.create(1L, "NAVER_PAY",
             List.of(new OrderLineItem(
                     3,

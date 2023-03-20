@@ -20,18 +20,18 @@ import org.springframework.context.ApplicationEventPublisher;
 
 public class PaymentCompletedProcessorTest {
 
+    private final ApplicationEventPublisher publisher = new DummyApplicationEventPublisher();
+    private final OrderRepository orderRepository = new StubOrderRepository();
+
     @Test
     @DisplayName("결제 금액과 주문 금액이 일치하지 않으면 예외가 발생한다")
-    void payedAmount_NotMatched_OrderAmount_return_exception() {
+    void test1() {
         // Arrange
-        var processor = new PaymentCompletedProcessor(
-            new OrderRepositoryStub(),
-            new ApplicationEventPublisherDummy()
-        );
+        var sut = new PaymentCompletedProcessor(orderRepository, publisher);
+        PaymentCompletedCommand command = createPaymentCompletedCommand(1L, 99001);
 
         // Act
-        Throwable result = catchThrowable(
-            () -> processor.execute(new PaymentCompletedCommand(1L, 99001)));
+        Throwable result = catchThrowable(() -> sut.execute(command));
 
         // Assert
         assertThat(result.getClass()).isEqualTo(AmountNotMatchedException.class);
@@ -40,17 +40,14 @@ public class PaymentCompletedProcessorTest {
 
     @Test
     @DisplayName("이미 취소된 주문은 결제시 예외가 발생한다.")
-    void alreadyOrderCanceled_return_exception() {
+    void test2() {
         // Arrange
         int payedAmount = 99000;
-
-        var processor = new PaymentCompletedProcessor(
-            new OrderRepositoryStub(),
-            new ApplicationEventPublisherDummy()
-        );
-
-        Order order = processor.execute(new PaymentCompletedCommand(1L, payedAmount));
+        var processor = new PaymentCompletedProcessor(orderRepository, publisher);
+        PaymentCompletedCommand command = createPaymentCompletedCommand(1L, payedAmount);
+        Order order = processor.execute(command);
         order.cancel();
+
         // Act
         Throwable result = catchThrowable(() -> order.payed(payedAmount));
 
@@ -60,16 +57,12 @@ public class PaymentCompletedProcessorTest {
 
     @Test
     @DisplayName("이미 결제된 주문은 결제시 예외가 발생한다.")
-    void alreadyOrderCompleted_return_exception() {
+    void test3() {
         // Arrange
         int payedAmount = 99000;
-
-        var processor = new PaymentCompletedProcessor(
-            new OrderRepositoryStub(),
-            new ApplicationEventPublisherDummy()
-        );
-
-        Order order = processor.execute(new PaymentCompletedCommand(1L, payedAmount));
+        var processor = new PaymentCompletedProcessor(orderRepository, publisher);
+        PaymentCompletedCommand command = createPaymentCompletedCommand(1L, payedAmount);
+        Order order = processor.execute(command);
 
         // Act
         Throwable result = catchThrowable(() -> order.payed(payedAmount));
@@ -79,7 +72,7 @@ public class PaymentCompletedProcessorTest {
     }
 
 
-    private static final class ApplicationEventPublisherDummy implements ApplicationEventPublisher {
+    private static final class DummyApplicationEventPublisher implements ApplicationEventPublisher {
 
         @Override
         public void publishEvent(ApplicationEvent event) {
@@ -93,7 +86,12 @@ public class PaymentCompletedProcessorTest {
     }
 
 
-    private static final class OrderRepositoryStub implements OrderRepository {
+    private PaymentCompletedCommand createPaymentCompletedCommand(Long orderId, Integer payedAmount) {
+        return new PaymentCompletedCommand(orderId, payedAmount);
+    }
+
+
+    private static final class StubOrderRepository implements OrderRepository {
 
         @Override
         public Order save(Order order) {

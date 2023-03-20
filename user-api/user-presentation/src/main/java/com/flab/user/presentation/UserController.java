@@ -4,6 +4,7 @@ import com.flab.common.auth.Role;
 import com.flab.common.auth.annotation.LoginCheck;
 import com.flab.common.response.CommonApiResponse;
 import com.flab.user.application.facade.UserManager;
+import com.flab.user.application.result.UserResult;
 import com.flab.user.presentation.request.CreateUserRequest;
 import com.flab.user.presentation.request.LoginUserRequest;
 import com.flab.user.presentation.request.UserEmailRequest;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/users")
 @RestController
 public class UserController {
 
@@ -27,13 +28,13 @@ public class UserController {
 
     @PostMapping
     public CommonApiResponse<UserResponse> signUp(@RequestBody @Valid CreateUserRequest request) {
-        var user = userManager.createUser(request.toCommand());
+        UserResult user = userManager.createUser(request.toCommand());
         return CommonApiResponse.success(UserResponse.from(user));
     }
 
     @PostMapping("/login")
     public CommonApiResponse<String> login(@RequestBody @Valid LoginUserRequest request) {
-        var token = userManager.login(request.toCommand());
+        String token = userManager.login(request.toCommand());
         return CommonApiResponse.success(token);
     }
 
@@ -41,12 +42,12 @@ public class UserController {
     @PostMapping("/logout")
     public CommonApiResponse<String> logout(@RequestHeader String authorization) {
         userManager.logout(authorization.replace("Bearer ", ""));
-        return CommonApiResponse.success("Ok");
+        return CommonApiResponse.success(UserResponse.logOut());
     }
 
     @PostMapping("/email/check")
     public CommonApiResponse<String> checkEmail(@RequestBody @Valid UserEmailRequest request) {
         userManager.checkEmail(request.getEmail());
-        return CommonApiResponse.success("Ok");
+        return CommonApiResponse.success(UserResponse.checkEmail());
     }
 }

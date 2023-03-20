@@ -21,6 +21,14 @@ public final class UserResponse {
         return new UserResponse(userResult.getId(), userResult.getEmail(), userResult.getNickname());
     }
 
+    public static String logOut() {
+        return "Logout OK";
+    }
+
+    public static String checkEmail() {
+        return "No duplicate emails";
+    }
+
     public Long getId() {
         return id;
     }
