@@ -17,17 +17,20 @@ import org.springframework.context.ApplicationEventPublisher;
 
 public class CreateOrderProcessorTest {
 
+    private final OrderRepository orderRepository = new DummyOrderRepository();
+    private final ApplicationEventPublisher publisher = new DummyApplicationEventPublisher();
+
     @Test
     @DisplayName("주문이 정상적으로 생성된다.")
-    void orderCreate_complete() {
+    void test1() {
         //Arrange
-        var processor = new CreateOrderProcessor(
-            new DummyOrderRepository(),
-            new ApplicationEventPublisherDummy()
+        var sut = new CreateOrderProcessor(
+            orderRepository,
+            publisher
         );
 
         //Act
-        OrderResult result = processor.execute(3L, createOrderCommand());
+        OrderResult result = sut.execute(3L, createOrderCommand());
 
         //Assert
         assertThat(result.getUserId()).isEqualTo(3L);
@@ -105,7 +108,7 @@ public class CreateOrderProcessorTest {
         );
     }
 
-    private static final class ApplicationEventPublisherDummy implements ApplicationEventPublisher {
+    private static final class DummyApplicationEventPublisher implements ApplicationEventPublisher {
 
         @Override
         public void publishEvent(ApplicationEvent event) {

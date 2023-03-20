@@ -47,9 +47,9 @@ public final class CommonApiResponse<T> {
     static class Error {
 
         //에러 타입
-        private String code;
+        private final String code;
         //에러 메시지
-        private String message;
+        private final String message;
 
         public Error(String code, String message) {
             this.code = code;

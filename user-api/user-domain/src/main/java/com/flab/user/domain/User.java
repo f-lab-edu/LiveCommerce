@@ -31,6 +31,10 @@ public class User {
     protected User() {
     }
 
+    public static User create(String email, String password, String nickname) {
+        return new User(email, password, nickname);
+    }
+
     public Long getId() {
         return id;
     }

@@ -7,6 +7,7 @@ import com.flab.inventory.application.command.DecreaseInventoryCommand;
 import com.flab.inventory.domain.Inventory;
 import com.flab.inventory.domain.Inventory.InventoryState;
 import com.flab.inventory.domain.Inventory.SaleStatus;
+import com.flab.inventory.domain.InventoryRepository;
 import com.flab.inventory.domain.data.ItemQuantity;
 import com.flab.inventory.domain.exception.NotEnoughQuantityException;
 import com.flab.inventory.domain.exception.SalesClosedException;
@@ -17,29 +18,28 @@ import org.junit.jupiter.api.Test;
 
 public class DecreaseInventoryProcessorTest {
 
+    private final InventoryRepository inventoryRepository = new FakeInventoryRepository();
+
     @Test
     @DisplayName("재고가 부족하면 예외가 발생한다.")
-    void inventory_decrease_notEnoughQuantity_return_exception() {
+    void test1() {
         // Arrange
-        var inventoryRepository = new FakeInventoryRepository();
-        var processor = new DecreaseInventoryProcessor(inventoryRepository);
+        var sut = new DecreaseInventoryProcessor(inventoryRepository);
+        Inventory inventory1 = Inventory.create(1L, SaleStatus.ON_SALE, "test1", 30, InventoryState.INVENTORY_SAFE);
+        Inventory inventory2 = Inventory.create(1L, SaleStatus.ON_SALE, "test2", 100, InventoryState.INVENTORY_SAFE);
 
-        inventoryRepository.save(
-            new Inventory(1L, SaleStatus.ON_SALE, "test", 30, InventoryState.INVENTORY_SAFE)
-        );
-        inventoryRepository.save(
-            new Inventory(2L, SaleStatus.ON_SALE, "test2", 100, InventoryState.INVENTORY_SAFE)
+        inventoryRepository.save(inventory1);
+        inventoryRepository.save(inventory2);
+
+        List<ItemQuantity> itemQuantity = List.of(
+            createItemQuantity(1L, 40),
+            createItemQuantity(2L, 10)
         );
 
-        var command = new DecreaseInventoryCommand(
-            List.of(
-                new ItemQuantity(1L, 40),
-                new ItemQuantity(2L, 10)
-            )
-        );
+        DecreaseInventoryCommand command = createDecreaseInventoryCommand(itemQuantity);
 
         // Act
-        Throwable result = catchThrowable(() -> processor.execute(command));
+        Throwable result = catchThrowable(() -> sut.execute(command));
 
         // Assert
         assertThat(result.getClass()).isEqualTo(NotEnoughQuantityException.class);
@@ -47,19 +47,21 @@ public class DecreaseInventoryProcessorTest {
 
     @Test
     @DisplayName("재고가 품절 상태이면 예외가 발생한다.")
-    void inventory_decrease_stock_out_return_exception() {
+    void test2() {
         // Arrange
-        var inventoryRepository = new FakeInventoryRepository();
         var processor = new DecreaseInventoryProcessor(inventoryRepository);
+        Inventory inventory1 = Inventory.create(1L, SaleStatus.ON_SALE, "test1", 30, InventoryState.INVENTORY_SAFE);
+        Inventory inventory2 = Inventory.create(2L, SaleStatus.ON_SALE, "test2", 100, InventoryState.STOCK_OUT);
 
-        inventoryRepository.save(
-            new Inventory(1L, SaleStatus.ON_SALE, "test", 30, InventoryState.INVENTORY_SAFE)
-        );
-        inventoryRepository.save(
-            new Inventory(2L, SaleStatus.ON_SALE, "test2", 100, InventoryState.STOCK_OUT)
+        inventoryRepository.save(inventory1);
+        inventoryRepository.save(inventory2);
+
+        List<ItemQuantity> itemQuantity = List.of(
+            createItemQuantity(1L, 10),
+            createItemQuantity(2L, 10)
         );
 
-        var command = new DecreaseInventoryCommand(List.of(new ItemQuantity(2L, 10)));
+        DecreaseInventoryCommand command = createDecreaseInventoryCommand(itemQuantity);
 
         // Act
         Throwable result = catchThrowable(() -> processor.execute(command));
@@ -70,33 +72,24 @@ public class DecreaseInventoryProcessorTest {
 
     @Test
     @DisplayName("판매 종료 상태이면 예외가 발생한다.")
-    void inventory_decrease_close_return_exception() {
+    void test3() {
         // Arrange
-        var inventoryRepository = new FakeInventoryRepository();
-        var processor = new DecreaseInventoryProcessor(inventoryRepository);
+        var sut = new DecreaseInventoryProcessor(inventoryRepository);
+        Inventory inventory1 = Inventory.create(1L, SaleStatus.ON_SALE, "test", 30, InventoryState.INVENTORY_SAFE);
+        Inventory inventory2 = Inventory.create(2L, SaleStatus.CLOSE, "test", 30, InventoryState.INVENTORY_SAFE);
 
-        inventoryRepository.save(
-            new Inventory(1L, SaleStatus.ON_SALE, "test", 30, InventoryState.INVENTORY_SAFE)
-        );
-        inventoryRepository.save(
-            new Inventory(2L, SaleStatus.CLOSE, "test2", 100, InventoryState.INVENTORY_SAFE)
+        inventoryRepository.save(inventory1);
+        inventoryRepository.save(inventory2);
+
+        List<ItemQuantity> itemQuantity = List.of(
+            createItemQuantity(1L, 10),
+            createItemQuantity(2L, 10)
         );
 
-        List<ItemQuantity> itemQuantities = List.of(new ItemQuantity(2L, 10));
-
-        var command = new DecreaseInventoryCommand(
-            List.of(
-                new ItemQuantity(1L, 4),
-                new ItemQuantity(2L, 2),
-                new ItemQuantity(1L, 4),
-                new ItemQuantity(2L, 8),
-                new ItemQuantity(1L, 4),
-                new ItemQuantity(1L, 4)
-            )
-        );
+        DecreaseInventoryCommand command = createDecreaseInventoryCommand(itemQuantity);
 
         // Act
-        Throwable result = catchThrowable(() -> processor.execute(command));
+        Throwable result = catchThrowable(() -> sut.execute(command));
 
         // Assert
         assertThat(result.getClass()).isEqualTo(SalesClosedException.class);
@@ -104,34 +97,38 @@ public class DecreaseInventoryProcessorTest {
 
     @Test
     @DisplayName("재고의 여유가 있으면 성공적으로 감소한다.")
-    void inventory_enough_quantity_decrease_return_success() {
+    void test4() {
         // Arrange
-        var inventoryRepository = new FakeInventoryRepository();
-        var processor = new DecreaseInventoryProcessor(inventoryRepository);
+        var sut = new DecreaseInventoryProcessor(inventoryRepository);
+        Inventory inventory1 = Inventory.create(1L, SaleStatus.ON_SALE, "test", 30, InventoryState.INVENTORY_SAFE);
+        Inventory inventory2 = Inventory.create(2L, SaleStatus.ON_SALE, "test", 30, InventoryState.INVENTORY_SAFE);
 
-        inventoryRepository.save(
-            new Inventory(1L, SaleStatus.ON_SALE, "test", 30, InventoryState.INVENTORY_SAFE)
-        );
-        inventoryRepository.save(
-            new Inventory(2L, SaleStatus.ON_SALE, "test2", 100, InventoryState.INVENTORY_SAFE)
+        inventoryRepository.save(inventory1);
+        inventoryRepository.save(inventory2);
+
+        List<ItemQuantity> itemQuantity = List.of(
+            createItemQuantity(1L, 1),
+            createItemQuantity(2L, 4),
+            createItemQuantity(1L, 3),
+            createItemQuantity(2L, 2),
+            createItemQuantity(2L, 8)
         );
 
-        var command = new DecreaseInventoryCommand(
-            List.of(
-                new ItemQuantity(1L, 4),
-                new ItemQuantity(2L, 2),
-                new ItemQuantity(1L, 4),
-                new ItemQuantity(2L, 8),
-                new ItemQuantity(1L, 4),
-                new ItemQuantity(1L, 4)
-            )
-        );
+        DecreaseInventoryCommand command = createDecreaseInventoryCommand(itemQuantity);
 
         // Act
-        processor.execute(command);
+        sut.execute(command);
 
         // Assert
-        assertThat(inventoryRepository.findByItemId(1L).getQuantity()).isEqualTo(14);
-        assertThat(inventoryRepository.findByItemId(2L).getQuantity()).isEqualTo(90);
+        assertThat(inventoryRepository.findByItemId(1L).getQuantity()).isEqualTo(26);
+        assertThat(inventoryRepository.findByItemId(2L).getQuantity()).isEqualTo(16);
+    }
+
+    private DecreaseInventoryCommand createDecreaseInventoryCommand(List<ItemQuantity> itemQuantities) {
+        return new DecreaseInventoryCommand(itemQuantities);
+    }
+
+    private ItemQuantity createItemQuantity(Long itemId, Integer count) {
+        return new ItemQuantity(itemId, count);
     }
 }
